@@ -1,0 +1,58 @@
+---
+title: Telegram Adapter
+description: 'Deploy your bot to Telegram'
+---
+
+## Setup
+
+### 1. Create Telegram Bot
+
+<Steps>
+  <Step title="Find BotFather">
+    Open Telegram and search for @BotFather
+  </Step>
+  <Step title="Create bot">
+    Send `/newbot` and follow instructions
+  </Step>
+  <Step title="Copy token">
+    Copy the API token provided
+  </Step>
+</Steps>
+
+### 2. Install
+```bash
+npm install @boostgpt/router
+```
+
+### 3. Configure
+```bash .env
+TELEGRAM_TOKEN=your_telegram_token
+```
+
+## Usage
+```javascript
+import { Router, TelegramAdapter } from '@boostgpt/router';
+
+const router = new Router({
+  apiKey: process.env.BOOSTGPT_API_KEY,
+  projectId: process.env.BOOSTGPT_PROJECT_ID,
+  adapters: [
+    new TelegramAdapter({
+      telegramToken: process.env.TELEGRAM_TOKEN,
+      welcomeMessage: 'Hi {name}! 👋'
+    })
+  ]
+});
+
+await router.start();
+```
+
+## Options
+
+<ParamField path="telegramToken" type="string" required>
+  Telegram bot token
+</ParamField>
+
+<ParamField path="welcomeMessage" type="string">
+  Message sent on /start (use {name} for user's name)
+</ParamField>

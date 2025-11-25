@@ -1,0 +1,112 @@
+---
+title: Troubleshooting
+description: 'Common issues and solutions'
+---
+
+## Installation Issues
+
+<AccordionGroup>
+  <Accordion icon="triangle-alert" title="Cannot find module 'boostgpt'">
+    **Solution:**
+```bash
+    npm install boostgpt @boostgpt/router
+```
+  </Accordion>
+
+  <Accordion icon="triangle-alert" title="Cannot find module 'discord.js'">
+    **Solution:** Install channel-specific dependency
+```bash
+    npm install discord.js
+```
+  </Accordion>
+
+  <Accordion icon="code" title="SyntaxError: Cannot use import statement">
+    **Solution:** Add to package.json:
+```json
+    {
+      "type": "module"
+    }
+```
+    Or use `.mjs` extension, or switch to `require()`.
+  </Accordion>
+</AccordionGroup>
+
+## Authentication Errors
+
+<AccordionGroup>
+  <Accordion icon="ban" title="401 Unauthorized">
+    **Cause:** Invalid API key
+    
+    **Solution:** Check your API key at [app.boostgpt.co/account/api-keys](https://app.boostgpt.co/account/api-keys)
+  </Accordion>
+
+  <Accordion icon="key" title="403 Forbidden">
+    **Cause:** Wrong Project ID
+    
+    **Solution:** Verify Project ID matches your API key
+  </Accordion>
+</AccordionGroup>
+
+## Discord Issues
+
+<AccordionGroup>
+  <Accordion icon="circle-x" title="Bot not responding to messages">
+    **Solution:** Enable **MESSAGE CONTENT INTENT** in Discord Developer Portal → Bot Settings → Privileged Gateway Intents
+  </Accordion>
+
+  <Accordion icon="user-round-x" title="Bot appears offline">
+    **Solution:** 
+    - Check token is correct
+    - Verify bot is invited to server
+    - Check internet connection
+  </Accordion>
+</AccordionGroup>
+
+## Telegram Issues
+
+<AccordionGroup>
+  <Accordion icon="ban" title="Bot was blocked by user">
+    **Solution:** User must start chat with bot first. Search for bot in Telegram and click Start.
+  </Accordion>
+
+  <Accordion icon="clock" title="Polling error">
+    **Solution:** Only one instance can poll at a time. Stop other instances or use webhooks.
+  </Accordion>
+</AccordionGroup>
+
+## Slack Issues
+
+<AccordionGroup>
+  <Accordion icon="plug" title="Bot not receiving messages">
+    **Solution:** 
+    - Enable Socket Mode in Slack app settings
+    - Verify App Token starts with `xapp-`
+    - Check bot has required scopes
+  </Accordion>
+</AccordionGroup>
+
+## WhatsApp Issues
+
+<AccordionGroup>
+  <Accordion icon="qr-code" title="QR code not showing">
+    **Solution:**
+```bash
+    npm install qrcode-terminal
+```
+  </Accordion>
+
+  <Accordion icon="triangle-alert" title="Session expired">
+    **Solution:** Delete `.wwebjs_auth` folder and scan QR again
+  </Accordion>
+</AccordionGroup>
+
+## Getting Help
+
+<CardGroup cols={2}>
+  <Card title="Discord Community" icon="discord" href="https://discord.gg/KGhz5SnyXM">
+    Join our Discord for live support
+  </Card>
+  <Card title="GitHub Issues" icon="github" href="https://github.com/boostgpt">
+    Report bugs or request features
+  </Card>
+</CardGroup>

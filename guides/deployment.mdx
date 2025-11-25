@@ -1,0 +1,170 @@
+---
+title: Deployment Guide
+description: 'Deploy BoostGPT bots to production'
+---
+
+## PM2 (Recommended)
+
+PM2 is a production process manager for Node.js applications.
+
+### Install PM2
+```bash
+npm install -g pm2
+```
+
+### Start Your Bot
+```bash
+pm2 start bot.js --name boostgpt-bot
+```
+
+### Useful Commands
+```bash
+pm2 status              # Check status
+pm2 logs boostgpt-bot   # View logs
+pm2 restart boostgpt-bot # Restart
+pm2 stop boostgpt-bot    # Stop
+pm2 delete boostgpt-bot  # Remove
+```
+
+### Auto-Start on Reboot
+```bash
+pm2 save
+pm2 startup
+```
+
+## Docker
+
+### Dockerfile
+```dockerfile
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --only=production
+
+COPY . .
+
+CMD ["node", "bot.js"]
+```
+
+### Build and Run
+```bash
+docker build -t boostgpt-bot .
+docker run -d --env-file .env --name boostgpt-bot boostgpt-bot
+```
+
+### Docker Compose
+```yaml
+version: '3.8'
+services:
+  bot:
+    build: .
+    env_file: .env
+    restart: unless-stopped
+```
+```bash
+docker-compose up -d
+```
+
+## Railway
+
+### Deploy
+```bash
+railway login
+railway init
+railway up
+```
+
+### Environment Variables
+
+Add your environment variables in Railway dashboard:
+- `BOOSTGPT_API_KEY`
+- `BOOSTGPT_PROJECT_ID`
+- `BOOSTGPT_BOT_ID`
+- Channel tokens
+
+## Heroku
+
+### Deploy
+```bash
+heroku login
+heroku create my-boostgpt-bot
+git push heroku main
+```
+
+### Set Config Vars
+```bash
+heroku config:set BOOSTGPT_API_KEY=your_key
+heroku config:set BOOSTGPT_PROJECT_ID=your_project_id
+# ... other vars
+```
+
+## Environment Variables
+
+<Warning>
+  Never commit `.env` files to version control. Use platform-specific secrets management.
+</Warning>
+
+### Railway
+Use Railway's environment variables section
+
+### Docker
+Use `--env-file` or Docker secrets
+
+### PM2
+Use `ecosystem.config.js`:
+```javascript
+module.exports = {
+  apps: [{
+    name: 'boostgpt-bot',
+    script: './bot.js',
+    env: {
+      NODE_ENV: 'production',
+      BOOSTGPT_API_KEY: process.env.BOOSTGPT_API_KEY,
+      // ... other vars
+    }
+  }]
+};
+```
+
+## Monitoring
+
+### PM2 Monitoring
+```bash
+pm2 monit
+```
+
+### Custom Logging
+```javascript
+router.onMessage(async (message, context) => {
+  console.log(JSON.stringify({
+    timestamp: new Date().toISOString(),
+    channel: context.channel,
+    userId: message.userId,
+    message: message.content
+  }));
+  
+  return null;
+});
+```
+
+## Health Checks
+```javascript
+import express from 'express';
+
+const app = express();
+
+app.get('/health', (req, res) => {
+  const status = router.getStatus();
+  res.json({
+    status: 'ok',
+    adapters: status.adapters.map(a => ({
+      channel: a.channel,
+      isStarted: a.isStarted
+    }))
+  });
+});
+
+app.listen(3000);
+```

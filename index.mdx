@@ -1,97 +1,185 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: Introduction
+description: 'Ship AI agents to any platform with one codebase'
 ---
 
-## Setting up
+<img
+  className="block dark:hidden"
+  src="/images/hero-light.png"
+  alt="BoostGPT Hero Light"
+/>
+<img
+  className="hidden dark:block"
+  src="/images/hero-dark.png"
+  alt="BoostGPT Hero Dark"
+/>
 
-Get your documentation site up and running in minutes.
+## Welcome to BoostGPT
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
+BoostGPT is the **conversational infrastructure platform** for developers. Build AI agents once and deploy them across Discord, Telegram, Slack, WhatsApp, and Crisp without managing multiple codebases.
 
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
+<CardGroup cols={2}>
   <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
+    title="Core SDK"
+    icon="bot"
+    href="/sdk/core/installation"
   >
-    Edit your docs locally and preview them in real time.
+    Manage bots, chat API, and training data
   </Card>
   <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
+    title="Router SDK"
+    icon="merge"
+    href="/sdk/router/installation"
   >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+    Deploy bots to multiple channels with one codebase
   </Card>
   <Card
-    title="API documentation"
-    icon="terminal"
+    title="REST API"
+    icon="braces"
     href="/api-reference/introduction"
   >
-    Auto-generate API documentation from OpenAPI specifications.
-  </Card>
-</Columns>
-
-## Create beautiful pages
-
-Everything you need to create world-class documentation.
-
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
+    Full REST API reference for bot management
   </Card>
   <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
+    title="Examples"
+    icon="lightbulb"
+    href="/examples/use-cases"
   >
-    Add sample code to demonstrate how to use your product.
+    Real-world examples and use cases
+  </Card>
+</CardGroup>
+
+## The Problem We Solve
+
+Building AI agents for multiple platforms means writing the same logic 5 times:
+
+```javascript
+// Discord.js
+discordClient.on('messageCreate', async (message) => {
+  // 100+ lines of Discord-specific code
+});
+
+// Telegram
+telegramBot.on('message', async (msg) => {
+  // 100+ lines of Telegram-specific code
+});
+
+// Slack
+slackApp.message(async ({ message, say }) => {
+  // 100+ lines of Slack-specific code
+});
+
+// And so on...
+```
+
+## The BoostGPT Solution
+
+One codebase. All channels.
+
+```javascript
+import { Router, DiscordAdapter, TelegramAdapter, SlackAdapter } from '@boostgpt/router';
+
+const router = new Router({
+  apiKey: process.env.BOOSTGPT_API_KEY,
+  projectId: process.env.BOOSTGPT_PROJECT_ID,
+  adapters: [
+    new DiscordAdapter({ discordToken: process.env.DISCORD_TOKEN }),
+    new TelegramAdapter({ telegramToken: process.env.TELEGRAM_TOKEN }),
+    new SlackAdapter({ slackToken: process.env.SLACK_TOKEN })
+  ]
+});
+
+// ONE handler for ALL channels
+router.onMessage(async (message, context) => {
+  return `Echo: ${message.content}`;
+});
+
+await router.start();
+```
+
+<Info>
+  **15 lines of code** replaces **500+ lines** across multiple platforms.
+</Info>
+
+## Key Features
+
+<AccordionGroup>
+  <Accordion icon="code-branch" title="Unified Message Routing">
+    Handle messages from Discord, Telegram, Slack, WhatsApp, and Crisp with a single message handler.
+  </Accordion>
+  
+  <Accordion icon="brain" title="Multi-Model Support">
+    Route intelligently between GPT-4, Claude, Gemini, and Grok based on your needs.
+  </Accordion>
+  
+  <Accordion icon="plug" title="Channel Abstraction">
+    We handle Discord intents, WhatsApp QR codes, Slack OAuth - you focus on your logic.
+  </Accordion>
+  
+  <Accordion icon="bolt" title="Production Ready">
+    Built-in error handling, logging, graceful shutdown, and automatic reconnection.
+  </Accordion>
+</AccordionGroup>
+
+## How It Works
+
+<Steps>
+  <Step title="Create a Project">
+    Sign up at [app.boostgpt.co](https://app.boostgpt.co) and create your first project to get API keys.
+  </Step>
+  
+  <Step title="Create a Bot">
+    Use the Core SDK or dashboard to create and train your AI bot with custom knowledge.
+  </Step>
+  
+  <Step title="Deploy Everywhere">
+    Use the Router SDK to deploy your bot to Discord, Telegram, Slack, WhatsApp, and Crisp simultaneously.
+  </Step>
+  
+  <Step title="Monitor & Scale">
+    Track usage, costs, and performance across all channels from your dashboard.
+  </Step>
+</Steps>
+
+## Quick Links
+
+<CardGroup cols={3}>
+  <Card
+    title="Quickstart"
+    icon="rocket"
+    href="/quickstart"
+  >
+    Get started in 5 minutes
   </Card>
   <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
+    title="API Keys"
+    icon="key"
+    href="/authentication"
   >
-    Display images and other media.
+    Set up authentication
   </Card>
   <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
+    title="Discord"
+    icon="discord"
+    href="https://discord.gg/KGhz5SnyXM"
   >
-    Write once and reuse across your docs.
+    Join our community
   </Card>
-</Columns>
+</CardGroup>
 
-## Need inspiration?
+## Why Developers Choose BoostGPT
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+<CardGroup cols={2}>
+  <Card title="For Indie Developers" icon="user">
+    Build once, deploy everywhere. Focus on your product, not infrastructure.
+  </Card>
+  <Card title="For SaaS Teams" icon="building">
+    Scale support across Discord communities, Slack workspaces, and WhatsApp without 5x engineering effort.
+  </Card>
+  <Card title="For Gaming Companies" icon="gamepad">
+    Deploy AI moderators and support bots across Discord servers instantly.
+  </Card>
+  <Card title="For Agencies" icon="briefcase">
+    Deliver multi-channel AI solutions to clients faster and maintain them easier.
+  </Card>
+</CardGroup>

@@ -1,0 +1,90 @@
+---
+title: Custom Adapters
+description: 'Build your own channel adapters'
+---
+
+## Overview
+
+Create custom adapters for any messaging platform.
+
+## BaseAdapter
+
+All adapters extend `BaseAdapter`:
+```javascript
+import { BaseAdapter } from '@boostgpt/router';
+
+export class CustomAdapter extends BaseAdapter {
+  constructor(options) {
+    super({ ...options, channelName: 'custom' });
+  }
+
+  async start() {
+    // Initialize your channel client
+    this.isStarted = true;
+  }
+
+  async sendMessage(recipient, message) {
+    // Send message via your channel
+  }
+
+  async stop() {
+    await super.stop();
+  }
+}
+```
+
+## Example: Twitter Adapter
+```javascript
+import { BaseAdapter } from '@boostgpt/router';
+import { TwitterApi } from 'twitter-api-v2';
+
+export class TwitterAdapter extends BaseAdapter {
+  constructor({ bearerToken, ...options }) {
+    super({ ...options, channelName: 'twitter' });
+    this.client = new TwitterApi(bearerToken);
+  }
+
+  async start() {
+    this.stream = await this.client.v2.searchStream({
+      'tweet.fields': ['author_id', 'created_at']
+    });
+
+    this.stream.on('data', async (tweet) => {
+      const message = {
+        content: tweet.data.text,
+        userId: tweet.data.author_id,
+        userName: tweet.data.author_id,
+        metadata: { tweetId: tweet.data.id }
+      };
+
+      const reply = await this.handleMessage(message);
+      
+      if (reply) {
+        await this.sendMessage(tweet.data.author_id, reply);
+      }
+    });
+
+    this.isStarted = true;
+  }
+
+  async sendMessage(userId, message) {
+    await this.client.v2.tweet(message);
+  }
+}
+```
+
+## Using Your Adapter
+```javascript
+import { Router } from '@boostgpt/router';
+import { TwitterAdapter } from './TwitterAdapter.js';
+
+const router = new Router({
+  apiKey: process.env.BOOSTGPT_API_KEY,
+  projectId: process.env.BOOSTGPT_PROJECT_ID,
+  adapters: [
+    new TwitterAdapter({ bearerToken: process.env.TWITTER_TOKEN })
+  ]
+});
+
+await router.start();
+```

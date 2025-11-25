@@ -1,80 +1,245 @@
 ---
-title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+title: Quickstart
+description: 'Get your first AI agent running in 5 minutes'
 ---
 
-## Get started in three steps
-
-Get your documentation site running locally and make your first customization.
-
-### Step 1: Set up your local environment
-
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 2: Deploy your changes
-
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
-
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
-
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 3: Go live
-
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
-
-## Next steps
-
-Now that you have your docs running, explore these key features:
+## Prerequisites
 
 <CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
+  <Card title="Node.js" icon="node-js">
+    Version 14.0.0 or higher
+  </Card>
+  <Card title="BoostGPT Account" icon="user">
+    Sign up at [app.boostgpt.co](https://app.boostgpt.co)
+  </Card>
 </CardGroup>
 
-<Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
-</Note>
+## Step 1: Create a Project
+
+<Steps>
+  <Step title="Sign up">
+    Go to [app.boostgpt.co](https://app.boostgpt.co) and create an account.
+  </Step>
+  
+  <Step title="Create a project">
+    Create your first project and copy the **Project ID** from settings.
+  </Step>
+  
+  <Step title="Generate API key">
+    Go to [API Keys](https://app.boostgpt.co/account/api-keys) and generate a new key.
+  </Step>
+</Steps>
+
+<Warning>
+  Keep your API key secure! Never commit it to version control.
+</Warning>
+
+## Step 2: Install the SDK
+
+<Tabs>
+  <Tab title="npm">
+    ```bash
+    npm install boostgpt @boostgpt/router
+    ```
+  </Tab>
+  <Tab title="yarn">
+    ```bash
+    yarn add boostgpt @boostgpt/router
+    ```
+  </Tab>
+  <Tab title="pnpm">
+    ```bash
+    pnpm add boostgpt @boostgpt/router
+    ```
+  </Tab>
+</Tabs>
+
+## Step 3: Create Your First Bot
+
+Create a `.env` file:
+
+```bash .env
+BOOSTGPT_API_KEY=your_api_key_here
+BOOSTGPT_PROJECT_ID=your_project_id_here
+```
+
+Create `create-bot.js`:
+
+```javascript create-bot.js
+import 'dotenv/config';
+import { BoostGPT } from 'boostgpt';
+
+const client = new BoostGPT({
+  key: process.env.BOOSTGPT_API_KEY,
+  project_id: process.env.BOOSTGPT_PROJECT_ID
+});
+
+// Create a bot
+const result = await client.createBot({
+  name: 'My First Bot',
+  model: 'gpt-4o-mini',
+  instruction: 'You are a helpful assistant. Be friendly and concise.',
+  max_reply_tokens: 1000,
+  status: 'active'
+});
+
+if (result.err) {
+  console.error('Error:', result.err);
+} else {
+  console.log('Bot created!');
+  console.log('Bot ID:', result.response.bot._id);
+}
+```
+
+Run it:
+
+```bash
+node create-bot.js
+```
+
+<Info>
+  Save the **Bot ID** from the output - you'll need it for the next step.
+</Info>
+
+## Step 4: Deploy to Discord (Optional)
+
+If you want to deploy your bot to Discord:
+
+<Steps>
+  <Step title="Create Discord application">
+    Go to [Discord Developer Portal](https://discord.com/developers/applications) and create a new application.
+  </Step>
+  
+  <Step title="Create bot user">
+    Go to the Bot section and create a bot user. Copy the bot token.
+  </Step>
+  
+  <Step title="Enable intents">
+    Enable **MESSAGE CONTENT INTENT** in the Bot settings.
+  </Step>
+  
+  <Step title="Invite bot to server">
+    Go to OAuth2 → URL Generator, select `bot` scope and `Send Messages`, `Read Message History` permissions. Use the generated URL to invite the bot.
+  </Step>
+</Steps>
+
+Update your `.env`:
+
+```bash .env
+BOOSTGPT_API_KEY=your_api_key_here
+BOOSTGPT_PROJECT_ID=your_project_id_here
+BOOSTGPT_BOT_ID=your_bot_id_here
+DISCORD_TOKEN=your_discord_bot_token_here
+```
+
+## Step 5: Run Your Multi-Channel Bot
+
+Create `bot.js`:
+
+```javascript bot.js
+import 'dotenv/config';
+import { Router, DiscordAdapter } from '@boostgpt/router';
+
+const router = new Router({
+  apiKey: process.env.BOOSTGPT_API_KEY,
+  projectId: process.env.BOOSTGPT_PROJECT_ID,
+  defaultBotId: process.env.BOOSTGPT_BOT_ID,
+  adapters: [
+    new DiscordAdapter({
+      discordToken: process.env.DISCORD_TOKEN,
+      replyInDMs: true,
+      replyOnMention: true
+    })
+  ]
+});
+
+// Custom message handler (optional)
+router.onMessage(async (message, context) => {
+  console.log(`[${context.channel}] ${message.userName}: ${message.content}`);
+  
+  // Handle custom commands
+  if (message.content === '/ping') {
+    return 'Pong! 🏓';
+  }
+  
+  // Let BoostGPT handle everything else
+  return null;
+});
+
+// Start the router
+await router.start();
+console.log('✅ Bot is running!');
+
+// Graceful shutdown
+process.on('SIGINT', async () => {
+  console.log('\n🛑 Shutting down...');
+  await router.stop();
+  process.exit(0);
+});
+```
+
+Run your bot:
+
+```bash
+node bot.js
+```
+
+<Check>
+  Your bot is now live on Discord! Message it or mention it in a channel.
+</Check>
+
+## What's Next?
+
+<CardGroup cols={2}>
+  <Card
+    title="Add More Channels"
+    icon="plus"
+    href="/sdk/router/adapters/telegram"
+  >
+    Deploy to Telegram, Slack, WhatsApp, or Crisp
+  </Card>
+  <Card
+    title="Train Your Bot"
+    icon="brain"
+    href="/sdk/core/api-reference"
+  >
+    Add custom knowledge to your bot
+  </Card>
+  <Card
+    title="Custom Message Logic"
+    icon="code"
+    href="/sdk/router/api-reference"
+  >
+    Build advanced message handlers
+  </Card>
+  <Card
+    title="Deploy to Production"
+    icon="rocket"
+    href="/guides/deployment"
+  >
+    Deploy with PM2, Docker, or Railway
+  </Card>
+</CardGroup>
+
+## Common Issues
+
+<AccordionGroup>
+  <Accordion icon="triangle-exclamation" title="Bot not responding on Discord">
+    Make sure you've enabled **MESSAGE CONTENT INTENT** in the Discord Developer Portal under Bot settings.
+  </Accordion>
+  
+  <Accordion icon="key" title="Authentication error">
+    Verify your API key and Project ID are correct. You can find them at [app.boostgpt.co/settings](https://app.boostgpt.co/settings).
+  </Accordion>
+  
+  <Accordion icon="circle-xmark" title="Module not found">
+    Make sure you've installed all dependencies:
+    ```bash
+    npm install boostgpt @boostgpt/router dotenv
+    ```
+  </Accordion>
+</AccordionGroup>
+
+<Info>
+  Need help? Join our [Discord community](https://discord.gg/KGhz5SnyXM) for support.
+</Info>

@@ -1,0 +1,72 @@
+---
+title: Discord Adapter
+description: 'Deploy your bot to Discord'
+---
+
+## Setup
+
+### 1. Create Discord Bot
+
+<Steps>
+  <Step title="Create application">
+    Go to [Discord Developer Portal](https://discord.com/developers/applications)
+  </Step>
+  <Step title="Create bot">
+    Navigate to Bot section and create a bot user
+  </Step>
+  <Step title="Enable intents">
+    Enable **MESSAGE CONTENT INTENT** in Bot settings
+  </Step>
+  <Step title="Copy token">
+    Copy your bot token
+  </Step>
+</Steps>
+
+### 2. Install Dependencies
+```bash
+npm install @boostgpt/router
+```
+
+### 3. Configure
+```bash .env
+DISCORD_TOKEN=your_discord_bot_token
+BOOSTGPT_BOT_ID=your_boostgpt_bot_id
+```
+
+## Usage
+```javascript
+import { Router, DiscordAdapter } from '@boostgpt/router';
+
+const router = new Router({
+  apiKey: process.env.BOOSTGPT_API_KEY,
+  projectId: process.env.BOOSTGPT_PROJECT_ID,
+  adapters: [
+    new DiscordAdapter({
+      discordToken: process.env.DISCORD_TOKEN,
+      botId: process.env.BOOSTGPT_BOT_ID,
+      replyInDMs: true,
+      replyOnMention: true
+    })
+  ]
+});
+
+await router.start();
+```
+
+## Configuration Options
+
+<ParamField path="discordToken" type="string" required>
+  Discord bot token
+</ParamField>
+
+<ParamField path="botId" type="string">
+  BoostGPT bot ID
+</ParamField>
+
+<ParamField path="replyInDMs" type="boolean" default="true">
+  Reply to direct messages
+</ParamField>
+
+<ParamField path="replyOnMention" type="boolean" default="true">
+  Reply when mentioned
+</ParamField>

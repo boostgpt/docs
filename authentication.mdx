@@ -1,0 +1,253 @@
+---
+title: Authentication
+description: 'Set up API keys and authenticate your requests'
+---
+
+## Overview
+
+BoostGPT uses API keys to authenticate requests. You'll need two pieces of information:
+
+<CardGroup cols={2}>
+  <Card title="API Key" icon="key">
+    Used to authenticate all API requests
+  </Card>
+  <Card title="Project ID" icon="fingerprint">
+    Identifies which project you're working with
+  </Card>
+</CardGroup>
+
+## Getting Your Credentials
+
+<Steps>
+  <Step title="Create an account">
+    Sign up at [app.boostgpt.co](https://app.boostgpt.co) if you haven't already.
+  </Step>
+  
+  <Step title="Create a project">
+    Create a new project from your dashboard. Each project is isolated with its own bots and data.
+  </Step>
+  
+  <Step title="Get your Project ID">
+    Go to your project settings to find your **Project ID**. You can also find it at [app.boostgpt.co/settings](https://app.boostgpt.co/settings).
+  </Step>
+  
+  <Step title="Generate an API key">
+    Navigate to [API Keys](https://app.boostgpt.co/account/api-keys) and click "Generate New Key". Copy it immediately - you won't be able to see it again.
+  </Step>
+</Steps>
+
+<Warning>
+  **Keep your API key secure!** Never commit it to version control or share it publicly.
+</Warning>
+
+## Using Environment Variables
+
+The recommended way to store your credentials is using environment variables.
+
+Create a `.env` file in your project root:
+
+```bash .env
+BOOSTGPT_API_KEY=your_api_key_here
+BOOSTGPT_PROJECT_ID=your_project_id_here
+```
+
+Add `.env` to your `.gitignore`:
+
+```bash .gitignore
+.env
+node_modules/
+```
+
+Load environment variables in your code:
+
+<Tabs>
+  <Tab title="ES Modules">
+    ```javascript
+    import 'dotenv/config';
+    
+    const apiKey = process.env.BOOSTGPT_API_KEY;
+    const projectId = process.env.BOOSTGPT_PROJECT_ID;
+    ```
+  </Tab>
+  
+  <Tab title="CommonJS">
+    ```javascript
+    require('dotenv').config();
+    
+    const apiKey = process.env.BOOSTGPT_API_KEY;
+    const projectId = process.env.BOOSTGPT_PROJECT_ID;
+    ```
+  </Tab>
+</Tabs>
+
+## SDK Authentication
+
+### Core SDK
+
+```javascript
+import { BoostGPT } from 'boostgpt';
+
+const client = new BoostGPT({
+  key: process.env.BOOSTGPT_API_KEY,
+  project_id: process.env.BOOSTGPT_PROJECT_ID
+});
+```
+
+### Router SDK
+
+```javascript
+import { Router } from '@boostgpt/router';
+
+const router = new Router({
+  apiKey: process.env.BOOSTGPT_API_KEY,
+  projectId: process.env.BOOSTGPT_PROJECT_ID,
+  // ... adapters
+});
+```
+
+<Info>
+  The Router SDK uses `apiKey` (camelCase) while the Core SDK uses `key`. Both accept the same API key value.
+</Info>
+
+## REST API Authentication
+
+When making direct REST API calls, include your API key in the `Authorization` header:
+
+```bash
+curl https://api.boostgpt.co/v1/bot/read \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "project_id": "YOUR_PROJECT_ID",
+    "bot_id": "YOUR_BOT_ID"
+  }'
+```
+
+## Multiple Projects
+
+If you're working with multiple projects, you can create separate clients:
+
+```javascript
+const productionClient = new BoostGPT({
+  key: process.env.BOOSTGPT_API_KEY_PROD,
+  project_id: process.env.BOOSTGPT_PROJECT_ID_PROD
+});
+
+const stagingClient = new BoostGPT({
+  key: process.env.BOOSTGPT_API_KEY_STAGING,
+  project_id: process.env.BOOSTGPT_PROJECT_ID_STAGING
+});
+```
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion icon="shield-check" title="Never hardcode credentials">
+    Always use environment variables or a secrets manager. Never commit API keys to git.
+  </Accordion>
+  
+  <Accordion icon="rotate" title="Rotate keys regularly">
+    Generate new API keys periodically and revoke old ones from your dashboard.
+  </Accordion>
+  
+  <Accordion icon="lock" title="Use separate keys per environment">
+    Use different API keys for development, staging, and production.
+  </Accordion>
+  
+  <Accordion icon="eye-slash" title="Restrict key access">
+    Only give API keys to team members who need them. Track which keys are used where.
+  </Accordion>
+</AccordionGroup>
+
+## Managing API Keys
+
+You can manage your API keys from the [API Keys dashboard](https://app.boostgpt.co/account/api-keys):
+
+- **Generate new keys** - Create additional API keys for different environments
+- **Revoke keys** - Immediately disable compromised or unused keys
+- **View usage** - See which keys are being used and when
+
+<Warning>
+  Revoking an API key will immediately break any applications using it. Make sure to update your applications before revoking keys.
+</Warning>
+
+## Rate Limits
+
+BoostGPT applies rate limits to ensure fair usage:
+
+<CardGroup cols={2}>
+  <Card title="Free Tier" icon="gift">
+    1,000 requests per day
+  </Card>
+  <Card title="Paid Plans" icon="bolt">
+    Higher limits based on your plan
+  </Card>
+</CardGroup>
+
+If you hit rate limits, you'll receive a `429 Too Many Requests` response. Implement exponential backoff in your retry logic:
+
+```javascript
+async function makeRequestWithRetry(requestFn, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await requestFn();
+    } catch (error) {
+      if (error.status === 429 && i < maxRetries - 1) {
+        const delay = Math.pow(2, i) * 1000; // Exponential backoff
+        await new Promise(resolve => setTimeout(resolve, delay));
+        continue;
+      }
+      throw error;
+    }
+  }
+}
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion icon="circle-xmark" title="401 Unauthorized">
+    Your API key is invalid or missing. Double-check that you're using the correct key and it hasn't been revoked.
+  </Accordion>
+  
+  <Accordion icon="ban" title="403 Forbidden">
+    Your API key doesn't have access to the requested resource. Verify you're using the correct Project ID.
+  </Accordion>
+  
+  <Accordion icon="clock" title="429 Too Many Requests">
+    You've exceeded your rate limit. Implement retry logic with exponential backoff or upgrade your plan.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Core SDK"
+    icon="box"
+    href="/sdk/core/installation"
+  >
+    Install and use the Core SDK
+  </Card>
+  <Card
+    title="Router SDK"
+    icon="code-branch"
+    href="/sdk/router/installation"
+  >
+    Set up the Router for multi-channel deployment
+  </Card>
+  <Card
+    title="API Reference"
+    icon="book"
+    href="/api-reference/introduction"
+  >
+    Explore the REST API endpoints
+  </Card>
+  <Card
+    title="Examples"
+    icon="lightbulb"
+    href="/examples/use-cases"
+  >
+    See real-world implementations
+  </Card>
+</CardGroup>

@@ -1,0 +1,572 @@
+---
+title: Router SDK API Reference
+description: 'Complete reference for the Router SDK'
+---
+
+## Router Class
+
+### Constructor
+
+```javascript
+new Router(options)
+```
+
+<ParamField path="apiKey" type="string" required>
+  BoostGPT API key
+</ParamField>
+
+<ParamField path="projectId" type="string" required>
+  BoostGPT project ID
+</ParamField>
+
+<ParamField path="adapters" type="Array<BaseAdapter>" default="[]">
+  Array of channel adapter instances
+</ParamField>
+
+<ParamField path="defaultBotId" type="string">
+  Default bot ID for all adapters (can be overridden per adapter)
+</ParamField>
+
+<ParamField path="onError" type="Function">
+  Global error handler function
+</ParamField>
+
+<ParamField path="enableLogging" type="boolean" default="true">
+  Enable console logging
+</ParamField>
+
+**Example:**
+
+```javascript
+const router = new Router({
+  apiKey: process.env.BOOSTGPT_API_KEY,
+  projectId: process.env.BOOSTGPT_PROJECT_ID,
+  defaultBotId: process.env.BOOSTGPT_BOT_ID,
+  adapters: [
+    new DiscordAdapter({ discordToken: '...' }),
+    new TelegramAdapter({ telegramToken: '...' })
+  ],
+  enableLogging: true
+});
+```
+
+---
+
+## Methods
+
+### onMessage()
+
+Set a custom message handler for all channels.
+
+```javascript
+router.onMessage(async (message, context) => {
+  // Your logic here
+  return response;
+});
+```
+
+**Parameters:**
+
+<ParamField path="message" type="Object">
+  Normalized message object:
+  ```javascript
+  {
+    content: string,      // Message text
+    userId: string,       // User identifier
+    userName: string,     // User display name
+    metadata: Object      // Channel-specific data
+  }
+  ```
+</ParamField>
+
+<ParamField path="context" type="Object">
+  Context object:
+  ```javascript
+  {
+    channel: string,      // Channel name ('discord', 'telegram', etc.)
+    adapter: BaseAdapter, // Adapter instance
+    router: Router,       // Router instance
+    boostgpt: BoostGPT   // BoostGPT client instance
+  }
+  ```
+</ParamField>
+
+**Returns:**
+
+- `string` - Send this as the response
+- `null` / `undefined` - Let BoostGPT handle it automatically
+
+**Example:**
+
+```javascript
+router.onMessage(async (message, context) => {
+  console.log(`[${context.channel}] ${message.userName}: ${message.content}`);
+  
+  // Custom commands
+  if (message.content === '/ping') {
+    return 'Pong!';
+  }
+  
+  // Let BoostGPT handle everything else
+  return null;
+});
+```
+
+---
+
+### onError()
+
+Set a custom error handler for all channels.
+
+```javascript
+router.onError(async (error, message, context) => {
+  // Handle error
+  return errorMessage;
+});
+```
+
+**Parameters:**
+
+<ParamField path="error" type="Error">
+  The error that occurred
+</ParamField>
+
+<ParamField path="message" type="Object">
+  The message that caused the error
+</ParamField>
+
+<ParamField path="context" type="Object">
+  Context object with channel information
+</ParamField>
+
+**Returns:**
+
+- `string` - Error message to send to user
+
+**Example:**
+
+```javascript
+router.onError(async (error, message, context) => {
+  console.error(`[${context.channel}] Error:`, error);
+  
+  // Log to monitoring service
+  await logToSentry(error, { channel: context.channel, userId: message.userId });
+  
+  return 'Sorry, something went wrong. Please try again!';
+});
+```
+
+---
+
+### start()
+
+Start all adapters and begin listening for messages.
+
+```javascript
+await router.start();
+```
+
+**Returns:** `Promise<void>`
+
+**Example:**
+
+```javascript
+try {
+  await router.start();
+  console.log('✅ Router started successfully');
+} catch (error) {
+  console.error('Failed to start router:', error);
+  process.exit(1);
+}
+```
+
+---
+
+### stop()
+
+Stop all adapters and disconnect from channels.
+
+```javascript
+await router.stop();
+```
+
+**Returns:** `Promise<void>`
+
+**Example:**
+
+```javascript
+process.on('SIGINT', async () => {
+  console.log('Shutting down...');
+  await router.stop();
+  process.exit(0);
+});
+```
+
+---
+
+### getAdapter()
+
+Get a specific adapter by channel name.
+
+```javascript
+router.getAdapter(channelName)
+```
+
+**Parameters:**
+
+<ParamField path="channelName" type="string" required>
+  Channel name ('discord', 'telegram', etc.)
+</ParamField>
+
+**Returns:** `BaseAdapter | null`
+
+**Example:**
+
+```javascript
+const discordAdapter = router.getAdapter('discord');
+if (discordAdapter) {
+  console.log('Discord adapter status:', discordAdapter.getStatus());
+}
+```
+
+---
+
+### sendMessage()
+
+Send a message to a specific user on a specific channel.
+
+```javascript
+await router.sendMessage(channelName, recipient, message)
+```
+
+**Parameters:**
+
+<ParamField path="channelName" type="string" required>
+  Channel name ('discord', 'telegram', etc.)
+</ParamField>
+
+<ParamField path="recipient" type="string" required>
+  User/channel ID (format varies by channel)
+</ParamField>
+
+<ParamField path="message" type="string" required>
+  Message content to send
+</ParamField>
+
+**Returns:** `Promise<any>`
+
+**Example:**
+
+```javascript
+// Send to Discord user
+await router.sendMessage('discord', 'user-id-123', 'Hello from bot!');
+
+// Send to Telegram chat
+await router.sendMessage('telegram', 'chat-id-456', 'Hi there!');
+
+// Send to Slack channel
+await router.sendMessage('slack', 'C1234567890', 'Team update!');
+```
+
+---
+
+### broadcast()
+
+Broadcast a message to all or specific channels.
+
+```javascript
+await router.broadcast(message, channels?)
+```
+
+**Parameters:**
+
+<ParamField path="message" type="string" required>
+  Message to broadcast
+</ParamField>
+
+<ParamField path="channels" type="Array<string>">
+  Optional array of channel names. If omitted, broadcasts to all channels.
+</ParamField>
+
+**Returns:** `Promise<Array<Object>>`
+
+Returns an array of results indicating success/failure for each channel.
+
+**Example:**
+
+```javascript
+// Broadcast to all channels
+await router.broadcast('Server maintenance in 5 minutes!');
+
+// Broadcast to specific channels only
+await router.broadcast('Discord and Telegram announcement', ['discord', 'telegram']);
+
+// Handle results
+const results = await router.broadcast('Test message');
+results.forEach(result => {
+  if (result.success) {
+    console.log(`✅ ${result.channel}: Sent successfully`);
+  } else {
+    console.log(`❌ ${result.channel}: ${result.error}`);
+  }
+});
+```
+
+---
+
+### getStatus()
+
+Get the current status of the router and all adapters.
+
+```javascript
+router.getStatus()
+```
+
+**Returns:**
+
+```javascript
+{
+  isStarted: boolean,
+  adapters: Array<{
+    channel: string,
+    isStarted: boolean,
+    botId: string,
+    // ... adapter-specific fields
+  }>,
+  projectId: string,
+  defaultBotId: string
+}
+```
+
+**Example:**
+
+```javascript
+const status = router.getStatus();
+console.log('Router started:', status.isStarted);
+console.log('Active channels:', status.adapters.map(a => a.channel).join(', '));
+```
+
+---
+
+### addAdapter()
+
+Add a new adapter at runtime.
+
+```javascript
+await router.addAdapter(adapter)
+```
+
+**Parameters:**
+
+<ParamField path="adapter" type="BaseAdapter" required>
+  Adapter instance to add
+</ParamField>
+
+**Returns:** `Promise<void>`
+
+**Example:**
+
+```javascript
+const newAdapter = new SlackAdapter({
+  slackToken: process.env.SLACK_TOKEN,
+  slackSigningSecret: process.env.SLACK_SIGNING_SECRET
+});
+
+await router.addAdapter(newAdapter);
+console.log('✅ Slack adapter added');
+```
+
+---
+
+### removeAdapter()
+
+Remove an adapter by channel name.
+
+```javascript
+await router.removeAdapter(channelName)
+```
+
+**Parameters:**
+
+<ParamField path="channelName" type="string" required>
+  Channel name to remove
+</ParamField>
+
+**Returns:** `Promise<void>`
+
+**Example:**
+
+```javascript
+await router.removeAdapter('discord');
+console.log('✅ Discord adapter removed');
+```
+
+---
+
+## BaseAdapter Class
+
+All channel adapters extend `BaseAdapter`. Use this to create custom adapters.
+
+### Constructor
+
+```javascript
+new BaseAdapter(options)
+```
+
+<ParamField path="boostgpt" type="BoostGPT" required>
+  BoostGPT client instance
+</ParamField>
+
+<ParamField path="botId" type="string" required>
+  Bot ID for this adapter
+</ParamField>
+
+<ParamField path="channelName" type="string" required>
+  Channel identifier (e.g., 'discord', 'custom')
+</ParamField>
+
+<ParamField path="model" type="string">
+  Override model for this channel
+</ParamField>
+
+<ParamField path="sourceIds" type="Array<string>">
+  Limit knowledge to specific sources
+</ParamField>
+
+<ParamField path="tags" type="Array<string>">
+  Limit knowledge to specific tags
+</ParamField>
+
+<ParamField path="top" type="number">
+  Override top setting for training data
+</ParamField>
+
+<ParamField path="maxReplyTokens" type="number">
+  Override max tokens for this channel
+</ParamField>
+
+<ParamField path="providerKey" type="string">
+  Use custom OpenAI/Anthropic key
+</ParamField>
+
+<ParamField path="errorMessage" type="string">
+  Default error message
+</ParamField>
+
+<ParamField path="enableLogging" type="boolean" default="true">
+  Enable logging for this adapter
+</ParamField>
+
+### Methods
+
+#### setMessageHandler()
+
+```javascript
+adapter.setMessageHandler(handler)
+```
+
+Set a custom message handler for this adapter.
+
+#### start()
+
+```javascript
+await adapter.start()
+```
+
+Start the adapter (must be implemented by child class).
+
+#### stop()
+
+```javascript
+await adapter.stop()
+```
+
+Stop the adapter.
+
+#### sendMessage()
+
+```javascript
+await adapter.sendMessage(recipient, message)
+```
+
+Send a message (must be implemented by child class).
+
+#### getStatus()
+
+```javascript
+adapter.getStatus()
+```
+
+Get adapter status.
+
+---
+
+## Type Definitions
+
+### Message Object
+
+```typescript
+interface Message {
+  content: string;
+  userId: string;
+  userName: string;
+  metadata: Record<string, any>;
+}
+```
+
+### Context Object
+
+```typescript
+interface Context {
+  channel: string;
+  adapter: BaseAdapter;
+  router: Router;
+  boostgpt: BoostGPT;
+}
+```
+
+### Adapter Status
+
+```typescript
+interface AdapterStatus {
+  channel: string;
+  isStarted: boolean;
+  botId: string;
+  model?: string;
+}
+```
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Custom Adapters"
+    icon="code"
+    href="/sdk/router/custom-adapters"
+  >
+    Build your own channel adapter
+  </Card>
+  <Card
+    title="Channel Adapters"
+    icon="plug"
+    href="/sdk/router/adapters/discord"
+  >
+    Configure specific channels
+  </Card>
+  <Card
+    title="Deployment"
+    icon="rocket"
+    href="/guides/deployment"
+  >
+    Deploy to production
+  </Card>
+  <Card
+    title="Examples"
+    icon="lightbulb"
+    href="/examples/use-cases"
+  >
+    Real-world implementations
+  </Card>
+</CardGroup>

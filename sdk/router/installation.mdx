@@ -1,0 +1,60 @@
+---
+title: Router SDK Installation
+description: 'Install and configure the BoostGPT Router SDK'
+---
+
+## Requirements
+
+<CardGroup cols={3}>
+  <Card title="Node.js" icon="node-js">
+    Version 14.0.0 or higher
+  </Card>
+  <Card title="Core SDK" icon="box">
+    boostgpt package
+  </Card>
+  <Card title="Channel Tokens" icon="key">
+    Discord, Telegram, Slack, etc.
+  </Card>
+</CardGroup>
+
+## Installation
+
+<Tabs>
+  <Tab title="npm">
+```bash
+    npm install boostgpt @boostgpt/router
+```
+  </Tab>
+</Tabs>
+
+<Info>
+  The Router SDK depends on `boostgpt`, so you must install both packages.
+</Info>
+
+## Quick Setup
+```javascript
+import 'dotenv/config';
+import { Router, DiscordAdapter } from '@boostgpt/router';
+
+const router = new Router({
+  apiKey: process.env.BOOSTGPT_API_KEY,
+  projectId: process.env.BOOSTGPT_PROJECT_ID,
+  defaultBotId: process.env.BOOSTGPT_BOT_ID,
+  adapters: [
+    new DiscordAdapter({ discordToken: process.env.DISCORD_TOKEN })
+  ]
+});
+
+await router.start();
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Getting Started" href="/sdk/router/getting-started">
+    Build your first multi-channel bot
+  </Card>
+  <Card title="API Reference" href="/sdk/router/api-reference">
+    Explore Router methods
+  </Card>
+</CardGroup>

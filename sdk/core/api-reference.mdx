@@ -1,0 +1,568 @@
+---
+title: Core SDK API Reference
+description: 'Complete reference for all Core SDK methods'
+---
+
+## Constructor
+
+```javascript
+const client = new BoostGPT({
+  key: string,           // Required: API key
+  project_id: string     // Required: Project ID
+});
+```
+
+---
+
+## Bot Management
+
+### createBot()
+
+Create a new AI bot.
+
+```javascript
+await client.createBot({
+  name: 'Bot Name',
+  model: 'gpt-4o-mini',
+  instruction: 'System instruction',
+  max_reply_tokens: 1000,
+  top: 15,
+  welcome_message: 'Hello!',
+  status: 'active'
+});
+```
+
+<ParamField path="name" type="string">
+  Display name for your bot
+</ParamField>
+
+<ParamField path="model" type="string" required>
+  AI model to use: `gpt-4o-mini`, `gpt-4`, `gpt-3.5-turbo`, etc.
+</ParamField>
+
+<ParamField path="instruction" type="string">
+  System instruction guiding the AI's behavior
+</ParamField>
+
+<ParamField path="max_reply_tokens" type="number" default="300">
+  Maximum tokens in AI responses
+</ParamField>
+
+<ParamField path="top" type="number" default="15">
+  Number of training data chunks to use (10-20 recommended)
+</ParamField>
+
+<ParamField path="welcome_message" type="string">
+  Initial message shown to users
+</ParamField>
+
+<ParamField path="status" type="string" default="active">
+  Bot status: `active` or `inactive`
+</ParamField>
+
+---
+
+### fetchBot()
+
+Get a bot's configuration.
+
+```javascript
+await client.fetchBot(bot_id);
+```
+
+<ParamField path="bot_id" type="string" required>
+  ID of the bot to fetch
+</ParamField>
+
+---
+
+### fetchBots()
+
+Get all bots in a project (paginated).
+
+```javascript
+await client.fetchBots({
+  page: 1,
+  per_page: 10
+});
+```
+
+<ParamField path="page" type="number" default="1">
+  Page number
+</ParamField>
+
+<ParamField path="per_page" type="number" default="10">
+  Items per page
+</ParamField>
+
+---
+
+### updateBot()
+
+Update a bot's configuration.
+
+```javascript
+await client.updateBot({
+  bot_id: 'bot-123',
+  name: 'Updated Name',
+  model: 'gpt-4o-mini',
+  instruction: 'New instruction',
+  max_reply_tokens: 1500,
+  top: 20,
+  welcome_message: 'Hi!',
+  status: 'active'
+});
+```
+
+All parameters same as `createBot()`, plus:
+
+<ParamField path="bot_id" type="string" required>
+  ID of the bot to update
+</ParamField>
+
+---
+
+### resetBot()
+
+Delete all training data from a bot.
+
+```javascript
+await client.resetBot(bot_id);
+```
+
+<Warning>
+  This permanently deletes all training sources and cannot be undone.
+</Warning>
+
+---
+
+### deleteBot()
+
+Delete a bot permanently.
+
+```javascript
+await client.deleteBot(bot_id);
+```
+
+<Warning>
+  This permanently deletes the bot, its training data, and chat history.
+</Warning>
+
+---
+
+## Chat Operations
+
+### chat()
+
+Send a message and get an AI response.
+
+```javascript
+await client.chat({
+  bot_id: 'bot-123',
+  message: 'Hello!',
+  chat_id: 'user-456',
+  vector: true,
+  stream: false,
+  model: 'gpt-4o-mini',
+  provider_key: 'optional-key',
+  instruction: 'Optional override',
+  source_ids: ['source1', 'source2'],
+  tags: ['tag1', 'tag2'],
+  top: 15,
+  max_reply_tokens: 1000
+});
+```
+
+<ParamField path="bot_id" type="string" required>
+  ID of the bot to chat with
+</ParamField>
+
+<ParamField path="message" type="string" required>
+  User's message
+</ParamField>
+
+<ParamField path="chat_id" type="string">
+  Unique ID for conversation continuity (e.g., user ID)
+</ParamField>
+
+<ParamField path="vector" type="boolean" default="true">
+  Use vector search for training data
+</ParamField>
+
+<ParamField path="stream" type="boolean" default="false">
+  Enable streaming responses
+</ParamField>
+
+<ParamField path="model" type="string">
+  Override bot's default model
+</ParamField>
+
+<ParamField path="provider_key" type="string">
+  Use your own OpenAI/Anthropic API key
+</ParamField>
+
+<ParamField path="instruction" type="string">
+  Override bot's default instruction
+</ParamField>
+
+<ParamField path="source_ids" type="array">
+  Limit knowledge to specific sources
+</ParamField>
+
+<ParamField path="tags" type="array">
+  Limit knowledge to specific tags
+</ParamField>
+
+<ParamField path="top" type="number">
+  Override bot's default top setting
+</ParamField>
+
+<ParamField path="max_reply_tokens" type="number">
+  Override bot's default token limit
+</ParamField>
+
+**Response:**
+
+```javascript
+{
+  err: null,
+  response: {
+    chat: {
+      reply: "AI response text",
+      // ... other fields
+    }
+  }
+}
+```
+
+---
+
+### fetchChat()
+
+Get chat history for a conversation.
+
+```javascript
+await client.fetchChat({
+  bot_id: 'bot-123',
+  chat_id: 'user-456',
+  page: 1,
+  per_page: 20
+});
+```
+
+<ParamField path="bot_id" type="string" required>
+  Bot ID
+</ParamField>
+
+<ParamField path="chat_id" type="string" required>
+  Chat/conversation ID
+</ParamField>
+
+<ParamField path="page" type="number" default="1">
+  Page number
+</ParamField>
+
+<ParamField path="per_page" type="number" default="20">
+  Messages per page
+</ParamField>
+
+---
+
+### fetchChats()
+
+Get all chats for a bot.
+
+```javascript
+await client.fetchChats({
+  bot_id: 'bot-123',
+  page: 1,
+  per_page: 10
+});
+```
+
+<ParamField path="bot_id" type="string" required>
+  Bot ID
+</ParamField>
+
+<ParamField path="page" type="number" default="1">
+  Page number
+</ParamField>
+
+<ParamField path="per_page" type="number" default="10">
+  Chats per page
+</ParamField>
+
+---
+
+### deleteChat()
+
+Delete a chat history.
+
+```javascript
+await client.deleteChat({
+  chat_id: 'user-456',
+  bot_id: 'bot-123'
+});
+```
+
+<ParamField path="chat_id" type="string" required>
+  Chat ID to delete
+</ParamField>
+
+<ParamField path="bot_id" type="string" required>
+  Bot ID
+</ParamField>
+
+---
+
+## Training & Sources
+
+### startTraining()
+
+Add training data to a bot.
+
+```javascript
+await client.startTraining({
+  bot_id: 'bot-123',
+  type: 'text',
+  source: 'Your training content here',
+  tags: ['support', 'faq'],
+  title: 'FAQ Document',
+  description: 'Common questions and answers'
+});
+```
+
+<ParamField path="bot_id" type="string" required>
+  Bot ID
+</ParamField>
+
+<ParamField path="type" type="string" required>
+  Source type: `text`, `file`, `webpage`, `website`
+</ParamField>
+
+<ParamField path="source" type="string | array" required>
+  - `text`: Text content
+  - `file`: URL to file or array of URLs
+  - `webpage`: URL or array of URLs
+  - `website`: Base URL to crawl
+</ParamField>
+
+<ParamField path="tags" type="array">
+  Tags for filtering (alphanumeric, `_`, `-`, `#` only)
+</ParamField>
+
+<ParamField path="title" type="string">
+  Source title
+</ParamField>
+
+<ParamField path="description" type="string">
+  Source description
+</ParamField>
+
+<ParamField path="forget_after" type="string">
+  Auto-delete after duration (e.g., "30d")
+</ParamField>
+
+<ParamField path="sync_frequency" type="string">
+  Re-sync interval (e.g., "1d", "7d")
+</ParamField>
+
+---
+
+### fetchTraining()
+
+Get a specific training source.
+
+```javascript
+await client.fetchTraining({
+  source_id: 'source-123',
+  bot_id: 'bot-123'
+});
+```
+
+---
+
+### fetchTrainings()
+
+Get all training sources for a bot.
+
+```javascript
+await client.fetchTrainings({
+  bot_id: 'bot-123',
+  page: 1,
+  per_page: 10
+});
+```
+
+---
+
+### updateTraining()
+
+Update a training source.
+
+```javascript
+await client.updateTraining({
+  source_id: 'source-123',
+  bot_id: 'bot-123',
+  tags: ['updated-tag'],
+  type: 'text',
+  source: 'Updated content'
+});
+```
+
+---
+
+### deleteTraining()
+
+Delete a training source.
+
+```javascript
+await client.deleteTraining({
+  source_id: 'source-123',
+  bot_id: 'bot-123'
+});
+```
+
+---
+
+## Search
+
+### search()
+
+Search the bot's knowledge base.
+
+```javascript
+await client.search({
+  bot_id: 'bot-123',
+  keywords: 'search query',
+  source_ids: ['source1', 'source2'],
+  tags: ['tag1', 'tag2'],
+  top: 5
+});
+```
+
+<ParamField path="bot_id" type="string" required>
+  Bot ID
+</ParamField>
+
+<ParamField path="keywords" type="string" required>
+  Search query
+</ParamField>
+
+<ParamField path="source_ids" type="array">
+  Limit search to specific sources
+</ParamField>
+
+<ParamField path="tags" type="array">
+  Limit search to specific tags
+</ParamField>
+
+<ParamField path="top" type="number" default="5">
+  Number of results to return
+</ParamField>
+
+---
+
+## Error Handling
+
+All methods return a consistent response format:
+
+```javascript
+const result = await client.createBot({ name: 'My Bot' });
+
+if (result.err) {
+  // Handle error
+  console.error('Error:', result.err.message);
+} else {
+  // Use response
+  console.log('Success:', result.response);
+}
+```
+
+Common error codes:
+- **401** - Invalid API key
+- **403** - Insufficient permissions
+- **404** - Resource not found
+- **429** - Rate limit exceeded
+- **500** - Server error
+
+---
+
+## Complete Example
+
+```javascript
+import 'dotenv/config';
+import { BoostGPT } from 'boostgpt';
+
+const client = new BoostGPT({
+  key: process.env.BOOSTGPT_API_KEY,
+  project_id: process.env.BOOSTGPT_PROJECT_ID
+});
+
+// Create bot
+const botResult = await client.createBot({
+  name: 'Support Bot',
+  model: 'gpt-4o-mini',
+  instruction: 'You are a helpful support agent'
+});
+
+if (botResult.err) {
+  console.error('Error:', botResult.err);
+  process.exit(1);
+}
+
+const botId = botResult.response.bot._id;
+
+// Add training data
+await client.startTraining({
+  bot_id: botId,
+  type: 'text',
+  source: 'Our product helps developers build AI agents...',
+  tags: ['product-info']
+});
+
+// Chat with bot
+const chatResult = await client.chat({
+  bot_id: botId,
+  message: 'What does your product do?',
+  chat_id: 'user-123',
+  vector: true
+});
+
+console.log('Bot:', chatResult.response.chat.reply);
+```
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Router SDK"
+    icon="code-branch"
+    href="/sdk/router/installation"
+  >
+    Deploy bots to multiple channels
+  </Card>
+  <Card
+    title="REST API"
+    icon="brackets-curly"
+    href="/api-reference/introduction"
+  >
+    Direct API access
+  </Card>
+  <Card
+    title="Examples"
+    icon="lightbulb"
+    href="/examples/use-cases"
+  >
+    Real-world implementations
+  </Card>
+  <Card
+    title="Troubleshooting"
+    icon="wrench"
+    href="/guides/troubleshooting"
+  >
+    Common issues
+  </Card>
+</CardGroup>

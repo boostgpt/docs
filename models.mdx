@@ -1,0 +1,204 @@
+---
+title: Models
+description: 'Complete catalog of available AI models'
+---
+
+## Model Catalog
+
+Browse all available models across providers. 
+
+{/* 
+const MODEL_CONFIGS = {
+    // OpenAI Models 
+    'gpt-5.1': { provider: 'openai', contextWindow: 1000000, maxTokens: 8192 },
+    'gpt-5': { provider: 'openai', contextWindow: 1000000, maxTokens: 8192 },
+    'gpt-5-mini': { provider: 'openai', contextWindow: 1000000, maxTokens: 8192 },
+    'gpt-5-nano': { provider: 'openai', contextWindow: 1000000, maxTokens: 8192 },
+    'gpt-4.1': { provider: 'openai', contextWindow: 1000000, maxTokens: 8192 },
+    'gpt-4.1-mini': { provider: 'openai', contextWindow: 1000000, maxTokens: 8192 },
+    'gpt-4o': { provider: 'openai', contextWindow: 128000, maxTokens: 16384 },
+    'gpt-4o-mini': { provider: 'openai', contextWindow: 128000, maxTokens: 16384 },
+    
+    // Anthropic Models
+    'claude-sonnet-4-5': { provider: 'anthropic', contextWindow: 200000, maxTokens: 64000 },
+    'claude-haiku-4-5': { provider: 'anthropic', contextWindow: 200000, maxTokens: 64000 },
+    'claude-opus-4-1': { provider: 'anthropic', contextWindow: 200000, maxTokens: 32000 },
+    
+    // Google Gemini Models (Updated)
+    'gemini-3-pro-preview': { provider: 'gemini', contextWindow: 1000000, maxTokens: 8192 },
+    'gemini-2.5-pro': { provider: 'gemini', contextWindow: 1000000, maxTokens: 65536 },
+    'gemini-2.5-flash-lite': { provider: 'gemini', contextWindow: 1000000, maxTokens: 65536 },
+    'gemini-2.5-flash': { provider: 'gemini', contextWindow: 1000000, maxTokens: 65536 },
+    
+    // xAI Models
+    'grok-4-1-fast-non-reasoning': { provider: 'xai', contextWindow: 2000000, maxTokens: 32000 },
+    'grok-4-fast-non-reasoning': { provider: 'xai', contextWindow: 2000000, maxTokens: 32000 },
+    'grok-3-mini': { provider: 'xai', contextWindow: 131072, maxTokens: 16000 },
+    'grok-3': { provider: 'xai', contextWindow: 131072, maxTokens: 16000 },
+}; */}
+
+
+
+### Supported Models
+
+<Badge size="md" icon="openai">gpt-5.1</Badge>
+<Badge size="md" icon="openai">gpt-5</Badge>
+<Badge size="md" icon="openai">gpt-5-mini</Badge>
+<Badge size="md" icon="openai">gpt-5-nano</Badge>
+<Badge size="md" icon="openai">gpt-4.1</Badge>
+<Badge size="md" icon="openai">gpt-4.1-mini</Badge>
+<Badge size="md" icon="openai">gpt-4o</Badge>
+<Badge size="md" icon="openai">gpt-4o-mini</Badge>
+
+<Panel>
+  <Info>Pin info to the side panel. Or add any other component.</Info>
+</Panel>
+
+  <Columns cols={1}>
+        <Card title="OpenAI Models">
+       
+            
+            
+        </Card>
+        <Card title="gpt-5">
+            Standard GPT-5 model with 1M token context window. Excellent for general-purpose tasks.
+        </Card>
+    </Columns>
+
+
+
+<AccordionGroup>
+
+
+
+
+
+
+  
+  <Accordion icon="openai" title="gpt-5">
+    **Context:** 1M tokens | **Max Output:** 8K tokens
+    
+    Standard GPT-5 model with million-token context window. Excellent for general-purpose tasks.
+    
+    ```javascript
+    model: 'gpt-5'
+    ```
+  </Accordion>
+  
+  <Accordion icon="bolt" title="gpt-5-mini">
+    **Context:** 1M tokens | **Max Output:** 8K tokens
+    
+    Faster, more cost-effective GPT-5 variant. Great balance of performance and efficiency.
+    
+    ```javascript
+    model: 'gpt-5-mini'
+    ```
+  </Accordion>
+  
+  <Accordion icon="zap" title="gpt-5-nano">
+    **Context:** 1M tokens | **Max Output:** 8K tokens
+    
+    Ultra-efficient GPT-5 for high-volume applications where speed and cost matter most.
+    
+    ```javascript
+    model: 'gpt-5-nano'
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### GPT-4.1 Series
+
+<AccordionGroup>
+  <Accordion icon="robot" title="gpt-4.1">
+    **Context:** 1M tokens | **Max Output:** 8K tokens
+    
+    Enhanced GPT-4 with extended context window. Excellent for document processing.
+    
+    ```javascript
+    model: 'gpt-4.1'
+    ```
+  </Accordion>
+  
+  <Accordion icon="bolt" title="gpt-4.1-mini">
+    **Context:** 1M tokens | **Max Output:** 8K tokens
+    
+    Efficient GPT-4.1 variant with faster responses and lower cost.
+    
+    ```javascript
+    model: 'gpt-4.1-mini'
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### GPT-4o Series
+
+<AccordionGroup>
+  <Accordion icon="robot" title="gpt-4o">
+    **Context:** 128K tokens | **Max Output:** 16K tokens
+    
+    Optimized GPT-4 with excellent performance across all tasks. Strong coding abilities.
+    
+    ```javascript
+    model: 'gpt-4o'
+    ```
+  </Accordion>
+  
+  <Accordion icon="star" title="gpt-4o-mini (Recommended for General Use)">
+    **Context:** 128K tokens | **Max Output:** 16K tokens
+    
+    **⭐ Best overall value.** Cost-effective GPT-4o for everyday use. Excellent for most applications.
+    
+    **Use when:** You need reliable performance at reasonable cost (customer support, chatbots, general Q&A)
+    
+    ```javascript
+    model: 'gpt-4o-mini'
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Anthropic Models (Claude)
+
+### Claude 4.5 Series (Latest)
+
+<AccordionGroup>
+  <Accordion icon="star" title="claude-sonnet-4-5 (Recommended for Conversation)">
+    <ParamField path="Model ID" type="string">
+      `claude-sonnet-4-5`
+    </ParamField>
+    
+    <ParamField path="Provider" type="string">
+      Anthropic
+    </ParamField>
+    
+    <ParamField path="Context Window" type="number">
+      200,000 tokens
+    </ParamField>
+    
+    <ParamField path="Max Output" type="number">
+      64,000 tokens
+    </ParamField>
+    
+    **Best for:** Natural conversation, dialogue, customer interactions
+    
+    **⭐ Most natural-sounding AI.** Exceptional at following instructions and maintaining context.
+    
+    **Use when:** Conversation quality is top priority (support bots, virtual assistants, community management)
+    
+    ```javascript
+    model: 'claude-sonnet-4-5'
+    ```
+  </Accordion>
+  
+  <Accordion icon="bolt" title="claude-haiku-4-5">
+    **Context:** 200K tokens | **Max Output:** 64K tokens
+    
+    Fast and efficient Claude for high-throughput applications. Best Claude option for speed.
+    
+    ```javascript
+    model: 'claude-haiku-4-5'
+    ```
+  </Accordion>
+</AccordionGroup>
+

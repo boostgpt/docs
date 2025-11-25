@@ -1,0 +1,53 @@
+---
+title: WhatsApp Adapter
+description: 'Deploy your bot to WhatsApp'
+---
+
+## Setup
+
+### 1. Install
+```bash
+npm install @boostgpt/router
+```
+
+### 2. Configure
+```bash .env
+WHATSAPP_CONTACTS=2349012345678,2349087654321
+```
+
+## Usage
+```javascript
+import { Router, WhatsAppAdapter } from '@boostgpt/router';
+
+const router = new Router({
+  apiKey: process.env.BOOSTGPT_API_KEY,
+  projectId: process.env.BOOSTGPT_PROJECT_ID,
+  adapters: [
+    new WhatsAppAdapter({
+      allowedContacts: process.env.WHATSAPP_CONTACTS.split(','),
+      useLocalAuth: true
+    })
+  ]
+});
+
+await router.start();
+// Scan QR code when prompted
+```
+
+## Options
+
+<ParamField path="allowedContacts" type="Array<string>">
+  Whitelist of phone numbers (with country code, no +)
+</ParamField>
+
+<ParamField path="useLocalAuth" type="boolean" default="true">
+  Save session locally
+</ParamField>
+
+## QR Code
+
+Scan the QR code with WhatsApp on your phone to authenticate.
+
+<Info>
+  The first time you run it, scan the QR code. Sessions are saved locally for subsequent runs.
+</Info>

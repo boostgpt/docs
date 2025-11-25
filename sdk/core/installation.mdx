@@ -1,0 +1,289 @@
+---
+title: Core SDK Installation
+description: 'Install and configure the BoostGPT Core SDK'
+---
+
+## Requirements
+
+<CardGroup cols={3}>
+  <Card title="Node.js" icon="node-js">
+    Version 12.20.0 or higher
+  </Card>
+  <Card title="Package Manager" icon="box">
+    npm, yarn, or pnpm
+  </Card>
+  <Card title="API Key" icon="key">
+    From [app.boostgpt.co](https://app.boostgpt.co)
+  </Card>
+</CardGroup>
+
+## Installation
+
+<Tabs>
+  <Tab title="npm">
+    ```bash
+    npm install boostgpt
+    ```
+  </Tab>
+  
+  <Tab title="yarn">
+    ```bash
+    yarn add boostgpt
+    ```
+  </Tab>
+  
+  <Tab title="pnpm">
+    ```bash
+    pnpm add boostgpt
+    ```
+  </Tab>
+</Tabs>
+
+## Setup
+
+### 1. Get Your Credentials
+
+<Steps>
+  <Step title="Create account">
+    Sign up at [app.boostgpt.co](https://app.boostgpt.co)
+  </Step>
+  
+  <Step title="Create project">
+    Create a new project from your dashboard
+  </Step>
+  
+  <Step title="Get credentials">
+    Copy your **Project ID** and **API Key** from settings
+  </Step>
+</Steps>
+
+### 2. Configure Environment Variables
+
+Create a `.env` file:
+
+```bash .env
+BOOSTGPT_API_KEY=your_api_key_here
+BOOSTGPT_PROJECT_ID=your_project_id_here
+```
+
+Install dotenv:
+
+```bash
+npm install dotenv
+```
+
+### 3. Initialize the Client
+
+<Tabs>
+  <Tab title="ES Modules">
+    ```javascript
+    import 'dotenv/config';
+    import { BoostGPT } from 'boostgpt';
+
+    const client = new BoostGPT({
+      key: process.env.BOOSTGPT_API_KEY,
+      project_id: process.env.BOOSTGPT_PROJECT_ID
+    });
+    ```
+  </Tab>
+  
+  <Tab title="CommonJS">
+    ```javascript
+    require('dotenv').config();
+    const { BoostGPT } = require('boostgpt');
+
+    const client = new BoostGPT({
+      key: process.env.BOOSTGPT_API_KEY,
+      project_id: process.env.BOOSTGPT_PROJECT_ID
+    });
+    ```
+  </Tab>
+</Tabs>
+
+## Quick Start Example
+
+Create a bot and have a conversation:
+
+```javascript
+import 'dotenv/config';
+import { BoostGPT } from 'boostgpt';
+
+const client = new BoostGPT({
+  key: process.env.BOOSTGPT_API_KEY,
+  project_id: process.env.BOOSTGPT_PROJECT_ID
+});
+
+// Create a bot
+const botResult = await client.createBot({
+  name: 'My Assistant',
+  model: 'gpt-4o-mini',
+  instruction: 'You are a helpful assistant. Be concise and friendly.',
+  max_reply_tokens: 1000,
+  status: 'active'
+});
+
+if (botResult.err) {
+  console.error('Error creating bot:', botResult.err);
+  process.exit(1);
+}
+
+const botId = botResult.response.bot._id;
+console.log('Bot created with ID:', botId);
+
+// Chat with the bot
+const chatResult = await client.chat({
+  bot_id: botId,
+  message: 'Hello! How are you?',
+  chat_id: 'user-123',
+  vector: true
+});
+
+if (chatResult.err) {
+  console.error('Error:', chatResult.err);
+} else {
+  console.log('Bot:', chatResult.response.chat.reply);
+}
+```
+
+<Check>
+  Run the script and you should see your bot respond!
+</Check>
+
+## Response Format
+
+All SDK methods return a consistent response format:
+
+```javascript
+{
+  err: null | Error,        // Error object if request failed
+  response: null | Object   // Response data if successful
+}
+```
+
+Always check for errors:
+
+```javascript
+const result = await client.createBot({ name: 'My Bot' });
+
+if (result.err) {
+  console.error('Failed:', result.err.message);
+  // Handle error
+} else {
+  console.log('Success:', result.response);
+  // Use response data
+}
+```
+
+## Configuration Options
+
+### Constructor Options
+
+```javascript
+new BoostGPT({
+  key: string,              // Required: Your API key
+  project_id: string        // Required: Your project ID
+})
+```
+
+## Module System
+
+The Core SDK supports both ES Modules and CommonJS:
+
+<Tabs>
+  <Tab title="ES Modules">
+    **Requirements:**
+    - Node.js 14.0.0+
+    - Add `"type": "module"` to `package.json` OR use `.mjs` extension
+    
+    ```javascript
+    import { BoostGPT } from 'boostgpt';
+    ```
+  </Tab>
+  
+  <Tab title="CommonJS">
+    **Requirements:**
+    - Node.js 12.20.0+
+    - Use `.js` extension (default)
+    
+    ```javascript
+    const { BoostGPT } = require('boostgpt');
+    ```
+  </Tab>
+</Tabs>
+
+## TypeScript Support
+
+While the SDK is written in JavaScript, it works with TypeScript projects. Type definitions may be added in a future release.
+
+For now, you can create your own type definitions:
+
+```typescript
+// types/boostgpt.d.ts
+declare module 'boostgpt' {
+  export class BoostGPT {
+    constructor(config: { key: string; project_id: string });
+    createBot(params: any): Promise<any>;
+    chat(params: any): Promise<any>;
+    // Add other methods as needed
+  }
+}
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion icon="circle-xmark" title="Cannot find module 'boostgpt'">
+    Make sure you've installed the package:
+    ```bash
+    npm install boostgpt
+    ```
+  </Accordion>
+  
+  <Accordion icon="triangle-exclamation" title="401 Unauthorized">
+    Check that your API key is correct and hasn't been revoked. You can verify it at [app.boostgpt.co/account/api-keys](https://app.boostgpt.co/account/api-keys).
+  </Accordion>
+  
+  <Accordion icon="ban" title="403 Forbidden">
+    Verify you're using the correct Project ID for your API key.
+  </Accordion>
+  
+  <Accordion icon="code" title="SyntaxError: Cannot use import statement">
+    You're trying to use ES modules in a CommonJS environment. Either:
+    - Add `"type": "module"` to your `package.json`
+    - Use `.mjs` file extension
+    - Switch to `require()` syntax
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="API Reference"
+    icon="book"
+    href="/sdk/core/api-reference"
+  >
+    Explore all available methods
+  </Card>
+  <Card
+    title="Router SDK"
+    icon="code-branch"
+    href="/sdk/router/installation"
+  >
+    Deploy bots to multiple channels
+  </Card>
+  <Card
+    title="Examples"
+    icon="lightbulb"
+    href="/examples/use-cases"
+  >
+    See real-world implementations
+  </Card>
+  <Card
+    title="Troubleshooting"
+    icon="wrench"
+    href="/guides/troubleshooting"
+  >
+    Common issues and solutions
+  </Card>
+</CardGroup>

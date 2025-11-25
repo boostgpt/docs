@@ -1,0 +1,63 @@
+---
+title: Crisp Adapter
+description: 'Deploy your bot to Crisp live chat'
+---
+
+## Setup
+
+### 1. Create Crisp Plugin
+
+<Steps>
+  <Step title="Create plugin">
+    Go to Crisp Marketplace and create a plugin
+  </Step>
+  <Step title="Get credentials">
+    Copy Plugin Identifier and Plugin Key
+  </Step>
+</Steps>
+
+See: [Crisp API Authentication](https://docs.crisp.chat/guides/rest-api/authentication/)
+
+### 2. Install
+```bash
+npm install @boostgpt/router
+```
+
+### 3. Configure
+```bash .env
+CRISP_IDENTIFIER=your_plugin_identifier
+CRISP_KEY=your_plugin_key
+```
+
+## Usage
+```javascript
+import { Router, CrispAdapter } from '@boostgpt/router';
+
+const router = new Router({
+  apiKey: process.env.BOOSTGPT_API_KEY,
+  projectId: process.env.BOOSTGPT_PROJECT_ID,
+  adapters: [
+    new CrispAdapter({
+      crispIdentifier: process.env.CRISP_IDENTIFIER,
+      crispKey: process.env.CRISP_KEY,
+      onlyWhenOffline: true
+    })
+  ]
+});
+
+await router.start();
+```
+
+## Options
+
+<ParamField path="crispIdentifier" type="string" required>
+  Crisp plugin identifier
+</ParamField>
+
+<ParamField path="crispKey" type="string" required>
+  Crisp plugin key
+</ParamField>
+
+<ParamField path="onlyWhenOffline" type="boolean" default="true">
+  Only reply when all operators are offline
+</ParamField>

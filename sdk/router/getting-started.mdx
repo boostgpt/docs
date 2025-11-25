@@ -1,0 +1,394 @@
+---
+title: Router Getting Started
+description: 'Build your first multi-channel bot in 10 minutes'
+---
+
+## What You'll Build
+
+A bot that works on Discord, Telegram, and Slack simultaneously with a single codebase.
+
+## Prerequisites
+
+<CardGroup cols={2}>
+  <Card title="BoostGPT Account" icon="user">
+    Sign up at [app.boostgpt.co](https://app.boostgpt.co)
+  </Card>
+  <Card title="Node.js" icon="node-js">
+    Version 14.0.0 or higher
+  </Card>
+</CardGroup>
+
+## Step 1: Install Dependencies
+
+```bash
+npm install boostgpt @boostgpt/router dotenv
+```
+
+## Step 2: Get Your Tokens
+
+### BoostGPT
+
+1. Go to [app.boostgpt.co](https://app.boostgpt.co)
+2. Create a project and copy the **Project ID**
+3. Generate an **API Key** from [API Keys](https://app.boostgpt.co/account/api-keys)
+4. Create a bot and copy the **Bot ID**
+
+### Discord
+
+1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
+2. Create a new application
+3. Go to Bot → Create bot
+4. Enable **MESSAGE CONTENT INTENT**
+5. Copy the bot token
+
+### Telegram
+
+1. Open Telegram and search for **@BotFather**
+2. Send `/newbot` and follow instructions
+3. Copy the token provided
+
+### Slack
+
+1. Go to [api.slack.com/apps](https://api.slack.com/apps)
+2. Create a new app
+3. Enable Socket Mode
+4. Add bot scopes: `chat:write`, `channels:history`, `im:history`
+5. Copy the Bot Token and App Token
+
+## Step 3: Configure Environment
+
+Create `.env`:
+
+```bash .env
+# BoostGPT
+BOOSTGPT_API_KEY=your_api_key
+BOOSTGPT_PROJECT_ID=your_project_id
+BOOSTGPT_BOT_ID=your_bot_id
+
+# Discord
+DISCORD_TOKEN=your_discord_token
+
+# Telegram
+TELEGRAM_TOKEN=your_telegram_token
+
+# Slack
+SLACK_TOKEN=xoxb-your-bot-token
+SLACK_SIGNING_SECRET=your_signing_secret
+SLACK_APP_TOKEN=xapp-your-app-token
+```
+
+## Step 4: Create Your Bot
+
+Create `bot.js`:
+
+```javascript bot.js
+import 'dotenv/config';
+import { 
+  Router, 
+  DiscordAdapter, 
+  TelegramAdapter,
+  SlackAdapter 
+} from '@boostgpt/router';
+
+const router = new Router({
+  apiKey: process.env.BOOSTGPT_API_KEY,
+  projectId: process.env.BOOSTGPT_PROJECT_ID,
+  defaultBotId: process.env.BOOSTGPT_BOT_ID,
+  adapters: [
+    // Discord
+    new DiscordAdapter({
+      discordToken: process.env.DISCORD_TOKEN,
+      replyInDMs: true,
+      replyOnMention: true
+    }),
+    
+    // Telegram
+    new TelegramAdapter({
+      telegramToken: process.env.TELEGRAM_TOKEN,
+      welcomeMessage: 'Hi {name}! How can I help?'
+    }),
+    
+    // Slack
+    new SlackAdapter({
+      slackToken: process.env.SLACK_TOKEN,
+      slackSigningSecret: process.env.SLACK_SIGNING_SECRET,
+      slackAppToken: process.env.SLACK_APP_TOKEN
+    })
+  ]
+});
+
+// Custom message handler
+router.onMessage(async (message, context) => {
+  // Log all messages
+  console.log(`[${context.channel}] ${message.userName}: ${message.content}`);
+  
+  // Handle custom commands
+  if (message.content === '/ping') {
+    return 'Pong! 🏓';
+  }
+  
+  if (message.content === '/status') {
+    const status = router.getStatus();
+    return `Bot is running on ${status.adapters.length} channels!`;
+  }
+  
+  // Let BoostGPT AI handle everything else
+  return null;
+});
+
+// Error handler
+router.onError(async (error, message, context) => {
+  console.error(`[${context.channel}] Error:`, error);
+  return 'Sorry, I encountered an error. Please try again!';
+});
+
+// Start the router
+await router.start();
+console.log('✅ Bot is live on all channels!');
+
+// Get status
+const status = router.getStatus();
+console.log('Running adapters:', status.adapters.map(a => a.channel).join(', '));
+
+// Graceful shutdown
+process.on('SIGINT', async () => {
+  console.log('\n🛑 Shutting down gracefully...');
+  await router.stop();
+  console.log('✅ Shutdown complete');
+  process.exit(0);
+});
+```
+
+## Step 5: Run Your Bot
+
+```bash
+node bot.js
+```
+
+You should see:
+
+```
+✅ Discord adapter started
+✅ Telegram adapter started
+✅ Slack adapter started
+✅ Bot is live on all channels!
+Running adapters: discord, telegram, slack
+```
+
+<Check>
+  Your bot is now live on 3 platforms with one codebase!
+</Check>
+
+## Step 6: Test It
+
+<Tabs>
+  <Tab title="Discord">
+    - Mention your bot in a channel: `@YourBot hello`
+    - Or DM it directly
+    - Try `/ping` or `/status`
+  </Tab>
+  
+  <Tab title="Telegram">
+    - Start a chat with your bot
+    - Send `/start` to see the welcome message
+    - Try `/ping` or any question
+  </Tab>
+  
+  <Tab title="Slack">
+    - Invite your bot to a channel
+    - Message it directly or in the channel
+    - Try `/ping` or `/status`
+  </Tab>
+</Tabs>
+
+## Understanding the Code
+
+### Message Object
+
+Every message has this structure:
+
+```javascript
+{
+  content: "User's message",
+  userId: "unique-user-id",
+  userName: "username",
+  metadata: {
+    // Channel-specific data
+    channelId: "...",
+    messageId: "...",
+    // etc.
+  }
+}
+```
+
+### Context Object
+
+The context provides channel information:
+
+```javascript
+{
+  channel: "discord" | "telegram" | "slack" | ...,
+  adapter: AdapterInstance,
+  router: RouterInstance,
+  boostgpt: BoostGPTInstance
+}
+```
+
+### Message Handler Return Values
+
+```javascript
+router.onMessage(async (message, context) => {
+  // Return a string to send as reply
+  return "Hello!";
+  
+  // Return null to let BoostGPT AI handle it
+  return null;
+  
+  // Return nothing (undefined) - same as null
+});
+```
+
+## Advanced: Custom Logic Per Channel
+
+```javascript
+router.onMessage(async (message, context) => {
+  // Different behavior per channel
+  if (context.channel === 'discord') {
+    if (message.content.startsWith('!')) {
+      return 'Discord commands start with /';
+    }
+  }
+  
+  if (context.channel === 'telegram') {
+    if (message.content === '/start') {
+      return 'Welcome to Telegram! 🎉';
+    }
+  }
+  
+  // Default: Let AI handle it
+  return null;
+});
+```
+
+## Adding More Channels
+
+Want to add WhatsApp or Crisp?
+
+<Tabs>
+  <Tab title="WhatsApp">
+
+    ```javascript
+    import { WhatsAppAdapter } from '@boostgpt/router';
+    
+    adapters: [
+      // ... existing adapters
+      new WhatsAppAdapter({
+        allowedContacts: ['1234567890'], // Optional whitelist
+        useLocalAuth: true
+      })
+    ]
+    ```
+    
+    Scan the QR code when prompted.
+  </Tab>
+  
+  <Tab title="Crisp">
+    
+    ```javascript
+    import { CrispAdapter } from '@boostgpt/router';
+    
+    adapters: [
+      // ... existing adapters
+      new CrispAdapter({
+        crispIdentifier: process.env.CRISP_IDENTIFIER,
+        crispKey: process.env.CRISP_KEY,
+        onlyWhenOffline: true
+      })
+    ]
+    ```
+  </Tab>
+</Tabs>
+
+## Common Patterns
+
+### Broadcasting Messages
+
+Send a message to all channels:
+
+```javascript
+await router.broadcast('Server maintenance in 5 minutes!');
+
+// Or specific channels only
+await router.broadcast('Discord-only announcement', ['discord']);
+```
+
+### Sending Direct Messages
+
+```javascript
+// Send to specific user on specific channel
+await router.sendMessage('discord', 'user-id-123', 'Hello!');
+```
+
+### Dynamic Adapter Management
+
+```javascript
+// Add adapter at runtime
+const newAdapter = new DiscordAdapter({ discordToken: '...' });
+await router.addAdapter(newAdapter);
+
+// Remove adapter
+await router.removeAdapter('discord');
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion icon="circle-xmark" title="Discord bot not responding">
+    Make sure **MESSAGE CONTENT INTENT** is enabled in Discord Developer Portal → Bot settings.
+  </Accordion>
+  
+  <Accordion icon="triangle-exclamation" title="Telegram bot shows 'Bot was blocked by the user'">
+    Start a chat with your bot first by searching for it in Telegram and clicking Start.
+  </Accordion>
+  
+  <Accordion icon="plug" title="Slack bot not receiving messages">
+    Verify Socket Mode is enabled and you're using the correct App Token (starts with `xapp-`).
+  </Accordion>
+  
+  <Accordion icon="ban" title="401 Unauthorized">
+    Check your BoostGPT API key and Project ID in `.env`.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="API Reference"
+    icon="book"
+    href="/sdk/router/api-reference"
+  >
+    Explore all Router methods
+  </Card>
+  <Card
+    title="Custom Adapters"
+    icon="code"
+    href="/sdk/router/custom-adapters"
+  >
+    Build your own channel adapter
+  </Card>
+  <Card
+    title="Deployment"
+    icon="rocket"
+    href="/guides/deployment"
+  >
+    Deploy to production
+  </Card>
+  <Card
+    title="Examples"
+    icon="lightbulb"
+    href="/examples/use-cases"
+  >
+    See real-world use cases
+  </Card>
+</CardGroup>

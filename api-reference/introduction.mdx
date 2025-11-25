@@ -1,33 +1,137 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: API Reference
+description: 'BoostGPT REST API documentation'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Base URL
 
-## Welcome
-
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
-
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+https://api.boostgpt.co
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
-
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+All API requests require authentication using your API key in the `Authorization` header:
+```bash
+curl https://api.boostgpt.co/v1/bot/read \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "project_id": "YOUR_PROJECT_ID",
+    "bot_id": "YOUR_BOT_ID"
+  }'
 ```
+
+## Getting Started
+
+<Steps>
+  <Step title="Get API credentials">
+    Sign up at [app.boostgpt.co](https://app.boostgpt.co) and generate an API key
+  </Step>
+  
+  <Step title="Create a project">
+    Create a project and copy your Project ID
+  </Step>
+  
+  <Step title="Make your first request">
+    Use the endpoints documented in the API Reference tab above
+  </Step>
+</Steps>
+
+## SDKs
+
+We recommend using our official SDKs instead of making direct API calls:
+
+<CardGroup cols={2}>
+  <Card
+    title="Node.js Core SDK"
+    icon="node-js"
+    href="/sdk/core/installation"
+  >
+    Official JavaScript/TypeScript SDK for bot management and chat
+  </Card>
+  <Card
+    title="Router SDK"
+    icon="code-branch"
+    href="/sdk/router/installation"
+  >
+    Multi-channel deployment SDK for Discord, Telegram, Slack, etc.
+  </Card>
+</CardGroup>
+
+## Response Format
+
+All endpoints return JSON responses in this format:
+
+### Success Response
+```json
+{
+  "success": true,
+  "data": {
+    // Response data
+  }
+}
+```
+
+### Error Response
+```json
+{
+  "success": false,
+  "error": {
+    "message": "Error description",
+    "code": "ERROR_CODE"
+  }
+}
+```
+
+## Rate Limits
+
+<CardGroup cols={2}>
+  <Card title="Free Tier" icon="gift">
+    1,000 requests per day
+  </Card>
+  <Card title="Paid Plans" icon="bolt">
+    Higher limits based on your plan
+  </Card>
+</CardGroup>
+
+If you exceed rate limits, you'll receive a `429 Too Many Requests` response.
+
+## Error Codes
+
+| Code | Description |
+|------|-------------|
+| 400 | Bad Request - Invalid parameters |
+| 401 | Unauthorized - Invalid API key |
+| 403 | Forbidden - Insufficient permissions |
+| 404 | Not Found - Resource doesn't exist |
+| 429 | Too Many Requests - Rate limit exceeded |
+| 500 | Internal Server Error |
+
+## API Endpoints
+
+All available endpoints are documented in the **API Reference** tab above. They are automatically generated from our OpenAPI specification.
+
+Browse endpoints by category:
+- **Bot Management** - Create, read, update, delete bots
+- **Chat Operations** - Send messages and manage conversations
+- **Sources & Training** - Add knowledge to your bots
+- **Search** - Query your bot's knowledge base
+- **Subscribers** - Manage leads and contacts
+
+## Support
+
+<CardGroup cols={2}>
+  <Card
+    title="Discord Community"
+    icon="discord"
+    href="https://discord.gg/KGhz5SnyXM"
+  >
+    Get help from our community
+  </Card>
+  <Card
+    title="GitHub"
+    icon="github"
+    href="https://github.com/boostgpt"
+  >
+    Report issues or contribute
+  </Card>
+</CardGroup>

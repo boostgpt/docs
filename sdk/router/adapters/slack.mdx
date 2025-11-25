@@ -1,0 +1,54 @@
+---
+title: Slack Adapter
+description: 'Deploy your bot to Slack'
+---
+
+## Setup
+
+### 1. Create Slack App
+
+<Steps>
+  <Step title="Create app">
+    Go to [api.slack.com/apps](https://api.slack.com/apps)
+  </Step>
+  <Step title="Enable sockets">
+    Enable Socket Mode in settings
+  </Step>
+  <Step title="Add scopes">
+    Add `chat:write`, `channels:history`, `groups:history`, `im:history`, `mpim:history`
+  </Step>
+  <Step title="Copy tokens">
+    Copy Bot Token and App Token
+  </Step>
+</Steps>
+
+### 2. Install
+```bash
+npm install @boostgpt/router
+```
+
+### 3. Configure
+```bash .env
+SLACK_TOKEN=xoxb-your-bot-token
+SLACK_SIGNING_SECRET=your-signing-secret
+SLACK_APP_TOKEN=xapp-your-app-token
+```
+
+## Usage
+```javascript
+import { Router, SlackAdapter } from '@boostgpt/router';
+
+const router = new Router({
+  apiKey: process.env.BOOSTGPT_API_KEY,
+  projectId: process.env.BOOSTGPT_PROJECT_ID,
+  adapters: [
+    new SlackAdapter({
+      slackToken: process.env.SLACK_TOKEN,
+      slackSigningSecret: process.env.SLACK_SIGNING_SECRET,
+      slackAppToken: process.env.SLACK_APP_TOKEN
+    })
+  ]
+});
+
+await router.start();
+```

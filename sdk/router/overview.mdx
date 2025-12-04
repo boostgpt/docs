@@ -1,0 +1,157 @@
+---
+title: "Router SDK Overview"
+description: "Deploy bots across Discord, Telegram, Slack, WhatsApp, and more"
+---
+
+## What is the Router SDK?
+
+The Router SDK lets you deploy BoostGPT bots across multiple messaging platforms with a single codebase. It uses the Core SDK internally and provides platform adapters.
+
+## Installation
+
+```bash
+npm install @boostgpt/router
+```
+
+## Quick Start
+
+```javascript
+import { Router, DiscordAdapter } from '@boostgpt/router';
+
+const router = new Router({
+  apiKey: process.env.BOOSTGPT_API_KEY,
+  projectId: process.env.BOOSTGPT_PROJECT_ID,
+  defaultBotId: process.env.BOOSTGPT_BOT_ID,
+  adapters: [
+    new DiscordAdapter({
+      discordToken: process.env.DISCORD_TOKEN
+    })
+  ]
+});
+
+router.onMessage(async (message, context) => {
+  // Handle commands
+  if (message.content === '/help') {
+    return 'I can help you! Just ask me anything.';
+  }
+
+  // Let AI handle everything else
+  return null;
+});
+
+await router.start();
+console.log('Bot is running!');
+```
+
+## Supported Platforms
+
+<CardGroup cols={3}>
+  <Card title="Discord" icon="discord" href="/sdk/router/adapters/discord">
+    Discord bot integration
+  </Card>
+  <Card title="Telegram" icon="telegram" href="/sdk/router/adapters/telegram">
+    Telegram bot integration
+  </Card>
+  <Card title="Slack" icon="slack" href="/sdk/router/adapters/slack">
+    Slack app integration
+  </Card>
+  <Card title="WhatsApp" icon="whatsapp" href="/sdk/router/adapters/whatsapp">
+    WhatsApp Business API
+  </Card>
+  <Card title="Crisp" icon="message" href="/sdk/router/adapters/crisp">
+    Crisp chat widget
+  </Card>
+  <Card title="Custom" icon="plug" href="/sdk/router/custom-adapters">
+    Build your own adapter
+  </Card>
+</CardGroup>
+
+## How It Works
+
+1. **Router receives message** from any platform
+2. **Your handler runs** - Return string for custom response or `null` for AI
+3. **Router uses AI** - If you return `null`, router calls BoostGPT
+4. **Response sent** back to the platform
+
+## Key Features
+
+- **Multi-platform** - One codebase for all platforms
+- **Command handling** - Intercept specific commands
+- **Uses Core SDK** - All bot features available
+- **Type-safe** - Full TypeScript support
+
+## Message Handler
+
+```javascript
+router.onMessage(async (message, context) => {
+  // message.content - User's message
+  // message.userId - User ID
+  // message.platform - Platform name (discord, telegram, etc.)
+  // context.boostgpt - Core SDK instance
+
+  if (message.content === '/ping') {
+    return 'Pong!';
+  }
+
+  // Return null to let AI handle
+  return null;
+});
+```
+
+## Multi-Platform Example
+
+Deploy to Discord and Telegram simultaneously:
+
+```javascript
+import { Router, DiscordAdapter, TelegramAdapter } from '@boostgpt/router';
+
+const router = new Router({
+  apiKey: process.env.BOOSTGPT_API_KEY,
+  projectId: process.env.BOOSTGPT_PROJECT_ID,
+  defaultBotId: process.env.BOOSTGPT_BOT_ID,
+  adapters: [
+    new DiscordAdapter({
+      discordToken: process.env.DISCORD_TOKEN
+    }),
+    new TelegramAdapter({
+      telegramToken: process.env.TELEGRAM_TOKEN
+    })
+  ]
+});
+
+router.onMessage(async (message, context) => {
+  if (message.content === '/start') {
+    return 'Welcome! How can I help you?';
+  }
+  return null;
+});
+
+await router.start();
+```
+
+## Access Core SDK
+
+Access the Core SDK directly when needed:
+
+```javascript
+router.onMessage(async (message, context) => {
+  if (message.content === '/stats') {
+    // Use Core SDK
+    const bots = await context.boostgpt.listBots();
+    return `You have ${bots.response.length} bots`;
+  }
+
+  return null;
+});
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Installation" icon="download" href="/sdk/router/installation">
+    Install and configure Router SDK
+  </Card>
+  <Card title="Message Handling" icon="message" href="/sdk/router/message-handling">
+    Handle messages and commands
+  </Card>
+</CardGroup>

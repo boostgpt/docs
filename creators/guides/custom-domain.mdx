@@ -1,0 +1,39 @@
+---
+title: "Custom Domain"
+description: "Use your own domain for agent page"
+---
+
+## Pro Plan Feature
+
+Custom domains are available on the **Pro plan** ($199/month).
+
+## Setup
+
+<Steps>
+  <Step title="Go to Custom Domains Tab">
+    Inside your agent, click on the **Custom Domains** tab
+  </Step>
+  <Step title="Enter Your Domain">
+    Enter your custom domain (e.g., chat.yourdomain.com)
+  </Step>
+  <Step title="Get Agent Page Domain">
+    Copy your agent page domain (e.g., example.boostgpt.page)
+  </Step>
+  <Step title="Update DNS Records">
+    Point your custom domain to your agent page domain with a CNAME record
+  </Step>
+  <Step title="Verify">
+    Return to the Custom Domains tab and verify setup
+  </Step>
+</Steps>
+
+Your agent page is now accessible at your custom domain!
+
+## DNS Settings
+
+Add this CNAME record in your domain's DNS settings:
+```
+Type: CNAME
+Name: chat (or your subdomain)
+Value: example.boostgpt.page (your agent page domain)
+```

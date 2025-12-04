@@ -1,0 +1,164 @@
+---
+title: "Webhooks"
+description: "Receive real-time events from BoostGPT"
+---
+
+## Overview
+
+Webhooks allow you to receive real-time notifications when events occur in your BoostGPT project.
+
+## Available Events
+
+- `bot.created` - New bot created
+- `bot.updated` - Bot settings changed
+- `bot.deleted` - Bot deleted
+- `chat.message` - New chat message sent
+- `subscriber.added` - New subscriber captured
+- `training.added` - Training data added
+
+## Setup Webhook
+
+<Steps>
+  <Step title="Create Endpoint">
+    Create an endpoint that accepts POST requests
+  </Step>
+  <Step title="Add Webhook in Dashboard">
+    Go to Settings ’ Webhooks ’ Add Webhook
+  </Step>
+  <Step title="Enter URL">
+    Provide your endpoint URL (must be HTTPS)
+  </Step>
+  <Step title="Select Events">
+    Choose which events to receive
+  </Step>
+</Steps>
+
+## Webhook Payload
+
+All webhooks send JSON payloads:
+
+```json
+{
+  "event": "chat.message",
+  "timestamp": "2025-01-01T12:00:00Z",
+  "project_id": "proj_123",
+  "data": {
+    "bot_id": "bot_456",
+    "message": "Hello",
+    "response": "Hi! How can I help?"
+  }
+}
+```
+
+## Example Endpoint
+
+### Express.js
+
+```javascript
+import express from 'express';
+
+const app = express();
+app.use(express.json());
+
+app.post('/webhooks/boostgpt', (req, res) => {
+  const { event, data } = req.body;
+
+  console.log('Received event:', event);
+
+  switch (event) {
+    case 'chat.message':
+      console.log('New chat:', data.message);
+      break;
+    case 'subscriber.added':
+      console.log('New subscriber:', data.email);
+      break;
+    default:
+      console.log('Unknown event:', event);
+  }
+
+  // Acknowledge receipt
+  res.status(200).json({ received: true });
+});
+
+app.listen(3000);
+```
+
+### Next.js API Route
+
+```javascript
+// pages/api/webhooks/boostgpt.js
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const { event, data } = req.body;
+
+  // Handle event
+  if (event === 'subscriber.added') {
+    // Add to email list
+    await addToMailchimp(data.email);
+  }
+
+  return res.status(200).json({ received: true });
+}
+```
+
+## Verify Webhook Signature
+
+Verify webhooks are from BoostGPT:
+
+```javascript
+import crypto from 'crypto';
+
+function verifySignature(payload, signature, secret) {
+  const hash = crypto
+    .createHmac('sha256', secret)
+    .update(JSON.stringify(payload))
+    .digest('hex');
+
+  return hash === signature;
+}
+
+app.post('/webhooks/boostgpt', (req, res) => {
+  const signature = req.headers['x-boostgpt-signature'];
+  const secret = process.env.WEBHOOK_SECRET;
+
+  if (!verifySignature(req.body, signature, secret)) {
+    return res.status(401).json({ error: 'Invalid signature' });
+  }
+
+  // Process webhook
+  res.status(200).json({ received: true });
+});
+```
+
+## Best Practices
+
+- **Return 200 quickly** - Don't process long tasks in webhook handler
+- **Use queues** - Add events to a queue for async processing
+- **Verify signatures** - Always verify webhook authenticity
+- **Handle retries** - Respond with 200 to prevent retries
+- **Log events** - Keep logs for debugging
+
+## Testing Webhooks
+
+Test locally using ngrok:
+
+```bash
+# Start your local server
+node server.js
+
+# In another terminal, expose it
+ngrok http 3000
+
+# Use the ngrok URL in dashboard
+https://abc123.ngrok.io/webhooks/boostgpt
+```
+
+## Next Steps
+
+<Card title="Error Handling" icon="triangle-exclamation" href="/developers/error-handling">
+  Handle webhook errors
+</Card>

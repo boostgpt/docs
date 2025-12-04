@@ -1,0 +1,175 @@
+---
+title: "Error Handling"
+description: "Handle errors gracefully in your BoostGPT applications"
+---
+
+## Error Response Format
+
+All BoostGPT SDK methods return responses in this format:
+
+```javascript
+{
+  err: null | string,      // Error message if any
+  response: object | null  // Response data if successful
+}
+```
+
+## Check for Errors
+
+Always check the `err` property before using `response`:
+
+```javascript
+const result = await client.createBot({
+  name: 'My Bot',
+  model: 'gpt-5-mini',
+  instruction: 'You are helpful.'
+});
+
+if (result.err) {
+  console.error('Error creating bot:', result.err);
+  // Handle error appropriately
+} else {
+  console.log('Bot created:', result.response);
+  // Use the response
+}
+```
+
+## Common Errors
+
+### Authentication Errors
+
+```javascript
+// Invalid API key or Project ID
+{
+  err: "Unauthorized: Invalid API key"
+}
+```
+
+**Solution**: Verify your credentials in `.env` file
+
+### Rate Limit Errors
+
+```javascript
+{
+  err: "Rate limit exceeded. Try again in 60 seconds."
+}
+```
+
+**Solution**: Implement retry logic with exponential backoff
+
+### Invalid Bot ID
+
+```javascript
+{
+  err: "Bot not found"
+}
+```
+
+**Solution**: Verify the bot exists and you have access to it
+
+### Model Errors
+
+```javascript
+{
+  err: "Model not supported or insufficient credits"
+}
+```
+
+**Solution**: Check model name and credit balance
+
+## Retry Logic
+
+Implement exponential backoff for transient errors:
+
+```javascript
+async function chatWithRetry(client, params, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    const response = await client.chat(params);
+
+    if (!response.err) {
+      return response;
+    }
+
+    // Check if error is retryable
+    if (response.err.includes('Rate limit') || response.err.includes('timeout')) {
+      const delay = Math.pow(2, i) * 1000; // 1s, 2s, 4s
+      console.log(`Retrying in ${delay}ms...`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    } else {
+      // Non-retryable error
+      return response;
+    }
+  }
+
+  return { err: 'Max retries exceeded', response: null };
+}
+```
+
+## Try-Catch with Async/Await
+
+Wrap SDK calls in try-catch for network errors:
+
+```javascript
+try {
+  const response = await client.chat({
+    bot_id: 'bot-123',
+    message: 'Hello'
+  });
+
+  if (response.err) {
+    console.error('API Error:', response.err);
+  } else {
+    console.log('Success:', response.response);
+  }
+} catch (error) {
+  console.error('Network Error:', error.message);
+}
+```
+
+## Error Logging
+
+Log errors for debugging:
+
+```javascript
+function logError(context, error) {
+  console.error({
+    timestamp: new Date().toISOString(),
+    context,
+    error
+  });
+
+  // Send to monitoring service (e.g., Sentry)
+  // Sentry.captureException(error);
+}
+
+const response = await client.chat({ bot_id, message });
+
+if (response.err) {
+  logError('chat_request', response.err);
+}
+```
+
+## User-Friendly Error Messages
+
+Map technical errors to user-friendly messages:
+
+```javascript
+function getUserMessage(error) {
+  if (error.includes('Rate limit')) {
+    return 'Too many requests. Please try again in a moment.';
+  }
+  if (error.includes('Unauthorized')) {
+    return 'Authentication failed. Please contact support.';
+  }
+  if (error.includes('Bot not found')) {
+    return 'Agent not available. Please try another one.';
+  }
+  return 'Something went wrong. Please try again.';
+}
+```
+
+## Next Steps
+
+<Card title="Rate Limits" icon="gauge" href="/developers/rate-limits">
+  Understand API rate limits
+</Card>

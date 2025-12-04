@@ -1,0 +1,401 @@
+---
+title: "OpenAI"
+description: "Use GPT models from OpenAI in your BoostGPT agents"
+---
+
+## Overview
+
+OpenAI provides the GPT family of models, including the latest GPT-5 series and specialized reasoning models. These models offer industry-leading performance across a wide range of tasks from simple chat to complex reasoning.
+
+## Available Models
+
+### GPT-5 Series (Latest)
+
+<CardGroup cols={2}>
+  <Card title="GPT-5" icon="sparkles">
+    **5 credits** " Flagship model with exceptional reasoning and creativity
+
+    - 200K context window
+    - Best for: Complex tasks, creative writing, advanced reasoning
+    - Speed: Medium " Cost: High
+  </Card>
+
+  <Card title="GPT-5 Mini" icon="bolt">
+    **3 credits** " Balanced performance and speed
+
+    - 200K context window
+    - Best for: Everyday tasks with strong reasoning
+    - Speed: Fast " Cost: Medium
+  </Card>
+
+  <Card title="GPT-5 Nano" icon="zap">
+    **2 credits** " Ultra-lightweight and fast
+
+    - 128K context window
+    - Best for: Simple tasks, high-volume applications
+    - Speed: Very Fast " Cost: Low
+  </Card>
+
+  <Card title="GPT-5.1" icon="brain">
+    **4 credits** " Enhanced reasoning model
+
+    - 200K context window
+    - **Reasoning model** with extended thinking
+    - Speed: Medium " Cost: High
+  </Card>
+</CardGroup>
+
+### O-Series Reasoning Models
+
+<Info>
+  Reasoning models use explicit step-by-step thinking for complex problem-solving. They require higher minimum completion tokens (2000-3000) and are best for analytical tasks.
+</Info>
+
+| Model | Credits | Context | Min Tokens | Best For |
+|-------|---------|---------|------------|----------|
+| **O1** | 6 | 200K | 3000 | Deep reasoning, complex problems |
+| **O1 Mini** | 3 | 128K | 2000 | Faster reasoning with strong analytics |
+| **O3 Mini** | 3 | 128K | 2000 | Next-gen compact reasoning |
+
+### GPT-4 Series
+
+| Model | Credits | Context | Description |
+|-------|---------|---------|-------------|
+| **GPT-4o** | 5 | 128K | Specialized for specific tasks, excellent performance |
+| **GPT-4o Mini** | 1 | 128K | Balanced for everyday tasks, efficient |
+| **GPT-4.1 Nano** | 0.5 | 64K | Lightweight for speed and low-cost |
+| **GPT-4.1 Mini** | 1 | 128K | Efficient with solid everyday performance |
+
+## Setup
+
+### Using BoostGPT-Hosted API Keys
+
+<Steps>
+  <Step title="Select OpenAI Models">
+    In your BoostGPT dashboard, simply select any OpenAI model when creating or configuring your bot. No API key needed!
+  </Step>
+
+  <Step title="Choose Your Model">
+    Select based on your needs:
+    - **GPT-5**: Complex reasoning, creative tasks
+    - **GPT-5 Mini**: Balanced everyday use
+    - **O1/O3 Mini**: Deep analytical work
+    - **GPT-4o Mini**: Cost-effective simple tasks
+  </Step>
+</Steps>
+
+### Using Your Own OpenAI API Key
+
+<Info>
+  Want to use your own OpenAI API key? See the [Bring Your Own Keys](/providers/bring-your-own-keys) guide.
+</Info>
+
+<Tabs>
+  <Tab title="Dashboard Setup">
+    <Steps>
+      <Step title="Navigate to Integrations">
+        Go to [app.boostgpt.co](https://app.boostgpt.co/integrations) and select **Integrations**
+      </Step>
+
+      <Step title="Select OpenAI">
+        Find and click on the **OpenAI** provider
+      </Step>
+
+      <Step title="Add API Key">
+        Enter your OpenAI API key and select which agents will use this key
+      </Step>
+
+      <Step title="Save Configuration">
+        Click save to apply your custom API key
+      </Step>
+    </Steps>
+
+    <Tip>
+      Using your own API key can reduce costs for high-volume applications and gives you direct control over rate limits.
+    </Tip>
+  </Tab>
+
+  <Tab title="Core SDK">
+    ```javascript bot.js
+    import { BoostGPT } from 'boostgpt';
+
+    const client = new BoostGPT({
+      project_id: process.env.BOOSTGPT_PROJECT_ID,
+      key: process.env.BOOSTGPT_API_KEY
+    });
+
+    // Create bot with OpenAI model
+    const botResponse = await client.createBot({
+      name: 'My GPT-5 Bot',
+      model: 'gpt-5-mini',
+      instruction: 'You are a helpful assistant.',
+      max_reply_tokens: 1000,
+      status: 'active'
+    });
+
+    if (botResponse.err) {
+      console.error('Error:', botResponse.err);
+    } else {
+      console.log('Bot created:', botResponse.response);
+    }
+    ```
+  </Tab>
+
+  <Tab title="Router SDK">
+    ```javascript router.js
+    import { Router, DiscordAdapter } from '@boostgpt/router';
+
+    const router = new Router({
+      apiKey: process.env.BOOSTGPT_API_KEY,
+      projectId: process.env.BOOSTGPT_PROJECT_ID,
+      defaultBotId: process.env.BOOSTGPT_BOT_ID, // Bot using OpenAI
+      adapters: [
+        new DiscordAdapter({
+          discordToken: process.env.DISCORD_TOKEN
+        })
+      ]
+    });
+
+    // Router automatically handles chat with your OpenAI bot
+    router.onMessage(async (message, context) => {
+      // Handle custom commands
+      if (message.content === '/help') {
+        return 'I can help you with anything!';
+      }
+
+      // Return null to let BoostGPT handle the message
+      return null;
+    });
+
+    await router.start();
+    console.log('✓ Router started with OpenAI bot');
+    ```
+  </Tab>
+</Tabs>
+
+## Model Selection Guide
+
+### When to Use Each Model
+
+<AccordionGroup>
+  <Accordion icon="sparkles" title="GPT-5 - Complex & Creative Tasks">
+    **Best for:**
+    - Creative writing and content generation
+    - Complex reasoning and analysis
+    - Multi-step problem solving
+    - High-stakes customer interactions
+
+    **Avoid for:**
+    - Simple FAQ responses
+    - High-volume/cost-sensitive applications
+
+    **Cost:** 5 credits per request
+  </Accordion>
+
+  <Accordion icon="bolt" title="GPT-5 Mini - Everyday Workhorse">
+    **Best for:**
+    - Customer support chatbots
+    - General conversation
+    - Content moderation
+    - Most production use cases
+
+    **Sweet spot:** Balance of performance and cost
+
+    **Cost:** 3 credits per request
+  </Accordion>
+
+  <Accordion icon="zap" title="GPT-5 Nano - Speed & Scale">
+    **Best for:**
+    - High-volume applications
+    - Simple queries and responses
+    - Quick classifications
+    - Prototyping and testing
+
+    **Cost:** 2 credits per request (most affordable GPT-5)
+  </Accordion>
+
+  <Accordion icon="brain" title="O1/O3 Mini - Deep Reasoning">
+    **Best for:**
+    - Mathematical problem solving
+    - Code debugging and optimization
+    - Scientific analysis
+    - Strategic planning
+
+    **Note:** Higher minimum tokens (2000+), slower responses
+
+    **Cost:** 3-6 credits per request
+  </Accordion>
+
+  <Accordion icon="circle-check" title="GPT-4o Mini - Budget Option">
+    **Best for:**
+    - Development and testing
+    - Simple chatbots
+    - Low-budget projects
+    - Learning and experimentation
+
+    **Cost:** 1 credit per request (cheapest option)
+  </Accordion>
+</AccordionGroup>
+
+## Performance Characteristics
+
+### Speed Comparison
+
+| Model | Speed | Typical Response Time |
+|-------|-------|----------------------|
+| GPT-4.1 Nano | ��� Very Fast | < 1s |
+| GPT-5 Nano | ��� Very Fast | < 2s |
+| GPT-4o Mini | �� Fast | 1-2s |
+| GPT-5 Mini | �� Fast | 2-3s |
+| GPT-4o | � Medium | 3-5s |
+| GPT-5 | � Medium | 3-5s |
+| O1 Mini | = Medium | 5-10s |
+| O1 | = Slow | 10-20s |
+
+### Context Windows
+
+- **GPT-5, GPT-5.1, O1**: 200,000 tokens (longest)
+- **GPT-4o, GPT-4.1 Mini, GPT-5 Nano**: 128,000 tokens
+- **GPT-4.1 Nano**: 64,000 tokens
+
+<Tip>
+  Longer context windows allow your bot to remember more conversation history and process longer documents.
+</Tip>
+
+## Best Practices
+
+### Optimize for Cost
+
+```javascript
+// Create bots with different models for different purposes
+const cheapBot = await client.createBot({
+  name: 'Quick Responses Bot',
+  model: 'gpt-4o-mini', // 1 credit - for simple queries
+  instruction: 'Provide quick, concise answers.'
+});
+
+const powerBot = await client.createBot({
+  name: 'Complex Analysis Bot',
+  model: 'gpt-5', // 5 credits - for complex tasks
+  instruction: 'Provide detailed analysis and explanations.'
+});
+
+// Router uses the bot specified in defaultBotId
+// For dynamic model selection, create separate bots and switch between them
+router.onMessage(async (message, context) => {
+  // Handle custom logic or return null for AI response
+  if (message.content === '/stats') {
+    return 'Bot running on GPT-5 Mini';
+  }
+
+  // Return null - router handles the message with your bot
+  return null;
+});
+```
+
+### Leverage Reasoning Models
+
+```javascript
+// Use O1 Mini for analytical tasks
+const response = await client.chat({
+  bot_id: 'your-bot-id',
+  message: 'Debug this Python code and explain the errors',
+  model: 'o1-mini', // Reasoning model
+  max_reply_tokens: 3000 // Higher for reasoning models
+});
+
+if (response.err) {
+  console.error('Error:', response.err);
+} else {
+  console.log('Analysis:', response.response.chat.reply);
+}
+```
+
+### Handle Rate Limits
+
+<Warning>
+  OpenAI has rate limits based on your API tier. BoostGPT automatically handles retries, but consider implementing request queuing for high-volume applications.
+</Warning>
+
+```javascript
+// Implement exponential backoff
+const sendWithRetry = async (messageData, maxRetries = 3) => {
+  for (let i = 0; i < maxRetries; i++) {
+    const response = await client.chat(messageData);
+
+    if (response.err && response.err.status === 429 && i < maxRetries - 1) {
+      // Rate limited, wait and retry
+      await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
+      continue;
+    }
+
+    return response;
+  }
+};
+
+// Usage
+const result = await sendWithRetry({
+  bot_id: 'your-bot-id',
+  message: 'Your message here'
+});
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion icon="circle-exclamation" title="Rate limit errors (429)">
+    **Cause:** Too many requests to OpenAI API
+
+    **Solutions:**
+    - Implement request throttling
+    - Use exponential backoff retries
+    - Upgrade your OpenAI API tier
+    - Switch to GPT-4o Mini for high-volume use
+  </Accordion>
+
+  <Accordion icon="circle-exclamation" title="Context length exceeded">
+    **Cause:** Input + completion tokens exceed model's context window
+
+    **Solutions:**
+    - Truncate conversation history
+    - Use models with larger context (GPT-5: 200K)
+    - Implement sliding window for message history
+  </Accordion>
+
+  <Accordion icon="circle-exclamation" title="Slow responses with O1 models">
+    **Expected behavior:** Reasoning models take longer
+
+    **Solutions:**
+    - Set user expectations (show "thinking..." indicator)
+    - Use O1 Mini instead of O1 for faster responses
+    - Reserve reasoning models for truly complex tasks
+  </Accordion>
+
+  <Accordion icon="circle-exclamation" title="High costs">
+    **Solutions:**
+    - Use GPT-5 Mini or GPT-4o Mini for most tasks
+    - Implement dynamic model selection
+    - Cache common responses
+    - Set max_tokens to limit completion length
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Model Comparison" icon="scale-balanced" href="/providers/model-comparison">
+    Compare OpenAI models with other providers
+  </Card>
+
+  <Card title="Reasoning Models" icon="brain" href="/providers/reasoning-models">
+    Deep dive into O1 and O3 reasoning capabilities
+  </Card>
+
+  <Card title="Bring Your Own Key" icon="key" href="/providers/bring-your-own-keys">
+    Use your own OpenAI API key
+  </Card>
+
+  <Card title="SDK Reference" icon="code" href="/sdk/core/api-reference">
+    Full API documentation
+  </Card>
+</CardGroup>

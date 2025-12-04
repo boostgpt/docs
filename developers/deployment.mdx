@@ -1,0 +1,134 @@
+---
+title: "Deployment"
+description: "Deploy your BoostGPT bots to production"
+---
+
+## Deployment Options
+
+<CardGroup cols={2}>
+  <Card title="Vercel" icon="triangle">
+    Deploy serverless functions with zero config
+  </Card>
+  <Card title="Railway" icon="train">
+    Deploy with automatic scaling
+  </Card>
+  <Card title="AWS Lambda" icon="aws">
+    Run on AWS serverless infrastructure
+  </Card>
+  <Card title="Docker" icon="docker">
+    Containerize and deploy anywhere
+  </Card>
+</CardGroup>
+
+## Deploy to Vercel
+
+### 1. Create API Route
+
+Create `api/chat.js`:
+
+```javascript
+import { BoostGPT } from 'boostgpt';
+
+const client = new BoostGPT({
+  project_id: process.env.BOOSTGPT_PROJECT_ID,
+  key: process.env.BOOSTGPT_API_KEY
+});
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const { message, bot_id } = req.body;
+
+  const response = await client.chat({
+    bot_id,
+    message
+  });
+
+  if (response.err) {
+    return res.status(500).json({ error: response.err });
+  }
+
+  return res.status(200).json({ response: response.response });
+}
+```
+
+### 2. Deploy
+
+```bash
+vercel --prod
+```
+
+## Deploy Router SDK
+
+### 1. Create Server
+
+```javascript
+import { Router, DiscordAdapter } from '@boostgpt/router';
+
+const router = new Router({
+  apiKey: process.env.BOOSTGPT_API_KEY,
+  projectId: process.env.BOOSTGPT_PROJECT_ID,
+  defaultBotId: process.env.BOOSTGPT_BOT_ID,
+  adapters: [
+    new DiscordAdapter({
+      discordToken: process.env.DISCORD_TOKEN
+    })
+  ]
+});
+
+await router.start();
+```
+
+### 2. Deploy to Railway
+
+```bash
+railway up
+```
+
+## Environment Variables
+
+Set these in your deployment platform:
+
+```bash
+BOOSTGPT_PROJECT_ID=your_project_id
+BOOSTGPT_API_KEY=your_api_key
+BOOSTGPT_BOT_ID=your_bot_id
+```
+
+## Docker Deployment
+
+```dockerfile
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --production
+
+COPY . .
+
+CMD ["node", "index.js"]
+```
+
+Build and run:
+
+```bash
+docker build -t boostgpt-bot .
+docker run -e BOOSTGPT_API_KEY=key boostgpt-bot
+```
+
+## Best Practices
+
+- Always use environment variables for credentials
+- Implement proper error handling
+- Use health check endpoints
+- Monitor with logging services
+- Set up auto-scaling for high traffic
+
+## Next Steps
+
+<Card title="Error Handling" icon="triangle-exclamation" href="/developers/error-handling">
+  Handle errors gracefully
+</Card>

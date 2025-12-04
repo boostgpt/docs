@@ -35,10 +35,10 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Documentation",
+        "tab": "Overview",
         "groups": [
           {
-            "group": "Getting Started",
+            "group": "Introduction",
             "pages": [
               "index",
               "quickstart",
@@ -46,55 +46,250 @@
             ]
           },
           {
-            "group": "Providers & Models",
+            "group": "Choose Your Path",
             "pages": [
-              "providers",
-              "models" 
+              "paths/creators",
+              "paths/developers",
+              "paths/integrations"
             ]
           },
           {
-            "group": "SDK",
+            "group": "Core Concepts",
             "pages": [
-              "sdk/overview",
+              "concepts/bots",
+              "concepts/projects",
+              "concepts/channels"
+            ]
+          },
+          {
+            "group": "Providers & Models",
+            "pages": [
+              "providers/overview",
+              "providers/bring-your-own-keys",
               {
-                "group": "Core SDK",
+                "group": "Supported Providers",
                 "pages": [
-                  "sdk/core/installation",
-                  "sdk/core/api-reference"
+                  "providers/openai",
+                  "providers/google",
+                  "providers/anthropic",
+                  "providers/xai",
+                  "providers/deepseek",
+                  "providers/mistral",
+                  "providers/cohere",
+                  "providers/groq",
+                  "providers/ollama"
                 ]
               },
-              {
-                "group": "Router SDK",
-                "pages": [
-                  "sdk/router/installation",
-                  "sdk/router/getting-started",
-                  "sdk/router/api-reference",
-                  "sdk/router/custom-adapters",
-                  {
-                    "group": "Adapters",
-                    "pages": [
-                      "sdk/router/adapters/discord",
-                      "sdk/router/adapters/telegram",
-                      "sdk/router/adapters/slack",
-                      "sdk/router/adapters/whatsapp",
-                      "sdk/router/adapters/crisp"
-                    ]
-                  }
-                ]
-              }
+              "providers/model-comparison",
+              "providers/reasoning-models"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "For Creators",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "creators/introduction",
+              "creators/quickstart",
+              "creators/training-your-agent"
+            ]
+          },
+          {
+            "group": "Features",
+            "pages": [
+              "creators/lead-capture",
+              "creators/branding",
+              "creators/analytics",
+              "creators/deploy"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "creators/integrations/overview",
+              "creators/integrations/email-tools",
+              "creators/integrations/crm",
+              "creators/integrations/calendar"
             ]
           },
           {
             "group": "Guides",
             "pages": [
-              "guides/deployment",
-              "guides/troubleshooting"
+              "creators/guides/increase-conversions",
+              "creators/guides/custom-domain",
+              "creators/guides/export-subscribers"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "For Developers",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "developers/introduction",
+              "developers/installation",
+              "developers/quickstart"
+            ]
+          },
+          {
+            "group": "Core SDK",
+            "pages": [
+              "sdk/core/overview",
+              "sdk/core/installation",
+              "sdk/core/bot-management",
+              "sdk/core/chat-api",
+              "sdk/core/training-data",
+              "sdk/core/api-reference"
+            ]
+          },
+          {
+            "group": "Router SDK",
+            "pages": [
+              "sdk/router/overview",
+              "sdk/router/installation",
+              "sdk/router/getting-started",
+              "sdk/router/message-handling",
+              "sdk/router/custom-adapters",
+              "sdk/router/api-reference",
+              {
+                "group": "Adapters",
+                "pages": [
+                  "sdk/router/adapters/overview",
+                  "sdk/router/adapters/discord",
+                  "sdk/router/adapters/telegram",
+                  "sdk/router/adapters/slack",
+                  "sdk/router/adapters/whatsapp",
+                  "sdk/router/adapters/crisp"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Advanced",
+            "pages": [
+              "developers/deployment",
+              "developers/error-handling",
+              "developers/webhooks",
+              "developers/rate-limits",
+              "developers/troubleshooting"
             ]
           },
           {
             "group": "Examples",
             "pages": [
-              "examples/use-cases"
+              "examples/basic-bot",
+              "examples/multi-channel",
+              "examples/custom-adapter",
+              "examples/with-integrations"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Integrations",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "integrations/introduction",
+              "integrations/quickstart",
+              "integrations/mcp-overview"
+            ]
+          },
+          {
+            "group": "Pre-Built Connectors",
+            "pages": [
+              "integrations/connectors/overview",
+              {
+                "group": "Scheduling & Calendar",
+                "pages": [
+                  "integrations/connectors/calendly",
+                  "integrations/connectors/google-calendar",
+                  "integrations/connectors/cal-com"
+                ]
+              },
+              {
+                "group": "Project Management",
+                "pages": [
+                  "integrations/connectors/notion",
+                  "integrations/connectors/asana",
+                  "integrations/connectors/jira",
+                  "integrations/connectors/linear",
+                  "integrations/connectors/trello",
+                  "integrations/connectors/monday",
+                  "integrations/connectors/clickup"
+                ]
+              },
+              {
+                "group": "Marketing & CRM",
+                "pages": [
+                  "integrations/connectors/hubspot",
+                  "integrations/connectors/mailchimp",
+                  "integrations/connectors/sendgrid",
+                  "integrations/connectors/substack"
+                ]
+              },
+              {
+                "group": "Developer Tools",
+                "pages": [
+                  "integrations/connectors/github",
+                  "integrations/connectors/vercel",
+                  "integrations/connectors/netlify",
+                  "integrations/connectors/sentry",
+                  "integrations/connectors/datadog"
+                ]
+              },
+              {
+                "group": "AI & Media",
+                "pages": [
+                  "integrations/connectors/stability-ai",
+                  "integrations/connectors/runway",
+                  "integrations/connectors/kling-ai",
+                  "integrations/connectors/luma-labs",
+                  "integrations/connectors/pexels",
+                  "integrations/connectors/unsplash"
+                ]
+              },
+              {
+                "group": "Utilities",
+                "pages": [
+                  "integrations/connectors/openweathermap",
+                  "integrations/connectors/mapbox",
+                  "integrations/connectors/uptimerobot"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Custom Integrations",
+            "pages": [
+              "integrations/custom/overview",
+              "integrations/custom/openapi",
+              "integrations/custom/postman",
+              "integrations/custom/mcp-server",
+              "integrations/custom/authentication"
+            ]
+          },
+          {
+            "group": "Connect External Tools",
+            "pages": [
+              "integrations/external/overview",
+              "integrations/external/claude-desktop",
+              "integrations/external/chatgpt",
+              "integrations/external/boostgpt-agents"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "integrations/guides/testing",
+              "integrations/guides/debugging",
+              "integrations/guides/best-practices"
             ]
           }
         ]
@@ -105,16 +300,29 @@
           {
             "group": "Overview",
             "pages": [
-              "api-reference/introduction"
+              "api-reference/introduction",
+              "api-reference/authentication",
+              "api-reference/errors",
+              "api-reference/rate-limits"
+            ]
+          },
+          {
+            "group": "Endpoints",
+            "pages": [
+              "api-reference/endpoints/bots",
+              "api-reference/endpoints/chat",
+              "api-reference/endpoints/training",
+              "api-reference/endpoints/projects",
+              "api-reference/endpoints/integrations"
             ]
           }
         ]
       },
-       {
+      {
         "tab": "Changelog",
         "groups": [
           {
-            "group": "Changelog",
+            "group": "Updates",
             "pages": [
               "changelog"
             ]

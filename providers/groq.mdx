@@ -1,0 +1,204 @@
+---
+title: "Groq"
+description: "Use ultra-fast LLM inference with Groq"
+---
+
+## Overview
+
+Groq provides blazing-fast inference for popular open-source models through their custom LPU hardware. Known for exceptional speed while maintaining strong model quality.
+
+## Available Models
+
+<CardGroup cols={2}>
+  <Card title="DeepSeek Llama (70B)" icon="brain">
+    **2 credits** • Distilled reasoning model
+
+    - 64K context window
+    - Excellent logical capabilities
+    - Speed: Fast • Cost: Low
+    - **Reasoning model** optimized for efficiency
+  </Card>
+
+  <Card title="Llama 3.3 Versatile (70B)" icon="sparkles">
+    **3 credits** • Versatile large model
+
+    - 128K context window
+    - Excellent reasoning across diverse tasks
+    - Speed: Fast • Cost: Medium
+    - Best for: General-purpose applications
+  </Card>
+
+  <Card title="Llama 3.1 Instant (8B)" icon="zap">
+    **1 credit** • Ultra-fast small model
+
+    - 128K context window
+    - Good reasoning with minimal latency
+    - Speed: Extremely Fast • Cost: Very Low
+    - Best for: Real-time applications
+  </Card>
+
+  <Card title="Qwen QWQ (32B)" icon="brain">
+    **2 credits** • Multilingual reasoning
+
+    - 32K context window
+    - Excellent reasoning and multilingual
+    - Speed: Fast • Cost: Low
+    - **Reasoning model** for diverse tasks
+  </Card>
+
+  <Card title="Qwen 3 (32B)" icon="bolt">
+    **2 credits** • Next-gen instruction model
+
+    - 32K context window
+    - Excellent instruction-following
+    - Speed: Fast • Cost: Low
+    - Best for: Strong language tasks
+  </Card>
+
+  <Card title="Mistral Saba (24B)" icon="circle-check">
+    **2 credits** • Reasoning and chat
+
+    - 32K context window
+    - Excellent reasoning
+    - Speed: Fast • Cost: Low
+    - Best for: Balanced performance
+  </Card>
+
+  <Card title="LLaMA 4 Maverick (17B 128E)" icon="crown">
+    **3 credits** • 128 experts model
+
+    - 128K context window
+    - Excellent for advanced instructions
+    - Speed: Medium • Cost: Medium
+    - Best for: Complex instruction tasks
+  </Card>
+
+  <Card title="LLaMA 4 Scout (17B 16E)" icon="search">
+    **1 credit** • 16 experts model
+
+    - 128K context window
+    - Good for efficient inference
+    - Speed: Fast • Cost: Low
+    - Best for: Lighter workloads
+  </Card>
+</CardGroup>
+
+## Model Comparison
+
+| Model | Credits | Context | Speed | Type | Best Use Case |
+|-------|---------|---------|-------|------|---------------|
+| **DeepSeek Llama 70B** | 2 | 64K | Fast | Reasoning | Efficient reasoning |
+| **Llama 3.3 Versatile** | 3 | 128K | Fast | General | Versatile applications |
+| **Llama 3.1 Instant** | 1 | 128K | Ultra Fast | Speed | Real-time apps |
+| **Qwen QWQ** | 2 | 32K | Fast | Reasoning | Multilingual reasoning |
+| **Qwen 3** | 2 | 32K | Fast | Instruction | Language tasks |
+| **Mistral Saba** | 2 | 32K | Fast | General | Balanced use |
+| **LLaMA 4 Maverick** | 3 | 128K | Medium | Advanced | Complex instructions |
+| **LLaMA 4 Scout** | 1 | 128K | Fast | Efficient | Light workloads |
+
+<Info>
+  **Groq's Strength**: Ultra-fast inference speeds (up to 10x faster) through custom LPU hardware while running quality open-source models.
+</Info>
+
+## Setup
+
+### Using BoostGPT-Hosted API Keys
+
+<Steps>
+  <Step title="Select Groq Model">
+    In your BoostGPT dashboard, select any Groq model when creating or configuring your bot.
+  </Step>
+
+  <Step title="Choose Your Model">
+    - **Llama 3.1 Instant**: For real-time, ultra-fast responses
+    - **Llama 3.3 Versatile**: For balanced performance
+    - **DeepSeek Llama 70B**: For reasoning tasks
+    - **Qwen models**: For multilingual applications
+  </Step>
+</Steps>
+
+### Using Your Own Groq API Key
+
+<Tabs>
+  <Tab title="Dashboard Setup">
+    <Steps>
+      <Step title="Navigate to Integrations">
+        Go to [app.boostgpt.co](https://app.boostgpt.co/integrations) and select **Integrations**
+      </Step>
+
+      <Step title="Select Groq">
+        Find and click on the **Groq** provider
+      </Step>
+
+      <Step title="Add API Key">
+        Enter your Groq API key and select which agents will use this key
+      </Step>
+
+      <Step title="Save Configuration">
+        Click save to apply your custom API key
+      </Step>
+    </Steps>
+  </Tab>
+
+  <Tab title="Core SDK">
+    ```javascript bot.js
+    import { BoostGPT } from 'boostgpt';
+
+    const client = new BoostGPT({
+      project_id: process.env.BOOSTGPT_PROJECT_ID,
+      key: process.env.BOOSTGPT_API_KEY
+    });
+
+    // Create bot with Groq model
+    const botResponse = await client.createBot({
+      name: 'My Groq Bot',
+      model: 'llama-3.1-8b-instant', // Ultra-fast!
+      instruction: 'You are a quick and helpful assistant.',
+      max_reply_tokens: 1000,
+      status: 'active'
+    });
+
+    if (botResponse.err) {
+      console.error('Error:', botResponse.err);
+    } else {
+      console.log('Bot created:', botResponse.response);
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Performance Benefits
+
+<Tip>
+  Groq's LPU (Language Processing Unit) hardware provides inference speeds up to 10x faster than traditional GPUs, making it ideal for real-time applications.
+</Tip>
+
+### Speed Comparison
+
+- **Llama 3.1 Instant**: < 0.5s typical response time
+- **DeepSeek Llama 70B**: < 1s response time
+- **Llama 3.3 Versatile**: 1-2s response time
+
+<Check>
+  Perfect for applications requiring immediate responses like live chat, gaming NPCs, or real-time analysis.
+</Check>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Reasoning Models" icon="brain" href="/providers/reasoning-models">
+    Learn about reasoning models on Groq
+  </Card>
+
+  <Card title="Model Comparison" icon="scale-balanced" href="/providers/model-comparison">
+    Compare Groq with other providers
+  </Card>
+
+  <Card title="SDK Reference" icon="code" href="/sdk/core/api-reference">
+    Full API documentation
+  </Card>
+
+  <Card title="Bring Your Own Key" icon="key" href="/providers/bring-your-own-keys">
+    Use your own Groq API key
+  </Card>
+</CardGroup>

@@ -1,0 +1,528 @@
+---
+title: "Reasoning Models"
+description: "Deep dive into advanced reasoning models"
+---
+
+## Overview
+
+Reasoning models use explicit step-by-step thinking to solve complex problems. Unlike standard models that generate immediate responses, reasoning models "think" through problems methodically, making them ideal for analytical tasks.
+
+## What Are Reasoning Models?
+
+Reasoning models employ a different approach:
+
+1. **Explicit Thinking** - Show their thought process
+2. **Multi-Step Analysis** - Break problems into steps
+3. **Self-Correction** - Refine answers progressively
+4. **Higher Token Usage** - Require more tokens (2000+ minimum)
+5. **Slower Response** - Take longer but more accurate
+
+<Info>
+  Think of reasoning models as "showing their work" like in math class - they explain how they reached the answer, not just what the answer is.
+</Info>
+
+## Available Reasoning Models
+
+### OpenAI O-Series
+
+<CardGroup cols={2}>
+  <Card title="O1" icon="brain">
+    **6 credits** • Deepest reasoning
+
+    - 200K context window
+    - 3000 min completion tokens
+    - Speed: Slow (10-20s)
+    - Best for: Complex problems, deep analysis
+  </Card>
+
+  <Card title="O1 Mini" icon="bolt">
+    **3 credits** • Faster reasoning
+
+    - 128K context window
+    - 2000 min completion tokens
+    - Speed: Medium (5-10s)
+    - Best for: Balanced reasoning tasks
+  </Card>
+
+  <Card title="O3 Mini" icon="sparkles">
+    **3 credits** • Next-gen compact
+
+    - 128K context window
+    - 2000 min completion tokens
+    - Speed: Medium (5-10s)
+    - Best for: Advanced reasoning
+  </Card>
+
+  <Card title="GPT-5.1" icon="lightbulb">
+    **4 credits** • Enhanced reasoning
+
+    - 200K context window
+    - 2000 min completion tokens
+    - Speed: Medium
+    - Best for: General reasoning tasks
+  </Card>
+</CardGroup>
+
+### Anthropic Extended Thinking
+
+<Card title="Claude 3 Opus Extended Thinking" icon="brain">
+  **6 credits** • Deep analytical reasoning
+
+  - 200K context window
+  - 2500 min completion tokens
+  - Speed: Slow
+  - Best for: Strategic planning, research
+</Card>
+
+### Google Flash Thinking
+
+<Card title="Gemini 2.0 Flash Thinking" icon="brain">
+  **3 credits** • Fast reasoning
+
+  - 1,000,000 token context window
+  - 2000 min completion tokens
+  - Speed: Medium (4-6s)
+  - Best for: Analytical tasks with large context
+</Card>
+
+### xAI Grok Reasoning
+
+<Card title="Grok 3 Reasoning" icon="brain">
+  **4 credits** • Enhanced analytical
+
+  - 128K context window
+  - 2000 min completion tokens
+  - Speed: Medium
+  - Best for: Problem-solving, analysis
+</Card>
+
+### DeepSeek R1
+
+<Card title="DeepSeek R1" icon="brain">
+  **2 credits** • Most affordable reasoning
+
+  - 64K context window
+  - 2000 min completion tokens
+  - Speed: Medium
+  - Best for: Cost-effective reasoning
+</Card>
+
+### Groq Reasoning Models
+
+<Card title="DeepSeek Llama 70B (Groq)" icon="bolt">
+  **2 credits** • Fast reasoning on LPU
+
+  - 64K context window
+  - 2000 min completion tokens
+  - Speed: Fast (ultra-fast inference)
+  - Best for: Efficient reasoning at speed
+</Card>
+
+<Card title="Qwen QWQ 32B (Groq)" icon="globe">
+  **2 credits** • Multilingual reasoning
+
+  - 32K context window
+  - 2000 min completion tokens
+  - Speed: Fast
+  - Best for: Multilingual analytical tasks
+</Card>
+
+## Reasoning Model Comparison
+
+| Model | Credits | Context | Speed | Reasoning Depth | Best For |
+|-------|---------|---------|-------|-----------------|----------|
+| **O1** | 6 | 200K | Slow | ⭐⭐⭐⭐⭐ | Most thorough |
+| **Claude 3 Opus Extended** | 6 | 200K | Slow | ⭐⭐⭐⭐⭐ | Strategic thinking |
+| **Grok 3 Reasoning** | 4 | 128K | Medium | ⭐⭐⭐⭐ | Problem-solving |
+| **GPT-5.1** | 4 | 200K | Medium | ⭐⭐⭐⭐ | General reasoning |
+| **O1 Mini** | 3 | 128K | Medium | ⭐⭐⭐⭐ | Fast reasoning |
+| **O3 Mini** | 3 | 128K | Medium | ⭐⭐⭐⭐ | Next-gen reasoning |
+| **Gemini 2.0 Flash Thinking** | 3 | 1M | Medium | ⭐⭐⭐⭐ | Large context reasoning |
+| **DeepSeek R1** | 2 | 64K | Medium | ⭐⭐⭐ | Budget reasoning |
+| **DeepSeek Llama 70B (Groq)** | 2 | 64K | Fast | ⭐⭐⭐ | Speed + reasoning |
+| **Qwen QWQ (Groq)** | 2 | 32K | Fast | ⭐⭐⭐ | Multilingual |
+
+## When to Use Reasoning Models
+
+### Perfect For
+
+<AccordionGroup>
+  <Accordion icon="calculator" title="Mathematical Problems">
+    Solving complex math, physics, or engineering problems that require step-by-step work.
+
+    ```javascript
+    const response = await client.chat({
+      bot_id: 'math-bot',
+      model: 'o1-mini',
+      message: 'Solve: If f(x) = x^2 + 3x - 4, find where f(x) = 0',
+      max_reply_tokens: 2000
+    });
+    ```
+  </Accordion>
+
+  <Accordion icon="code" title="Code Debugging">
+    Analyzing code to find bugs, understand logic, and suggest improvements.
+
+    ```javascript
+    const response = await client.chat({
+      bot_id: 'debug-bot',
+      message: `Debug this function:\n\n${codeSnippet}`,
+      reasoning_mode: 'stepwise', // Step-by-step analysis
+      max_reply_tokens: 2500
+    });
+    ```
+  </Accordion>
+
+  <Accordion icon="chart-line" title="Strategic Planning">
+    Business analysis, market research, competitive analysis.
+
+    Best models: O1, Claude 3 Opus Extended
+  </Accordion>
+
+  <Accordion icon="flask" title="Scientific Analysis">
+    Research paper analysis, experimental design, data interpretation.
+
+    Best models: O1, Gemini 2.0 Flash Thinking
+  </Accordion>
+
+  <Accordion icon="puzzle-piece" title="Logic Puzzles">
+    Solving riddles, logic games, complex reasoning challenges.
+
+    Best models: O1 Mini, DeepSeek R1 (budget option)
+  </Accordion>
+</AccordionGroup>
+
+### Not Ideal For
+
+<Warning>
+  Reasoning models are overkill for these tasks. Use standard models instead:
+</Warning>
+
+- Simple conversations
+- Quick factual questions
+- Creative writing (use GPT-5 or Claude Opus instead)
+- High-volume simple queries (too slow and expensive)
+- Real-time chat applications (too slow)
+
+## Usage Examples
+
+### OpenAI O1 - Deep Analysis
+
+```javascript
+import { BoostGPT } from 'boostgpt';
+
+const client = new BoostGPT({
+  project_id: process.env.BOOSTGPT_PROJECT_ID,
+  key: process.env.BOOSTGPT_API_KEY
+});
+
+// Create bot with O1 model
+const botResponse = await client.createBot({
+  name: 'Deep Thinker',
+  model: 'o1',
+  instruction: 'You are a logical analyst.',
+  max_reply_tokens: 3000, // O1 needs minimum 3000
+  status: 'active'
+});
+
+// Use for complex analysis
+const analysisResponse = await client.chat({
+  bot_id: botResponse.response.id,
+  message: 'Analyze the pros and cons of different database architectures for a high-traffic social media platform',
+  max_reply_tokens: 3000
+});
+
+if (analysisResponse.err) {
+  console.error('Error:', analysisResponse.err);
+} else {
+  console.log('Analysis:', analysisResponse.response.chat.reply);
+}
+```
+
+### DeepSeek R1 - Budget Reasoning
+
+```javascript
+// Most affordable reasoning model
+const budgetBot = await client.createBot({
+  name: 'Budget Reasoner',
+  model: 'deepseek-reasoner',
+  instruction: 'You solve problems step-by-step.',
+  max_reply_tokens: 2000,
+  status: 'active'
+});
+
+const response = await client.chat({
+  bot_id: budgetBot.response.id,
+  message: 'Debug this Python function and explain the issue',
+  max_reply_tokens: 2000
+});
+```
+
+### Gemini 2.0 Flash Thinking - Large Context
+
+```javascript
+// Use Gemini for reasoning with large context
+const geminiBot = await client.createBot({
+  name: 'Context Reasoner',
+  model: 'gemini-2.0-flash-thinking',
+  instruction: 'Analyze documents thoroughly.',
+  max_reply_tokens: 2000,
+  status: 'active'
+});
+
+// Can handle large documents with reasoning
+const docAnalysis = await client.chat({
+  bot_id: geminiBot.response.id,
+  message: `Analyze this entire document:\n\n${largeDocument}`,
+  max_reply_tokens: 2000
+});
+```
+
+### Override Reasoning Mode
+
+All reasoning models support these modes:
+
+| Mode | Description | Credit Multiplier |
+|------|-------------|-------------------|
+| `auto` | Automatically selects best approach | Varies |
+| `standard` | Quick, straightforward answers | 1x |
+| `stepwise` | Breaks problems into steps with sources | Up to 2x |
+| `react` | Deep thinking with reflection cycles | Up to 5x |
+| `interactive` | Uses tools to gather info and perform calculations | Up to 10x |
+
+```javascript
+// Use reasoning model with different modes
+const reasoningBot = await client.createBot({
+  name: 'Deep Thinker',
+  model: 'o1',
+  instruction: 'You solve complex problems.',
+  reasoning_mode: 'auto', // Let it choose
+  max_reply_tokens: 3000,
+  status: 'active'
+});
+
+// Override reasoning mode per request
+const quickAnswer = await client.chat({
+  bot_id: reasoningBot.response.id,
+  message: 'What is 2+2?',
+  reasoning_mode: 'standard' // Quick mode (1x credit)
+});
+
+const deepThinking = await client.chat({
+  bot_id: reasoningBot.response.id,
+  message: 'Develop a 5-year business strategy',
+  reasoning_mode: 'react' // Deep Thinking (up to 5x credit)
+});
+
+const withTools = await client.chat({
+  bot_id: reasoningBot.response.id,
+  message: 'Research current market trends and analyze',
+  reasoning_mode: 'interactive' // Uses tools (up to 10x credit)
+});
+```
+
+## Best Practices
+
+### Set Appropriate Token Limits
+
+```javascript
+// Reasoning models need higher limits
+const config = {
+  'o1': { min: 3000, recommended: 4000 },
+  'o1-mini': { min: 2000, recommended: 3000 },
+  'deepseek-reasoner': { min: 2000, recommended: 2500 },
+  'gemini-2.0-flash-thinking': { min: 2000, recommended: 3000 },
+  'claude-3-opus-extended-thinking': { min: 2500, recommended: 3000 }
+};
+```
+
+### Handle Longer Wait Times
+
+```javascript
+// Add loading indicators for reasoning models
+router.onMessage(async (message, context) => {
+  if (message.content.includes('analyze')) {
+    // Send initial message
+    await context.adapter.sendMessage(
+      message.userId,
+      'Thinking deeply about this... ⏳'
+    );
+
+    // Return null - let router handle with reasoning bot
+    return null;
+  }
+
+  return null;
+});
+```
+
+### Cost Optimization
+
+```javascript
+// Use cheaper models for simple tasks, reasoning for complex
+const isComplexQuery = (message) => {
+  const keywords = ['analyze', 'debug', 'solve', 'explain why', 'compare'];
+  return keywords.some(kw => message.toLowerCase().includes(kw));
+};
+
+// Choose bot based on complexity
+const botId = isComplexQuery(userMessage) 
+  ? reasoningBotId  // 3-6 credits
+  : standardBotId;  // 1-2 credits
+
+const response = await client.chat({
+  bot_id: botId,
+  message: userMessage
+});
+```
+
+### Cache Common Analyses
+
+```javascript
+// Cache reasoning results for common queries
+const cache = new Map();
+
+const getAnalysis = async (query) => {
+  if (cache.has(query)) {
+    return cache.get(query);
+  }
+
+  const response = await client.chat({
+    bot_id: reasoningBotId,
+    message: query,
+    max_reply_tokens: 2000
+  });
+
+  const result = response.response.chat.reply;
+  cache.set(query, result);
+  return result;
+};
+```
+
+## Performance Comparison
+
+### Speed vs Accuracy Tradeoff
+
+| Model | Avg Response Time | Accuracy | Cost Efficiency |
+|-------|-------------------|----------|-----------------|
+| **O1** | 10-20s | ⭐⭐⭐⭐⭐ | Low (6 credits) |
+| **O1 Mini** | 5-10s | ⭐⭐⭐⭐ | Medium (3 credits) |
+| **DeepSeek R1** | 5-8s | ⭐⭐⭐ | High (2 credits) |
+| **Gemini Flash Thinking** | 4-6s | ⭐⭐⭐⭐ | High (3 credits) |
+| **Groq DeepSeek Llama** | 2-4s | ⭐⭐⭐ | Very High (2 credits) |
+
+<Tip>
+  **Best Value**: DeepSeek R1 (2 credits) or Gemini 2.0 Flash Thinking (3 credits) offer the best balance of cost and capability.
+</Tip>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion icon="circle-exclamation" title="Responses too slow">
+    **Expected:** Reasoning models take longer
+
+    **Solutions:**
+    - Use O1 Mini instead of O1
+    - Use DeepSeek R1 for faster reasoning
+    - Try Groq's reasoning models for ultra-fast
+    - Add progress indicators for users
+  </Accordion>
+
+  <Accordion icon="circle-exclamation" title="High costs">
+    **Cause:** Reasoning models use more tokens and credits
+
+    **Solutions:**
+    - Use only for complex tasks
+    - Try DeepSeek R1 (2 credits)
+    - Cache results for common queries
+    - Use standard models for simple tasks
+  </Accordion>
+
+  <Accordion icon="circle-exclamation" title="Not showing thinking process">
+    **Note:** Some models show thinking, others don't
+
+    **Details:**
+    - O1 series: Shows detailed thinking
+    - DeepSeek R1: Shows reasoning steps
+    - Claude Extended: Implicit thinking
+    - Gemini Thinking: Shows analysis process
+  </Accordion>
+
+  <Accordion icon="circle-exclamation" title="Token limit errors">
+    **Cause:** Insufficient max_reply_tokens
+
+    **Solutions:**
+    - Set minimum 2000 tokens
+    - Use 3000+ for O1
+    - Use 2500+ for Claude Extended
+    - Check model-specific requirements
+  </Accordion>
+</AccordionGroup>
+
+## Real-World Use Cases
+
+### Code Review Assistant
+
+```javascript
+// Automated code review with O1 Mini
+const reviewCode = async (pullRequestDiff) => {
+  const response = await client.chat({
+    bot_id: 'code-reviewer-bot',
+    message: `Review this code change:\n\n${pullRequestDiff}\n\nProvide:\n1. Bug detection\n2. Performance issues\n3. Best practice violations\n4. Security concerns`,
+    max_reply_tokens: 3000
+  });
+
+  return response.response.chat.reply;
+};
+```
+
+### Business Strategy Advisor
+
+```javascript
+// Strategic planning with deep thinking
+const strategize = async (businessData) => {
+  const response = await client.chat({
+    bot_id: 'strategy-bot',
+    message: `Given this data:\n${businessData}\n\nDevelop a comprehensive strategy`,
+    reasoning_mode: 'react', // Deep thinking (up to 5x credit)
+    max_reply_tokens: 3000
+  });
+
+  return response.response.chat.reply;
+};
+```
+
+### Math Tutor
+
+```javascript
+// Step-by-step math solutions with DeepSeek R1
+const solveMath = async (problem) => {
+  const response = await client.chat({
+    bot_id: 'math-tutor-bot',
+    message: `Solve this step-by-step:\n${problem}`,
+    max_reply_tokens: 2000
+  });
+
+  return response.response.chat.reply;
+};
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Model Comparison" icon="scale-balanced" href="/providers/model-comparison">
+    Compare all models
+  </Card>
+
+  <Card title="Provider Overview" icon="list" href="/providers/overview">
+    See all providers
+  </Card>
+
+  <Card title="OpenAI O-Series" icon="openai" href="/providers/openai">
+    Learn about O1 models
+  </Card>
+
+  <Card title="DeepSeek R1" icon="brain" href="/providers/deepseek">
+    Budget reasoning option
+  </Card>
+</CardGroup>

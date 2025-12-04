@@ -1,0 +1,123 @@
+---
+title: "Core SDK Overview"
+description: "Build and manage AI agents with the BoostGPT Core SDK"
+---
+
+## What is the Core SDK?
+
+The Core SDK provides programmatic access to create, manage, and interact with BoostGPT agents. It handles bot management, chat interactions, and training data.
+
+## Installation
+
+```bash
+npm install boostgpt
+```
+
+## Quick Start
+
+```javascript
+import { BoostGPT } from 'boostgpt';
+
+const client = new BoostGPT({
+  project_id: process.env.BOOSTGPT_PROJECT_ID,
+  key: process.env.BOOSTGPT_API_KEY
+});
+```
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="Bot Management" icon="robot" href="/sdk/core/bot-management">
+    Create, update, and delete bots
+  </Card>
+  <Card title="Chat API" icon="messages" href="/sdk/core/chat-api">
+    Send messages and get AI responses
+  </Card>
+  <Card title="Training Data" icon="book" href="/sdk/core/training-data">
+    Add knowledge to your bots
+  </Card>
+  <Card title="API Reference" icon="code" href="/sdk/core/api-reference">
+    Complete method documentation
+  </Card>
+</CardGroup>
+
+## Response Format
+
+All SDK methods return a consistent format:
+
+```javascript
+{
+  err: null | string,      // Error message if failed
+  response: object | null  // Response data if successful
+}
+```
+
+Always check `err` before using `response`:
+
+```javascript
+const result = await client.createBot({
+  name: 'My Bot',
+  model: 'gpt-5-mini',
+  instruction: 'You are helpful.'
+});
+
+if (result.err) {
+  console.error('Error:', result.err);
+} else {
+  console.log('Success:', result.response);
+}
+```
+
+## Available Methods
+
+### Bot Management
+- `createBot()` - Create a new bot
+- `updateBot()` - Update bot settings
+- `deleteBot()` - Delete a bot
+- `getBot()` - Get bot details
+- `listBots()` - List all bots
+
+### Chat
+- `chat()` - Send message and get response
+- `chatStream()` - Stream responses in real-time
+
+### Training
+- `addTraining()` - Add training content
+- `listTraining()` - List training data
+- `deleteTraining()` - Remove training data
+
+## Example Usage
+
+```javascript
+// Create a bot
+const bot = await client.createBot({
+  name: 'Support Bot',
+  model: 'gpt-5-mini',
+  instruction: 'You are a customer support assistant.'
+});
+
+// Add training
+await client.addTraining({
+  bot_id: bot.response.id,
+  content: 'We offer 24/7 support at support@example.com'
+});
+
+// Chat
+const response = await client.chat({
+  bot_id: bot.response.id,
+  message: 'How can I contact support?'
+});
+
+console.log('Bot:', response.response);
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Installation" icon="download" href="/sdk/core/installation">
+    Install and configure SDK
+  </Card>
+  <Card title="Bot Management" icon="robot" href="/sdk/core/bot-management">
+    Create and manage bots
+  </Card>
+</CardGroup>

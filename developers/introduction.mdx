@@ -1,0 +1,81 @@
+---
+title: "Developers Introduction"
+description: "Build AI agents programmatically with BoostGPT SDKs"
+---
+
+## For Developers
+
+BoostGPT provides powerful SDKs to build, manage, and deploy AI agents programmatically.
+
+## Two SDKs
+
+<CardGroup cols={2}>
+  <Card title="Core SDK" icon="code" href="/sdk/core/overview">
+    Create and manage bots, handle chat interactions, train agents
+  </Card>
+  <Card title="Router SDK" icon="route" href="/sdk/router/overview">
+    Deploy bots across Discord, Telegram, Slack, WhatsApp, and more
+  </Card>
+</CardGroup>
+
+## Quick Example
+
+```javascript
+import { BoostGPT } from 'boostgpt';
+
+const client = new BoostGPT({
+  project_id: process.env.BOOSTGPT_PROJECT_ID,
+  key: process.env.BOOSTGPT_API_KEY
+});
+
+// Create a bot
+const bot = await client.createBot({
+  name: 'Support Bot',
+  model: 'gpt-5-mini',
+  instruction: 'You are a helpful support assistant.'
+});
+
+// Chat with the bot
+const response = await client.chat({
+  bot_id: bot.response.id,
+  message: 'How can I reset my password?'
+});
+
+if (response.err) {
+  console.error('Error:', response.err);
+} else {
+  console.log('Bot:', response.response);
+}
+```
+
+## What You Can Build
+
+- **Multi-channel bots** - Deploy across Discord, Telegram, Slack, WhatsApp
+- **Custom integrations** - Connect to your own tools and APIs
+- **Programmatic agents** - Manage fleets of specialized agents
+- **Automated workflows** - Chain multiple agents together
+
+## Getting Started
+
+<Steps>
+  <Step title="Install SDK">
+    Install the Core SDK or Router SDK via npm
+  </Step>
+  <Step title="Get API Keys">
+    Generate API keys from your dashboard
+  </Step>
+  <Step title="Build">
+    Create your first bot programmatically
+  </Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Installation" icon="download" href="/developers/installation">
+    Install BoostGPT SDKs
+  </Card>
+  <Card title="Quickstart" icon="rocket" href="/developers/quickstart">
+    Build your first bot
+  </Card>
+</CardGroup>

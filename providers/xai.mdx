@@ -1,0 +1,150 @@
+---
+title: "xAI"
+description: "Use Grok models from xAI in your BoostGPT agents"
+---
+
+## Overview
+
+xAI's Grok models bring real-time knowledge and unique capabilities to your agents. Known for their direct, informative responses and ability to access current information.
+
+## Available Models
+
+<CardGroup cols={2}>
+  <Card title="Grok 4.1 Fast Non-Reasoning" icon="bolt">
+    **2 credits** • Optimized for speed
+
+    - 128K context window
+    - Good reasoning with fast responses
+    - Speed: Fast • Cost: Low
+    - Best for: Real-time applications
+  </Card>
+
+  <Card title="Grok 4 Fast Non-Reasoning" icon="zap">
+    **2 credits** • Fast and efficient
+
+    - 128K context window
+    - Good reasoning for quick tasks
+    - Speed: Fast • Cost: Low
+    - Best for: Quick responses
+  </Card>
+
+  <Card title="Grok 3" icon="sparkles">
+    **2 credits** • Versatile model
+
+    - 128K context window
+    - Excellent reasoning capabilities
+    - Speed: Medium • Cost: Medium
+    - Best for: Diverse applications
+  </Card>
+
+  <Card title="Grok 3 Mini" icon="circle">
+    **1 credit** • Compact and efficient
+
+    - 64K context window
+    - Good reasoning at low cost
+    - Speed: Fast • Cost: Low
+    - Best for: Simple tasks, high volume
+  </Card>
+
+  <Card title="Grok 3 Reasoning" icon="brain">
+    **4 credits** • Enhanced reasoning
+
+    - 128K context window
+    - Excellent analytical capabilities
+    - Speed: Medium • Cost: Medium
+    - **Reasoning model** for complex tasks
+  </Card>
+</CardGroup>
+
+## Model Comparison
+
+| Model | Credits | Context | Speed | Reasoning | Best Use Case |
+|-------|---------|---------|-------|-----------|---------------|
+| **Grok 4.1 Fast** | 2 | 128K | Fast | Good | Real-time apps, quick responses |
+| **Grok 4 Fast** | 2 | 128K | Fast | Good | General fast applications |
+| **Grok 3** | 2 | 128K | Medium | Excellent | Balanced general use |
+| **Grok 3 Mini** | 1 | 64K | Fast | Good | High-volume, simple tasks |
+| **Grok 3 Reasoning** | 4 | 128K | Medium | Excellent | Analytical, problem-solving |
+
+<Info>
+  **Grok's Strength**: Fast responses with current knowledge and straightforward, informative answers.
+</Info>
+
+## Setup
+
+### Using BoostGPT-Hosted API Keys
+
+<Steps>
+  <Step title="Select Grok Model">
+    In your BoostGPT dashboard, select any Grok model when creating or configuring your bot.
+  </Step>
+
+  <Step title="Choose Your Model">
+    - **Grok 3**: Best for balanced performance
+    - **Grok 4.1 Fast**: When you need speed
+    - **Grok 3 Mini**: Cost-effective for simple tasks
+    - **Grok 3 Reasoning**: Complex analytical tasks
+  </Step>
+</Steps>
+
+### Using Your Own xAI API Key
+
+<Tabs>
+  <Tab title="Dashboard Setup">
+    <Steps>
+      <Step title="Navigate to Integrations">
+        Go to [app.boostgpt.co](https://app.boostgpt.co/integrations) and select **Integrations**
+      </Step>
+
+      <Step title="Select xAI">
+        Find and click on the **xAI** provider
+      </Step>
+
+      <Step title="Add API Key">
+        Enter your xAI API key and select which agents will use this key
+      </Step>
+
+      <Step title="Save Configuration">
+        Click save to apply your custom API key
+      </Step>
+    </Steps>
+  </Tab>
+
+  <Tab title="Core SDK">
+    ```javascript bot.js
+    import { BoostGPT } from 'boostgpt';
+
+    const client = new BoostGPT({
+      key: process.env.BOOSTGPT_API_KEY,
+      project_id: process.env.BOOSTGPT_PROJECT_ID
+    });
+
+    // Create bot with Grok model
+    const bot = await client.bots.create({
+      name: 'My Grok Bot',
+      model: 'grok-3',
+      system_prompt: 'You are a helpful and direct assistant.'
+    });
+    ```
+  </Tab>
+</Tabs>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Model Comparison" icon="scale-balanced" href="/providers/model-comparison">
+    Compare Grok with other providers
+  </Card>
+
+  <Card title="Reasoning Models" icon="brain" href="/providers/reasoning-models">
+    Learn about Grok 3 Reasoning
+  </Card>
+
+  <Card title="SDK Reference" icon="code" href="/sdk/core/api-reference">
+    Full API documentation
+  </Card>
+
+  <Card title="Provider Overview" icon="list" href="/providers/overview">
+    See all available providers
+  </Card>
+</CardGroup>

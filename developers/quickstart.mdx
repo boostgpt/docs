@@ -1,0 +1,117 @@
+---
+title: "Quickstart"
+description: "Build your first bot in 5 minutes"
+---
+
+## Create Your First Bot
+
+```javascript
+import { BoostGPT } from 'boostgpt';
+
+const client = new BoostGPT({
+  project_id: process.env.BOOSTGPT_PROJECT_ID,
+  key: process.env.BOOSTGPT_API_KEY
+});
+
+// Create a bot
+const botResponse = await client.createBot({
+  name: 'My First Bot',
+  model: 'gpt-5-mini',
+  instruction: 'You are a helpful assistant.',
+  max_reply_tokens: 1000,
+  status: 'active'
+});
+
+if (botResponse.err) {
+  console.error('Error creating bot:', botResponse.err);
+  process.exit(1);
+}
+
+const bot = botResponse.response;
+console.log('Bot created:', bot.id);
+```
+
+## Chat with Your Bot
+
+```javascript
+const chatResponse = await client.chat({
+  bot_id: bot.id,
+  message: 'Hello! How are you?'
+});
+
+if (chatResponse.err) {
+  console.error('Error:', chatResponse.err);
+} else {
+  console.log('Bot response:', chatResponse.response);
+}
+```
+
+## Add Training Data
+
+```javascript
+const trainingResponse = await client.addTraining({
+  bot_id: bot.id,
+  content: 'Our product is called BoostGPT. It helps developers build AI agents.',
+  type: 'text'
+});
+
+if (trainingResponse.err) {
+  console.error('Error adding training:', trainingResponse.err);
+} else {
+  console.log('Training added successfully');
+}
+```
+
+## Complete Example
+
+```javascript
+import { BoostGPT } from 'boostgpt';
+
+const client = new BoostGPT({
+  project_id: process.env.BOOSTGPT_PROJECT_ID,
+  key: process.env.BOOSTGPT_API_KEY
+});
+
+async function main() {
+  // Create bot
+  const botResponse = await client.createBot({
+    name: 'Support Bot',
+    model: 'gpt-5-mini',
+    instruction: 'You are a helpful customer support assistant.'
+  });
+
+  if (botResponse.err) {
+    console.error('Error:', botResponse.err);
+    return;
+  }
+
+  const bot = botResponse.response;
+
+  // Add training
+  await client.addTraining({
+    bot_id: bot.id,
+    content: 'We offer 24/7 support. Contact us at support@example.com'
+  });
+
+  // Chat
+  const response = await client.chat({
+    bot_id: bot.id,
+    message: 'How can I contact support?'
+  });
+
+  console.log('Bot:', response.response);
+}
+
+main();
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Core SDK" icon="code" href="/sdk/core/overview">
+    Explore Core SDK features
+  </Card>
+  <Card title="Router SDK" icon="route" href="/sdk/router/overview">
+    Deploy to multiple channels
+  </Card>
+</CardGroup>

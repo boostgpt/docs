@@ -1,0 +1,137 @@
+---
+title: "Mistral AI"
+description: "Use Mistral models in your BoostGPT agents"
+---
+
+## Overview
+
+Mistral AI provides open and efficient generative AI models with strong performance across various tasks. Mistral models offer a good balance of capability and cost-effectiveness.
+
+## Available Models
+
+<CardGroup cols={2}>
+  <Card title="Mistral Large" icon="crown">
+    **4 credits** • Most powerful Mistral model
+
+    - 128K context window
+    - Excellent reasoning capabilities
+    - Speed: Medium • Cost: Medium
+    - Best for: Complex tasks, demanding applications
+  </Card>
+
+  <Card title="Mistral Medium" icon="sparkles">
+    **3 credits** • Mid-tier model
+
+    - 32K context window
+    - Excellent reasoning for most tasks
+    - Speed: Medium • Cost: Medium
+    - Best for: Balanced production use
+  </Card>
+
+  <Card title="Mistral Small" icon="zap">
+    **1 credit** • Efficient and fast
+
+    - 32K context window
+    - Good reasoning at low cost
+    - Speed: Fast • Cost: Low
+    - Best for: Simple tasks, high volume
+  </Card>
+</CardGroup>
+
+## Model Comparison
+
+| Model | Credits | Context | Speed | Reasoning | Best Use Case |
+|-------|---------|---------|-------|-----------|---------------|
+| **Mistral Large** | 4 | 128K | Medium | Excellent | Complex applications |
+| **Mistral Medium** | 3 | 32K | Medium | Excellent | General production use |
+| **Mistral Small** | 1 | 32K | Fast | Good | Cost-effective tasks |
+
+<Info>
+  **Mistral's Strength**: Open, efficient models with strong multilingual capabilities and balanced performance.
+</Info>
+
+## Setup
+
+### Using BoostGPT-Hosted API Keys
+
+<Steps>
+  <Step title="Select Mistral Model">
+    In your BoostGPT dashboard, select any Mistral model when creating or configuring your bot.
+  </Step>
+
+  <Step title="Choose Your Model">
+    - **Mistral Large**: For complex, demanding applications
+    - **Mistral Medium**: For balanced production use
+    - **Mistral Small**: For cost-effective simple tasks
+  </Step>
+</Steps>
+
+### Using Your Own Mistral API Key
+
+<Tabs>
+  <Tab title="Dashboard Setup">
+    <Steps>
+      <Step title="Navigate to Integrations">
+        Go to [app.boostgpt.co](https://app.boostgpt.co/integrations) and select **Integrations**
+      </Step>
+
+      <Step title="Select Mistral">
+        Find and click on the **Mistral** provider
+      </Step>
+
+      <Step title="Add API Key">
+        Enter your Mistral API key and select which agents will use this key
+      </Step>
+
+      <Step title="Save Configuration">
+        Click save to apply your custom API key
+      </Step>
+    </Steps>
+  </Tab>
+
+  <Tab title="Core SDK">
+    ```javascript bot.js
+    import { BoostGPT } from 'boostgpt';
+
+    const client = new BoostGPT({
+      project_id: process.env.BOOSTGPT_PROJECT_ID,
+      key: process.env.BOOSTGPT_API_KEY
+    });
+
+    // Create bot with Mistral model
+    const botResponse = await client.createBot({
+      name: 'My Mistral Bot',
+      model: 'mistral-medium-latest',
+      instruction: 'You are a helpful assistant.',
+      max_reply_tokens: 1000,
+      status: 'active'
+    });
+
+    if (botResponse.err) {
+      console.error('Error:', botResponse.err);
+    } else {
+      console.log('Bot created:', botResponse.response);
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Model Comparison" icon="scale-balanced" href="/providers/model-comparison">
+    Compare Mistral with other providers
+  </Card>
+
+  <Card title="SDK Reference" icon="code" href="/sdk/core/api-reference">
+    Full API documentation
+  </Card>
+
+  <Card title="Provider Overview" icon="list" href="/providers/overview">
+    See all providers
+  </Card>
+
+  <Card title="Bring Your Own Key" icon="key" href="/providers/bring-your-own-keys">
+    Use your own Mistral API key
+  </Card>
+</CardGroup>

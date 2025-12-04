@@ -1,0 +1,73 @@
+---
+title: "Installation"
+description: "Install BoostGPT SDKs"
+---
+
+## Prerequisites
+
+- Node.js 18 or higher
+- npm or yarn
+- BoostGPT account with API keys
+
+## Install Core SDK
+
+```bash
+npm install boostgpt
+```
+
+or with yarn:
+
+```bash
+yarn add boostgpt
+```
+
+## Install Router SDK
+
+```bash
+npm install @boostgpt/router
+```
+
+## Get API Keys
+
+<Steps>
+  <Step title="Go to Dashboard">
+    Visit [app.boostgpt.co](https://app.boostgpt.co)
+  </Step>
+  <Step title="Create Project">
+    Create a new project if you don't have one
+  </Step>
+  <Step title="Generate API Key">
+    Go to Settings ’ API Keys ’ Generate New Key
+  </Step>
+  <Step title="Save Credentials">
+    Copy your Project ID and API Key
+  </Step>
+</Steps>
+
+## Environment Setup
+
+Create a `.env` file in your project root:
+
+```bash
+BOOSTGPT_PROJECT_ID=your_project_id
+BOOSTGPT_API_KEY=your_api_key
+```
+
+## Verify Installation
+
+```javascript
+import { BoostGPT } from 'boostgpt';
+
+const client = new BoostGPT({
+  project_id: process.env.BOOSTGPT_PROJECT_ID,
+  key: process.env.BOOSTGPT_API_KEY
+});
+
+console.log('BoostGPT SDK installed successfully!');
+```
+
+## Next Steps
+
+<Card title="Quickstart" icon="rocket" href="/developers/quickstart">
+  Build your first bot
+</Card>

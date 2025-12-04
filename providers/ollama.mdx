@@ -1,0 +1,346 @@
+---
+title: "Ollama"
+description: "Run local AI models with Ollama"
+---
+
+## Overview
+
+Ollama allows you to run open-source AI models locally on your own infrastructure. Perfect for privacy-sensitive applications, development, and cost optimization.
+
+## Available Models
+
+<CardGroup cols={2}>
+  <Card title="Llama 3.3 (70B) Local" icon="server">
+    **2 credits** • Powerful local model
+
+    - 128K context window
+    - Excellent reasoning for self-hosted
+    - Speed: Medium • Cost: Very Low (local)
+    - Best for: Local powerful performance
+  </Card>
+
+  <Card title="Llama 3.1 (405B) Local" icon="database">
+    **4 credits** • Massive local model
+
+    - 128K context window
+    - Exceptional capabilities self-hosted
+    - Speed: Slow • Cost: Very Low (local)
+    - Best for: Maximum local intelligence
+  </Card>
+
+  <Card title="Llama 3.1 (70B) Local" icon="circle-check">
+    **2 credits** • Balanced local model
+
+    - 128K context window
+    - Excellent for self-hosted apps
+    - Speed: Medium • Cost: Very Low (local)
+    - Best for: Strong local performance
+  </Card>
+
+  <Card title="Llama 3.1 (8B) Local" icon="zap">
+    **1 credit** • Efficient local model
+
+    - 128K context window
+    - Good for basic local tasks
+    - Speed: Fast • Cost: Very Low (local)
+    - Best for: Light local processing
+  </Card>
+</CardGroup>
+
+## Model Comparison
+
+| Model | Credits | Context | Speed | Hardware Needs | Best Use Case |
+|-------|---------|---------|-------|----------------|---------------|
+| **Llama 3.3 (70B)** | 2 | 128K | Medium | 40GB+ VRAM | Local power |
+| **Llama 3.1 (405B)** | 4 | 128K | Slow | 200GB+ VRAM | Maximum local capability |
+| **Llama 3.1 (70B)** | 2 | 128K | Medium | 40GB+ VRAM | Balanced local |
+| **Llama 3.1 (8B)** | 1 | 128K | Fast | 8GB+ VRAM | Efficient local |
+
+<Info>
+  **Ollama's Strength**: Full data privacy, no API costs, complete control over your AI infrastructure. Run models entirely on your own hardware.
+</Info>
+
+## Setup
+
+### Prerequisites
+
+<Steps>
+  <Step title="Install Ollama">
+    Download and install Ollama from [ollama.com](https://ollama.com)
+
+    ```bash
+    # macOS/Linux
+    curl -fsSL https://ollama.com/install.sh | sh
+
+    # Windows
+    # Download installer from ollama.com
+    ```
+  </Step>
+
+  <Step title="Pull a Model">
+    ```bash
+    # Pull Llama 3.1 8B (recommended for testing)
+    ollama pull llama3.1:8b
+
+    # Or pull Llama 3.3 70B for production
+    ollama pull llama3.3:70b
+    ```
+  </Step>
+
+  <Step title="Start Ollama Server">
+    ```bash
+    # Ollama runs on localhost:11434 by default
+    ollama serve
+    ```
+  </Step>
+</Steps>
+
+### Configure BoostGPT
+
+<Tabs>
+  <Tab title="Dashboard Setup">
+    <Steps>
+      <Step title="Navigate to Integrations">
+        Go to [app.boostgpt.co](https://app.boostgpt.co/integrations) and select **Integrations**
+      </Step>
+
+      <Step title="Select Ollama">
+        Find and click on the **Ollama** provider
+      </Step>
+
+      <Step title="Configure Host">
+        Enter your Ollama host URL (default: `http://localhost:11434`)
+        
+        Select which agents will use Ollama
+      </Step>
+
+      <Step title="Save Configuration">
+        Click save to apply your Ollama configuration
+      </Step>
+    </Steps>
+  </Tab>
+
+  <Tab title="Core SDK">
+    ```javascript bot.js
+    import { BoostGPT } from 'boostgpt';
+
+    const client = new BoostGPT({
+      project_id: process.env.BOOSTGPT_PROJECT_ID,
+      key: process.env.BOOSTGPT_API_KEY
+    });
+
+    // Create bot with Ollama model
+    const botResponse = await client.createBot({
+      name: 'My Local Ollama Bot',
+      model: 'llama3.1:8b', // Must match pulled model
+      instruction: 'You are a helpful local assistant.',
+      max_reply_tokens: 1000,
+      status: 'active'
+    });
+
+    if (botResponse.err) {
+      console.error('Error:', botResponse.err);
+    } else {
+      console.log('Bot created:', botResponse.response);
+    }
+
+    // Chat with Ollama bot using provider_host
+    const chatResponse = await client.chat({
+      bot_id: botResponse.response.id,
+      provider_host: 'http://localhost:11434', // Specify Ollama host
+      message: 'Hello, how are you?'
+    });
+
+    if (chatResponse.err) {
+      console.error('Error:', chatResponse.err);
+    } else {
+      console.log('Response:', chatResponse.response.chat.reply);
+    }
+    ```
+  </Tab>
+
+  <Tab title="Router SDK">
+    ```javascript router.js
+    import { Router, WhatsAppAdapter } from '@boostgpt/router';
+
+    const router = new Router({
+      apiKey: process.env.BOOSTGPT_API_KEY,
+      projectId: process.env.BOOSTGPT_PROJECT_ID,
+      defaultBotId: process.env.BOOSTGPT_BOT_ID, // Ollama bot
+      adapters: [
+        new WhatsAppAdapter({
+          useLocalAuth: true
+        })
+      ]
+    });
+
+    // Router uses your local Ollama bot
+    router.onMessage(async (message, context) => {
+      // Handle commands
+      if (message.content === '/status') {
+        return 'Running locally with Ollama!';
+      }
+
+      return null; // Ollama handles it
+    });
+
+    await router.start();
+    ```
+  </Tab>
+</Tabs>
+
+## Self-Hosting Benefits
+
+<AccordionGroup>
+  <Accordion icon="shield" title="Complete Data Privacy">
+    All data stays on your infrastructure. No information leaves your network. Perfect for sensitive applications, healthcare, finance, or proprietary data.
+  </Accordion>
+
+  <Accordion icon="dollar-sign" title="No API Costs">
+    After initial hardware investment, inference is free. No per-request charges, no rate limits, no monthly bills.
+  </Accordion>
+
+  <Accordion icon="sliders" title="Full Control">
+    Customize models, control versions, modify parameters, and optimize for your specific use case. Complete flexibility.
+  </Accordion>
+
+  <Accordion icon="wifi-slash" title="Offline Operation">
+    Works completely offline. No internet dependency for inference. Perfect for air-gapped environments or unreliable connectivity.
+  </Accordion>
+</AccordionGroup>
+
+## Hardware Requirements
+
+| Model | Min VRAM | Recommended RAM | CPU Cores | Best Hardware |
+|-------|----------|-----------------|-----------|---------------|
+| **Llama 3.1 (8B)** | 8GB | 16GB | 4+ | Gaming PC, M1 Mac |
+| **Llama 3.1 (70B)** | 40GB | 64GB | 8+ | Workstation, A100 |
+| **Llama 3.3 (70B)** | 40GB | 64GB | 8+ | Workstation, A100 |
+| **Llama 3.1 (405B)** | 200GB+ | 256GB+ | 16+ | Multi-GPU server |
+
+<Tip>
+  Start with Llama 3.1 (8B) for development and testing. It runs well on consumer hardware and M-series Macs.
+</Tip>
+
+## Best Practices
+
+### Using provider_host for Ollama
+
+When using the Core SDK chat method, specify the Ollama host with `provider_host`:
+
+```javascript
+// Chat with local Ollama instance
+const chatResponse = await client.chat({
+  bot_id: 'your-bot-id',
+  provider_host: 'http://localhost:11434', // Required for Ollama
+  message: 'Analyze this code for bugs'
+});
+
+// Use custom Ollama host (e.g., remote server)
+const remoteResponse = await client.chat({
+  bot_id: 'your-bot-id',
+  provider_host: 'http://192.168.1.100:11434', // Custom host
+  message: 'Hello!'
+});
+```
+
+<Info>
+  The `provider_host` parameter is required when using Ollama with the Core SDK chat method, as it tells BoostGPT where your Ollama instance is running.
+</Info>
+
+### Model Selection for Hardware
+
+```bash
+# For MacBook Pro M1/M2 (16GB RAM)
+ollama pull llama3.1:8b
+
+# For Workstation with RTX 4090 (24GB VRAM)
+ollama pull llama3.3:70b
+
+# For Server with A100 (80GB VRAM)
+ollama pull llama3.1:405b
+```
+
+### Production Deployment
+
+<Steps>
+  <Step title="Use Docker">
+    ```bash
+    docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+    ```
+  </Step>
+
+  <Step title="Configure Firewall">
+    Ensure Ollama port (11434) is accessible to your BoostGPT application
+  </Step>
+
+  <Step title="Monitor Resources">
+    Watch GPU/CPU usage and scale hardware as needed
+  </Step>
+
+  <Step title="Set Up Load Balancing">
+    For high volume, run multiple Ollama instances behind a load balancer
+  </Step>
+</Steps>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion icon="circle-exclamation" title="Connection refused">
+    **Cause:** Ollama server not running or firewall blocking
+
+    **Solutions:**
+    - Run `ollama serve` to start server
+    - Check firewall allows port 11434
+    - Verify host URL in configuration
+  </Accordion>
+
+  <Accordion icon="circle-exclamation" title="Model not found">
+    **Cause:** Model not pulled locally
+
+    **Solutions:**
+    - Run `ollama pull <model-name>`
+    - Verify model name matches exactly
+    - Check `ollama list` for available models
+  </Accordion>
+
+  <Accordion icon="circle-exclamation" title="Slow responses">
+    **Cause:** Insufficient hardware resources
+
+    **Solutions:**
+    - Use smaller model (8B instead of 70B)
+    - Add more RAM/VRAM
+    - Reduce max_reply_tokens
+    - Close other GPU-intensive applications
+  </Accordion>
+
+  <Accordion icon="circle-exclamation" title="Out of memory errors">
+    **Cause:** Model too large for available VRAM
+
+    **Solutions:**
+    - Switch to smaller model
+    - Reduce context window
+    - Use CPU fallback (slower but works)
+    - Upgrade hardware
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Model Comparison" icon="scale-balanced" href="/providers/model-comparison">
+    Compare Ollama with cloud providers
+  </Card>
+
+  <Card title="Deployment Guide" icon="server" href="/guides/deployment">
+    Learn about production deployment
+  </Card>
+
+  <Card title="SDK Reference" icon="code" href="/sdk/core/api-reference">
+    Full API documentation
+  </Card>
+
+  <Card title="Provider Overview" icon="list" href="/providers/overview">
+    See all providers
+  </Card>
+</CardGroup>

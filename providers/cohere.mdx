@@ -1,0 +1,137 @@
+---
+title: "Cohere"
+description: "Use Cohere models in your BoostGPT agents"
+---
+
+## Overview
+
+Cohere provides enterprise-grade language models optimized for business use cases. Command models excel at instruction-following and production deployments.
+
+## Available Models
+
+<CardGroup cols={2}>
+  <Card title="Command R+" icon="crown">
+    **5 credits** • Most advanced Command model
+
+    - 128K context window
+    - Exceptional reasoning and performance
+    - Speed: Medium • Cost: High
+    - Best for: Complex tasks, high-stakes applications
+  </Card>
+
+  <Card title="Command A" icon="sparkles">
+    **5 credits** • Most performant model
+
+    - 128K context window
+    - Exceptional performance on challenging tasks
+    - Speed: Medium • Cost: High
+    - Best for: Demanding enterprise applications
+  </Card>
+
+  <Card title="Command R7B" icon="bolt">
+    **5 credits** • Smallest and fastest
+
+    - 128K context window
+    - Excellent reasoning with quick responses
+    - Speed: Very Fast • Cost: Low
+    - Best for: Fast responses at scale
+  </Card>
+</CardGroup>
+
+## Model Comparison
+
+| Model | Credits | Context | Speed | Reasoning | Best Use Case |
+|-------|---------|---------|-------|-----------|---------------|
+| **Command R+** | 5 | 128K | Medium | Exceptional | Complex enterprise tasks |
+| **Command A** | 5 | 128K | Medium | Exceptional | High-performance applications |
+| **Command R7B** | 5 | 128K | Very Fast | Excellent | Fast, scalable responses |
+
+<Info>
+  **Cohere's Strength**: Enterprise-grade models optimized for business applications with strong instruction-following.
+</Info>
+
+## Setup
+
+### Using BoostGPT-Hosted API Keys
+
+<Steps>
+  <Step title="Select Cohere Model">
+    In your BoostGPT dashboard, select any Cohere model when creating or configuring your bot.
+  </Step>
+
+  <Step title="Choose Your Model">
+    - **Command R+**: For complex enterprise tasks
+    - **Command A**: For high-performance applications
+    - **Command R7B**: For fast, scalable responses
+  </Step>
+</Steps>
+
+### Using Your Own Cohere API Key
+
+<Tabs>
+  <Tab title="Dashboard Setup">
+    <Steps>
+      <Step title="Navigate to Integrations">
+        Go to [app.boostgpt.co](https://app.boostgpt.co/integrations) and select **Integrations**
+      </Step>
+
+      <Step title="Select Cohere">
+        Find and click on the **Cohere** provider
+      </Step>
+
+      <Step title="Add API Key">
+        Enter your Cohere API key and select which agents will use this key
+      </Step>
+
+      <Step title="Save Configuration">
+        Click save to apply your custom API key
+      </Step>
+    </Steps>
+  </Tab>
+
+  <Tab title="Core SDK">
+    ```javascript bot.js
+    import { BoostGPT } from 'boostgpt';
+
+    const client = new BoostGPT({
+      project_id: process.env.BOOSTGPT_PROJECT_ID,
+      key: process.env.BOOSTGPT_API_KEY
+    });
+
+    // Create bot with Cohere model
+    const botResponse = await client.createBot({
+      name: 'My Cohere Bot',
+      model: 'command-r-plus',
+      instruction: 'You are an enterprise assistant.',
+      max_reply_tokens: 1000,
+      status: 'active'
+    });
+
+    if (botResponse.err) {
+      console.error('Error:', botResponse.err);
+    } else {
+      console.log('Bot created:', botResponse.response);
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Model Comparison" icon="scale-balanced" href="/providers/model-comparison">
+    Compare Cohere with other providers
+  </Card>
+
+  <Card title="SDK Reference" icon="code" href="/sdk/core/api-reference">
+    Full API documentation
+  </Card>
+
+  <Card title="Provider Overview" icon="list" href="/providers/overview">
+    See all providers
+  </Card>
+
+  <Card title="Bring Your Own Key" icon="key" href="/providers/bring-your-own-keys">
+    Use your own Cohere API key
+  </Card>
+</CardGroup>

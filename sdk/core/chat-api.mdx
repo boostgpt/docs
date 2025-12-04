@@ -1,0 +1,258 @@
+---
+title: "Chat API"
+description: "Send messages and receive AI responses"
+---
+
+## Basic Chat
+
+```javascript
+const result = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'Hello! How can you help me?'
+});
+
+if (result.err) {
+  console.error('Error:', result.err);
+} else {
+  console.log('Bot response:', result.response);
+}
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `bot_id` | string | Yes | Bot ID to chat with |
+| `message` | string | Yes | User message |
+| `model` | string | No | Override bot's model |
+| `provider_key` | string | No | Use your own API key (BYOK) |
+| `provider_host` | string | No | Required for Ollama (e.g., `http://localhost:11434`) |
+| `instruction` | string | No | Override bot's instruction |
+| `source_ids` | array | No | Specific training sources to use |
+| `max_reply_tokens` | number | No | Override max tokens |
+| `chat_id` | string | No | Chat ID to maintain conversation context |
+| `stream` | boolean | No | Stream response (default: `false`) |
+| `memory` | boolean | No | Use agent's memory (default: `true`) |
+| `reasoning_mode` | string | No | `auto`, `standard`, `stepwise`, `react`, `interactive` |
+
+### Response
+
+```javascript
+{
+  err: null,
+  response: 'I can help you with customer support, product information, and answering your questions!'
+}
+```
+
+## Chat with Conversation Context
+
+Use `chat_id` to maintain conversation context:
+
+```javascript
+const chatId = 'chat_user_123';
+
+// First message
+const msg1 = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'My name is John',
+  chat_id: chatId
+});
+
+// Second message (bot remembers context)
+const msg2 = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'What is my name?',
+  chat_id: chatId
+});
+
+console.log(msg2.response); // "Your name is John"
+```
+
+## Override Model Per Request
+
+```javascript
+const result = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'Complex question requiring deep thinking',
+  model: 'o1', // Use reasoning model for this request
+  reasoning_mode: 'react' // Deep Thinking mode (up to 5x credit)
+});
+```
+
+### Reasoning Modes
+
+- **auto** - Automatically selects best approach
+- **standard** - Quick answers (1x credit)
+- **stepwise** - Step-by-step with sources (up to 2x)
+- **react** - Deep thinking with reflection (up to 5x)
+- **interactive** - Uses tools and research (up to 10x)
+
+## Use Local Ollama Models
+
+For self-hosted models:
+
+```javascript
+const result = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'Hello',
+  model: 'llama3.1',
+  provider_host: 'http://localhost:11434'
+});
+```
+
+<Info>
+Use `provider_host` instead of `provider_key` for Ollama.
+</Info>
+
+
+## Limit Response Length
+
+```javascript
+const result = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'Give me a brief summary',
+  max_reply_tokens: 200 // Short response
+});
+```
+
+## Use Your Own API Key (BYOK)
+
+Bring your own API key for any provider:
+
+```javascript
+const result = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'Hello',
+  model: 'gpt-5',
+  provider_key: 'sk-your-openai-key' // Use your OpenAI key
+});
+```
+
+## Override Instructions
+
+Override the bot's instruction per request:
+
+```javascript
+const result = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'Tell me a joke',
+  instruction: 'You are a comedian who tells funny jokes.'
+});
+```
+
+## Use Specific Training Sources
+
+Target specific training sources by ID:
+
+```javascript
+const result = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'What is our refund policy?',
+  source_ids: ['source_123', 'source_456'] // Only use these sources
+});
+```
+
+## Disable Memory
+
+Disable agent's memory for a specific request:
+
+```javascript
+const result = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'Hello',
+  memory: false // Don't use agent's training data
+});
+```
+
+## Stream Responses
+
+Stream responses in real-time by setting `stream: true`:
+
+```javascript
+const result = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'Write a long story',
+  stream: true
+});
+
+if (result.err) {
+  console.error('Error:', result.err);
+} else {
+  // Handle streaming response
+  for await (const chunk of result.response) {
+    process.stdout.write(chunk);
+  }
+}
+```
+
+## Error Handling
+
+```javascript
+const result = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'Hello'
+});
+
+if (result.err) {
+  if (result.err.includes('Rate limit')) {
+    console.log('Rate limited, retry later');
+  } else if (result.err.includes('Bot not found')) {
+    console.log('Bot does not exist');
+  } else {
+    console.error('Unknown error:', result.err);
+  }
+} else {
+  console.log('Success:', result.response);
+}
+```
+
+## Complete Example
+
+```javascript
+import { BoostGPT } from 'boostgpt';
+
+const client = new BoostGPT({
+  project_id: process.env.BOOSTGPT_PROJECT_ID,
+  key: process.env.BOOSTGPT_API_KEY
+});
+
+async function chat() {
+  const chatId = `chat_${Date.now()}`;
+
+  // Start conversation
+  const response1 = await client.chat({
+    bot_id: 'bot_abc123',
+    message: 'What services do you offer?',
+    chat_id: chatId
+  });
+
+  if (response1.err) {
+    console.error('Error:', response1.err);
+    return;
+  }
+
+  console.log('Bot:', response1.response);
+
+  // Follow-up question (remembers context)
+  const response2 = await client.chat({
+    bot_id: 'bot_abc123',
+    message: 'How much does it cost?',
+    chat_id: chatId
+  });
+
+  console.log('Bot:', response2.response);
+}
+
+chat();
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Training Data" icon="book" href="/sdk/core/training-data">
+    Add knowledge to improve responses
+  </Card>
+  <Card title="API Reference" icon="code" href="/sdk/core/api-reference">
+    Complete API documentation
+  </Card>
+</CardGroup>

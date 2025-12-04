@@ -1,0 +1,179 @@
+---
+title: "Troubleshooting"
+description: "Debug common issues with BoostGPT"
+---
+
+## Common Issues
+
+### Authentication Failed
+
+**Error**: `Unauthorized: Invalid API key`
+
+**Solutions**:
+- Verify `BOOSTGPT_PROJECT_ID` and `BOOSTGPT_API_KEY` in `.env`
+- Generate new API key from dashboard if needed
+- Check that credentials are not expired
+- Ensure no extra spaces in environment variables
+
+```javascript
+// Check credentials are loaded
+console.log('Project ID:', process.env.BOOSTGPT_PROJECT_ID);
+console.log('API Key:', process.env.BOOSTGPT_API_KEY ? 'Set' : 'Missing');
+```
+
+### Bot Not Found
+
+**Error**: `Bot not found`
+
+**Solutions**:
+- Verify bot ID is correct
+- Check bot exists in your project
+- Ensure bot status is `active`
+- Confirm you have access to the bot
+
+```javascript
+// List all bots to find correct ID
+const bots = await client.listBots();
+console.log('Available bots:', bots.response);
+```
+
+### Rate Limit Exceeded
+
+**Error**: `Rate limit exceeded`
+
+**Solutions**:
+- Implement retry logic with exponential backoff
+- Add delays between requests
+- Use request queue for high volume
+- Upgrade to higher plan for more requests
+
+See [Rate Limits](/developers/rate-limits) for detailed solutions.
+
+### Model Not Available
+
+**Error**: `Model not supported`
+
+**Solutions**:
+- Check model name spelling (e.g., `gpt-5-mini` not `gpt5-mini`)
+- Verify model is available in your region
+- Check model pricing and credit balance
+- See [Model Comparison](/providers/model-comparison) for available models
+
+### Insufficient Credits
+
+**Error**: `Insufficient credits`
+
+**Solutions**:
+- Check credit balance in dashboard
+- Add more credits or upgrade plan
+- Use cheaper models for testing (e.g., `gemini-flash-lite`)
+
+### Connection Timeout
+
+**Error**: `Request timeout`
+
+**Solutions**:
+- Check your internet connection
+- Verify API endpoint is reachable
+- Increase timeout in HTTP client
+- Try again as it may be temporary
+
+```javascript
+// Set custom timeout
+import axios from 'axios';
+
+const client = axios.create({
+  timeout: 30000 // 30 seconds
+});
+```
+
+### Training Data Not Reflected
+
+**Issue**: Bot doesn't use training data
+
+**Solutions**:
+- Wait a few seconds for indexing (usually instant)
+- Verify training was added successfully
+- Check training content is relevant to query
+- Ensure bot has `access_to_memory: true` in settings
+
+```javascript
+// Verify training was added
+const training = await client.addTraining({
+  bot_id: 'bot-123',
+  content: 'Your training content'
+});
+
+if (training.err) {
+  console.error('Training failed:', training.err);
+}
+```
+
+### Router SDK Not Receiving Messages
+
+**Issue**: Router doesn't respond to messages
+
+**Solutions**:
+- Verify adapter tokens are correct (Discord, Telegram, etc.)
+- Check bot has correct permissions in platform
+- Ensure `router.start()` was called
+- Check console for connection errors
+
+```javascript
+router.onMessage((message, context) => {
+  console.log('Received message:', message.content);
+  // Make sure this logs when you send messages
+});
+```
+
+### Webhook Not Firing
+
+**Issue**: Not receiving webhooks
+
+**Solutions**:
+- Verify webhook URL is publicly accessible (HTTPS required)
+- Check endpoint returns 200 status code
+- Test with ngrok for local development
+- View webhook logs in dashboard
+
+## Enable Debug Logging
+
+Enable verbose logging to diagnose issues:
+
+```javascript
+import { BoostGPT } from 'boostgpt';
+
+const client = new BoostGPT({
+  project_id: process.env.BOOSTGPT_PROJECT_ID,
+  key: process.env.BOOSTGPT_API_KEY,
+  debug: true // Enable debug mode
+});
+```
+
+## Check API Status
+
+Verify BoostGPT services are operational:
+
+```bash
+curl https://status.boostgpt.co
+```
+
+## Contact Support
+
+If issues persist:
+
+- Check [GitHub Issues](https://github.com/boostgpt)
+- Join [Discord Community](https://discord.gg/KGhz5SnyXM)
+- Email support@boostgpt.co
+- Include error messages and request IDs
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Error Handling" icon="triangle-exclamation" href="/developers/error-handling">
+    Handle errors properly
+  </Card>
+  <Card title="Discord Community" icon="discord" href="https://discord.gg/KGhz5SnyXM">
+    Get help from community
+  </Card>
+</CardGroup>

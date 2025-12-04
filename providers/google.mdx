@@ -1,0 +1,391 @@
+---
+title: "Google AI (Gemini)"
+description: "Use Gemini models from Google in your BoostGPT agents"
+---
+
+## Overview
+
+Google's Gemini models offer industry-leading context windows (up to 2 million tokens), exceptional multimodal capabilities, and strong performance across text, code, and reasoning tasks.
+
+## Available Models
+
+### Gemini 3 Pro Preview (Latest)
+
+<Card title="Gemini 3 Pro Preview" icon="sparkles">
+  **5 credits** • Cutting-edge preview model
+
+  - 2,000,000 token context window (largest available)
+  - Exceptional reasoning and contextual understanding
+  - Speed: Medium • Cost: High
+  - Best for: Research, massive documents, advanced R&D
+</Card>
+
+### Gemini 2.5 Series (Stable)
+
+<CardGroup cols={2}>
+  <Card title="Gemini 2.5 Pro" icon="crown">
+    **3 credits** • Most advanced stable model
+
+    - 2,000,000 token context window
+    - Exceptional reasoning and accuracy
+    - Speed: Slow • Cost: High
+    - Best for: Complex reasoning, long documents
+  </Card>
+
+  <Card title="Gemini 2.5 Flash" icon="bolt">
+    **2 credits** • Fast and capable
+
+    - 1,000,000 token context window
+    - Excellent reasoning with speed
+    - Speed: Fast • Cost: Medium
+    - Best for: Production applications
+  </Card>
+
+  <Card title="Gemini 2.5 Flash Lite" icon="zap">
+    **1 credit** • Ultra-fast and efficient
+
+    - 1,000,000 token context window
+    - Good reasoning at lowest cost
+    - Speed: Very Fast • Cost: Very Low
+    - Best for: High-volume, simple tasks
+  </Card>
+
+  <Card title="Gemini 2.0 Flash Thinking" icon="brain">
+    **3 credits** • Reasoning model
+
+    - 1,000,000 token context window
+    - Explicit thinking process for analysis
+    - Speed: Medium • Cost: Medium
+    - **Reasoning model** for problem-solving
+  </Card>
+</CardGroup>
+
+## Model Comparison
+
+| Model | Credits | Context | Speed | Type | Best Use Case |
+|-------|---------|---------|-------|------|---------------|
+| **Gemini 3 Pro Preview** | 5 | 2M | Medium | Preview | Cutting-edge, massive context |
+| **Gemini 2.5 Pro** | 3 | 2M | Slow | Stable | Complex analysis, long docs |
+| **Gemini 2.5 Flash** | 2 | 1M | Fast | Stable | Production workhorse |
+| **Gemini 2.5 Flash Lite** | 1 | 1M | Very Fast | Stable | Cost-effective, high volume |
+| **Gemini 2.0 Flash Thinking** | 3 | 1M | Medium | Reasoning | Analytical tasks |
+
+<Info>
+  **Context Window Champion**: Gemini models offer up to 2 million tokens - enough for entire codebases or books! That's 10x more than competitors.
+</Info>
+
+## Setup
+
+### Using BoostGPT-Hosted API Keys
+
+<Steps>
+  <Step title="Select Gemini Model">
+    In your BoostGPT dashboard, select any Gemini model when creating or configuring your bot.
+  </Step>
+
+  <Step title="Choose Your Model">
+    - **Gemini 2.5 Flash**: Best for most production use cases
+    - **Gemini 2.5 Pro**: When you need massive 2M context
+    - **Gemini 2.5 Flash Lite**: High-volume, cost-sensitive
+    - **Gemini 2.0 Flash Thinking**: Complex reasoning tasks
+  </Step>
+</Steps>
+
+### Using Your Own Google AI API Key
+
+<Tabs>
+  <Tab title="Dashboard Setup">
+    <Steps>
+      <Step title="Navigate to Integrations">
+        Go to [app.boostgpt.co](https://app.boostgpt.co/integrations) and select **Integrations**
+      </Step>
+
+      <Step title="Select Google AI">
+        Find and click on the **Google** provider
+      </Step>
+
+      <Step title="Add API Key">
+        Get your API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+        
+        Enter the API key and select which agents will use it
+      </Step>
+
+      <Step title="Save Configuration">
+        Click save to apply your custom API key
+      </Step>
+    </Steps>
+
+    <Tip>
+      Google AI offers a generous free tier for testing and development!
+    </Tip>
+  </Tab>
+
+  <Tab title="Core SDK">
+    ```javascript bot.js
+    import { BoostGPT } from 'boostgpt';
+
+    const client = new BoostGPT({
+      project_id: process.env.BOOSTGPT_PROJECT_ID,
+      key: process.env.BOOSTGPT_API_KEY
+    });
+
+    // Create bot with Gemini model
+    const botResponse = await client.createBot({
+      name: 'My Gemini Bot',
+      model: 'gemini-2.5-flash',
+      instruction: 'You are a helpful assistant.',
+      max_reply_tokens: 1000,
+      status: 'active'
+    });
+
+    if (botResponse.err) {
+      console.error('Error:', botResponse.err);
+    } else {
+      console.log('Bot created:', botResponse.response);
+    }
+    ```
+  </Tab>
+
+  <Tab title="Router SDK">
+    ```javascript router.js
+    import { Router, TelegramAdapter } from '@boostgpt/router';
+
+    const router = new Router({
+      apiKey: process.env.BOOSTGPT_API_KEY,
+      projectId: process.env.BOOSTGPT_PROJECT_ID,
+      defaultBotId: process.env.BOOSTGPT_BOT_ID, // Gemini bot
+      adapters: [
+        new TelegramAdapter({
+          telegramToken: process.env.TELEGRAM_TOKEN
+        })
+      ]
+    });
+
+    // Router uses Gemini automatically
+    router.onMessage(async (message, context) => {
+      // Custom logic
+      if (message.content === '/info') {
+        return 'Powered by Gemini with 1M context!';
+      }
+
+      return null; // Gemini handles it
+    });
+
+    await router.start();
+    ```
+  </Tab>
+</Tabs>
+
+## Model Selection Guide
+
+<AccordionGroup>
+  <Accordion icon="bolt" title="Gemini 2.5 Flash - Production Workhorse">
+    **Best for:**
+    - Production chatbots and customer support
+    - General-purpose applications
+    - Fast responses with strong reasoning
+    - 1M context for long conversations
+
+    **Sweet spot:** Best balance of speed, cost, and capability
+
+    **Cost:** 2 credits per request
+  </Accordion>
+
+  <Accordion icon="crown" title="Gemini 2.5 Pro - Maximum Context">
+    **Best for:**
+    - Analyzing entire codebases
+    - Processing very long documents (books, research papers)
+    - Multi-turn conversations with full history
+    - Maximum context retention (2M tokens)
+
+    **Standout feature:** Largest context window available
+
+    **Cost:** 3 credits per request
+  </Accordion>
+
+  <Accordion icon="zap" title="Gemini 2.5 Flash Lite - High Volume">
+    **Best for:**
+    - High-volume applications (thousands of requests)
+    - Simple queries and responses
+    - Cost-sensitive production
+    - Quick classifications
+
+    **Cost:** 1 credit per request (most affordable)
+  </Accordion>
+
+  <Accordion icon="brain" title="Gemini 2.0 Flash Thinking - Reasoning">
+    **Best for:**
+    - Mathematical problem solving
+    - Code analysis and debugging
+    - Multi-step logical reasoning
+    - Scientific tasks
+
+    **Note:** Reasoning model with explicit thinking
+
+    **Cost:** 3 credits per request
+  </Accordion>
+
+  <Accordion icon="sparkles" title="Gemini 3 Pro Preview - Cutting Edge">
+    **Best for:**
+    - Research and experimentation
+    - Testing next-generation capabilities
+    - Maximum context + latest features
+
+    **Note:** Preview model, may have breaking changes
+
+    **Cost:** 5 credits per request
+  </Accordion>
+</AccordionGroup>
+
+## Key Features
+
+### Massive Context Windows
+
+<Tip>
+  Gemini models can process up to **2 million tokens** - roughly 1.5 million words or 3,000 pages in a single request!
+</Tip>
+
+```javascript
+// Process entire codebase in one request
+const analyzeCodebase = async (entireCodebase) => {
+  const response = await client.chat({
+    bot_id: 'your-bot-id',
+    model: 'gemini-2.5-pro',
+    message: `Analyze this entire codebase:\n\n${entireCodebase}`
+  });
+
+  if (response.err) {
+    console.error('Error:', response.err);
+  } else {
+    console.log('Analysis:', response.response.chat.reply);
+  }
+};
+```
+
+### Use Flash Thinking for Reasoning
+
+```javascript
+// Override to use reasoning model
+const debugCode = async (code) => {
+  const response = await client.chat({
+    bot_id: 'your-bot-id',
+    reasoning_mode: 'react', // Deep thinking
+    message: `Debug this code:\n\n${code}`,
+    max_reply_tokens: 2000
+  });
+
+  return response.response.chat.reply;
+};
+```
+
+## Best Practices
+
+### Leverage Long Context
+
+```javascript
+// Maintain extensive conversation history
+router.onMessage(async (message, context) => {
+  const response = await context.boostgpt.chat({
+    bot_id: context.adapter.botId,
+    message: message.content,
+    channel: context.channel
+    // Gemini's 1M-2M context allows keeping full history
+  });
+
+  return response.response.chat.reply;
+});
+```
+
+### Optimize Cost vs Context
+
+```javascript
+// Use Flash Lite for simple tasks, Pro for long context
+const needsLongContext = conversationHistory.length > 50;
+
+const response = await client.chat({
+  bot_id: needsLongContext ? proBot : liteBot,
+  message: userMessage
+});
+```
+
+## Performance Characteristics
+
+### Speed
+
+- **Gemini 2.5 Flash Lite**: &lt;2s response time
+- **Gemini 2.5 Flash**: 2-4s response time
+- **Gemini 2.0 Flash Thinking**: 4-6s (reasoning)
+- **Gemini 2.5 Pro**: 5-10s (massive context)
+
+### Context Windows
+
+- **Gemini 3 Pro Preview**: 2,000,000 tokens
+- **Gemini 2.5 Pro**: 2,000,000 tokens
+- **Gemini 2.5 Flash/Lite**: 1,000,000 tokens
+- **Gemini 2.0 Flash Thinking**: 1,000,000 tokens
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion icon="circle-exclamation" title="Slow responses with Pro">
+    **Expected:** Pro prioritizes accuracy over speed
+
+    **Solutions:**
+    - Use Flash for faster responses
+    - Reduce input length when possible
+    - Add loading indicators
+  </Accordion>
+
+  <Accordion icon="circle-exclamation" title="Context length errors">
+    **Rare:** 1M-2M context handles most cases
+
+    **Solutions:**
+    - Use Pro for maximum 2M context
+    - Implement message pruning for extreme cases
+    - Split very large documents
+  </Accordion>
+
+  <Accordion icon="circle-exclamation" title="Higher costs than expected">
+    **Cause:** Long contexts consume many tokens
+
+    **Solutions:**
+    - Use Flash Lite for simple tasks (1 credit)
+    - Implement context pruning
+    - Set max_reply_tokens limits
+    - Monitor token usage in dashboard
+  </Accordion>
+</AccordionGroup>
+
+## Comparison with Competitors
+
+| Feature | Gemini 2.5 Pro | GPT-5 | Claude Sonnet 4.5 |
+|---------|----------------|-------|-------------------|
+| Context Window | **2M tokens** | 200K | 200K |
+| Speed | Slow | Medium | Medium |
+| Cost (Credits) | 3 | 5 | 3 |
+| Reasoning | Exceptional | Exceptional | Excellent |
+| Best For | Long documents | Creative tasks | Balanced use |
+
+<Check>
+  **Winner for context**: Gemini offers 10x the context window of competitors!
+</Check>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Model Comparison" icon="scale-balanced" href="/providers/model-comparison">
+    Compare all providers
+  </Card>
+
+  <Card title="Reasoning Models" icon="brain" href="/providers/reasoning-models">
+    Learn about Flash Thinking
+  </Card>
+
+  <Card title="Bring Your Own Key" icon="key" href="/providers/bring-your-own-keys">
+    Use your Google AI API key
+  </Card>
+
+  <Card title="SDK Reference" icon="code" href="/sdk/core/api-reference">
+    Full API documentation
+  </Card>
+</CardGroup>

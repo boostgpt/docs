@@ -1,0 +1,206 @@
+---
+title: Providers & Models
+description: 'Choose from 50+ AI models across 9 providers—or bring your own'
+---
+
+## Supported Providers
+
+BoostGPT supports **9 AI providers** with **50+ models** spanning from ultra-fast nano models to advanced reasoning models.
+
+<CardGroup cols={3}>
+  <Card title="OpenAI" icon="openai" href="/providers/openai">
+    GPT-4o, GPT-5, O1, O3 Mini + reasoning models
+  </Card>
+  <Card title="Google" icon="google" href="/providers/google">
+    Gemini 2.5 Pro, Gemini 3, Flash Thinking
+  </Card>
+  <Card title="Anthropic" icon="anthropic" href="/providers/anthropic">
+    Claude Opus 4.1, Sonnet 4.5, Extended Thinking
+  </Card>
+  <Card title="xAI" icon="x" href="/providers/xai">
+    Grok 3, Grok 4.1, Reasoning models
+  </Card>
+  <Card title="DeepSeek" icon="brain" href="/providers/deepseek">
+    DeepSeek V3, DeepSeek R1 (reasoning)
+  </Card>
+  <Card title="Mistral" icon="wind" href="/providers/mistral">
+    Small, Medium, Large variants
+  </Card>
+  <Card title="Cohere" icon="c" href="/providers/cohere">
+    Command R+, Command A, Command R7B
+  </Card>
+  <Card title="Groq" icon="zap" href="/providers/groq">
+    Ultra-fast inference: Llama, Qwen, Mistral
+  </Card>
+  <Card title="Ollama" icon="server" href="/providers/ollama">
+    Self-hosted local models (bring your own)
+  </Card>
+</CardGroup>
+
+## Key Features
+
+<AccordionGroup>
+  <Accordion icon="key" title="Bring Your Own API Keys">
+    Use your own API keys for OpenAI, Google, Anthropic, xAI, DeepSeek, Mistral, Cohere, Groq, or Ollama. You control costs and rate limits.
+  </Accordion>
+  
+  <Accordion icon="cloud" title="Use Our Infrastructure (Optional)">
+    Don't have API keys? Use our pooled infrastructure on paid plans. We handle provisioning, rate limits, and scaling.
+  </Accordion>
+  
+  <Accordion icon="brain" title="Reasoning Models">
+    Access advanced reasoning models like O1, O3 Mini, DeepSeek R1, Gemini Flash Thinking, and Claude Extended Thinking for complex problem-solving.
+  </Accordion>
+  
+  <Accordion icon="gauge" title="Smart Model Selection">
+    Choose models based on speed, cost, reasoning capability, and context window. Use fast models for simple queries, reasoning models for complex tasks.
+  </Accordion>
+  
+  <Accordion icon="server" title="Self-Hosted with Ollama">
+    Run models locally using Ollama. Keep data private, eliminate API costs, and use custom fine-tuned models.
+  </Accordion>
+</AccordionGroup>
+
+## Model Categories
+
+### Speed-Optimized (Nano/Mini)
+Ultra-fast models for simple tasks, high-volume applications, and real-time responses.
+
+**Best for:** FAQs, basic chat, high-traffic bots  
+**Examples:** GPT-4.1 Nano, Llama 3.1 Instant (8B), Gemini 2.5 Flash Lite
+
+### Balanced (Standard)
+Great all-around models balancing speed, cost, and capability.
+
+**Best for:** Most production use cases, customer support, content generation  
+**Examples:** GPT-4o Mini, Claude Sonnet 4.5, Gemini 2.5 Flash
+
+### Advanced (Pro/Large)
+Powerful models for complex tasks requiring deep understanding.
+
+**Best for:** Complex queries, creative writing, technical analysis  
+**Examples:** GPT-5, Claude Opus 4.1, Gemini 2.5 Pro
+
+### Reasoning Models
+Specialized models with extended thinking for complex problem-solving.
+
+**Best for:** Math, coding, logic puzzles, multi-step reasoning  
+**Examples:** O1, DeepSeek R1, Gemini Flash Thinking, Claude Extended Thinking
+
+[Learn more about reasoning models →](/providers/reasoning-models)
+
+## Model Comparison
+
+| Provider | Model | Speed | Cost | Reasoning | Context | Credits |
+|----------|-------|-------|------|-----------|---------|---------|
+| OpenAI | O1 | Slow | High | Exceptional | 200K | 6 |
+| OpenAI | GPT-5 | Medium | High | Exceptional | 200K | 5 |
+| OpenAI | GPT-4o | Medium | Medium | Excellent | 128K | 5 |
+| OpenAI | GPT-4o Mini | Fast | Low | Good | 128K | 1 |
+| Google | Gemini 2.5 Pro | Slow | High | Exceptional | 2M | 3 |
+| Google | Gemini 2.5 Flash | Fast | Medium | Excellent | 1M | 2 |
+| Anthropic | Claude Opus 4.1 | Medium | High | Exceptional | 200K | 5 |
+| Anthropic | Claude Sonnet 4.5 | Medium | Medium | Excellent | 200K | 3 |
+| xAI | Grok 3 Reasoning | Medium | Medium | Excellent | 128K | 4 |
+| DeepSeek | DeepSeek R1 | Medium | Medium | Excellent | 64K | 2 |
+| Groq | Llama 3.3 (70B) | Fast | Medium | Excellent | 128K | 3 |
+| Ollama | Llama 3.3 (70B) | Medium | Free* | Excellent | 128K | 2 |
+
+*Local hosting costs (compute) not included
+
+[View full comparison →](/providers/model-comparison)
+
+## Using Your Own Models (Ollama)
+
+The **only way** to use custom models in BoostGPT is through **Ollama**.
+
+<Steps>
+  <Step title="Install Ollama">
+    Download and install [Ollama](https://ollama.ai) on your server or local machine.
+  </Step>
+  
+  <Step title="Pull Your Model">
+```bash
+    ollama pull llama3.3:70b
+    # Or your custom fine-tuned model
+```
+  </Step>
+  
+  <Step title="Configure BoostGPT">
+    Set your Ollama host URL in the dashboard or via SDK:
+```javascript
+    const bot = await client.bots.create({
+      name: 'My Bot',
+      provider: 'ollama',
+      model: 'llama3.3:70b',
+      ollama_host: 'http://localhost:11434' // or your server IP
+    });
+```
+  </Step>
+  
+  <Step title="Deploy">
+    Your agent will now use your self-hosted Ollama model. No API costs, full control.
+  </Step>
+</Steps>
+
+[Learn more about Ollama →](/providers/ollama)
+
+## Credits System
+
+Each model has a **credit cost per message**. Credits are consumed when your agent generates responses.
+
+- **Nano/Mini models:** 0.5-1 credits (cheapest)
+- **Standard models:** 2-3 credits
+- **Pro/Large models:** 4-5 credits
+- **Reasoning models:** 3-6 credits (most expensive, but highest quality)
+
+<Info>
+  Credits are only for **agent responses**. Incoming messages, training data, and API calls don't consume credits.
+</Info>
+
+## Choosing the Right Model
+
+### For Creators (No-Code Dashboard)
+1. Go to your bot settings
+2. Click "Model Selection"
+3. Choose based on your needs:
+   - **Fast responses** → GPT-4o Mini, Gemini Flash Lite
+   - **Best quality** → GPT-5, Claude Opus, Gemini Pro
+   - **Complex reasoning** → O1, DeepSeek R1
+   - **Low cost** → Use nano/mini variants
+
+### For Developers (SDK/API)
+```javascript
+const bot = await client.bots.create({
+  name: 'Support Bot',
+  provider: 'openai',
+  model: 'gpt-4o-mini', // Fast & affordable
+  // Or for complex queries:
+  // model: 'o1', // Advanced reasoning
+});
+```
+
+## Provider-Specific Setup
+
+<CardGroup cols={2}>
+  <Card title="Bring Your Own Keys" icon="key" href="/providers/bring-your-own-keys">
+    Use your existing API keys from any provider
+  </Card>
+  <Card title="Use Our Infrastructure" icon="cloud" href="/authentication">
+    Let us handle provisioning (paid plans only)
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+<CardGroup cols={3}>
+  <Card title="Model Comparison" icon="chart-bar" href="/providers/model-comparison">
+    Compare all 50+ models
+  </Card>
+  <Card title="Reasoning Models" icon="brain" href="/providers/reasoning-models">
+    Learn about O1, R1, etc.
+  </Card>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Start building now
+  </Card>
+</CardGroup>

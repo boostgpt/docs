@@ -1,0 +1,227 @@
+---
+title: "DeepSeek"
+description: "Use DeepSeek models in your BoostGPT agents"
+---
+
+## Overview
+
+DeepSeek offers powerful AI models with specialized reasoning capabilities. DeepSeek R1 is particularly strong at complex reasoning and analytical tasks.
+
+## Available Models
+
+<CardGroup cols={2}>
+  <Card title="DeepSeek V3" icon="comments">
+    **1 credit** " General-purpose chat model
+
+    - 64K context window
+    - Good reasoning for everyday tasks
+    - Speed: Fast " Cost: Low
+    - Best for: Conversations, general tasks
+  </Card>
+
+  <Card title="DeepSeek R1" icon="brain">
+    **2 credits** " Specialized reasoning model
+
+    - 64K context window
+    - Excellent logical and analytical capabilities
+    - Speed: Medium " Cost: Medium
+    - **Reasoning model** for complex problems
+  </Card>
+</CardGroup>
+
+## Model Comparison
+
+| Model | Credits | Context | Speed | Reasoning | Best Use Case |
+|-------|---------|---------|-------|-----------|---------------|
+| **DeepSeek V3** | 1 | 64K | Fast | Good | Everyday conversations |
+| **DeepSeek R1** | 2 | 64K | Medium | Excellent | Complex reasoning, analysis |
+
+<Info>
+  **DeepSeek's Strength**: Exceptional reasoning capabilities at affordable prices. R1 model offers advanced logical thinking.
+</Info>
+
+## Setup
+
+### Using BoostGPT-Hosted API Keys
+
+<Steps>
+  <Step title="Select DeepSeek Model">
+    In your BoostGPT dashboard, select DeepSeek V3 or R1 when creating or configuring your bot.
+  </Step>
+
+  <Step title="Choose Your Model">
+    - **DeepSeek V3**: For general chat and conversations
+    - **DeepSeek R1**: For complex reasoning and analysis
+  </Step>
+</Steps>
+
+### Using Your Own DeepSeek API Key
+
+<Tabs>
+  <Tab title="Dashboard Setup">
+    <Steps>
+      <Step title="Navigate to Integrations">
+        Go to [app.boostgpt.co](https://app.boostgpt.co/integrations) and select **Integrations**
+      </Step>
+
+      <Step title="Select DeepSeek">
+        Find and click on the **DeepSeek** provider
+      </Step>
+
+      <Step title="Add API Key">
+        Enter your DeepSeek API key and select which agents will use this key
+      </Step>
+
+      <Step title="Save Configuration">
+        Click save to apply your custom API key
+      </Step>
+    </Steps>
+  </Tab>
+
+  <Tab title="Core SDK">
+    ```javascript bot.js
+    import { BoostGPT } from 'boostgpt';
+
+    const client = new BoostGPT({
+      project_id: process.env.BOOSTGPT_PROJECT_ID,
+      key: process.env.BOOSTGPT_API_KEY
+    });
+
+    // Create bot with DeepSeek model
+    const botResponse = await client.createBot({
+      name: 'My DeepSeek Bot',
+      model: 'deepseek-reasoner', // R1 model
+      instruction: 'You are a logical and analytical assistant.',
+      max_reply_tokens: 1000,
+      status: 'active'
+    });
+
+    if (botResponse.err) {
+      console.error('Error:', botResponse.err);
+    } else {
+      console.log('Bot created:', botResponse.response);
+    }
+    ```
+  </Tab>
+
+  <Tab title="Router SDK">
+    ```javascript router.js
+    import { Router, TelegramAdapter } from '@boostgpt/router';
+
+    const router = new Router({
+      apiKey: process.env.BOOSTGPT_API_KEY,
+      projectId: process.env.BOOSTGPT_PROJECT_ID,
+      defaultBotId: process.env.BOOSTGPT_BOT_ID, // DeepSeek bot
+      adapters: [
+        new TelegramAdapter({
+          telegramToken: process.env.TELEGRAM_TOKEN
+        })
+      ]
+    });
+
+    // Router handles DeepSeek automatically
+    router.onMessage(async (message, context) => {
+      // Custom commands only
+      if (message.content === '/help') {
+        return 'I use DeepSeek for reasoning!';
+      }
+
+      return null; // Let DeepSeek handle it
+    });
+
+    await router.start();
+    ```
+  </Tab>
+</Tabs>
+
+## Model Selection Guide
+
+<AccordionGroup>
+  <Accordion icon="comments" title="DeepSeek V3 - General Chat">
+    **Best for:**
+    - Customer support chatbots
+    - General conversations
+    - Simple queries and responses
+    - Cost-effective deployments
+
+    **Cost:** 1 credit per request (very affordable)
+  </Accordion>
+
+  <Accordion icon="brain" title="DeepSeek R1 - Reasoning Tasks">
+    **Best for:**
+    - Mathematical problem solving
+    - Code analysis and debugging
+    - Logical reasoning tasks
+    - Complex analytical work
+
+    **Note:** Reasoning model with min 2000 completion tokens
+
+    **Cost:** 2 credits per request
+  </Accordion>
+</AccordionGroup>
+
+## Best Practices
+
+### Use R1 for Complex Reasoning
+
+```javascript
+// Use DeepSeek R1 for analytical tasks
+const analyzeCode = async (code) => {
+  const response = await client.chat({
+    bot_id: 'your-bot-id',
+    message: `Analyze this code and identify potential issues:\n\n${code}`,
+    model: 'deepseek-reasoner',
+    max_reply_tokens: 2000 // Higher for reasoning models
+  });
+
+  if (response.err) {
+    console.error('Error:', response.err);
+  } else {
+    console.log('Analysis:', response.response.chat.reply);
+  }
+};
+```
+
+### Optimize Costs with Dynamic Model Selection
+
+```javascript
+// Use V3 for simple queries, R1 for complex ones
+router.onMessage(async (message, context) => {
+  const needsReasoning = message.content.includes('analyze') ||
+                         message.content.includes('debug') ||
+                         message.content.includes('solve');
+
+  // Use different bots for different complexity levels
+  const bot_id = needsReasoning ?
+    process.env.DEEPSEEK_R1_BOT_ID :
+    process.env.DEEPSEEK_V3_BOT_ID;
+
+  const response = await context.boostgpt.chat({
+    bot_id,
+    message: message.content,
+    channel: context.channel
+  });
+
+  return response.response.chat.reply;
+});
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Reasoning Models" icon="brain" href="/providers/reasoning-models">
+    Deep dive into DeepSeek R1
+  </Card>
+
+  <Card title="Model Comparison" icon="scale-balanced" href="/providers/model-comparison">
+    Compare DeepSeek with others
+  </Card>
+
+  <Card title="SDK Reference" icon="code" href="/sdk/core/api-reference">
+    Full API documentation
+  </Card>
+
+  <Card title="Provider Overview" icon="list" href="/providers/overview">
+    See all providers
+  </Card>
+</CardGroup>

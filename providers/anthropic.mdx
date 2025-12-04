@@ -1,0 +1,405 @@
+---
+title: "Anthropic"
+description: "Use Claude models from Anthropic in your BoostGPT agents"
+---
+
+## Overview
+
+Anthropic's Claude models are known for their safety, nuance, and strong performance on complex tasks. Claude excels at detailed analysis, creative writing, and maintaining helpful, harmless, and honest conversations.
+
+## Available Models
+
+<CardGroup cols={2}>
+  <Card title="Claude Opus 4.1" icon="crown">
+    **5 credits** • Most powerful Claude model
+
+    - 200K context window
+    - Exceptional reasoning and creativity
+    - Speed: Medium • Cost: High
+    - Best for: Complex analysis, creative content
+  </Card>
+
+  <Card title="Claude Haiku 4.5" icon="zap">
+    **4 credits** • Fast and efficient
+
+    - 200K context window
+    - Good reasoning with fast responses
+    - Speed: Fast • Cost: Low
+    - Best for: Quick responses, high-volume tasks
+  </Card>
+
+  <Card title="Claude Sonnet 4.5" icon="sparkles">
+    **3 credits** • Balanced performance
+
+    - 200K context window
+    - Excellent reasoning and speed balance
+    - Speed: Medium • Cost: Medium
+    - Best for: Production applications
+  </Card>
+
+  <Card title="Claude 3 Opus Extended Thinking" icon="brain">
+    **6 credits** • Deep reasoning model
+
+    - 200K context window
+    - Extended thinking capabilities
+    - Speed: Slow • Cost: High
+    - **Reasoning model** for analytical tasks
+  </Card>
+</CardGroup>
+
+## Model Comparison
+
+| Model | Credits | Context | Speed | Reasoning | Best Use Case |
+|-------|---------|---------|-------|-----------|---------------|
+| **Claude Opus 4.1** | 5 | 200K | Medium | Exceptional | Complex analysis, creative writing |
+| **Claude Haiku 4.5** | 4 | 200K | Fast | Good | Quick responses, high-volume |
+| **Claude Sonnet 4.5** | 3 | 200K | Medium | Excellent | Balanced production use |
+| **Claude 3 Opus Extended** | 6 | 200K | Slow | Exceptional | Deep analytical tasks |
+
+<Info>
+  **Claude's Strengths**: Exceptional safety, nuanced understanding, detailed analysis, and maintaining context across long conversations.
+</Info>
+
+## Setup
+
+### Using BoostGPT-Hosted API Keys
+
+<Steps>
+  <Step title="Select Claude Model">
+    In your BoostGPT dashboard, select any Claude model when creating or configuring your bot. No Anthropic API key needed!
+  </Step>
+
+  <Step title="Choose Your Model">
+    Select based on your needs:
+    - **Claude Sonnet 4.5**: Best for most production use cases
+    - **Claude Opus 4.1**: When you need maximum intelligence
+    - **Claude Haiku 4.5**: Fast responses for high-volume apps
+    - **Claude 3 Opus Extended**: Deep reasoning and analysis
+  </Step>
+</Steps>
+
+### Using Your Own Anthropic API Key
+
+<Tabs>
+  <Tab title="Dashboard Setup">
+    <Steps>
+      <Step title="Navigate to Integrations">
+        Go to [app.boostgpt.co](https://app.boostgpt.co/integrations) and select **Integrations**
+      </Step>
+
+      <Step title="Select Anthropic">
+        Find and click on the **Anthropic** provider
+      </Step>
+
+      <Step title="Add API Key">
+        Enter your Anthropic API key and select which agents will use this key
+      </Step>
+
+      <Step title="Save Configuration">
+        Click save to apply your custom API key
+      </Step>
+    </Steps>
+
+    <Tip>
+      Using your own API key can reduce costs for high-volume applications and gives you direct control over rate limits.
+    </Tip>
+  </Tab>
+
+  <Tab title="Core SDK">
+    ```javascript bot.js
+    import { BoostGPT } from 'boostgpt';
+
+    const client = new BoostGPT({
+      project_id: process.env.BOOSTGPT_PROJECT_ID,
+      key: process.env.BOOSTGPT_API_KEY
+    });
+
+    // Create bot with Claude model
+    const botResponse = await client.createBot({
+      name: 'My Claude Bot',
+      model: 'claude-sonnet-4-5',
+      instruction: 'You are a helpful and thoughtful assistant.',
+      max_reply_tokens: 1000,
+      status: 'active'
+    });
+
+    if (botResponse.err) {
+      console.error('Error:', botResponse.err);
+    } else {
+      console.log('Bot created:', botResponse.response);
+    }
+    ```
+  </Tab>
+
+  <Tab title="Router SDK">
+    ```javascript router.js
+    import { Router, TelegramAdapter } from '@boostgpt/router';
+
+    const router = new Router({
+      apiKey: process.env.BOOSTGPT_API_KEY,
+      projectId: process.env.BOOSTGPT_PROJECT_ID,
+      defaultBotId: process.env.BOOSTGPT_BOT_ID, // Bot using Claude
+      adapters: [
+        new TelegramAdapter({
+          telegramToken: process.env.TELEGRAM_TOKEN
+        })
+      ]
+    });
+
+    // Router automatically uses your Claude bot
+    router.onMessage(async (message, context) => {
+      // Handle commands, return null for AI
+      if (message.content === '/help') {
+        return 'Ask me anything!';
+      }
+
+      return null; // Let Claude handle it
+    });
+
+    await router.start();
+    ```
+  </Tab>
+</Tabs>
+
+## Reasoning Modes
+
+Configure how your Claude agent thinks and responds:
+
+<AccordionGroup>
+  <Accordion icon="wand-magic-sparkles" title="Auto Mode (Recommended)">
+    **1-10x credits** • Automatically selects the best reasoning approach based on your question's complexity.
+
+    Configure reasoning mode in the dashboard when creating/editing your agent, or via API when creating custom bots.
+
+    Best for: Most use cases, intelligent cost optimization
+  </Accordion>
+
+  <Accordion icon="bolt" title="Quick Mode (Standard)">
+    **1x credits** • Straightforward answers without additional analysis. Most efficient option.
+
+    Best for: Simple queries, FAQs, high-volume applications
+  </Accordion>
+
+  <Accordion icon="search" title="Research & Tools Mode (Interactive)">
+    **Up to 10x credits** • Uses tools to gather information, perform calculations, or execute tasks. Most powerful option.
+
+    Best for: Complex queries requiring external data or tools
+  </Accordion>
+
+  <Accordion icon="list-ol" title="Step-by-Step Mode (Stepwise)">
+    **Up to 2x credits** • Breaks problems into smaller steps with sources for each part, improving transparency.
+
+    Best for: Educational content, troubleshooting, explanations
+  </Accordion>
+
+  <Accordion icon="brain" title="Deep Thinking Mode (React)">
+    **Up to 5x credits** • Cycles through thinking and reflecting to refine answers progressively.
+
+    Best for: Complex analysis, strategic planning, research
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  Reasoning modes are configured in the BoostGPT dashboard when creating or editing your agent. They control how the model approaches problem-solving and can significantly impact credit usage.
+</Tip>
+
+## Model Selection Guide
+
+### When to Use Each Model
+
+<AccordionGroup>
+  <Accordion icon="sparkles" title="Claude Sonnet 4.5 - Production Workhorse">
+    **Best for:**
+    - Customer support and chatbots
+    - Content generation and editing
+    - General-purpose applications
+    - Balanced cost and performance
+
+    **Sweet spot:** Excellent reasoning at medium cost
+
+    **Cost:** 3 credits per request
+  </Accordion>
+
+  <Accordion icon="crown" title="Claude Opus 4.1 - Maximum Intelligence">
+    **Best for:**
+    - Complex analysis and research
+    - Creative writing and storytelling
+    - Detailed explanations
+    - High-stakes interactions
+
+    **Standout:** Exceptional nuance and depth
+
+    **Cost:** 5 credits per request
+  </Accordion>
+
+  <Accordion icon="zap" title="Claude Haiku 4.5 - Speed & Volume">
+    **Best for:**
+    - Quick responses
+    - Simple queries
+    - High-volume applications
+    - Cost-sensitive deployments
+
+    **Cost:** 4 credits per request
+  </Accordion>
+
+  <Accordion icon="brain" title="Claude 3 Opus Extended - Deep Analysis">
+    **Best for:**
+    - Scientific and technical analysis
+    - Multi-step reasoning tasks
+    - Strategic planning
+    - Complex problem-solving
+
+    **Note:** Highest cost, slowest, but most thorough
+
+    **Cost:** 6 credits per request
+  </Accordion>
+</AccordionGroup>
+
+## Best Practices
+
+### Override Reasoning Modes Per Request
+
+You can override the reasoning mode set on your agent using the `reasoning_mode` parameter:
+
+```javascript
+// Override to Deep Thinking for complex analysis
+const chatResponse = await client.chat({
+  bot_id: 'your-bot-id',
+  reasoning_mode: 'react', // Deep Thinking mode (up to 5x credits)
+  message: 'Analyze the market trends and provide strategic recommendations'
+});
+
+if (chatResponse.err) {
+  console.error('Error:', chatResponse.err);
+} else {
+  console.log('Analysis:', chatResponse.response.chat.reply);
+}
+
+// Use Quick mode for simple queries
+const quickResponse = await client.chat({
+  bot_id: 'your-bot-id',
+  reasoning_mode: 'standard', // Quick mode (1x credits)
+  message: 'What is your name?'
+});
+```
+
+<Tip>
+  **Reasoning Mode Options:**
+  - `auto` - Automatically selects best approach (1-10x credits)
+  - `standard` - Quick, straightforward answers (1x credits)
+  - `interactive` - Research & Tools mode (up to 10x credits)
+  - `stepwise` - Step-by-Step explanations (up to 2x credits)
+  - `react` - Deep Thinking mode (up to 5x credits)
+</Tip>
+
+### Dynamic Reasoning Mode with Router
+
+```javascript
+// Router automatically uses your bot
+// Set reasoning mode in bot configuration or override per-request with Core SDK
+router.onMessage(async (message, context) => {
+  // Handle custom commands
+  if (message.content === '/ping') {
+    return 'Pong!';
+  }
+
+  // For most cases, just return null - router handles it
+  return null;
+});
+
+// For advanced per-request reasoning mode control, use Core SDK directly
+```
+
+### Leverage Claude's Safety
+
+```javascript
+// Claude excels at content moderation
+const moderateContent = async (userInput) => {
+  const response = await client.chat({
+    bot_id: 'moderator-bot',
+    message: `Is this content appropriate? "${userInput}"`,
+    reasoning_mode: 'standard' // Quick mode for moderation
+  });
+
+  if (response.err) {
+    console.error('Error:', response.err);
+    return null;
+  }
+
+  return response.response.chat.reply;
+};
+```
+
+### Use Extended Thinking for Complex Tasks
+
+```javascript
+// Use Extended Thinking model with Deep Thinking mode
+const analyzeStrategy = async (data) => {
+  const response = await client.chat({
+    bot_id: 'analyst-bot',
+    message: `Analyze this business data and provide strategic recommendations: ${data}`,
+    reasoning_mode: 'react', // Deep thinking mode (5x credits)
+    max_reply_tokens: 2500
+  });
+
+  if (response.err) {
+    console.error('Error:', response.err);
+    return null;
+  }
+
+  return response.response.chat.reply;
+};
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion icon="circle-exclamation" title="High costs with reasoning modes">
+    **Cause:** Research & Tools (10x) and Deep Thinking (5x) modes multiply credit costs
+
+    **Solutions:**
+    - Use Quick mode (standard) for simple queries
+    - Use Auto mode to let Claude optimize automatically
+    - Reserve deep modes for complex tasks only
+    - Monitor credit usage in dashboard
+  </Accordion>
+
+  <Accordion icon="circle-exclamation" title="Slow responses">
+    **Cause:** Deep Thinking mode or Extended Thinking models are slower
+
+    **Solutions:**
+    - Use Claude Haiku 4.5 for faster responses
+    - Use Quick mode (standard reasoning)
+    - Add "thinking..." indicators for user feedback
+    - Reserve slow modes for async tasks
+  </Accordion>
+
+  <Accordion icon="circle-exclamation" title="Context length errors">
+    **Rare:** Claude's 200K context handles most use cases
+
+    **Solutions:**
+    - Implement message history pruning
+    - Summarize older messages
+    - Use streaming for very long outputs
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Model Comparison" icon="scale-balanced" href="/providers/model-comparison">
+    Compare Claude with other providers
+  </Card>
+
+  <Card title="Reasoning Models" icon="brain" href="/providers/reasoning-models">
+    Deep dive into Extended Thinking
+  </Card>
+
+  <Card title="Bring Your Own Key" icon="key" href="/providers/bring-your-own-keys">
+    Use your own Anthropic API key
+  </Card>
+
+  <Card title="SDK Reference" icon="code" href="/sdk/core/api-reference">
+    Full API documentation
+  </Card>
+</CardGroup>

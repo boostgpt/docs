@@ -1,0 +1,471 @@
+---
+title: "Bring Your Own Keys (BYOK)"
+description: "Use your own API keys from AI providers with BoostGPT"
+---
+
+## Overview
+
+While BoostGPT provides hosted API keys for all supported providers, you can bring your own API keys (BYOK) for greater control, cost optimization, and compliance requirements.
+
+## Benefits of BYOK
+
+<CardGroup cols={2}>
+  <Card title="Cost Control" icon="dollar-sign">
+    Direct billing from providers, potentially lower costs for high-volume applications
+  </Card>
+
+  <Card title="Rate Limits" icon="gauge">
+    Use your own API tier and rate limits without sharing with other BoostGPT users
+  </Card>
+
+  <Card title="Compliance" icon="shield-check">
+    Meet regulatory requirements that mandate direct provider relationships
+  </Card>
+
+  <Card title="Billing Transparency" icon="file-invoice">
+    Direct invoices from AI providers with detailed usage breakdowns
+  </Card>
+</CardGroup>
+
+## Supported Providers
+
+All major AI providers support BYOK through the BoostGPT dashboard:
+
+<AccordionGroup>
+  <Accordion icon="openai" title="OpenAI">
+    **Models:** GPT-5, GPT-4, O-series reasoning models
+
+    **Get API Key:** [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+
+    **Cost:** Pay-as-you-go pricing directly to OpenAI
+  </Accordion>
+
+  <Accordion icon="google" title="Google (Gemini)">
+    **Models:** Gemini 2.5, Gemini 3 Pro Preview
+
+    **Get API Key:** [makersuite.google.com/app/apikey](https://makersuite.google.com/app/apikey)
+
+    **Cost:** Free tier available, then pay-as-you-go
+  </Accordion>
+
+  <Accordion icon="brain" title="Anthropic (Claude)">
+    **Models:** Claude Opus, Sonnet, Haiku
+
+    **Get API Key:** [console.anthropic.com/account/keys](https://console.anthropic.com/account/keys)
+
+    **Cost:** Pay-as-you-go with higher tier discounts
+  </Accordion>
+
+  <Accordion icon="x-twitter" title="xAI (Grok)">
+    **Models:** Grok 3, Grok 4 Fast
+
+    **Get API Key:** [console.x.ai](https://console.x.ai)
+
+    **Cost:** Pay-per-request pricing
+  </Accordion>
+
+  <Accordion icon="circle" title="DeepSeek">
+    **Models:** DeepSeek V3, DeepSeek R1
+
+    **Get API Key:** [platform.deepseek.com](https://platform.deepseek.com)
+
+    **Cost:** Competitive pay-as-you-go pricing
+  </Accordion>
+
+  <Accordion icon="sparkles" title="Mistral AI">
+    **Models:** Mistral Small, Medium, Large
+
+    **Get API Key:** [console.mistral.ai](https://console.mistral.ai)
+
+    **Cost:** Usage-based pricing
+  </Accordion>
+
+  <Accordion icon="circle-check" title="Cohere">
+    **Models:** Command R+, Command A, Command R7B
+
+    **Get API Key:** [dashboard.cohere.com/api-keys](https://dashboard.cohere.com/api-keys)
+
+    **Cost:** Free trial, then pay-as-you-go
+  </Accordion>
+
+  <Accordion icon="bolt" title="Groq">
+    **Models:** Llama 3.x, DeepSeek Llama, Qwen models
+
+    **Get API Key:** [console.groq.com/keys](https://console.groq.com/keys)
+
+    **Cost:** Generous free tier, competitive paid pricing
+  </Accordion>
+
+  <Accordion icon="server" title="Ollama">
+    **Models:** All local models (no API key needed)
+
+    **Setup:** Install Ollama locally and provide host URL
+
+    **Cost:** Free (self-hosted)
+  </Accordion>
+</AccordionGroup>
+
+## Setup Guide
+
+### Step 1: Get Your API Key
+
+<Steps>
+  <Step title="Choose Your Provider">
+    Select the AI provider you want to use (OpenAI, Anthropic, Google, etc.)
+  </Step>
+
+  <Step title="Create Account">
+    Sign up for an account with the provider if you don't have one
+  </Step>
+
+  <Step title="Generate API Key">
+    Navigate to the provider's API key management page and create a new key
+
+    <Tip>
+      Give your key a descriptive name like "BoostGPT Production" to track usage
+    </Tip>
+  </Step>
+
+  <Step title="Copy API Key">
+    Copy the API key immediately - most providers only show it once!
+
+    <Warning>
+      Store your API key securely. Never commit it to version control or share it publicly.
+    </Warning>
+  </Step>
+</Steps>
+
+### Step 2: Add API Key to BoostGPT
+
+<Steps>
+  <Step title="Open BoostGPT Dashboard">
+    Go to [app.boostgpt.co](https://app.boostgpt.co) and log in
+  </Step>
+
+  <Step title="Navigate to Integrations">
+    Click on **Integrations** in the sidebar navigation
+  </Step>
+
+  <Step title="Select Provider">
+    Find and click on the AI provider you want to configure (e.g., OpenAI, Anthropic)
+  </Step>
+
+  <Step title="Enter API Key">
+    Paste your API key into the provided field
+  </Step>
+
+  <Step title="Select Agents">
+    Choose which agents should use this API key
+
+    <Info>
+      You can use different API keys for different agents to separate billing or apply different rate limits.
+    </Info>
+  </Step>
+
+  <Step title="Save Configuration">
+    Click **Save** to apply your custom API key
+  </Step>
+
+  <Step title="Test the Integration">
+    Send a test message to verify the API key works correctly
+  </Step>
+</Steps>
+
+### Step 3: Monitor Usage
+
+<Info>
+  Track your usage and costs directly in your provider's dashboard. BoostGPT will use your API key for all requests from the selected agents.
+</Info>
+
+## Usage with SDKs
+
+Once configured in the dashboard, your agents automatically use your custom API keys. No code changes needed!
+
+### Core SDK
+
+```javascript
+import { BoostGPT } from 'boostgpt';
+
+const client = new BoostGPT({
+  project_id: process.env.BOOSTGPT_PROJECT_ID,
+  key: process.env.BOOSTGPT_API_KEY
+});
+
+// This bot will use your custom OpenAI API key (if configured in dashboard)
+const botResponse = await client.createBot({
+  name: 'My BYOK Bot',
+  model: 'gpt-5-mini',
+  instruction: 'You are a helpful assistant.',
+  status: 'active'
+});
+
+// Chat requests automatically use your API key
+const chatResponse = await client.chat({
+  bot_id: botResponse.response.id,
+  message: 'Hello!'
+});
+```
+
+### Router SDK
+
+```javascript
+import { Router, DiscordAdapter } from '@boostgpt/router';
+
+const router = new Router({
+  apiKey: process.env.BOOSTGPT_API_KEY,
+  projectId: process.env.BOOSTGPT_PROJECT_ID,
+  defaultBotId: process.env.BOOSTGPT_BOT_ID, // Bot using your custom API key
+  adapters: [
+    new DiscordAdapter({
+      discordToken: process.env.DISCORD_TOKEN
+    })
+  ]
+});
+
+// Router automatically uses your custom API key
+router.onMessage(async (message, context) => {
+  // Handle commands or return null for AI
+  if (message.content === '/status') {
+    return 'Using your own API key!';
+  }
+
+  return null; // BoostGPT handles with your key
+});
+
+await router.start();
+```
+
+### Override API Key Per Request (Advanced)
+
+For Ollama or custom setups, you can override the provider configuration per request:
+
+```javascript
+// Override Ollama host per request
+const chatResponse = await client.chat({
+  bot_id: 'your-bot-id',
+  provider_host: 'http://custom-server:11434',
+  message: 'Hello from custom host!'
+});
+
+// Override OpenAI API key per request (if needed)
+const customResponse = await client.chat({
+  bot_id: 'your-bot-id',
+  provider_key: 'sk-custom-key-here', // Use specific API key
+  message: 'Hello!'
+});
+```
+
+## Cost Comparison
+
+### BoostGPT Credits vs BYOK
+
+<Info>
+  BoostGPT credits provide simplicity and predictability, while BYOK offers potential cost savings for high-volume usage.
+</Info>
+
+| Scenario | BoostGPT Credits | BYOK | Recommendation |
+|----------|------------------|------|----------------|
+| **Low Volume** (&lt;1M tokens/month) | Simple, predictable | More setup, similar cost | Use Credits |
+| **High Volume** (&gt;10M tokens/month) | Pay per credit | Direct provider pricing | Use BYOK |
+| **Multiple Models** | Single credit balance | Separate provider bills | Use Credits |
+| **Compliance Required** | Shared infrastructure | Direct provider relationship | Use BYOK |
+| **Development/Testing** | Easy to start | Requires API keys | Use Credits |
+
+### Example Cost Analysis
+
+**Scenario:** 1M GPT-4o Mini requests per month
+
+- **BoostGPT Credits:** 1M credits × $0.01 = $10,000
+- **BYOK with OpenAI:** ~$8,000 (OpenAI direct pricing)
+- **Savings:** ~$2,000/month (20%)
+
+<Tip>
+  For high-volume production workloads (&gt;1M requests/month), BYOK typically offers 15-30% cost savings.
+</Tip>
+
+## Security Best Practices
+
+### Protect Your API Keys
+
+<AccordionGroup>
+  <Accordion icon="key" title="Use Environment Variables">
+    Never hardcode API keys in your code
+
+    ```bash .env
+    OPENAI_API_KEY=sk-...
+    ANTHROPIC_API_KEY=sk-ant-...
+    GOOGLE_AI_KEY=AIza...
+    ```
+  </Accordion>
+
+  <Accordion icon="rotate" title="Rotate Keys Regularly">
+    Generate new API keys every 3-6 months and revoke old ones
+  </Accordion>
+
+  <Accordion icon="shield" title="Use Different Keys Per Environment">
+    Separate API keys for development, staging, and production
+  </Accordion>
+
+  <Accordion icon="gauge" title="Set Rate Limits">
+    Configure rate limits at the provider level to prevent unexpected costs
+  </Accordion>
+
+  <Accordion icon="bell" title="Enable Alerts">
+    Set up billing alerts with your providers to monitor unexpected usage spikes
+  </Accordion>
+
+  <Accordion icon="ban" title="Never Share Keys">
+    Each team member should have their own API keys, never share
+  </Accordion>
+</AccordionGroup>
+
+### Monitor API Usage
+
+<Steps>
+  <Step title="Provider Dashboards">
+    Check usage in OpenAI Console, Anthropic Console, etc.
+  </Step>
+
+  <Step title="Set Billing Alerts">
+    Configure alerts at $50, $100, $500 thresholds
+  </Step>
+
+  <Step title="Review Monthly">
+    Analyze usage patterns and optimize model selection
+  </Step>
+
+  <Step title="Track by Agent">
+    Use different API keys for different agents to track costs separately
+  </Step>
+</Steps>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion icon="circle-exclamation" title="Invalid API Key error">
+    **Cause:** API key is incorrect, expired, or revoked
+
+    **Solutions:**
+    - Double-check the API key was copied correctly
+    - Verify the key hasn't been revoked in provider dashboard
+    - Generate a new API key
+    - Ensure no extra spaces or characters
+  </Accordion>
+
+  <Accordion icon="circle-exclamation" title="Rate limit exceeded">
+    **Cause:** Too many requests for your API tier
+
+    **Solutions:**
+    - Upgrade your API tier with the provider
+    - Implement request throttling
+    - Use exponential backoff retries
+    - Consider using BoostGPT credits for overflow
+  </Accordion>
+
+  <Accordion icon="circle-exclamation" title="Insufficient quota">
+    **Cause:** API account hasn't been verified or has no credits
+
+    **Solutions:**
+    - Add payment method to provider account
+    - Verify email/phone with provider
+    - Check billing status in provider dashboard
+    - Add credits or update payment method
+  </Accordion>
+
+  <Accordion icon="circle-exclamation" title="API key not working in BoostGPT">
+    **Cause:** Configuration issue in BoostGPT dashboard
+
+    **Solutions:**
+    - Verify API key was saved correctly
+    - Check that the agent is selected to use the custom key
+    - Test the API key directly with provider's API
+    - Re-enter and save the API key
+  </Accordion>
+
+  <Accordion icon="circle-exclamation" title="Unexpected costs">
+    **Cause:** Higher than expected usage or expensive model selection
+
+    **Solutions:**
+    - Review usage in provider dashboard
+    - Switch to more cost-effective models (e.g., GPT-4o Mini instead of GPT-5)
+    - Set max_reply_tokens limits
+    - Implement caching for common queries
+    - Enable billing alerts
+  </Accordion>
+</AccordionGroup>
+
+## Migration from Credits to BYOK
+
+<Steps>
+  <Step title="Calculate Usage">
+    Review your monthly credit usage in BoostGPT dashboard
+  </Step>
+
+  <Step title="Estimate Costs">
+    Compare BoostGPT credit costs vs direct provider pricing
+  </Step>
+
+  <Step title="Obtain API Keys">
+    Sign up with providers and generate API keys
+  </Step>
+
+  <Step title="Test in Staging">
+    Configure API keys for a test agent first
+  </Step>
+
+  <Step title="Gradual Rollout">
+    Move agents to BYOK one at a time, monitoring costs
+  </Step>
+
+  <Step title="Monitor Performance">
+    Track response times and error rates after migration
+  </Step>
+</Steps>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion icon="question" title="Can I use both BoostGPT credits and BYOK?">
+    Yes! You can use BoostGPT credits for some agents and BYOK for others. Configure API keys per-agent in the dashboard.
+  </Accordion>
+
+  <Accordion icon="question" title="Do I still need a BoostGPT subscription with BYOK?">
+    Yes. BoostGPT provides the infrastructure, SDKs, routing, and management tools. BYOK only changes where API calls are billed.
+  </Accordion>
+
+  <Accordion icon="question" title="What happens if my API key runs out of credits?">
+    Requests will fail with an error. BoostGPT will NOT fallback to BoostGPT credits automatically. Monitor your provider balances.
+  </Accordion>
+
+  <Accordion icon="question" title="Can I switch back to BoostGPT credits?">
+    Yes! Simply remove your custom API key from the Integration settings, and your agents will use BoostGPT credits again.
+  </Accordion>
+
+  <Accordion icon="question" title="Does BYOK work with all features?">
+    Yes. All BoostGPT features work identically with BYOK, including reasoning modes, multi-channel routing, and integrations.
+  </Accordion>
+
+  <Accordion icon="question" title="How secure is storing my API key in BoostGPT?">
+    API keys are encrypted at rest and in transit. Only your agents use your keys, never shared with other users. See our [security docs](/security) for details.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Provider Overview" icon="list" href="/providers/overview">
+    See all supported providers
+  </Card>
+
+  <Card title="Model Comparison" icon="scale-balanced" href="/providers/model-comparison">
+    Compare models and pricing
+  </Card>
+
+  <Card title="Authentication" icon="lock" href="/authentication">
+    Learn about BoostGPT authentication
+  </Card>
+
+  <Card title="Integrations" icon="plug" href="/integrations/introduction">
+    Connect external tools and services
+  </Card>
+</CardGroup>

@@ -1,0 +1,174 @@
+---
+title: "Bot Management"
+description: "Create, update, and manage bots with the Core SDK"
+---
+
+## Create a Bot
+
+```javascript
+const result = await client.createBot({
+  name: 'Customer Support Bot',
+  model: 'gpt-5-mini',
+  instruction: 'You are a helpful customer support assistant.',
+  max_reply_tokens: 1000,
+  status: 'active'
+});
+
+if (result.err) {
+  console.error('Error:', result.err);
+} else {
+  console.log('Bot created:', result.response.id);
+}
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | Yes | Bot name |
+| `model` | string | Yes | Model to use (e.g., `gpt-5-mini`) |
+| `instruction` | string | Yes | System instructions for the bot |
+| `max_reply_tokens` | number | No | Max response length (default: 1000) |
+| `temperature` | number | No | Creativity 0-1 (default: 0.7) |
+| `reasoning_mode` | string | No | `auto`, `standard`, `stepwise`, `react`, `interactive` |
+| `status` | string | No | `active` or `inactive` (default: `active`) |
+
+### Response
+
+```javascript
+{
+  err: null,
+  response: {
+    id: 'bot_abc123',
+    name: 'Customer Support Bot',
+    model: 'gpt-5-mini',
+    instruction: 'You are a helpful customer support assistant.',
+    status: 'active',
+    created_at: '2025-01-01T12:00:00Z'
+  }
+}
+```
+
+## Get Bot Details
+
+```javascript
+const result = await client.fetchBot('bot_abc123');
+
+if (result.err) {
+  console.error('Error:', result.err);
+} else {
+  console.log('Bot:', result.response);
+}
+```
+
+## List All Bots
+
+```javascript
+const result = await client.fetchBots({
+  page: 1,
+  per_page: 10
+});
+
+if (result.err) {
+  console.error('Error:', result.err);
+} else {
+  console.log('Bots:', result.response);
+}
+```
+
+### Response
+
+```javascript
+{
+  err: null,
+  response: [
+    {
+      id: 'bot_abc123',
+      name: 'Support Bot',
+      model: 'gpt-5-mini',
+      status: 'active'
+    },
+    {
+      id: 'bot_xyz789',
+      name: 'Sales Bot',
+      model: 'gemini-2.0-flash',
+      status: 'active'
+    }
+  ]
+}
+```
+
+## Update Bot
+
+```javascript
+const result = await client.updateBot({
+  bot_id: 'bot_abc123',
+  name: 'Updated Support Bot',
+  instruction: 'You are an expert support assistant.',
+  model: 'gpt-4o-min',
+  max_reply_tokens: 1500,
+  top: 0.8,
+  welcome_message: 'Hi there! How can I help?',
+  status: 'active'
+});
+
+if (result.err) {
+  console.error('Error:', result.err);
+} else {
+  console.log('Bot updated:', result.response);
+}
+```
+
+## Reset Bot
+
+Reset a bot's conversation history and training data:
+
+```javascript
+const result = await client.resetBot('bot_abc123');
+
+if (result.err) {
+  console.error('Error:', result.err);
+} else {
+  console.log('Bot reset successfully');
+}
+```
+
+## Delete Bot
+
+```javascript
+const result = await client.deleteBot('bot_abc123');
+
+if (result.err) {
+  console.error('Error:', result.err);
+} else {
+  console.log('Bot deleted successfully');
+}
+```
+
+## Choose a Model
+
+See all available models:
+
+<Card title="Model Comparison" icon="chart-bar" href="/providers/model-comparison">
+  Compare 50+ models across 9 providers
+</Card>
+
+### Popular Models
+
+- **gpt-5-mini** - Fast, cheap, great for most tasks (1 credit)
+- **gpt-5** - Most capable OpenAI model (5 credits)
+- **gemini-2.0-flash** - Fast Google model with 1M context (1 credit)
+- **gemini-2.5-flash-thinking** - Reasoning model (3 credits)
+- **claude-3.7-sonnet** - Best for complex tasks (4 credits)
+
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Chat API" icon="messages" href="/sdk/core/chat-api">
+    Interact with your bots
+  </Card>
+  <Card title="Training Data" icon="book" href="/sdk/core/training-data">
+    Add knowledge to bots
+  </Card>
+</CardGroup>

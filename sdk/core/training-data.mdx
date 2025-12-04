@@ -1,0 +1,258 @@
+---
+title: "Training Data"
+description: "Add knowledge and context to your bots"
+---
+
+## Add Training Content
+
+```javascript
+const result = await client.addTraining({
+  bot_id: 'bot_abc123',
+  content: 'Our company offers 24/7 customer support at support@example.com',
+  type: 'text'
+});
+
+if (result.err) {
+  console.error('Error:', result.err);
+} else {
+  console.log('Training added:', result.response.id);
+}
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `bot_id` | string | Yes | Bot ID to train |
+| `content` | string | Yes | Training content (text) |
+| `type` | string | No | Content type (default: `text`) |
+| `metadata` | object | No | Custom metadata |
+
+### Response
+
+```javascript
+{
+  err: null,
+  response: {
+    id: 'training_xyz789',
+    bot_id: 'bot_abc123',
+    content: 'Our company offers 24/7 customer support...',
+    created_at: '2025-01-01T12:00:00Z'
+  }
+}
+```
+
+## Add Multiple Training Items
+
+```javascript
+const trainingData = [
+  'We are open Monday-Friday 9am-5pm EST',
+  'Free shipping on orders over $50',
+  'Returns accepted within 30 days',
+  'Contact support: support@example.com or (555) 123-4567'
+];
+
+for (const content of trainingData) {
+  const result = await client.addTraining({
+    bot_id: 'bot_abc123',
+    content
+  });
+
+  if (result.err) {
+    console.error('Failed to add:', content, result.err);
+  }
+}
+```
+
+## Add Training with Metadata
+
+```javascript
+const result = await client.addTraining({
+  bot_id: 'bot_abc123',
+  content: 'Our premium plan costs $99/month',
+  metadata: {
+    category: 'pricing',
+    plan: 'premium',
+    last_updated: '2025-01-01'
+  }
+});
+```
+
+## List Training Data
+
+```javascript
+const result = await client.listTraining({
+  bot_id: 'bot_abc123'
+});
+
+if (result.err) {
+  console.error('Error:', result.err);
+} else {
+  console.log('Training items:', result.response);
+}
+```
+
+### Response
+
+```javascript
+{
+  err: null,
+  response: [
+    {
+      id: 'training_1',
+      content: 'We offer 24/7 support',
+      created_at: '2025-01-01T12:00:00Z'
+    },
+    {
+      id: 'training_2',
+      content: 'Free shipping on orders over $50',
+      created_at: '2025-01-01T12:05:00Z'
+    }
+  ]
+}
+```
+
+## Delete Training Data
+
+```javascript
+const result = await client.deleteTraining({
+  bot_id: 'bot_abc123',
+  training_id: 'training_xyz789'
+});
+
+if (result.err) {
+  console.error('Error:', result.err);
+} else {
+  console.log('Training deleted successfully');
+}
+```
+
+## Best Practices
+
+### 1. Keep Content Focused
+
+```javascript
+// Good - Specific and clear
+await client.addTraining({
+  bot_id: 'bot_abc123',
+  content: 'Returns are accepted within 30 days of purchase with original receipt'
+});
+
+// Bad - Too vague
+await client.addTraining({
+  bot_id: 'bot_abc123',
+  content: 'We have a return policy'
+});
+```
+
+### 2. Structure FAQs
+
+```javascript
+const faqs = [
+  {
+    question: 'What are your business hours?',
+    answer: 'We are open Monday-Friday 9am-5pm EST'
+  },
+  {
+    question: 'Do you offer free shipping?',
+    answer: 'Yes, free shipping on orders over $50'
+  }
+];
+
+for (const faq of faqs) {
+  await client.addTraining({
+    bot_id: 'bot_abc123',
+    content: `Q: ${faq.question}\nA: ${faq.answer}`
+  });
+}
+```
+
+### 3. Update Regularly
+
+```javascript
+// Delete old pricing
+await client.deleteTraining({
+  bot_id: 'bot_abc123',
+  training_id: 'old_pricing_id'
+});
+
+// Add new pricing
+await client.addTraining({
+  bot_id: 'bot_abc123',
+  content: 'Premium plan: $199/month (updated Jan 2025)'
+});
+```
+
+## Training Limits by Plan
+
+| Plan | Training Size |
+|------|---------------|
+| **Free** | 500 KB |
+| **Starter** | 20 MB |
+| **Pro** | 30 MB |
+| **Scale** | Custom |
+
+## Complete Example
+
+```javascript
+import { BoostGPT } from 'boostgpt';
+
+const client = new BoostGPT({
+  project_id: process.env.BOOSTGPT_PROJECT_ID,
+  key: process.env.BOOSTGPT_API_KEY
+});
+
+async function setupBot() {
+  // Create bot
+  const bot = await client.createBot({
+    name: 'Support Bot',
+    model: 'gpt-5-mini',
+    instruction: 'You are a helpful support assistant.'
+  });
+
+  if (bot.err) {
+    console.error('Error creating bot:', bot.err);
+    return;
+  }
+
+  // Add training data
+  const trainingContent = [
+    'Company name: TechCorp',
+    'Support email: support@techcorp.com',
+    'Business hours: Mon-Fri 9am-5pm EST',
+    'Phone: (555) 123-4567',
+    'Returns accepted within 30 days',
+    'Free shipping on orders over $50'
+  ];
+
+  for (const content of trainingContent) {
+    await client.addTraining({
+      bot_id: bot.response.id,
+      content
+    });
+  }
+
+  console.log('Bot trained successfully!');
+
+  // Test the bot
+  const response = await client.chat({
+    bot_id: bot.response.id,
+    message: 'What are your business hours?'
+  });
+
+  console.log('Bot response:', response.response);
+}
+
+setupBot();
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Chat API" icon="messages" href="/sdk/core/chat-api">
+    Chat with your trained bot
+  </Card>
+  <Card title="API Reference" icon="code" href="/sdk/core/api-reference">
+    Complete API documentation
+  </Card>
+</CardGroup>

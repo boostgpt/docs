@@ -291,6 +291,7 @@
         "groups": [
           {
             "group": "Overview",
+            "icon": "book-open",
             "pages": [
               "api-reference/introduction",
               "api-reference/authentication",
@@ -300,6 +301,7 @@
           },
           {
             "group": "Endpoints",
+            "icon": "globe",
             "openapi": {
               "source": "api-reference/openapi.json"
             }

@@ -116,7 +116,7 @@ const client = new BoostGPT({
 // Create a bot
 const botResult = await client.createBot({
   name: 'My Assistant',
-  model: 'gpt-4o-mini',
+  model: 'gpt-5-mini',
   instruction: 'You are a helpful assistant. Be concise and friendly.',
   max_reply_tokens: 1000,
   status: 'active'
@@ -127,21 +127,20 @@ if (botResult.err) {
   process.exit(1);
 }
 
-const botId = botResult.response.bot._id;
+const botId = botResult.response.id;
 console.log('Bot created with ID:', botId);
 
 // Chat with the bot
 const chatResult = await client.chat({
   bot_id: botId,
   message: 'Hello! How are you?',
-  chat_id: 'user-123',
-  vector: true
+  chat_id: 'user-123'
 });
 
 if (chatResult.err) {
   console.error('Error:', chatResult.err);
 } else {
-  console.log('Bot:', chatResult.response.chat.reply);
+  console.log('Bot:', chatResult.response);
 }
 ```
 

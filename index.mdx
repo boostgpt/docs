@@ -1,287 +1,82 @@
 ---
-title: Introduction
-description: 'Build AI agents once. Deploy everywhere. Connect to anything.'
+title: "Introduction"
+description: "Build AI agents once. Deploy everywhere. Connect to anything."
+mode: "frame"
+keywords: ["overview", "platform", "getting started", "features"]
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/hero-light.png"
-  alt="BoostGPT Hero Light"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/hero-dark.png"
-  alt="BoostGPT Hero Dark"
-/>
+export const HeroCard = ({ filename, title, description, href, icon }) => {
+  return (
+    <a className="group cursor-pointer pb-8" href={href}>
+      {/* <img
+        src={`https://placehold.co/960x540/EFF3FF/2364FF?text=${filename}&font=lato&w=960&h=540&fm=svg`}
+        className="block dark:hidden pointer-events-none group-hover:scale-105 transition-all duration-100 rounded-2xl"
+      />
+      <img
+        src={`https://mintlify.s3.us-west-1.amazonaws.com/mintlify/images/hero/${filename}-dark.png`}
+        className="pointer-events-none group-hover:scale-105 transition-all duration-100 hidden dark:block"
+      /> */}
+      <span className="text-gray-400 dark:text-zinc-200 group-hover:text-gray-900 dark:group-hover:text-zinc-50 transition-colors duration-100 flex items-center justify-center rounded-2xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 shadow-md group-hover:shadow-lg w-full h-[200px]">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rocket-icon lucide-rocket" dangerouslySetInnerHTML={{ __html: icon }}></svg>
+      </span>
 
-## Welcome to BoostGPT
+      <h3 className="mt-5 text-gray-900 dark:text-zinc-50 font-medium">
+        {title}
+      </h3>
+      <span className="mt-1.5">{description}</span>
+    </a>
+  );
+};
 
-BoostGPT is the **complete conversational infrastructure platform**—from branded chatbots to multi-channel bots to 50+ pre-built integrations. Whether you're a creator capturing subscribers or a developer shipping multi-platform agents, BoostGPT handles the infrastructure so you can focus on what matters.
+<div className="relative">
+  <div className="absolute -top-14 left-0 right-0 opacity-80">
+    <img
+      src="/images/background-light.svg"
+      className="block dark:hidden pointer-events-none w-full h-auto"
+      alt="Decorative background image."
+    />
+    <img
+      src="/images/background-dark.svg"
+      className="hidden dark:block pointer-events-none w-full h-auto"
+      alt="Decorative background image."
+    />
+  </div>
 
-## Choose Your Path
+  <div className="relative z-10 px-4 py-16 lg:py-48 lg:pb-24 max-w-3xl mx-auto">
+    <h1 className="block text-4xl font-medium text-center text-gray-900 dark:text-zinc-50 tracking-tight">
+      Documentation
+    </h1>
 
-<CardGroup cols={3}>
-  <Card
-    title="For Creators"
-    icon="sparkles"
-    href="/paths/creators"
-  >
-    Launch branded agents that capture subscribers—no code required
-  </Card>
-  <Card
-    title="For Developers"
-    icon="code"
-    href="/paths/developers"
-  >
-    Ship multi-channel bots with one unified SDK
-  </Card>
-  <Card
-    title="Integrations"
-    icon="plug"
-    href="/paths/integrations"
-  >
-    Connect your agents to 50+ services or build custom ones
-  </Card>
-</CardGroup>
+    <div className="max-w-xl mx-auto px-4 mt-4 text-lg text-center text-gray-500 dark:text-zinc-500">
+     Build AI agents once. Deploy everywhere. Connect to anything.
+    </div>
 
-## Quick Start by Use Case
+    <div className="px-6 lg:px-0 mt-12 lg:mt-24 grid sm:grid-cols-2 gap-x-6 gap-y-4">
+      <HeroCard icon={'<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>'} filename="Q" title="Quickstart" description="Deploy your first AI agent running in 5 minutes" href="/quickstart" />
 
-<AccordionGroup>
-  <Accordion icon="user" title="I want to build a branded AI agent (no-code)">
-    Perfect! Start with our [Creator Quickstart](/creators/quickstart) to launch your agent in 5 minutes. Gate access behind email signup, customize your branding, and start capturing subscribers today.
-  </Accordion>
-  
-  <Accordion icon="code" title="I want to build multi-channel bots (SDK)">
-    Great! Check out the [Router SDK](/sdk/router/getting-started) to deploy across Discord, Slack, Telegram, WhatsApp, and Crisp with one codebase. Write your logic once, deploy everywhere.
-  </Accordion>
-  
-  <Accordion icon="plug" title="I want to add integrations to my agent">
-    Awesome! Browse our [Pre-Built Connectors](/integrations/connectors/overview) (Calendly, Stripe, Notion, GitHub, etc.) or [build custom ones](/integrations/custom/overview) in 5 minutes using OpenAPI docs or Postman collections.
-  </Accordion>
+      <HeroCard
+      icon={'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/>'} 
+        filename="C"
+        title="For Creators"
+        description="Launch branded agents that capture subscribers—no code required"
+        href="/creators"
+      />
 
-  <Accordion icon="brain" title="I want to use custom AI models">
-    Easy! BoostGPT supports [multiple AI providers](/concepts/providers)—use GPT-4, Claude, Gemini, Grok, or bring your own via Ollama.
-  </Accordion>
-</AccordionGroup>
+      <HeroCard
+      icon={'<path d="M12 19h8"/><path d="m4 17 6-6-6-6"/>'} 
+        filename="D"
+        title="For Developers"
+        description="Ship multi-channel bots with one unified SDK"
+        href="/developers"
+      />
 
-## The Problem We Solve
-
-### For Creators
-You're answering the same questions all day without capturing leads or building an audience. Visitors take your knowledge and disappear—no email, no follow-up, no revenue.
-
-### For Developers
-Building AI agents for multiple platforms means writing the same logic 5+ times. Discord intents, Slack OAuth, Telegram webhooks—every platform is different. Maintenance becomes a nightmare.
-
-### For Everyone
-AI agents that can't take action are just chatbots. Your agent needs to book meetings, check inventory, process payments, and access real-time data.
-
-## The BoostGPT Solution
-
-<Tabs>
-  <Tab title="Creators">
-    **One branded agent. Automatic subscriber capture. Zero code.**
-
-    - Turn on the login gate—94%+ email capture rate
-    - Customize colors, logo, and domain
-    - Export to MailChimp, ConvertKit, or any CRM
-    - Get your shareable link in 30 seconds
-
-    [Get Started →](/creators/quickstart)
-  </Tab>
-  
-  <Tab title="Developers">
-    **One codebase. All channels. Production-ready.**
-```javascript
-    import { Router, DiscordAdapter, TelegramAdapter, SlackAdapter } from '@boostgpt/router';
-
-    const router = new Router({
-      apiKey: process.env.BOOSTGPT_API_KEY,
-      projectId: process.env.BOOSTGPT_PROJECT_ID,
-      adapters: [
-        new DiscordAdapter({ discordToken: process.env.DISCORD_TOKEN }),
-        new TelegramAdapter({ telegramToken: process.env.TELEGRAM_TOKEN }),
-        new SlackAdapter({ slackToken: process.env.SLACK_TOKEN })
-      ]
-    });
-
-    // ONE handler for ALL channels
-    router.onMessage(async (message, context) => {
-      return `Echo: ${message.content}`;
-    });
-
-    await router.start();
-```
-
-    <Info>
-      **15 lines of code** replaces **500+ lines** across multiple platforms.
-    </Info>
-
-    [Get Started →](/sdk/router/getting-started)
-  </Tab>
-
-  <Tab title="Integrations">
-    **50+ pre-built connectors. Or build custom ones in minutes.**
-
-    **Pre-Built:**
-    - Calendly, Google Calendar, Cal.com
-    - Stripe, PayPal, Paddle
-    - Notion, Asana, Jira, Linear
-    - GitHub, Vercel, Netlify
-    - Stability AI, Runway, Pexels
-    - And 35+ more...
-
-    **Custom:**
-    - Import OpenAPI specs → MCP server generated automatically
-    - Upload Postman collections → Live in 5 minutes
-    - Full authentication & error handling built-in
-
-    [Browse Connectors →](/integrations/connectors/overview) | [Build Custom →](/integrations/custom/overview)
-  </Tab>
-</Tabs>
-
-## Key Features
-
-<AccordionGroup>
-  <Accordion icon="code-branch" title="Unified Message Routing">
-    Handle messages from Discord, Telegram, Slack, WhatsApp, and Crisp with a single message handler. Normalized message format across all platforms—no more if-statements.
-  </Accordion>
-  
-  <Accordion icon="lock" title="Lead Capture & Gating">
-    Require email login before chat access. 94%+ conversion rate. Export subscribers to any email marketing tool. Fully branded with your colors and logo.
-  </Accordion>
-
-  <Accordion icon="plug" title="50+ Pre-Built Integrations">
-    Connect to Calendly, Stripe, Notion, GitHub, and more with one click. Or build custom integrations using OpenAPI docs or Postman collections—no MCP experience needed.
-  </Accordion>
-  
-  <Accordion icon="brain" title="Multi-Model Support">
-    Route intelligently between GPT-4, Claude, Gemini, and Grok. Use different models for different channels or query types. Bring your own API keys or use our infrastructure.
-  </Accordion>
-  
-  <Accordion icon="shield" title="Channel Abstraction">
-    We handle Discord intents, WhatsApp QR codes, Slack OAuth, and platform-specific quirks. You write business logic once—it works everywhere.
-  </Accordion>
-  
-  <Accordion icon="bolt" title="Production Ready">
-    Built-in error handling, automatic retries, graceful shutdown, reconnection logic, and 99.9% uptime. Deploy with confidence.
-  </Accordion>
-</AccordionGroup>
-
-## How It Works
-
-<Steps>
-  <Step title="Create a Project">
-    Sign up at [app.boostgpt.co](https://app.boostgpt.co) and create your first project to get API keys.
-  </Step>
-  
-  <Step title="Build Your Agent">
-    **Creators:** Train your agent via dashboard—drag in PDFs, paste URLs, or add notes.  
-    **Developers:** Use the Core SDK or REST API to programmatically create and train bots.
-  </Step>
-  
-  <Step title="Deploy & Connect">
-    **Creators:** Turn on the login gate, customize branding, and share your link.  
-    **Developers:** Use the Router SDK to deploy to Discord, Telegram, Slack, WhatsApp, and Crisp simultaneously.  
-    **Everyone:** Enable pre-built integrations or connect custom ones.
-  </Step>
-  
-  <Step title="Monitor & Scale">
-    Track usage, costs, subscribers, and performance across all channels from your dashboard. Export data, analyze conversations, and optimize.
-  </Step>
-</Steps>
-
-## Quick Links
-
-<CardGroup cols={3}>
-  <Card
-    title="Quickstart"
-    icon="rocket"
-    href="/quickstart"
-  >
-    Get started in 5 minutes
-  </Card>
-  <Card
-    title="API Keys"
-    icon="key"
-    href="/authentication"
-  >
-    Set up authentication
-  </Card>
-  <Card
-    title="Discord"
-    icon="discord"
-    href="https://discord.gg/KGhz5SnyXM"
-  >
-    Join our community
-  </Card>
-  <Card
-    title="Browse Integrations"
-    icon="plug"
-    href="/integrations/connectors/overview"
-  >
-    50+ pre-built connectors
-  </Card>
-  <Card
-    title="SDK Reference"
-    icon="code"
-    href="/sdk/router/api-reference"
-  >
-    Full API documentation
-  </Card>
-  <Card
-    title="Examples"
-    icon="lightbulb"
-    href="/examples/basic-bot"
-  >
-    Real-world examples
-  </Card>
-</CardGroup>
-
-## Who Uses BoostGPT
-
-<CardGroup cols={2}>
-  <Card title="Creators & Consultants" icon="user">
-    Launch branded agents that answer FAQs, qualify leads, and capture subscribers automatically. Turn expertise into audience growth.
-  </Card>
-  <Card title="Indie Developers" icon="code">
-    Build once, deploy everywhere. Focus on your product, not platform-specific boilerplate. Ship multi-channel bots in hours, not weeks.
-  </Card>
-  <Card title="SaaS Teams" icon="building">
-    Scale support across Discord communities, Slack workspaces, and WhatsApp without 5x engineering effort. One codebase, all channels.
-  </Card>
-  <Card title="Gaming Companies" icon="gamepad">
-    Deploy AI moderators and support bots across Discord servers instantly. Handle thousands of users with consistent responses.
-  </Card>
-  <Card title="Agencies" icon="briefcase">
-    Deliver multi-channel AI solutions to clients faster and maintain them easier. White-label support included.
-  </Card>
-  <Card title="E-commerce & Support" icon="shopping-cart">
-    Answer product questions, check order status, process returns, and book support calls—all through your AI agent with live integrations.
-  </Card>
-</CardGroup>
-
-## Ready to Build?
-
-<CardGroup cols={3}>
-  <Card
-    title="Start as Creator"
-    icon="sparkles"
-    href="/creators/quickstart"
-  >
-    No-code branded agents
-  </Card>
-  <Card
-    title="Start as Developer"
-    icon="code"
-    href="/sdk/router/getting-started"
-  >
-    Multi-channel SDK
-  </Card>
-  <Card
-    title="Explore Integrations"
-    icon="plug"
-    href="/integrations/connectors/overview"
-  >
-    50+ connectors
-  </Card>
-</CardGroup>
+      <HeroCard
+      icon={'<path d="M10 22V7a1 1 0 0 0-1-1H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a1 1 0 0 0-1-1H2"/><rect x="14" y="2" width="8" height="8" rx="1"/>'} 
+        filename="I"
+        title="Integrations"
+        description="Connect your agents to 50+ services or build custom ones"
+        href="/integrations"
+      />
+    </div>
+  </div>
+</div>

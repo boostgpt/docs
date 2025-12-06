@@ -1,0 +1,60 @@
+---
+title: "Shopify"
+description: "E-commerce platform"
+---
+
+## Overview
+
+Connect Shopify to manage products, orders, and customers.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Shopify** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Shopify**
+  </Step>
+  <Step title="Configure">
+    Enter your Shopify store URL and API credentials
+  </Step>
+  <Step title="Test">
+    Playground: "Show me recent orders"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Get order details for order #1234"
+
+Agent: Order #1234:
+       - Customer: John Doe
+       - Total: $99.99
+       - Status: Shipped
+```
+
+## Integration Example
+
+**With Gmail:**
+
+```text
+User: "Send order confirmation emails for today's Shopify orders"
+
+Agent: *fetches new orders*
+       *sends emails via Gmail*
+
+       Sent 15 confirmation emails
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Stripe" icon="stripe" href="/integrations/connectors/stripe">
+    Payment processing
+  </Card>
+  <Card title="WooCommerce" icon="wordpress" href="/integrations/connectors/woocommerce">
+    WordPress e-commerce
+  </Card>
+</CardGroup>

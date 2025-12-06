@@ -1,0 +1,58 @@
+---
+title: "Discord"
+description: "Discord server management"
+---
+
+## Overview
+
+Connect Discord to send messages and manage your Discord server.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Discord** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Discord**
+  </Step>
+  <Step title="Configure">
+    Enter your Discord Bot Token
+  </Step>
+  <Step title="Test">
+    Playground: "Send a message to #general"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Post to #announcements that the new feature is live"
+
+Agent: Posted to #announcements:
+       "New feature is now live!"
+```
+
+## Integration Example
+
+**With GitHub:**
+
+```text
+User: "Post GitHub issues to #dev channel"
+
+Agent: *fetches GitHub issues*
+       *posts to Discord*
+
+       Posted 5 new issues to #dev
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Slack" icon="slack" href="/integrations/connectors/slack">
+    Alternative team chat
+  </Card>
+  <Card title="GitHub" icon="github" href="/integrations/connectors/github">
+    Code repository
+  </Card>
+</CardGroup>

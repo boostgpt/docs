@@ -1,0 +1,129 @@
+---
+title: "Integrations"
+description: "Connect your agents to external tools and services"
+---
+
+## What are Integrations?
+
+BoostGPT integrations allow your agents to connect to external tools and services through the Model Context Protocol (MCP). Give your agents the power to:
+
+- Send emails and manage contacts
+- Schedule meetings and manage calendars
+- Access CRM data and update records
+- Manage tasks and projects
+- Read and write files
+- And much more...
+
+## How Integrations Work
+
+BoostGPT uses **MCP (Model Context Protocol)** to connect agents to external services:
+
+1. **Deploy a connector** - Choose from 30+ pre-built connectors or build your own
+2. **Connect to your agent** - Add the connector to your agent's Tools tab
+3. **Agent uses tools** - Your agent automatically calls tools when needed
+
+## Two Ways to Connect
+
+<CardGroup cols={2}>
+  <Card title="Pre-built Connectors" icon="plug" href="/integrations/connectors/overview">
+    Use our ready-made connectors for popular services
+  </Card>
+  <Card title="Custom Connectors" icon="code" href="/integrations/custom/overview">
+    Build your own MCP-compatible connectors
+  </Card>
+</CardGroup>
+
+## Available Connectors
+
+### Calendar & Scheduling
+- **Calendly** - Schedule meetings and manage availability
+- **Google Calendar** - Manage events and calendars
+- **Cal.com** - Open-source scheduling
+- **Outlook Calendar** - Microsoft calendar integration
+
+### Email & Communication
+- **Gmail** - Send and manage emails
+- **Outlook Email** - Microsoft email integration
+- **SendGrid** - Transactional email service
+- **Mailchimp** - Email marketing campaigns
+- **Twilio** - SMS and phone calls
+- **Discord** - Discord server management
+- **Slack** - Slack workspace integration
+
+### CRM & Sales
+- **HubSpot** - All-in-one CRM
+- **Salesforce** - Enterprise CRM
+- **Pipedrive** - Sales pipeline management
+- **Zoho CRM** - Customer relationship management
+
+### Productivity & Project Management
+- **Notion** - Notes and knowledge base
+- **Asana** - Project management
+- **Trello** - Kanban boards
+- **ClickUp** - Work management
+- **Monday.com** - Team collaboration
+- **Jira** - Issue tracking
+
+### File Storage
+- **Google Drive** - Cloud storage
+- **Dropbox** - File sync and storage
+- **OneDrive** - Microsoft cloud storage
+
+### E-commerce & Payments
+- **Shopify** - E-commerce platform
+- **WooCommerce** - WordPress e-commerce
+- **Stripe** - Payment processing
+
+### Analytics
+- **Google Analytics** - Web analytics
+- **Mixpanel** - Product analytics
+
+## Getting Started
+
+<Steps>
+  <Step title="Choose a connector">
+    Browse available connectors or build your own
+  </Step>
+  <Step title="Deploy the connector">
+    Go to Dashboard -> Integrations -> Connectors -> Deploy
+  </Step>
+  <Step title="Add to agent">
+    Go to your agent's Tools tab -> Add Tool -> Select connector
+  </Step>
+  <Step title="Test it">
+    Chat with your agent and watch it use the tools!
+  </Step>
+</Steps>
+
+## Example: Gmail Integration
+
+```text
+User: "Send an email to john@example.com about the meeting"
+Agent: *uses Gmail tool to send email*
+Agent: "I've sent the email to john@example.com about the meeting."
+```
+
+## Pricing
+
+Integrations are included in all plans:
+- **Free**: 1 connector
+- **Starter**: 5 connectors
+- **Pro**: 20 connectors
+- **Scale**: Unlimited connectors
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/integrations/quickstart">
+    Set up your first integration in 5 minutes
+  </Card>
+  <Card title="MCP Overview" icon="circle-info" href="/integrations/mcp-overview">
+    Learn about the Model Context Protocol
+  </Card>
+  <Card title="Browse Connectors" icon="grid" href="/integrations/connectors/overview">
+    Explore all available connectors
+  </Card>
+  <Card title="Build Custom" icon="code" href="/integrations/custom/overview">
+    Create your own connectors
+  </Card>
+</CardGroup>

@@ -3,70 +3,59 @@
   "info": {
     "title": "BoostGPT API",
     "version": "1.0.0",
-    "description": "Start by creating a project in BoostGPT, which will provide you with a dedicated workspace for each of your applications. Within each project, you can create and train multiple chatbots. You will need an Openai key to be able to create a project.\n\nTo begin, create your initial project and copy its ID. Go to the project settings to copy your project ID or go here: [https://app.boostgpt.co/settings](https://app.boostgpt.co/settings). Use your project ID in your requests when interacting with our API."
+    "description": "API for managing AI agents with memory capabilities"
   },
   "servers": [
     {
-      "url": "https://api.boostgpt.co/v1/",
+      "url": "https://api.boostgpt.co",
       "description": "Production server"
     }
   ],
   "paths": {
     "/v1/bot/source/create": {
       "post": {
-        "summary": "https://api.boostgpt.co/v1/bot/source/create",
+        "summary": "Create Memory Source",
         "tags": [
-          "Bot",
-          "Sources"
+          "Memory"
         ],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 0,
-              "maxLength": 0
-            }
-          }
-        ],
-        "responses": {},
-        "description": "Adds a new data source to your bot\n\n| **Request body** |  |  |\n| --- | --- | --- |\n| project_id | String | Required |\n| bot_id | String | Required |\n| tags | Array | Optional  <br>  <br>Segment the training data using only tags that contain uppercase and lowercase letters (A-Z, a-z), numeric digits (0-9), underscores (_), hyphens (-), and hash symbols (#). Exclude any tags with other characters |\n| type | String | Require any of : text, file, webpage, website |\n| source | String/Array | Require your text content or an accessible link to your file, webpage, or website  <br>  <br>The source can be an array of link(s) you want your bot to learn when you set the \"type\" to **webpage** or **file**. |",
+        "description": "Create a new memory source for an agent",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "project_id": {
-                    "type": "string"
-                  },
-                  "bot_id": {
-                    "type": "string"
-                  },
-                  "title": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "tags": {
-                    "type": "array",
-                    "items": {}
-                  },
-                  "type": {
-                    "type": "string"
-                  },
-                  "source": {
-                    "type": "string"
-                  },
-                  "forget_after": {
-                    "type": "string"
-                  },
-                  "sync_frequency": {
-                    "type": "string"
-                  }
+                "$ref": "#/components/schemas/CreateMemorySourceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Memory source created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemorySourceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -76,48 +65,58 @@
     },
     "/v1/bot/source/read": {
       "get": {
-        "summary": "https://api.boostgpt.co/v1/bot/source/read",
+        "summary": "Get Memory Source",
         "tags": [
-          "Bot",
-          "Sources"
+          "Memory"
         ],
+        "description": "Fetch a specific memory source by ID",
         "parameters": [
           {
             "name": "project_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Project ID"
           },
           {
             "name": "bot_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Agent ID"
           },
           {
             "name": "source_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "description": "Memory source ID"
           }
         ],
-        "responses": {},
-        "description": "Fetches all the embeddings in a data source",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
+        "responses": {
+          "200": {
+            "description": "Memory source retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemorySourceResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Memory source not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             }
           }
@@ -126,55 +125,59 @@
     },
     "/v1/bot/source/readall": {
       "get": {
-        "summary": "https://api.boostgpt.co/v1/bot/source/readall",
+        "summary": "List Memory Sources",
         "tags": [
-          "Bot",
-          "Sources"
+          "Memory"
         ],
+        "description": "Fetch a paginated list of all memory sources for an agent",
         "parameters": [
           {
             "name": "project_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Project ID"
           },
           {
             "name": "bot_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Agent ID"
           },
           {
             "name": "page",
             "in": "query",
+            "required": false,
             "schema": {
-              "type": "integer"
-            }
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number"
           },
           {
             "name": "per_page",
             "in": "query",
+            "required": false,
             "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Items per page"
           }
         ],
-        "responses": {},
-        "description": "Fetches a paginated list of all the created data sources",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
+        "responses": {
+          "200": {
+            "description": "Memory sources retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemorySourceListResponse"
+                }
               }
             }
           }
@@ -183,78 +186,38 @@
     },
     "/v1/bot/source/update": {
       "put": {
-        "summary": "https://api.boostgpt.co/v1/bot/source/update",
+        "summary": "Update Memory Source",
         "tags": [
-          "Bot",
-          "Sources"
+          "Memory"
         ],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {},
-        "description": "Updates a bot data source\n\n| **Request body** |  |  |\n| --- | --- | --- |\n| project_id | String | Required |\n| bot_id | String | Required |\n| source_id | String | Required |\n| tags | Array | Optional  <br>  <br>Segment the training data using only tags that contain uppercase and lowercase letters (A-Z, a-z), numeric digits (0-9), underscores (_), hyphens (-), and hash symbols (#). Exclude any tags with other characters |\n| type | String | Require any of : text, file, webpage, website |\n| source | String/Array | Require your text content or an accessible link to your file, webpage, or website  <br>  <br>The source can be an array of link(s) you want your bot to learn when you set the \"type\" to **webpage** or **file**. |",
+        "description": "Update an existing memory source",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object"
+                "$ref": "#/components/schemas/UpdateMemorySourceRequest"
               }
             }
           }
-        }
-      }
-    },
-    "/v1/bot/source/settings/update": {
-      "put": {
-        "summary": "https://api.boostgpt.co/v1/bot/source/settings/update",
-        "tags": [
-          "Bot",
-          "Sources"
-        ],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
+        },
+        "responses": {
+          "200": {
+            "description": "Memory source updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemorySourceUpdateResponse"
+                }
+              }
             }
-          }
-        ],
-        "responses": {},
-        "description": "Updates a bot data source\n\n| **Request body** |  |  |\n| --- | --- | --- |\n| project_id | String | Required |\n| bot_id | String | Required |\n| source_id | String | Required |\n| tags | Array | Optional  <br>  <br>Segment the training data using only tags that contain uppercase and lowercase letters (A-Z, a-z), numeric digits (0-9), underscores (_), hyphens (-), and hash symbols (#). Exclude any tags with other characters |\n| type | String | Require any of : text, file, webpage, website |\n| source | String/Array | Require your text content or an accessible link to your file, webpage, or website  <br>  <br>The source can be an array of link(s) you want your bot to learn when you set the \"type\" to **webpage** or **file**. |",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "project_id": {
-                    "type": "string"
-                  },
-                  "bot_id": {
-                    "type": "string"
-                  },
-                  "source_id": {
-                    "type": "string"
-                  },
-                  "tags": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "type": {
-                    "type": "string"
-                  },
-                  "source": {
-                    "type": "string"
-                  }
+          },
+          "404": {
+            "description": "Memory source not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -264,48 +227,58 @@
     },
     "/v1/bot/source/delete": {
       "delete": {
-        "summary": "https://api.boostgpt.co/v1/bot/source/delete",
+        "summary": "Delete Memory Source",
         "tags": [
-          "Bot",
-          "Sources"
+          "Memory"
         ],
+        "description": "Delete a specific memory source",
         "parameters": [
           {
             "name": "project_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Project ID"
           },
           {
             "name": "bot_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Agent ID"
           },
           {
             "name": "source_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "description": "Memory source ID"
           }
         ],
-        "responses": {},
-        "description": "Deletes a bot data source",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
+        "responses": {
+          "200": {
+            "description": "Memory source deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Memory source not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             }
           }
@@ -314,52 +287,28 @@
     },
     "/v1/bot/search": {
       "post": {
-        "summary": "https://api.boostgpt.co/v1/bot/search",
+        "summary": "Search Agent Memory",
         "tags": [
-          "Bot",
-          "Search"
+          "Memory"
         ],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {},
-        "description": "Search your trained chatbot vector database\n\n| **Request body** |  |  |\n| --- | --- | --- |\n| project_id | String | Required |\n| bot_id | String | Required |\n| keywords | String | Required |\n| source_ids | Array | Optional  <br>  <br>The training source IDs you want the AI's knowledge to be limited to. |\n| tags | Array | Optional  <br>  <br>Utilize tags to restrict the AI's knowledge to a specific set of training data.  <br>  <br>Only tags that contain uppercase and lowercase letters (A-Z, a-z), numeric digits (0-9), underscores (_), hyphens (-), and hash symbols (#) are allowed. |\n| top | Integer | Optional  <br>  <br>The weight of training data used to form the AI's context.  <br>  <br>Recommended settings between: 10 - 20 give a better response from the AI.  <br>  <br>Defaults to the bot top settings. |",
+        "description": "Search through an agent's memory using keywords and filters",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "project_id": {
-                    "type": "string"
-                  },
-                  "bot_id": {
-                    "type": "string"
-                  },
-                  "keywords": {
-                    "type": "string"
-                  },
-                  "source_ids": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "tags": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "top": {
-                    "type": "integer"
-                  }
+                "$ref": "#/components/schemas/SearchMemoryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Search results retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchMemoryResponse"
                 }
               }
             }
@@ -369,39 +318,38 @@
     },
     "/v1/bot/create": {
       "post": {
-        "summary": "https://api.boostgpt.co/v1/bot/create",
+        "summary": "Create Agent",
         "tags": [
-          "Bot"
+          "Agent"
         ],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": false,
-            "deprecated": false,
-            "schema": {}
-          }
-        ],
-        "responses": {},
-        "description": "**Creates a bot**\n\n| **Request body** |  |  |\n| --- | --- | --- |\n| project_id | String | Required |\n| name | String | Optional  <br>  <br>Give your bot a nice name. |\n| model | String | The model to use for the AI's response.  <br>  <br>Require any of : gpt-3.5-turbo, gpt-3.5-turbo-16k, gpt-3.5-turbo-1106, gpt-4-32k, gpt-4-0613, gpt-4-32k-0613, gpt-4 |\n| instruction | String | Optional  <br>  <br>This is an instruction that guides the AI on how to respond. |\n| max_reply_tokens | Integer | Optional  <br>  <br>The maximum number of tokens allowed for the AI's response. By default, the number of tokens is set to 300. |\n| top | Integer | Optional  <br>  <br>The weight of training data used to form the AI's context. Defaults to 15.  <br>  <br>Recommended settings between: 10 - 20 give a better response from the AI. |\n| welcome_message | String | Optional  <br>  <br>This is the welcome message visitors will see when they open a chat. |\n| status | String | The status of the AI bot.  <br>  <br>Require any string of \\[ \"1\" or \"0\"\\]. Status 1 = online, Status 0 = offline |",
+        "description": "Create a new AI agent",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "project_id": {
-                    "type": "string"
-                  },
-                  "model": {
-                    "type": "string"
-                  },
-                  "instruction": {
-                    "type": "string"
-                  },
-                  "status": {
-                    "type": "integer"
-                  }
+                "$ref": "#/components/schemas/CreateAgentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agent created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -411,40 +359,49 @@
     },
     "/v1/bot/read": {
       "get": {
-        "summary": "https://api.boostgpt.co/v1/bot/read",
+        "summary": "Get Agent",
         "tags": [
-          "Bot"
+          "Agent"
         ],
+        "description": "Fetch a specific agent by ID",
         "parameters": [
           {
             "name": "project_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Project ID"
           },
           {
             "name": "bot_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "description": "Agent ID"
           }
         ],
-        "responses": {},
-        "description": "Fetches a bot info",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
+        "responses": {
+          "200": {
+            "description": "Agent retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Agent not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             }
           }
@@ -453,47 +410,50 @@
     },
     "/v1/bot/readall": {
       "get": {
-        "summary": "https://api.boostgpt.co/v1/bot/readall",
+        "summary": "List Agents",
         "tags": [
-          "Bot"
+          "Agent"
         ],
+        "description": "Fetch a paginated list of all agents in a project",
         "parameters": [
           {
             "name": "project_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Project ID"
           },
           {
             "name": "page",
             "in": "query",
+            "required": false,
             "schema": {
-              "type": "integer"
-            }
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number"
           },
           {
             "name": "per_page",
             "in": "query",
+            "required": false,
             "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Items per page"
           }
         ],
-        "responses": {},
-        "description": "Fetches all the created bot in a project",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
+        "responses": {
+          "200": {
+            "description": "Agents retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentListResponse"
+                }
               }
             }
           }
@@ -502,42 +462,38 @@
     },
     "/v1/bot/update": {
       "put": {
-        "summary": "https://api.boostgpt.co/v1/bot/update",
+        "summary": "Update Agent",
         "tags": [
-          "Bot"
+          "Agent"
         ],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": false,
-            "deprecated": false,
-            "schema": {}
-          }
-        ],
-        "responses": {},
-        "description": "Updates a bot\n\n| **Request body** |  |  |\n| --- | --- | --- |\n| project_id | String | Required |\n| name | String | Optional  <br>  <br>Give your bot a nice name. |\n| bot_id | String | Required |\n| model | String | The model to use for the AI's response.  <br>  <br>Require any of : gpt-3.5-turbo, gpt-3.5-turbo-16k, gpt-3.5-turbo-1106, gpt-4-32k, gpt-4-0613, gpt-4-32k-0613, gpt-4 |\n| instruction | String | Optional  <br>  <br>This is an instruction that guides the AI on how to respond. |\n| max_reply_tokens | Integer | Optional  <br>  <br>The maximum number of tokens allowed for the AI's response. |\n| top | Integer | Optional  <br>  <br>The weight of training data used to form the AI's context.  <br>  <br>Recommended settings between: 10 - 20 give a better response from the AI. |\n| welcome_message | String | Optional  <br>  <br>This is the welcome message visitors will see when they open a chat. |\n| hide_branding | String | Optional  <br>  <br>This option conceals the BoostGPT branding label displayed on the AI assistant. |\n| status | String | The status of the AI bot.  <br>  <br>Require any string of \\[ \"1\" or \"0\"\\]. Status 1 = online, Status 0 = offline |",
+        "description": "Update an existing agent's configuration",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "project_id": {
-                    "type": "string"
-                  },
-                  "bot_id": {
-                    "type": "string"
-                  },
-                  "model": {
-                    "type": "string"
-                  },
-                  "instruction": {
-                    "type": "string"
-                  },
-                  "status": {
-                    "type": "integer"
-                  }
+                "$ref": "#/components/schemas/UpdateAgentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agent updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateAgentResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Agent not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -547,33 +503,28 @@
     },
     "/v1/bot/reset": {
       "post": {
-        "summary": "https://api.boostgpt.co/v1/bot/reset",
+        "summary": "Reset Agent Memory",
         "tags": [
-          "Bot"
+          "Agent"
         ],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {},
-        "description": "Reset a bot. This deletes all the bot's training data.\n\n| **Request body** |  |  |\n| --- | --- | --- |\n| project_id | String | Required |\n| bot_id | String | Required |",
+        "description": "Delete all memory sources associated with an agent",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "project_id": {
-                    "type": "string"
-                  },
-                  "bot_id": {
-                    "type": "string"
-                  }
+                "$ref": "#/components/schemas/ResetAgentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agent memory reset successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
                 }
               }
             }
@@ -583,40 +534,49 @@
     },
     "/v1/bot/delete": {
       "delete": {
-        "summary": "https://api.boostgpt.co/v1/bot/delete",
+        "summary": "Delete Agent",
         "tags": [
-          "Bot"
+          "Agent"
         ],
+        "description": "Delete a specific agent",
         "parameters": [
           {
             "name": "project_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Project ID"
           },
           {
             "name": "bot_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "description": "Agent ID"
           }
         ],
-        "responses": {},
-        "description": "Deletes a bot",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
+        "responses": {
+          "200": {
+            "description": "Agent deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Agent not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             }
           }
@@ -625,69 +585,28 @@
     },
     "/v1/bot/chat": {
       "post": {
-        "summary": "https://api.boostgpt.co/v1/bot/chat",
+        "summary": "Chat with Agent",
         "tags": [
           "Chat"
         ],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {},
-        "description": "Engage your trained chatbot and get a response\n\n| **Request body** |  |  |\n| --- | --- | --- |\n| project_id | String | Required |\n| bot_id | String | Required |\n| openai_key | String | Required |\n| model | String | Optional  <br>  <br>The model to use for the AI's response. Defaults to the bot model.  <br>  <br>Options available:  <br>gpt-3.5-turbo, gpt-3.5-turbo-16k, gpt-3.5-turbo-1106, gpt-4-32k, gpt-4-0613, gpt-4-32k-0613, gpt-4. |\n| message | String | Required |\n| source_ids | Array | Optional  <br>  <br>The training source IDs you want the AI's knowledge to be limited to. |\n| tags | Array | Optional  <br>  <br>Utilize tags to restrict the AI's knowledge to a specific set of training data.  <br>  <br>Only tags that contain uppercase and lowercase letters (A-Z, a-z), numeric digits (0-9), underscores (_), hyphens (-), and hash symbols (#) are allowed. |\n| top | Integer | Optional  <br>  <br>The weight of training data used to form the AI's context.  <br>  <br>Recommended settings between: 10 - 20 give a better response from the AI.  <br>  <br>Defaults to the bot top settings. |\n| instruction | String | Optional  <br>  <br>This is an instruction that guides the AI on how to respond.  <br>  <br>Defaults to the bot instruction settings. |\n| max_reply_tokens | Integer | Optional  <br>  <br>The maximum number of tokens allowed for the AI's response.  <br>  <br>Defaults to the bot max_reply_tokens settings. |\n| chat_id | String | Provide a chat id to engage with the AI bot in a conversational manner. Chat id should be unique per chat thread with the AI. |\n| stream | Boolean | Provides control over the response behavior. When set to true, it enables streaming of partial progress updates. Alternatively, when set to false, the full response will be sent once it's ready.  <br>  <br>This enhancement gives users the flexibility to choose between receiving real-time progress updates or waiting for the complete response. |",
+        "description": "Send a message to an agent and receive a response",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "project_id": {
-                    "type": "string"
-                  },
-                  "bot_id": {
-                    "type": "string"
-                  },
-                  "provider_key": {
-                    "type": "string"
-                  },
-                  "model": {
-                    "type": "string"
-                  },
-                  "message": {
-                    "type": "string"
-                  },
-                  "source_ids": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "tags": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "top": {
-                    "type": "integer"
-                  },
-                  "instruction": {
-                    "type": "string"
-                  },
-                  "max_reply_tokens": {
-                    "type": "integer"
-                  },
-                  "stream": {
-                    "type": "boolean"
-                  },
-                  "chat_id": {
-                    "type": "string"
-                  }
+                "$ref": "#/components/schemas/ChatRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Chat response received successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatResponse"
                 }
               }
             }
@@ -697,47 +616,48 @@
     },
     "/v1/bot/chat/delete": {
       "delete": {
-        "summary": "https://api.boostgpt.co/v1/bot/chat/delete",
+        "summary": "Delete Chat History",
         "tags": [
           "Chat"
         ],
+        "description": "Delete a specific chat conversation",
         "parameters": [
           {
             "name": "project_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Project ID"
           },
           {
             "name": "bot_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Agent ID"
           },
           {
             "name": "chat_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "description": "Chat ID"
           }
         ],
-        "responses": {},
-        "description": "Delete a chat history",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
+        "responses": {
+          "200": {
+            "description": "Chat history deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
               }
             }
           }
@@ -746,61 +666,68 @@
     },
     "/v1/bot/chat/read": {
       "get": {
-        "summary": "https://api.boostgpt.co/v1/bot/chat/read",
+        "summary": "Get Chat History",
         "tags": [
           "Chat"
         ],
+        "description": "Fetch messages from a specific chat conversation",
         "parameters": [
           {
             "name": "project_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Project ID"
           },
           {
             "name": "bot_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Agent ID"
           },
           {
             "name": "chat_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Chat ID"
           },
           {
             "name": "page",
             "in": "query",
+            "required": false,
             "schema": {
-              "type": "integer"
-            }
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number"
           },
           {
             "name": "per_page",
             "in": "query",
+            "required": false,
             "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Items per page"
           }
         ],
-        "responses": {},
-        "description": "Fetches a chatbot chat history",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
+        "responses": {
+          "200": {
+            "description": "Chat history retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatHistoryResponse"
+                }
               }
             }
           }
@@ -809,54 +736,59 @@
     },
     "/v1/bot/chat/readall": {
       "get": {
-        "summary": "https://api.boostgpt.co/v1/bot/chat/readall",
+        "summary": "List All Chats",
         "tags": [
           "Chat"
         ],
+        "description": "Fetch a paginated list of all chat conversations for an agent",
         "parameters": [
           {
             "name": "project_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Project ID"
           },
           {
             "name": "bot_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Agent ID"
           },
           {
             "name": "page",
             "in": "query",
+            "required": false,
             "schema": {
-              "type": "integer"
-            }
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number"
           },
           {
             "name": "per_page",
             "in": "query",
+            "required": false,
             "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Items per page"
           }
         ],
-        "responses": {},
-        "description": "Fetches a chatbot chats.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
+        "responses": {
+          "200": {
+            "description": "Chat list retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatListResponse"
+                }
               }
             }
           }
@@ -865,52 +797,1783 @@
     },
     "/v1/bot/subscriber/readall": {
       "get": {
-        "summary": "https://api.boostgpt.co/v1/subscriber/readall",
+        "summary": "List Subscribers",
         "tags": [
           "Subscribers"
         ],
+        "description": "Fetch a paginated list of all subscribers/leads",
         "parameters": [
           {
             "name": "project_id",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Project ID"
           },
           {
             "name": "page",
             "in": "query",
+            "required": false,
             "schema": {
-              "type": "integer"
-            }
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number"
           },
           {
             "name": "per_page",
             "in": "query",
+            "required": false,
             "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Items per page"
           }
         ],
-        "responses": {},
-        "description": "Fetches all leads",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
+        "responses": {
+          "200": {
+            "description": "Subscribers retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriberListResponse"
+                }
               }
             }
           }
         }
       }
     }
-  }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Enter your API key"
+      }
+    },
+    "schemas": {
+      "CreateMemorySourceRequest": {
+        "type": "object",
+        "required": [
+          "project_id",
+          "bot_id",
+          "title",
+          "type",
+          "source"
+        ],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "The project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "The agent ID"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the memory source"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the memory source"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tags for categorizing the memory source"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of memory source (e.g., 'document', 'url', 'text')"
+          },
+          "source": {
+            "type": "string",
+            "description": "The actual source content or URL"
+          },
+          "forget_after": {
+            "type": "string",
+            "description": "Time duration after which to forget this source",
+            "enum": [
+              "1 day",
+              "1 week",
+              "2 weeks",
+              "1 month",
+              "3 months",
+              "6 months",
+              "1 year",
+              "never"
+            ]
+          },
+          "sync_frequency": {
+            "type": "string",
+            "description": "How often to sync this source",
+            "enum": [
+              "never",
+              "weekly",
+              "monthly"
+            ]
+          }
+        }
+      },
+      "UpdateMemorySourceRequest": {
+        "type": "object",
+        "required": [
+          "project_id",
+          "bot_id",
+          "source_id"
+        ],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "The project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "The agent ID"
+          },
+          "source_id": {
+            "type": "string",
+            "description": "The memory source ID to update"
+          },
+          "title": {
+            "type": "string",
+            "description": "Updated title"
+          },
+          "description": {
+            "type": "string",
+            "description": "Updated description"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Updated tags"
+          },
+          "source": {
+            "type": "string",
+            "description": "Updated source content"
+          },
+          "forget_after": {
+            "type": "string",
+            "description": "Updated forget duration",
+            "enum": [
+              "1 day",
+              "1 week",
+              "2 weeks",
+              "1 month",
+              "3 months",
+              "6 months",
+              "1 year",
+              "never"
+            ]
+          },
+          "sync_frequency": {
+            "type": "string",
+            "description": "Updated sync frequency",
+            "enum": [
+              "never",
+              "weekly",
+              "monthly"
+            ]
+          }
+        }
+      },
+      "MemorySourceResponse": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "object",
+            "description": "Memory source details",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Memory source ID"
+              },
+              "uuid": {
+                "type": "string",
+                "description": "Memory source unique identifier"
+              },
+              "title": {
+                "type": "string",
+                "description": "Title of the memory source"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the memory source"
+              },
+              "source": {
+                "type": "string",
+                "description": "The source URL or origin"
+              },
+              "content": {
+                "type": "string",
+                "description": "The actual content or URL to fetch"
+              },
+              "type": {
+                "type": "string",
+                "description": "Type of memory source (e.g., 'website', 'document', 'text')"
+              },
+              "forget_after": {
+                "type": "string",
+                "description": "Forget duration setting (e.g., 'never', '30d')"
+              },
+              "sync_frequency": {
+                "type": "string",
+                "description": "Sync frequency setting (e.g., 'never', 'daily', 'weekly')"
+              },
+              "links": {
+                "type": "array",
+                "description": "Extracted links from the source",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "description": "Link URL"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Page title"
+                    },
+                    "tokens": {
+                      "type": "integer",
+                      "description": "Number of tokens in the page content"
+                    },
+                    "favicon": {
+                      "type": "string",
+                      "description": "Favicon URL"
+                    }
+                  }
+                }
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Tags associated with the source"
+              },
+              "tokens": {
+                "type": "integer",
+                "description": "Total number of tokens across all content"
+              },
+              "status": {
+                "type": "string",
+                "description": "Processing status (e.g., 'success', 'pending', 'failed')"
+              },
+              "synced_at": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true,
+                "description": "Last sync timestamp"
+              },
+              "forget_after_at": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true,
+                "description": "Timestamp when the source will be forgotten"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Creation timestamp"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Last update timestamp"
+              }
+            }
+          }
+        }
+      },
+      "MemorySourceObject": {
+        "type": "object",
+        "description": "Memory source object (used in list responses)",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Memory source ID"
+          },
+          "uuid": {
+            "type": "string",
+            "description": "Memory source unique identifier"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the memory source"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the memory source"
+          },
+          "source": {
+            "type": "string",
+            "description": "The source URL or origin"
+          },
+          "content": {
+            "type": "string",
+            "description": "The actual content or URL to fetch"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of memory source (e.g., 'website', 'document', 'text')"
+          },
+          "forget_after": {
+            "type": "string",
+            "description": "Forget duration setting (e.g., 'never', '30d')"
+          },
+          "sync_frequency": {
+            "type": "string",
+            "description": "Sync frequency setting (e.g., 'never', 'daily', 'weekly')"
+          },
+          "links": {
+            "type": "array",
+            "description": "Extracted links from the source",
+            "items": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "description": "Link URL"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Page title"
+                },
+                "tokens": {
+                  "type": "integer",
+                  "description": "Number of tokens in the page content"
+                },
+                "favicon": {
+                  "type": "string",
+                  "description": "Favicon URL"
+                }
+              }
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tags associated with the source"
+          },
+          "tokens": {
+            "type": "integer",
+            "description": "Total number of tokens across all content"
+          },
+          "status": {
+            "type": "string",
+            "description": "Processing status (e.g., 'success', 'pending', 'failed')"
+          },
+          "synced_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "Last sync timestamp"
+          },
+          "forget_after_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "Timestamp when the source will be forgotten"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        }
+      },
+      "MemorySourceListResponse": {
+        "type": "object",
+        "properties": {
+          "sources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MemorySourceObject"
+            }
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
+        }
+      },
+      "MemorySourceUpdateResponse": {
+        "type": "object",
+        "description": "Memory source update response containing only the ID and updated fields",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Memory source ID"
+          },
+          "status": {
+            "type": "string",
+            "description": "Processing status (e.g., 'processing', 'success', 'failed')"
+          },
+          "title": {
+            "type": "string",
+            "description": "Updated title (if changed)"
+          },
+          "description": {
+            "type": "string",
+            "description": "Updated description (if changed)"
+          },
+          "source": {
+            "type": "string",
+            "description": "Updated source URL (if changed)"
+          },
+          "tags": {
+            "type": "string",
+            "description": "Updated tags as JSON string (if changed)"
+          },
+          "sync_frequency": {
+            "type": "string",
+            "description": "Updated sync frequency (if changed)"
+          },
+          "forget_after": {
+            "type": "string",
+            "description": "Updated forget duration (if changed)"
+          },
+           "updated_at": {
+            "type": "string",
+            "description": "Last update timestamp"
+          }
+        },
+        "required": ["id", "status", "updated_at"]
+      },
+      "SearchMemoryRequest": {
+        "type": "object",
+        "required": [
+          "project_id",
+          "bot_id",
+          "keywords"
+        ],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "Project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "Agent ID"
+          },
+          "keywords": {
+            "type": "string",
+            "description": "Search keywords"
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Filter by specific memory source IDs"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Filter by tags"
+          },
+          "top": {
+            "type": "integer",
+            "description": "Number of top results to return",
+            "default": 5
+          }
+        }
+      },
+      "SearchMemoryResponse": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "object",
+            "description": "Search results containing context and sources",
+            "properties": {
+              "context": {
+                "type": "string",
+                "description": "Aggregated context from all matching sources"
+              },
+              "sources": {
+                "type": "array",
+                "description": "List of source documents that matched the search",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "source_id": {
+                      "type": "string",
+                      "description": "Memory source ID"
+                    },
+                    "favicon": {
+                      "type": "string",
+                      "description": "Favicon URL for the source"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Title of the source page"
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "URL of the source page"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Tags associated with the source"
+                    }
+                  }
+                }
+              },
+              "confidence_score": {
+                "type": "number",
+                "description": "Overall confidence score for the search results"
+              }
+            }
+          }
+        }
+      },
+      "CreateAgentRequest": {
+        "type": "object",
+        "required": [
+          "project_id",
+          "model",
+          "name"
+        ],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "The project ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the agent"
+          },
+          "model": {
+            "type": "string",
+            "description": "The AI model to use (e.g., 'gpt-5.1', 'gemini-2.5-flash')"
+          },
+          "instruction": {
+            "type": "string",
+            "description": "System instructions for the agent"
+          },
+          "status": {
+            "type": "integer",
+            "description": "Agent status (0 = inactive, 1 = active)",
+            "enum": [0, 1]
+          }
+        }
+      },
+      "UpdateAgentRequest": {
+        "type": "object",
+        "required": [
+          "project_id",
+          "bot_id"
+        ],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "The project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "The agent ID to update"
+          },
+          "model": {
+            "type": "string",
+            "description": "Updated AI model"
+          },
+          "instruction": {
+            "type": "string",
+            "description": "Updated system instructions"
+          },
+          "status": {
+            "type": "integer",
+            "description": "Updated status",
+            "enum": [0, 1]
+          }
+        }
+      },
+      "ResetAgentRequest": {
+        "type": "object",
+        "required": [
+          "project_id",
+          "bot_id"
+        ],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "The project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "The agent ID to reset"
+          }
+        }
+      },
+      "AgentResponse": {
+        "type": "object",
+        "description": "Complete agent details (for Create/Read operations)",
+        "properties": {
+          "bot": {
+            "$ref": "#/components/schemas/BotObject"
+          }
+        }
+      },
+      "UpdateAgentResponse": {
+        "type": "object",
+        "description": "Agent update response containing only the ID and updated fields",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Agent ID"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "Last update timestamp"
+          },
+          "model": {
+            "type": "string",
+            "description": "Updated AI model (if changed)"
+          },
+          "instruction": {
+            "type": "string",
+            "description": "Updated system instructions (if changed)"
+          },
+          "status": {
+            "type": "integer",
+            "description": "Updated status (if changed)",
+            "enum": [0, 1]
+          },
+          "name": {
+            "type": "string",
+            "description": "Updated agent name (if changed)"
+          },
+          "reasoning_type": {
+            "type": "string",
+            "description": "Updated reasoning type (if changed)"
+          },
+          "max_reply_tokens": {
+            "type": "string",
+            "description": "Updated max reply tokens (if changed)"
+          },
+          "top": {
+            "type": "integer",
+            "description": "Updated top value (if changed)"
+          }
+        },
+        "required": ["id", "updated_at"]
+      },
+      "AgentListResponse": {
+        "type": "object",
+        "properties": {
+          "bots": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BotObject"
+            }
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
+        }
+      },
+      "BotObject": {
+        "type": "object",
+        "description": "Agent/Bot object (used in list responses)",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Agent unique identifier"
+          },
+          "uuid": {
+            "type": "string",
+            "description": "Agent unique identifier"
+          },
+          "subdomain": {
+            "type": "string",
+            "description": "Agent subdomain"
+          },
+          "provider_key": {
+            "type": "string",
+            "nullable": true,
+            "description": "AI provider API key"
+          },
+          "avatar": {
+            "type": "string",
+            "nullable": true,
+            "description": "Agent avatar filename"
+          },
+          "name": {
+            "type": "string",
+            "description": "Agent name"
+          },
+          "model": {
+            "type": "string",
+            "description": "AI model being used"
+          },
+          "reasoning_type": {
+            "type": "string",
+            "description": "Default reasoning type for the agent"
+          },
+          "max_reply_tokens": {
+            "type": "string",
+            "description": "Maximum reply tokens"
+          },
+          "top": {
+            "type": "integer",
+            "description": "Number of top memory results to use"
+          },
+          "instruction": {
+            "type": "string",
+            "description": "System instructions for the agent"
+          },
+          "ratelimit_message": {
+            "type": "string",
+            "nullable": true,
+            "description": "Custom rate limit message"
+          },
+          "ratelimit_seconds": {
+            "type": "integer",
+            "description": "Rate limit time window in seconds"
+          },
+          "ratelimit_requests": {
+            "type": "integer",
+            "description": "Maximum requests per time window"
+          },
+          "no_answer_reply": {
+            "type": "string",
+            "description": "Default reply when agent has no answer"
+          },
+          "require_login": {
+            "type": "integer",
+            "description": "Whether login is required (0 = no, 1 = yes)"
+          },
+          "memory": {
+            "type": "integer",
+            "description": "Whether memory is enabled (0 = no, 1 = yes)"
+          },
+          "hide_branding": {
+            "type": "integer",
+            "description": "Whether to hide branding (0 = no, 1 = yes)"
+          },
+          "branding": {
+            "type": "object",
+            "description": "Agent branding configuration",
+            "properties": {
+              "seo": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "SEO title"
+                  },
+                  "keywords": {
+                    "type": "string",
+                    "description": "SEO keywords"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "SEO description"
+                  }
+                }
+              },
+              "logo": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "Logo URL"
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "description": "Whether logo is enabled"
+                  }
+                }
+              },
+              "theme": {
+                "type": "string",
+                "description": "UI theme (e.g., light, dark)"
+              },
+              "favicon": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "Favicon URL"
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "description": "Whether favicon is enabled"
+                  }
+                }
+              },
+              "tagline": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "description": "Tagline text"
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "description": "Whether tagline is enabled"
+                  }
+                }
+              },
+              "navigation": {
+                "type": "object",
+                "properties": {
+                  "links": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    },
+                    "description": "Navigation links"
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "description": "Whether navigation is enabled"
+                  }
+                }
+              },
+              "description": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "description": "Description text"
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "description": "Whether description is enabled"
+                  }
+                }
+              },
+              "placeholder": {
+                "type": "string",
+                "description": "Input placeholder text"
+              },
+              "accent_color": {
+                "type": "string",
+                "description": "Accent color hex code"
+              },
+              "background_color": {
+                "type": "string",
+                "description": "Background color hex code"
+              },
+              "message_greetings": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean",
+                    "description": "Whether message greetings are enabled"
+                  },
+                  "greetings": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of greeting messages"
+                  }
+                }
+              },
+              "conversation_starters": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean",
+                    "description": "Whether conversation starters are enabled"
+                  },
+                  "prompts": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of conversation starter prompts"
+                  }
+                }
+              }
+            }
+          },
+          "status": {
+            "type": "integer",
+            "description": "Agent status (0 = inactive, 1 = active)"
+          },
+          "active_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last active timestamp"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          },
+          "integrations": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "List of enabled integrations"
+          },
+          "avatar_link": {
+            "type": "string",
+            "description": "Full avatar URL"
+          },
+          "domain": {
+            "type": "string",
+            "description": "Agent's public domain URL"
+          }
+        }
+      },
+      "ChatRequest": {
+        "type": "object",
+        "required": [
+          "project_id",
+          "bot_id",
+          "message"
+        ],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "Project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "Agent ID"
+          },
+          "provider_key": {
+            "type": "string",
+            "description": "Optional API key for the AI provider"
+          },
+          "provider_host": {
+            "type": "string",
+            "description": "Optional host URL for the AI provider"
+          },
+          "model": {
+            "type": "string",
+            "description": "Override the default model for this request"
+          },
+          "message": {
+            "type": "string",
+            "description": "The user's message"
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Specific memory sources to use"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Filter memory by tags"
+          },
+          "top": {
+            "type": "integer",
+            "description": "Number of memory results to include",
+            "default": 5
+          },
+          "instruction": {
+            "type": "string",
+            "description": "Override system instructions for this request"
+          },
+          "max_reply_tokens": {
+            "type": "integer",
+            "description": "Maximum tokens in the response"
+          },
+          "stream": {
+            "type": "boolean",
+            "description": "Enable streaming response",
+            "default": false
+          },
+          "chat_id": {
+            "type": "string",
+            "description": "Chat conversation ID (creates new if not provided)"
+          },
+          "reasoning_mode": {
+            "type": "string",
+            "enum": ["standard", "interactive", "stepwise", "react"],
+            "description": "Reasoning mode for the agent response (standard, interactive, stepwise, or react)",
+            "default": "standard"
+          }
+        }
+      },
+      "ChatResponse": {
+        "type": "object",
+        "description": "Response structure varies based on reasoning_mode. Contains 'chat' object with mode-specific fields.",
+        "properties": {
+          "chat": {
+            "type": "object",
+            "description": "Chat response data with mode-specific structure",
+            "properties": {
+              "reply": {
+                "type": "string",
+                "description": "Agent's text response (present in all modes)"
+              },
+              "user": {
+                "$ref": "#/components/schemas/MessageDetails",
+                "description": "User message details"
+              },
+              "agent": {
+                "$ref": "#/components/schemas/MessageDetails",
+                "description": "Agent message details"
+              },
+              "preference": {
+                "$ref": "#/components/schemas/PreferenceConfig",
+                "description": "Preference configuration used"
+              },
+              "meta": {
+                "type": "array",
+                "description": "Metadata and sources",
+                "items": {
+                  "$ref": "#/components/schemas/SourceMeta"
+                }
+              },
+              "usage": {
+                "type": "object",
+                "description": "Token usage information",
+                "properties": {
+                  "prompt_tokens": {
+                    "type": "integer",
+                    "description": "Number of prompt tokens"
+                  },
+                  "completion_tokens": {
+                    "type": "integer",
+                    "description": "Number of completion tokens"
+                  },
+                  "total_tokens": {
+                    "type": "integer",
+                    "description": "Total tokens used"
+                  },
+                  "reasoning_type": {
+                    "type": "string",
+                    "description": "Reasoning type used (for non-standard modes)"
+                  },
+                  "conversation_count": {
+                    "type": "integer",
+                    "description": "Number of conversation turns (for reasoning modes)"
+                  },
+                  "prompt_tokens_details": {
+                    "type": "object",
+                    "properties": {
+                      "cached_tokens": {
+                        "type": "integer"
+                      },
+                      "audio_tokens": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "completion_tokens_details": {
+                    "type": "object",
+                    "properties": {
+                      "reasoning_tokens": {
+                        "type": "integer"
+                      },
+                      "audio_tokens": {
+                        "type": "integer"
+                      },
+                      "accepted_prediction_tokens": {
+                        "type": "integer"
+                      },
+                      "rejected_prediction_tokens": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              },
+              "config_used": {
+                "$ref": "#/components/schemas/PreferenceConfig",
+                "description": "Configuration used for this response"
+              },
+              "analytics_id": {
+                "type": "integer",
+                "description": "Analytics tracking ID"
+              },
+              "actual_time_ms": {
+                "type": "integer",
+                "description": "Actual processing time in milliseconds"
+              },
+              "type": {
+                "type": "string",
+                "description": "Response type (interactive mode: 'tool_approval_required')"
+              },
+              "tool": {
+                "$ref": "#/components/schemas/ToolInfo",
+                "description": "Tool information (interactive mode only)"
+              },
+              "requiresApproval": {
+                "type": "boolean",
+                "description": "Whether tool execution requires approval (interactive mode)"
+              },
+              "executionId": {
+                "type": "string",
+                "description": "Execution ID (interactive mode)"
+              },
+              "originalQuery": {
+                "type": "string",
+                "description": "Original user query (interactive mode)"
+              },
+              "context": {
+                "type": "string",
+                "description": "Conversation context (interactive mode)"
+              },
+              "executedTools": {
+                "type": "array",
+                "description": "List of executed tools (interactive mode)",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "isComplete": {
+                "type": "boolean",
+                "description": "Whether reasoning is complete (interactive mode)"
+              },
+              "availableTools": {
+                "type": "integer",
+                "description": "Number of available tools (interactive mode)"
+              },
+              "stepInfo": {
+                "type": "string",
+                "description": "Step information (interactive mode)"
+              },
+              "hasMoreSteps": {
+                "type": "boolean",
+                "description": "Whether more steps remain (interactive mode)"
+              },
+              "finalAnswer": {
+                "type": "string",
+                "description": "Final answer (stepwise/react modes)"
+              },
+              "reasoningSteps": {
+                "type": "array",
+                "description": "Reasoning steps (stepwise mode)",
+                "items": {
+                  "$ref": "#/components/schemas/ReasoningStep"
+                }
+              },
+              "sources": {
+                "type": "array",
+                "description": "Sources used (stepwise/react modes)",
+                "items": {
+                  "$ref": "#/components/schemas/SourceMeta"
+                }
+              },
+              "totalSteps": {
+                "type": "integer",
+                "description": "Total number of reasoning steps (stepwise mode)"
+              },
+              "reasoning": {
+                "type": "array",
+                "description": "Detailed reasoning cycles (stepwise/react modes)",
+                "items": {
+                  "$ref": "#/components/schemas/ReasoningStep"
+                }
+              },
+              "reasoningCycles": {
+                "type": "array",
+                "description": "Reasoning cycles (react mode)",
+                "items": {
+                  "$ref": "#/components/schemas/ReasoningStep"
+                }
+              },
+              "totalCycles": {
+                "type": "integer",
+                "description": "Total reasoning cycles (react mode)"
+              },
+              "converged": {
+                "type": "boolean",
+                "description": "Whether reasoning converged (react mode)"
+              }
+            }
+          }
+        }
+      },
+      "MessageDetails": {
+        "type": "object",
+        "description": "Detailed information about a chat message",
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "description": "Message unique identifier"
+          },
+          "chat_id": {
+            "type": "string",
+            "description": "Chat conversation ID"
+          },
+          "content": {
+            "type": "string",
+            "description": "Message content"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["user", "system"],
+            "description": "Message role"
+          },
+          "model": {
+            "type": "string",
+            "description": "AI model used"
+          },
+          "complexity": {
+            "type": "string",
+            "description": "Complexity level"
+          },
+          "reasoning_type": {
+            "type": "string",
+            "description": "Reasoning type"
+          },
+          "estimated_time_ms": {
+            "type": "string",
+            "description": "Estimated time in milliseconds"
+          },
+          "estimated_cost": {
+            "type": "string",
+            "description": "Estimated cost"
+          },
+          "confidence": {
+            "type": "string",
+            "description": "Confidence level"
+          },
+          "channel": {
+            "type": "string",
+            "description": "Communication channel"
+          },
+          "credit_used": {
+            "type": "string",
+            "description": "Credits used"
+          },
+          "confidence_score": {
+            "type": "string",
+            "description": "Confidence score"
+          },
+          "tokens": {
+            "type": "integer",
+            "description": "Token count"
+          },
+          "upvotes": {
+            "type": "integer",
+            "description": "Upvote count"
+          },
+          "downvotes": {
+            "type": "integer",
+            "description": "Downvote count"
+          },
+          "reasoning": {
+            "type": "object",
+            "nullable": true,
+            "description": "Reasoning details"
+          },
+          "preference": {
+            "$ref": "#/components/schemas/PreferenceConfig",
+            "nullable": true
+          },
+          "sources": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/SourceMeta"
+            }
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          },
+          "isToolExecuting": {
+            "type": "boolean",
+            "description": "Whether tool is executing"
+          }
+        }
+      },
+      "PreferenceConfig": {
+        "type": "object",
+        "description": "User preference configuration",
+        "properties": {
+          "reasoningType": {
+            "type": "string",
+            "description": "Reasoning type preference"
+          },
+          "model": {
+            "type": "string",
+            "description": "Model preference"
+          },
+          "maxTokens": {
+            "type": "integer",
+            "description": "Maximum tokens"
+          },
+          "complexity": {
+            "type": "string",
+            "description": "Complexity preference"
+          }
+        }
+      },
+      "SourceMeta": {
+        "type": "object",
+        "description": "Source metadata information",
+        "properties": {
+          "citation_number": {
+            "type": "integer",
+            "description": "Citation number"
+          },
+          "source_id": {
+            "type": "string",
+            "description": "Source identifier"
+          },
+          "title": {
+            "type": "string",
+            "description": "Source title"
+          },
+          "url": {
+            "type": "string",
+            "description": "Source URL"
+          },
+          "favicon": {
+            "type": "string",
+            "description": "Favicon URL"
+          },
+          "type": {
+            "type": "string",
+            "description": "Source type"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Source tags"
+          }
+        }
+      },
+      "ToolInfo": {
+        "type": "object",
+        "description": "Tool execution information",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Tool name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Tool description"
+          },
+          "server_label": {
+            "type": "string",
+            "description": "Server label"
+          },
+          "parameters": {
+            "type": "object",
+            "description": "Tool parameters"
+          },
+          "parameterExplanation": {
+            "type": "string",
+            "description": "Explanation of parameters"
+          },
+          "reasoning": {
+            "type": "string",
+            "description": "Reasoning for tool use"
+          }
+        }
+      },
+      "ReasoningStep": {
+        "type": "object",
+        "description": "A single reasoning step or cycle",
+        "properties": {
+          "cycle": {
+            "type": "integer",
+            "description": "Cycle number"
+          },
+          "thought": {
+            "type": "string",
+            "description": "Thought process"
+          },
+          "action": {
+            "type": "string",
+            "description": "Action taken"
+          },
+          "actionInput": {
+            "type": "string",
+            "description": "Input for the action"
+          },
+          "observation": {
+            "type": "string",
+            "description": "Observation from action"
+          },
+          "actionSuccess": {
+            "type": "boolean",
+            "description": "Whether action succeeded"
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "Timestamp of step"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SourceMeta"
+            },
+            "description": "Sources used in this step"
+          }
+        }
+      },
+      "ChatHistoryResponse": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Total number of messages"
+          },
+          "conversation": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "uuid": {
+                  "type": "string",
+                  "description": "Message unique identifier"
+                },
+                "chat_id": {
+                  "type": "string",
+                  "description": "Chat conversation ID"
+                },
+                "content": {
+                  "type": "string",
+                  "description": "Message content"
+                },
+                "role": {
+                  "type": "string",
+                  "enum": ["user", "system"],
+                  "description": "Message role"
+                },
+                "model": {
+                  "type": "string",
+                  "description": "AI model used for this message"
+                },
+                "complexity": {
+                  "type": "string",
+                  "description": "Message complexity level"
+                },
+                "reasoning_type": {
+                  "type": "string",
+                  "description": "Type of reasoning used (e.g., standard, interactive, stepwise, react)"
+                },
+                "estimated_time_ms": {
+                  "type": "string",
+                  "description": "Estimated processing time in milliseconds"
+                },
+                "estimated_cost": {
+                  "type": "string",
+                  "description": "Estimated cost"
+                },
+                "confidence": {
+                  "type": "string",
+                  "description": "Confidence level"
+                },
+                "channel": {
+                  "type": "string",
+                  "description": "Communication channel (e.g., web, api)"
+                },
+                "credit_used": {
+                  "type": "string",
+                  "description": "Credits consumed"
+                },
+                "confidence_score": {
+                  "type": "string",
+                  "description": "Confidence score percentage"
+                },
+                "tokens": {
+                  "type": "integer",
+                  "description": "Number of tokens used"
+                },
+                "upvotes": {
+                  "type": "integer",
+                  "description": "Number of upvotes"
+                },
+                "downvotes": {
+                  "type": "integer",
+                  "description": "Number of downvotes"
+                },
+                "reasoning": {
+                  "type": "object",
+                  "description": "Detailed reasoning information",
+                  "nullable": true
+                },
+                "preference": {
+                  "type": "object",
+                  "description": "User preferences for this message",
+                  "nullable": true,
+                  "properties": {
+                    "model": {
+                      "type": "string",
+                      "description": "Preferred model"
+                    },
+                    "maxTokens": {
+                      "type": "integer",
+                      "description": "Maximum tokens"
+                    },
+                    "complexity": {
+                      "type": "string",
+                      "description": "Complexity preference"
+                    },
+                    "reasoningType": {
+                      "type": "string",
+                      "description": "Reasoning type preference"
+                    }
+                  }
+                },
+                "sources": {
+                  "type": "array",
+                  "description": "Sources referenced in the response",
+                  "nullable": true,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "description": "Source URL"
+                      },
+                      "tags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Source tags"
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "Source type (e.g., website)"
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "Source title"
+                      },
+                      "favicon": {
+                        "type": "string",
+                        "description": "Source favicon URL"
+                      },
+                      "source_id": {
+                        "type": "string",
+                        "description": "Source identifier"
+                      },
+                      "citation_number": {
+                        "type": "integer",
+                        "description": "Citation number"
+                      }
+                    }
+                  }
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Last update timestamp"
+                },
+                "user": {
+                  "type": "object",
+                  "description": "User information",
+                  "nullable": true,
+                  "properties": {
+                    "uuid": {
+                      "type": "string",
+                      "description": "User unique identifier"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "User email"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User name"
+                    },
+                    "avatar": {
+                      "type": "string",
+                      "description": "User avatar filename",
+                      "nullable": true
+                    },
+                    "avatar_link": {
+                      "type": "string",
+                      "description": "User avatar URL"
+                    }
+                  }
+                },
+                "isToolExecuting": {
+                  "type": "boolean",
+                  "description": "Whether a tool is currently executing"
+                }
+              }
+            }
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
+        }
+      },
+      "ChatListResponse": {
+        "type": "object",
+        "properties": {
+          "chats": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "chat_id": {
+                  "type": "string",
+                  "description": "Chat ID"
+                },
+                "subject": {
+                  "type": "string",
+                  "description": "Preview of the last message"
+                },
+                "channel": {
+                  "type": "string",
+                  "description": "The chat channel"
+                },
+                "message_count": {
+                  "type": "integer",
+                  "description": "Total messages in this chat"
+                },
+                "user": {
+                  "type": "object",
+                  "description": "The user engaging the agent"
+                },
+                "latest": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Last update timestamp"
+                }
+              }
+            }
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
+        }
+      },
+      "SubscriberListResponse": {
+        "type": "object",
+        "properties": {
+          "subscribers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Subscriber ID"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "Subscriber email"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Subscriber name"
+                },
+                "subscribed_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Subscription timestamp"
+                }
+              }
+            }
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
+        }
+      },
+      "Pagination": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Current page number"
+          },
+          "per_page": {
+            "type": "integer",
+            "description": "Items per page"
+          },
+          "total": {
+            "type": "integer",
+            "description": "Total number of items"
+          },
+          "total_pages": {
+            "type": "integer",
+            "description": "Total number of pages"
+          }
+        }
+      },
+      "SuccessResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Operation success status"
+          },
+          "message": {
+            "type": "string",
+            "description": "Success message"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "code": {
+            "type": "string",
+            "description": "Error code"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Agent",
+      "description": "Operations for managing AI agents"
+    },
+    {
+      "name": "Memory",
+      "description": "Operations for managing agent memory sources"
+    },
+    {
+      "name": "Chat",
+      "description": "Operations for chatting with agents and managing conversations"
+    },
+    {
+      "name": "Subscribers",
+      "description": "Operations for managing subscribers and leads"
+    }
+  ]
 }

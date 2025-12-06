@@ -1,0 +1,201 @@
+---
+title: "Using with BoostGPT Agents"
+description: "Connect MCP servers to your BoostGPT agents"
+---
+
+## Overview
+
+Connect your custom MCP servers to any BoostGPT agent to give them access to custom tools.
+
+## Quick Start
+
+<Steps>
+  <Step title="Create MCP Server">
+    **Dashboard -> MCP Servers -> Create Server**
+
+    Import your OpenAPI spec or Postman collection
+  </Step>
+
+  <Step title="Get MCP URL">
+    Copy your server URL:
+    ```text
+    https://mcp.your-server-id.boostgpt.co
+    ```
+  </Step>
+
+  <Step title="Open Agent">
+    Go to any agent -> **Tools** tab
+  </Step>
+
+  <Step title="Add Tool">
+    - Click **Add Tool**
+    - Click **Add New**
+    - Paste your MCP URL
+    - Click **Connect**
+  </Step>
+
+  <Step title="Test">
+    Open **Playground** and test your custom tools
+  </Step>
+</Steps>
+
+## Example Usage
+
+After connecting your MCP server:
+
+```text
+# MCP Server: Internal CRM
+# Tools: get_customer, create_deal, send_email
+
+User: "Look up customer john@acme.com"
+
+Agent: *uses get_customer tool from your MCP server*
+       Found customer: John Doe from Acme Corp
+       - ID: 12345
+       - Status: Active
+       - Lifetime value: $50,000
+
+User: "Create a deal for them worth $10K"
+
+Agent: *uses create_deal tool*
+       Deal created successfully!
+       Deal ID: DEAL-789
+
+User: "Send them a follow-up email"
+
+Agent: *uses send_email tool*
+       Email sent to john@acme.com
+```
+
+## Multiple MCP Servers
+
+Connect multiple MCP servers to one agent:
+
+```text
+Agent -> Tools Tab:
+-  Internal CRM (https://mcp.boostgpt.co/crm)
+-  Inventory System (https://mcp.boostgpt.co/inventory)
+-  Billing API (https://mcp.boostgpt.co/billing)
+
+Agent can now access all tools from all three systems!
+```
+
+## Use Cases
+
+### Customer Support Agent
+
+```text
+MCP Servers:
+- CRM: Customer lookup, ticket creation
+- Knowledge Base: Search documentation
+- Email System: Send responses
+
+Agent handles:
+"Hi, I need help with my order #12345"
+-> Looks up order in CRM
+-> Searches KB for solutions
+-> Sends resolution email
+```
+
+### Sales Assistant
+
+```text
+MCP Servers:
+- CRM: Deal management
+- Email: Outreach
+- Calendar: Meeting scheduling
+
+Agent handles:
+"Schedule demos for all hot leads this week"
+-> Queries CRM for hot leads
+-> Finds available calendar slots
+-> Sends calendar invites via email
+```
+
+### Internal Tools Agent
+
+```text
+MCP Servers:
+- Database: Query data
+- Reporting: Generate reports
+- Slack: Send notifications
+
+Agent handles:
+"Generate weekly sales report and post to #sales"
+-> Queries database
+-> Generates report
+-> Posts to Slack
+```
+
+## Managing Connected Tools
+
+### View Connected Tools
+
+**Agent -> Tools Tab** shows all connected MCP servers and their tools
+
+### Disconnect Tool
+
+Click **Remove** next to disconnect
+
+### Update MCP Server
+
+Changes to your MCP server automatically reflect in all connected agents
+
+## Authentication
+
+MCP servers use authentication configured in Agent tool settings:
+
+1. **Dashboard -> Agents -> Your Agent -> Tools -> Your Tool**
+2. Configure API keys or OAuth client details
+3. Save changes
+
+## Monitoring
+
+### Tool Usage
+
+**Agent -> Insights Tab -> Tool Analytics**
+- See which MCP tools are being used
+- Track success/failure rates
+- Monitor response times
+
+### MCP Server Logs
+
+**Dashboard -> MCP Servers -> Your Server -> Logs**
+- View all requests from agents
+- Debug failed tool calls
+- Monitor authentication issues
+
+## Best Practices
+
+1. **Group related tools** - One MCP server per system/API
+2. **Clear tool names** - Help agent understand what each tool does
+3. **Test thoroughly** - Use Playground before deploying
+4. **Monitor usage** - Check Insights regularly
+5. **Update documentation** - Keep tool descriptions current
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion icon="link-2-off" title="MCP server won't connect">
+    Check that your MCP URL is correct and the server is running in Dashboard -> MCP Servers
+  </Accordion>
+
+  <Accordion icon="ban" title="Tools not working">
+    Verify authentication is configured correctly in MCP server settings
+  </Accordion>
+
+  <Accordion icon="circle-x" title="Slow responses">
+    Check MCP server logs for timeout issues. Optimize API response times.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Create MCP Server" icon="server" href="/integrations/custom/overview">
+    Build your first custom MCP server
+  </Card>
+  <Card title="Claude Desktop" icon="brain" href="/integrations/external/claude-desktop">
+    Use MCP servers with Claude Desktop
+  </Card>
+</CardGroup>

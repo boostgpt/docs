@@ -47,19 +47,6 @@ Ollama allows you to run open-source AI models locally on your own infrastructur
   </Card>
 </CardGroup>
 
-## Model Comparison
-
-| Model | Credits | Context | Speed | Hardware Needs | Best Use Case |
-|-------|---------|---------|-------|----------------|---------------|
-| **Llama 3.3 (70B)** | 2 | 128K | Medium | 40GB+ VRAM | Local power |
-| **Llama 3.1 (405B)** | 4 | 128K | Slow | 200GB+ VRAM | Maximum local capability |
-| **Llama 3.1 (70B)** | 2 | 128K | Medium | 40GB+ VRAM | Balanced local |
-| **Llama 3.1 (8B)** | 1 | 128K | Fast | 8GB+ VRAM | Efficient local |
-
-<Info>
-  **Ollama's Strength**: Full data privacy, no API costs, complete control over your AI infrastructure. Run models entirely on your own hardware.
-</Info>
-
 ## Setup
 
 ### Prerequisites
@@ -189,25 +176,7 @@ Ollama allows you to run open-source AI models locally on your own infrastructur
   </Tab>
 </Tabs>
 
-## Self-Hosting Benefits
 
-<AccordionGroup>
-  <Accordion icon="shield" title="Complete Data Privacy">
-    All data stays on your infrastructure. No information leaves your network. Perfect for sensitive applications, healthcare, finance, or proprietary data.
-  </Accordion>
-
-  <Accordion icon="dollar-sign" title="No API Costs">
-    After initial hardware investment, inference is free. No per-request charges, no rate limits, no monthly bills.
-  </Accordion>
-
-  <Accordion icon="sliders" title="Full Control">
-    Customize models, control versions, modify parameters, and optimize for your specific use case. Complete flexibility.
-  </Accordion>
-
-  <Accordion icon="wifi-slash" title="Offline Operation">
-    Works completely offline. No internet dependency for inference. Perfect for air-gapped environments or unreliable connectivity.
-  </Accordion>
-</AccordionGroup>
 
 ## Hardware Requirements
 
@@ -286,7 +255,7 @@ ollama pull llama3.1:405b
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion icon="circle-exclamation" title="Connection refused">
+  <Accordion icon="circle-alert" title="Connection refused">
     **Cause:** Ollama server not running or firewall blocking
 
     **Solutions:**
@@ -295,7 +264,7 @@ ollama pull llama3.1:405b
     - Verify host URL in configuration
   </Accordion>
 
-  <Accordion icon="circle-exclamation" title="Model not found">
+  <Accordion icon="circle-alert" title="Model not found">
     **Cause:** Model not pulled locally
 
     **Solutions:**
@@ -304,7 +273,7 @@ ollama pull llama3.1:405b
     - Check `ollama list` for available models
   </Accordion>
 
-  <Accordion icon="circle-exclamation" title="Slow responses">
+  <Accordion icon="circle-alert" title="Slow responses">
     **Cause:** Insufficient hardware resources
 
     **Solutions:**
@@ -314,7 +283,7 @@ ollama pull llama3.1:405b
     - Close other GPU-intensive applications
   </Accordion>
 
-  <Accordion icon="circle-exclamation" title="Out of memory errors">
+  <Accordion icon="circle-alert" title="Out of memory errors">
     **Cause:** Model too large for available VRAM
 
     **Solutions:**
@@ -328,7 +297,7 @@ ollama pull llama3.1:405b
 ## Next Steps
 
 <CardGroup cols={2}>
-  <Card title="Model Comparison" icon="scale-balanced" href="/providers/model-comparison">
+  <Card title="Model Comparison" icon="scale" href="/providers/model-comparison">
     Compare Ollama with cloud providers
   </Card>
 

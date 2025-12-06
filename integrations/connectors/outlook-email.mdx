@@ -1,0 +1,57 @@
+---
+title: "Outlook Email"
+description: "Microsoft email integration"
+---
+
+## Overview
+
+Connect Outlook to send and manage emails through Microsoft.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Outlook Email** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Outlook Email**
+  </Step>
+  <Step title="Configure">
+    Sign in with Microsoft account (OAuth)
+  </Step>
+  <Step title="Test">
+    Playground: "Send a test email to myself"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Send email to john@company.com about tomorrow's meeting"
+
+Agent: Sent email to john@company.com via Outlook
+```
+
+## Integration Example
+
+**With Salesforce:**
+
+```text
+User: "Email all Salesforce leads from this week"
+
+Agent: *fetches Salesforce leads*
+       *sends emails via Outlook*
+
+       Sent 12 emails to new leads
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Gmail" icon="envelope" href="/integrations/connectors/gmail">
+    Alternative email
+  </Card>
+  <Card title="Outlook Calendar" icon="calendar" href="/integrations/connectors/outlook-calendar">
+    Calendar integration
+  </Card>
+</CardGroup>

@@ -1,0 +1,58 @@
+---
+title: "Monday.com"
+description: "Team collaboration platform"
+---
+
+## Overview
+
+Connect Monday.com to manage boards, items, and team workflows.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Monday.com** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Monday.com**
+  </Step>
+  <Step title="Configure">
+    Enter your Monday.com API Key
+  </Step>
+  <Step title="Test">
+    Playground: "Show me items in my board"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Add an item to my Sprint board: Fix login bug"
+
+Agent: Created item in Sprint board:
+       "Fix login bug"
+```
+
+## Integration Example
+
+**With Jira:**
+
+```text
+User: "Sync Jira issues to Monday.com board"
+
+Agent: *fetches Jira issues*
+       *creates Monday items*
+
+       Synced 12 issues to Monday.com
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="ClickUp" icon="check" href="/integrations/connectors/clickup">
+    Alternative work management
+  </Card>
+  <Card title="Asana" icon="list-check" href="/integrations/connectors/asana">
+    Project management
+  </Card>
+</CardGroup>

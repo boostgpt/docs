@@ -1,0 +1,414 @@
+---
+title: "Integration Best Practices"
+description: "Best practices for building and using integrations"
+---
+
+## Overview
+
+Follow these best practices to build reliable, efficient, and user-friendly integrations.
+
+## Tool Design
+
+### Clear Naming
+
+Use descriptive tool names that explain what they do:
+
+<CodeGroup>
+```text Good
+send_email
+create_customer
+get_order_status
+update_inventory
+```
+
+```text Bad
+tool1
+do_thing
+process
+execute
+```
+</CodeGroup>
+
+### Detailed Descriptions
+
+Write clear descriptions that help the AI understand when to use each tool:
+
+<CodeGroup>
+```json Good
+{
+  "name": "send_email",
+  "description": "Send an email message to one or more recipients. Use this when the user asks to send, email, or message someone. Supports attachments and CC/BCC."
+}
+```
+
+```json Bad
+{
+  "name": "send_email",
+  "description": "Sends email"
+}
+```
+</CodeGroup>
+
+### Parameter Documentation
+
+Document all parameters with types and descriptions:
+
+```json
+{
+  "parameters": {
+    "email": {
+      "type": "string",
+      "required": true,
+      "description": "Recipient email address (e.g., john@example.com)"
+    },
+    "subject": {
+      "type": "string",
+      "required": true,
+      "description": "Email subject line"
+    },
+    "body": {
+      "type": "string",
+      "required": true,
+      "description": "Email body content (supports HTML)"
+    },
+    "cc": {
+      "type": "array",
+      "required": false,
+      "description": "CC recipients (optional, array of email addresses)"
+    }
+  }
+}
+```
+
+## Authentication
+
+### Secure Credentials
+
+Never expose credentials in code or logs:
+
+<CodeGroup>
+```javascript Good
+// Store in environment variables
+const apiKey = process.env.API_KEY;
+
+// Or use BoostGPT's auth management
+// Dashboard -> MCP Servers -> Settings
+```
+
+```javascript Bad
+// Hardcoded credentials
+const apiKey = "sk_live_abc123xyz";
+
+// Logged credentials
+console.log(`Using API key: ${apiKey}`);
+```
+</CodeGroup>
+
+### Rotate Regularly
+
+Update API keys and tokens periodically:
+
+- **API Keys**: Rotate every 90 days
+- **OAuth Tokens**: Refresh before expiration
+- **Passwords**: Change quarterly
+
+### Minimal Permissions
+
+Request only the permissions your integration needs:
+
+```yaml
+# Good: Specific scopes
+scopes:
+  - read:users
+  - write:contacts
+
+# Bad: Over-privileged
+scopes:
+  - admin
+  - full_access
+```
+
+## Error Handling
+
+### Return Clear Errors
+
+Provide helpful error messages:
+
+<CodeGroup>
+```json Good
+{
+  "success": false,
+  "error": "Customer not found: No customer with email john@example.com",
+  "code": "CUSTOMER_NOT_FOUND"
+}
+```
+
+```json Bad
+{
+  "success": false,
+  "error": "Error"
+}
+```
+</CodeGroup>
+
+### Handle Rate Limits
+
+Respect API rate limits:
+
+```javascript
+// Check rate limits
+if (rateLimitExceeded()) {
+  return {
+    success: false,
+    error: "Rate limit exceeded. Try again in 60 seconds.",
+    retryAfter: 60
+  };
+}
+
+// Implement exponential backoff
+async function retryWithBackoff(fn, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (i === maxRetries - 1) throw error;
+      await sleep(Math.pow(2, i) * 1000);
+    }
+  }
+}
+```
+
+### Validate Inputs
+
+Check all inputs before making API calls:
+
+```javascript
+function validateEmail(email) {
+  if (!email) {
+    return { valid: false, error: "Email is required" };
+  }
+  if (!email.includes('@')) {
+    return { valid: false, error: "Invalid email format" };
+  }
+  return { valid: true };
+}
+
+// Use in handler
+const validation = validateEmail(params.email);
+if (!validation.valid) {
+  return { success: false, error: validation.error };
+}
+```
+
+## Performance
+
+### Fast Responses
+
+Keep tool responses under 5 seconds:
+
+```javascript
+// Set timeouts
+const controller = new AbortController();
+const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+try {
+  const response = await fetch(url, {
+    signal: controller.signal
+  });
+  return await response.json();
+} catch (error) {
+  if (error.name === 'AbortError') {
+    return { success: false, error: "Request timeout" };
+  }
+  throw error;
+} finally {
+  clearTimeout(timeoutId);
+}
+```
+
+### Cache When Possible
+
+Cache frequently accessed data:
+
+```javascript
+const cache = new Map();
+
+async function getCustomer(id) {
+  // Check cache first
+  if (cache.has(id)) {
+    return cache.get(id);
+  }
+
+  // Fetch from API
+  const customer = await api.getCustomer(id);
+
+  // Cache for 5 minutes
+  cache.set(id, customer);
+  setTimeout(() => cache.delete(id), 5 * 60 * 1000);
+
+  return customer;
+}
+```
+
+### Batch Operations
+
+Batch requests when possible:
+
+<CodeGroup>
+```javascript Good
+// Batch create
+const customers = await api.createCustomers([
+  { name: "John" },
+  { name: "Jane" },
+  { name: "Bob" }
+]);
+```
+
+```javascript Bad
+// Individual creates
+await api.createCustomer({ name: "John" });
+await api.createCustomer({ name: "Jane" });
+await api.createCustomer({ name: "Bob" });
+```
+</CodeGroup>
+
+## Testing
+
+### Test All Tools
+
+Test every tool before deploying:
+
+```javascript
+// Test script
+async function testTools() {
+  // Test create
+  const createResult = await tools.create_customer({
+    name: "Test User",
+    email: "test@example.com"
+  });
+  assert(createResult.success);
+
+  // Test read
+  const readResult = await tools.get_customer({
+    id: createResult.id
+  });
+  assert(readResult.success);
+
+  // Test cleanup
+  await tools.delete_customer({ id: createResult.id });
+}
+```
+
+### Handle Edge Cases
+
+Test error scenarios:
+
+```javascript
+// Test invalid inputs
+await tools.create_customer({
+  name: "",  // Empty name
+  email: "invalid"  // Invalid email
+});
+
+// Test missing data
+await tools.get_customer({
+  id: "nonexistent"  // Customer doesn't exist
+});
+
+// Test rate limits
+for (let i = 0; i < 1000; i++) {
+  await tools.list_customers();  // Should handle rate limiting
+}
+```
+
+### Monitor Production
+
+Check logs regularly:
+
+**Dashboard -> MCP Servers -> Your Server -> Logs**
+- Monitor error rates
+- Check response times
+- Track authentication issues
+
+## Documentation
+
+### Document Use Cases
+
+Explain when to use your integration:
+
+```markdown
+## When to Use
+
+Use this integration when you need to:
+- Look up customer information
+- Create and manage deals
+- Send automated emails
+
+## When NOT to Use
+
+Don't use for:
+- Bulk data exports (use database directly)
+- Real-time streaming (use websockets)
+```
+
+### Provide Examples
+
+Include practical examples:
+
+```text
+Example 1: Customer Lookup
+"Find customer john@acme.com"
+-> Uses get_customer tool
+-> Returns customer details
+
+Example 2: Deal Creation
+"Create a $25K deal for Acme Corp"
+-> Uses create_deal tool
+-> Returns deal ID
+```
+
+### Keep Updated
+
+Update documentation when you change tools:
+- New parameters
+- Changed behavior
+- Deprecated features
+
+## Monitoring
+
+### Track Usage
+
+Monitor tool usage:
+
+**Agent -> Insights -> Tool Analytics**
+- Most used tools
+- Success rates
+- Response times
+
+### Set Alerts
+
+Get notified of issues:
+
+- **High error rate**: >5% failures
+- **Slow responses**: >5 second average
+- **Auth failures**: Any authentication errors
+
+### Review Regularly
+
+Weekly review checklist:
+- [ ] Check error logs
+- [ ] Review response times
+- [ ] Verify rate limits not exceeded
+- [ ] Update credentials if needed
+- [ ] Check for API changes
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Testing Guide" icon="flask-conical" href="/integrations/guides/testing">
+    Learn how to test integrations
+  </Card>
+  <Card title="Debugging Guide" icon="bug" href="/integrations/guides/debugging">
+    Debug integration issues
+  </Card>
+</CardGroup>

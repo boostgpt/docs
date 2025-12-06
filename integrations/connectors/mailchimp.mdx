@@ -1,0 +1,60 @@
+---
+title: "Mailchimp"
+description: "Manage email marketing campaigns"
+---
+
+## Overview
+
+Connect Mailchimp to manage subscribers, campaigns, and email marketing.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Mailchimp** → **Deploy**
+  </Step>
+
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Mailchimp**
+  </Step>
+
+  <Step title="Configure">
+    Sign in to Mailchimp and grant access (OAuth)
+  </Step>
+
+  <Step title="Test">
+    Playground: "How many subscribers do I have?"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Add sarah@company.com to my newsletter list"
+
+Agent: Added sarah@company.com to your newsletter audience
+```
+
+## Integration Example
+
+**With HubSpot:**
+
+```text
+User: "Add all HubSpot contacts to my Mailchimp newsletter"
+
+Agent: *fetches HubSpot contacts*
+       *adds to Mailchimp audience*
+
+       Added 150 contacts to Mailchimp newsletter
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="SendGrid" icon="paper-plane" href="/integrations/connectors/sendgrid">
+    Transactional emails
+  </Card>
+  <Card title="HubSpot" icon="hubspot" href="/integrations/connectors/hubspot">
+    CRM integration
+  </Card>
+</CardGroup>

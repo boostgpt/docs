@@ -1,0 +1,55 @@
+---
+title: "Linear"
+description: "Issue and project tracking"
+---
+
+## Overview
+
+Connect Linear to manage issues, projects, and sprints.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Linear** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Linear**
+  </Step>
+  <Step title="Configure">
+    Enter your Linear API Key
+  </Step>
+  <Step title="Test">
+    Playground: "Show me my issues"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Create an issue: Add dark mode support"
+
+Agent: Created Linear issue:
+       "Add dark mode support" - ENG-42
+```
+
+## Integration Example
+
+**With GitHub:**
+
+```text
+User: "Create Linear issues from GitHub bugs"
+
+Agent: Created 5 Linear issues from GitHub
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Jira" icon="jira" href="/integrations/connectors/jira">
+    Alternative issue tracker
+  </Card>
+  <Card title="GitHub" icon="github" href="/integrations/connectors/github">
+    Code repository
+  </Card>
+</CardGroup>

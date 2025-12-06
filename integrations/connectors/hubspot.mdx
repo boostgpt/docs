@@ -1,0 +1,64 @@
+---
+title: "HubSpot"
+description: "Manage contacts, deals, and CRM data"
+---
+
+## Overview
+
+Connect HubSpot to manage contacts, deals, companies, and automate CRM workflows.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **HubSpot** → **Deploy**
+  </Step>
+
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **HubSpot**
+  </Step>
+
+  <Step title="Configure">
+    Sign in with HubSpot and grant CRM permissions (OAuth)
+  </Step>
+
+  <Step title="Test">
+    Playground: "Create a contact for John Doe at TechCorp"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Create a contact for Sarah Johnson, email sarah@techcorp.com, company TechCorp"
+
+Agent: Created HubSpot contact:
+       - Name: Sarah Johnson
+       - Email: sarah@techcorp.com
+       - Company: TechCorp
+```
+
+## Integration Example
+
+**With Gmail:**
+
+```text
+User: "Find all emails from sarah@techcorp.com and create a HubSpot contact"
+
+Agent: *searches Gmail for emails from Sarah*
+       *extracts contact information*
+       *creates HubSpot contact*
+
+       Contact created with email history from Gmail
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Gmail" icon="envelope" href="/integrations/connectors/gmail">
+    Sync emails with contacts
+  </Card>
+  <Card title="Salesforce" icon="salesforce" href="/integrations/connectors/salesforce">
+    Alternative CRM
+  </Card>
+</CardGroup>

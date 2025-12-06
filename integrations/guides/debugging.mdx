@@ -1,0 +1,445 @@
+---
+title: "Debugging Integrations"
+description: "How to debug MCP integration issues"
+---
+
+## Overview
+
+Learn how to identify and fix issues with your MCP integrations.
+
+## Debugging Tools
+
+<CardGroup cols={3}>
+  <Card title="MCP Logs" icon="file">
+    View server request logs
+  </Card>
+  <Card title="Agent Insights" icon="chart-line">
+    See tool usage analytics
+  </Card>
+  <Card title="Playground" icon="play">
+    Test tools interactively
+  </Card>
+</CardGroup>
+
+## Accessing Logs
+
+### MCP Server Logs
+
+View all requests to your MCP server:
+
+<Steps>
+  <Step title="Go to Logs">
+    **Dashboard -> MCP Servers -> Your Server -> Logs**
+  </Step>
+
+  <Step title="Review Requests">
+    See all tool calls:
+    - Timestamp
+    - Tool name
+    - Parameters
+    - Response
+    - Status (success/error)
+    - Duration
+  </Step>
+
+  <Step title="Filter">
+    Filter logs by:
+    - Date range
+    - Tool name
+    - Status (success/error)
+    - Agent
+  </Step>
+</Steps>
+
+### Agent Tool Logs
+
+View tools used by specific agent:
+
+<Steps>
+  <Step title="Open Agent">
+    Go to your agent
+  </Step>
+
+  <Step title="Insights Tab">
+    Click **Insights** tab
+  </Step>
+
+  <Step title="Tool Analytics">
+    See:
+    - Which tools were called
+    - Success/failure rates
+    - Response times
+    - Error messages
+  </Step>
+</Steps>
+
+## Common Issues
+
+### Authentication Errors
+
+**Symptom:** 401 Unauthorized or 403 Forbidden
+
+**Causes:**
+- Invalid API key
+- Expired token
+- Wrong authentication method
+- Missing credentials
+
+**Debug:**
+
+<Steps>
+  <Step title="Check Credentials">
+    **Dashboard -> Agents -> Your Agent -> Tools -> Your Tool**
+
+    Verify:
+    - API key is correct
+    - Auth method matches API requirements
+    - Credentials not expired
+  </Step>
+
+  <Step title="Test API Directly">
+    ```bash
+    # Test with curl
+    curl https://api.example.com/users \
+      -H "Authorization: Bearer YOUR_TOKEN"
+    ```
+
+    If this fails, the issue is with your credentials
+  </Step>
+
+  <Step title="Check Logs">
+    Look for auth errors in MCP server logs
+  </Step>
+
+  <Step title="Fix">
+    Update credentials in Agent tool settings and test again
+  </Step>
+</Steps>
+
+### Tool Not Found
+
+**Symptom:** "Tool not available" error
+
+**Causes:**
+- Tool not in OpenAPI spec
+- MCP server not connected to agent
+- Tool name mismatch
+
+**Debug:**
+
+<Steps>
+  <Step title="Check Connection">
+    **Agent -> Tools Tab**
+
+    Verify MCP server is connected and showing tools
+  </Step>
+
+  <Step title="Check Tool Name">
+    Tool names are generated from endpoint paths:
+    - `GET /users` -> `get_users`
+    - `POST /customers` -> `create_customer`
+
+    Check if expected tool name matches
+  </Step>
+
+  <Step title="Refresh">
+    Disconnect and reconnect Agent tool to refresh tools
+  </Step>
+</Steps>
+
+### Slow Responses
+
+**Symptom:** Tools taking >5 seconds
+
+**Causes:**
+- Slow API responses
+- Large data transfers
+- Network issues
+- No caching
+
+**Debug:**
+
+<Steps>
+  <Step title="Check Response Times">
+    **Dashboard -> MCP Servers -> Logs**
+
+    Look at duration column
+  </Step>
+
+  <Step title="Test API Speed">
+    ```bash
+    # Time API call
+    time curl https://api.example.com/users
+    ```
+  </Step>
+
+  <Step title="Identify Slow Endpoints">
+    Find which tools are slowest in logs
+  </Step>
+
+  <Step title="Fix">
+    Options:
+    - Optimize API queries
+    - Add caching
+    - Paginate large results
+    - Use async processing
+  </Step>
+</Steps>
+
+### Invalid Parameters
+
+**Symptom:** "Invalid parameter" or "Required parameter missing"
+
+**Causes:**
+- Missing required field
+- Wrong parameter type
+- Invalid format
+
+**Debug:**
+
+<Steps>
+  <Step title="Check Logs">
+    Look for parameter validation errors
+  </Step>
+
+  <Step title="Review OpenAPI Spec">
+    Verify parameter definitions:
+    ```yaml
+    parameters:
+      - name: email
+        required: true
+        schema:
+          type: string
+          format: email
+    ```
+  </Step>
+
+  <Step title="Test in Playground">
+    Try tool with different parameter combinations:
+    ```text
+    "Create customer John, john@test.com"
+    vs
+    "Create customer John"
+    ```
+  </Step>
+
+  <Step title="Fix">
+    Update OpenAPI spec with correct parameter requirements
+  </Step>
+</Steps>
+
+### Rate Limiting
+
+**Symptom:** 429 Too Many Requests
+
+**Causes:**
+- Exceeded API rate limits
+- Too many concurrent requests
+- No rate limit handling
+
+**Debug:**
+
+<Steps>
+  <Step title="Check Rate Limits">
+    Review API documentation for limits
+  </Step>
+
+  <Step title="Monitor Request Volume">
+    **Dashboard -> MCP Servers -> Analytics**
+
+    Check requests per minute
+  </Step>
+
+  <Step title="Review Logs">
+    Look for 429 errors and their timing
+  </Step>
+
+  <Step title="Fix">
+    Options:
+    - Implement exponential backoff
+    - Add request queuing
+    - Cache responses
+    - Upgrade API plan
+  </Step>
+</Steps>
+
+## Debugging Workflow
+
+### Step 1: Reproduce
+
+Reproduce the issue consistently:
+
+```text
+1. Open Playground
+2. Send exact same request
+3. Observe error
+
+Example:
+"Create customer john@test.com"
+-> Error: "Email already exists"
+```
+
+### Step 2: Check Logs
+
+Review MCP server logs:
+
+```text
+Timestamp: 2025-01-05 10:30:15
+Tool: create_customer
+Parameters: { email: "john@test.com", name: "John" }
+Response: { success: false, error: "Email already exists" }
+Status: Error
+Duration: 234ms
+```
+
+### Step 3: Test Directly
+
+Test the underlying API directly:
+
+```bash
+# Replicate the exact call
+curl -X POST https://api.example.com/customers \
+  -H "Authorization: Bearer TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"email": "john@test.com", "name": "John"}'
+```
+
+### Step 4: Isolate
+
+Narrow down the issue:
+
+- Is it authentication? Test with different credentials
+- Is it the API? Test API directly
+- Is it the MCP server? Check other tools
+- Is it the agent? Test with different agent
+
+### Step 5: Fix
+
+Apply the appropriate fix:
+
+<CodeGroup>
+```text Authentication Issue
+Dashboard -> MCP Servers -> Settings
+-> Update API credentials
+```
+
+```text API Issue
+Contact API provider or
+review API documentation
+```
+
+```text OpenAPI Spec Issue
+Dashboard -> MCP Servers -> Edit
+-> Update OpenAPI spec
+```
+
+```text Agent Issue
+Agent -> Settings -> Reset
+-> Reconnect tools
+```
+</CodeGroup>
+
+### Step 6: Verify
+
+Test the fix:
+
+```text
+1. Apply fix
+2. Test in Playground
+3. Check logs for success
+4. Monitor for 24 hours
+```
+
+## Advanced Debugging
+
+### Enable Verbose Logging
+
+Get more detailed logs:
+
+**Dashboard -> MCP Servers -> Your Server -> Settings**
+- Enable **Debug Mode**
+- Shows full request/response bodies
+- Includes headers and metadata
+
+### Webhook Debugging
+
+For webhooks, test delivery:
+
+```bash
+# Use webhook.site for testing
+1. Go to webhook.site
+2. Copy unique URL
+3. Set as webhook URL in MCP server
+4. Trigger event
+5. See exact payload received
+```
+
+### Network Debugging
+
+Check network issues:
+
+```bash
+# Test connectivity
+ping api.example.com
+
+# Check DNS
+nslookup api.example.com
+
+# Trace route
+traceroute api.example.com
+
+# Test SSL
+openssl s_client -connect api.example.com:443
+```
+
+## Debugging Checklist
+
+When debugging an issue:
+
+- [ ] Can you reproduce it consistently?
+- [ ] What's in the error logs?
+- [ ] Does the API work directly?
+- [ ] Is authentication correct?
+- [ ] Are parameters valid?
+- [ ] Is the network reachable?
+- [ ] Are there rate limits?
+- [ ] Is the OpenAPI spec correct?
+- [ ] Have you tested in Playground?
+- [ ] Have you checked recent changes?
+
+## Getting Help
+
+If you're still stuck:
+
+### Check Documentation
+
+- [OpenAPI Import](/integrations/custom/openapi)
+- [Authentication](/integrations/custom/authentication)
+- [Best Practices](/integrations/guides/best-practices)
+
+### Contact Support
+
+**hello@boostgpt.co**
+
+Include:
+- MCP server ID
+- Error message
+- Steps to reproduce
+- Logs (from Dashboard -> MCP Servers -> Logs)
+- OpenAPI spec or Postman collection
+
+### Community
+
+Join our Discord for community help:
+- [discord.gg/boostgpt](https://discord.gg/KGhz5SnyXM)
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Testing Guide" icon="flask-conical" href="/integrations/guides/testing">
+    Learn how to test integrations
+  </Card>
+  <Card title="Best Practices" icon="star" href="/integrations/guides/best-practices">
+    Follow integration best practices
+  </Card>
+</CardGroup>

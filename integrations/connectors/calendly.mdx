@@ -1,0 +1,61 @@
+---
+title: "Calendly"
+description: "Schedule meetings and manage availability"
+---
+
+## Overview
+
+Connect Calendly to schedule meetings and manage your availability.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Calendly** → **Deploy**
+  </Step>
+
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Calendly**
+  </Step>
+
+  <Step title="Configure">
+    Sign in to Calendly and grant access (OAuth)
+  </Step>
+
+  <Step title="Test">
+    Playground: "Get my Calendly scheduling link"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Share my Calendly link for 30-minute meetings"
+
+Agent: Here's your Calendly link:
+       https://calendly.com/yourname/30min
+```
+
+## Integration Example
+
+**With Gmail:**
+
+```text
+User: "Send my Calendly link to john@example.com"
+
+Agent: *gets Calendly link*
+       *sends email via Gmail*
+
+       Sent Calendly scheduling link to john@example.com
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Google Calendar" icon="calendar" href="/integrations/connectors/google-calendar">
+    Sync scheduled meetings
+  </Card>
+  <Card title="Cal.com" icon="calendar" href="/integrations/connectors/cal-com">
+    Open-source alternative
+  </Card>
+</CardGroup>

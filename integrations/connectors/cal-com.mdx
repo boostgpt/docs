@@ -1,0 +1,55 @@
+---
+title: "Cal.com"
+description: "Open-source scheduling platform"
+---
+
+## Overview
+
+Connect Cal.com to manage scheduling and bookings.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Cal.com** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Cal.com**
+  </Step>
+  <Step title="Configure">
+    Enter your Cal.com API Key
+  </Step>
+  <Step title="Test">
+    Playground: "Get my Cal.com booking link"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Share my Cal.com link for 1-hour meetings"
+
+Agent: Here's your booking link:
+       https://cal.com/yourname/60min
+```
+
+## Integration Example
+
+**With Gmail:**
+
+```text
+User: "Email my Cal.com link to leads"
+
+Agent: Sent booking links to 5 leads via Gmail
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Calendly" icon="calendar-check" href="/integrations/connectors/calendly">
+    Alternative scheduling
+  </Card>
+  <Card title="Google Calendar" icon="calendar" href="/integrations/connectors/google-calendar">
+    Calendar sync
+  </Card>
+</CardGroup>

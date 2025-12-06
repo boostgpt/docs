@@ -1,0 +1,60 @@
+---
+title: "Notion"
+description: "Manage notes and knowledge base"
+---
+
+## Overview
+
+Connect Notion to create, read, and manage pages and databases.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Notion** → **Deploy**
+  </Step>
+
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Notion**
+  </Step>
+
+  <Step title="Configure">
+    Sign in to Notion and grant workspace access (OAuth)
+  </Step>
+
+  <Step title="Test">
+    Playground: "Create a new page titled 'Meeting Notes'"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Create a Notion page for today's meeting notes"
+
+Agent: Created Notion page: "Meeting Notes - Jan 5, 2025"
+```
+
+## Integration Example
+
+**With Gmail:**
+
+```text
+User: "Save important emails to Notion as pages"
+
+Agent: *searches Gmail for starred emails*
+       *creates Notion pages*
+
+       Created 3 Notion pages from starred emails
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Google Drive" icon="google" href="/integrations/connectors/google-drive">
+    Cloud file storage
+  </Card>
+  <Card title="Asana" icon="list-check" href="/integrations/connectors/asana">
+    Project management
+  </Card>
+</CardGroup>

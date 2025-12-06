@@ -1,0 +1,57 @@
+---
+title: "OpenWeatherMap"
+description: "Weather data and forecasts"
+---
+
+## Overview
+
+Connect OpenWeatherMap to get current weather and forecasts.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **OpenWeatherMap** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **OpenWeatherMap**
+  </Step>
+  <Step title="Configure">
+    Enter your OpenWeatherMap API Key
+  </Step>
+  <Step title="Test">
+    Playground: "What's the weather in San Francisco?"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Get weather for New York City"
+
+Agent: New York weather:
+       72°F, Partly cloudy
+       Humidity: 65%
+```
+
+## Integration Example
+
+**With Slack:**
+
+```text
+User: "Post daily weather forecast to #general"
+
+Agent: Posted to #general:
+       Today: 75°F, Sunny ☀️
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Mapbox" icon="map" href="/integrations/connectors/mapbox">
+    Maps and location data
+  </Card>
+  <Card title="Slack" icon="slack" href="/integrations/connectors/slack">
+    Team notifications
+  </Card>
+</CardGroup>

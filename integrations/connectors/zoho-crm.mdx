@@ -1,0 +1,58 @@
+---
+title: "Zoho CRM"
+description: "Customer relationship management"
+---
+
+## Overview
+
+Connect Zoho CRM to manage leads, contacts, and deals.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Zoho CRM** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Zoho CRM**
+  </Step>
+  <Step title="Configure">
+    Sign in to Zoho and grant access (OAuth)
+  </Step>
+  <Step title="Test">
+    Playground: "Show me open leads"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Create a lead: Sarah Johnson from TechStart"
+
+Agent: Created Zoho CRM lead:
+       "Sarah Johnson" - TechStart
+```
+
+## Integration Example
+
+**With Gmail:**
+
+```text
+User: "Add all new email contacts to Zoho CRM"
+
+Agent: *searches Gmail for new contacts*
+       *creates Zoho leads*
+
+       Created 6 leads in Zoho CRM from Gmail
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="HubSpot" icon="hubspot" href="/integrations/connectors/hubspot">
+    Alternative CRM
+  </Card>
+  <Card title="Pipedrive" icon="pipe" href="/integrations/connectors/pipedrive">
+    Sales pipeline
+  </Card>
+</CardGroup>

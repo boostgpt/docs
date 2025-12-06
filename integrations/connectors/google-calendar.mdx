@@ -1,0 +1,63 @@
+---
+title: "Google Calendar"
+description: "Schedule and manage events with Google Calendar"
+---
+
+## Overview
+
+Connect Google Calendar to create, update, and manage calendar events through your agent.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Google Calendar** → **Deploy**
+  </Step>
+
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Google Calendar**
+  </Step>
+
+  <Step title="Configure">
+    Sign in with Google and grant Calendar permissions (OAuth)
+  </Step>
+
+  <Step title="Test">
+    Playground: "Schedule a meeting for tomorrow at 2pm"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Schedule a team meeting for next Tuesday at 10am, 1 hour duration"
+
+Agent: I've created a calendar event:
+       - Team Meeting
+       - Tuesday, Jan 14, 2025
+       - 10:00 AM - 11:00 AM
+```
+
+## Integration Example
+
+**With Gmail:**
+
+```text
+User: "Check my emails for meeting requests and add them to my calendar"
+
+Agent: *searches Gmail for meeting requests*
+       *creates calendar events*
+
+       Added 3 meetings from your email to calendar
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Gmail" icon="envelope" href="/integrations/connectors/gmail">
+    Convert emails to events
+  </Card>
+  <Card title="Calendly" icon="calendar-check" href="/integrations/connectors/calendly">
+    Alternative scheduling tool
+  </Card>
+</CardGroup>

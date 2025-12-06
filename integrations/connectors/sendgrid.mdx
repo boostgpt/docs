@@ -1,0 +1,60 @@
+---
+title: "SendGrid"
+description: "Send transactional emails"
+---
+
+## Overview
+
+Connect SendGrid to send transactional and marketing emails at scale.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **SendGrid** → **Deploy**
+  </Step>
+
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **SendGrid**
+  </Step>
+
+  <Step title="Configure">
+    Enter your SendGrid API Key
+  </Step>
+
+  <Step title="Test">
+    Playground: "Send a test email to myemail@example.com"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Send welcome email to john@example.com using the onboarding template"
+
+Agent: Sent welcome email to john@example.com via SendGrid
+```
+
+## Integration Example
+
+**With HubSpot:**
+
+```text
+User: "Send onboarding emails to all new HubSpot contacts from today"
+
+Agent: *fetches new HubSpot contacts*
+       *sends emails via SendGrid*
+
+       Sent 12 onboarding emails via SendGrid
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Mailchimp" icon="mailchimp" href="/integrations/connectors/mailchimp">
+    Email marketing
+  </Card>
+  <Card title="Gmail" icon="envelope" href="/integrations/connectors/gmail">
+    Personal email
+  </Card>
+</CardGroup>

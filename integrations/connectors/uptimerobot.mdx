@@ -1,0 +1,56 @@
+---
+title: "UptimeRobot"
+description: "Website uptime monitoring"
+---
+
+## Overview
+
+Connect UptimeRobot to monitor website uptime and get alerts.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **UptimeRobot** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **UptimeRobot**
+  </Step>
+  <Step title="Configure">
+    Enter your UptimeRobot API Key
+  </Step>
+  <Step title="Test">
+    Playground: "Show me monitor status"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Get uptime for mywebsite.com"
+
+Agent: mywebsite.com uptime:
+       30 days: 99.98%
+       Status: Up
+```
+
+## Integration Example
+
+**With Slack:**
+
+```text
+User: "Alert #ops when website goes down"
+
+Agent: Monitoring UptimeRobot, will alert #ops on downtime
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Datadog" icon="chart-line" href="/integrations/connectors/datadog">
+    Infrastructure monitoring
+  </Card>
+  <Card title="Slack" icon="slack" href="/integrations/connectors/slack">
+    Team alerts
+  </Card>
+</CardGroup>

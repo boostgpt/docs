@@ -72,18 +72,24 @@ if (result.err) {
 
 ### Bot Management
 - `createBot()` - Create a new bot
+- `fetchBot()` - Get bot details
+- `fetchBots()` - List all bots (paginated)
 - `updateBot()` - Update bot settings
+- `resetBot()` - Delete all training data
 - `deleteBot()` - Delete a bot
-- `getBot()` - Get bot details
-- `listBots()` - List all bots
 
 ### Chat
-- `chat()` - Send message and get response
-- `chatStream()` - Stream responses in real-time
+- `chat()` - Send message and get response (supports streaming)
+- `fetchChat()` - Get chat history
+- `fetchChats()` - List all chats (paginated)
+- `deleteChat()` - Delete chat history
+- `search()` - Search bot's knowledge base
 
 ### Training
-- `addTraining()` - Add training content
-- `listTraining()` - List training data
+- `startTraining()` - Add training content (queued)
+- `fetchTraining()` - Get training source
+- `fetchTrainings()` - List training data (paginated)
+- `updateTraining()` - Update training source
 - `deleteTraining()` - Remove training data
 
 ## Example Usage
@@ -97,9 +103,10 @@ const bot = await client.createBot({
 });
 
 // Add training
-await client.addTraining({
+await client.startTraining({
   bot_id: bot.response.id,
-  content: 'We offer 24/7 support at support@example.com'
+  type: 'text',
+  source: 'We offer 24/7 support at support@example.com'
 });
 
 // Chat

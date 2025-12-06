@@ -1,0 +1,55 @@
+---
+title: "Stability AI"
+description: "AI image generation"
+---
+
+## Overview
+
+Connect Stability AI to generate images with Stable Diffusion.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Stability AI** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Stability AI**
+  </Step>
+  <Step title="Configure">
+    Enter your Stability AI API Key
+  </Step>
+  <Step title="Test">
+    Playground: "Generate an image of a sunset"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Generate an image: futuristic city at night"
+
+Agent: Generated image:
+       [Image URL]
+```
+
+## Integration Example
+
+**With Google Drive:**
+
+```text
+User: "Generate product images and save to Drive"
+
+Agent: Generated 5 images, saved to Drive/AI Images
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Runway" icon="video" href="/integrations/connectors/runway">
+    AI video generation
+  </Card>
+  <Card title="Google Drive" icon="google" href="/integrations/connectors/google-drive">
+    File storage
+  </Card>
+</CardGroup>

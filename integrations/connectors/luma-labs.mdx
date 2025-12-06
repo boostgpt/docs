@@ -1,0 +1,55 @@
+---
+title: "Luma Labs"
+description: "3D capture and AI video"
+---
+
+## Overview
+
+Connect Luma Labs for 3D capture and video generation.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Luma Labs** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Luma Labs**
+  </Step>
+  <Step title="Configure">
+    Enter your Luma Labs API Key
+  </Step>
+  <Step title="Test">
+    Playground: "Generate a 3D scene"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Create a 3D model from photos"
+
+Agent: Processing 3D reconstruction...
+       Model ready: [URL]
+```
+
+## Integration Example
+
+**With Dropbox:**
+
+```text
+User: "Save Luma 3D models to Dropbox"
+
+Agent: Saved 3D model to Dropbox/3D Models
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Stability AI" icon="image" href="/integrations/connectors/stability-ai">
+    AI image generation
+  </Card>
+  <Card title="Dropbox" icon="dropbox" href="/integrations/connectors/dropbox">
+    File storage
+  </Card>
+</CardGroup>

@@ -1,0 +1,188 @@
+---
+title: "Custom Adapter Example"
+description: "Build a custom platform adapter for the Router SDK"
+---
+
+## Overview
+
+Create a custom adapter to deploy your bot to any platform not natively supported.
+
+## Prerequisites
+
+```bash
+npm install @boostgpt/core-sdk @boostgpt/router-sdk
+```
+
+## Custom Adapter Template
+
+```javascript
+import { BaseAdapter } from '@boostgpt/router-sdk';
+
+class CustomAdapter extends BaseAdapter {
+  constructor(config) {
+    super();
+    this.config = config;
+    this.client = null;
+  }
+
+  async connect() {
+    // Initialize platform client
+    this.client = new PlatformClient(this.config);
+    
+    // Listen for messages
+    this.client.on('message', async (platformMessage) => {
+      // Transform to BoostGPT format
+      const message = {
+        text: platformMessage.content,
+        id: platformMessage.id
+      };
+
+      const context = {
+        platform: 'custom',
+        user: {
+          id: platformMessage.user.id,
+          name: platformMessage.user.name
+        },
+        channel: platformMessage.channel
+      };
+
+      // Handle message
+      const response = await this.handleMessage(message, context);
+
+      // Send response
+      if (response) {
+        await this.send(response, context);
+      }
+    });
+
+    console.log('[Custom] Connected');
+  }
+
+  async send(text, context) {
+    // Send message to platform
+    await this.client.sendMessage({
+      channel: context.channel,
+      text: text
+    });
+  }
+
+  async disconnect() {
+    if (this.client) {
+      await this.client.disconnect();
+    }
+  }
+}
+
+export default CustomAdapter;
+```
+
+## Using Custom Adapter
+
+```javascript
+import { Router } from '@boostgpt/router-sdk';
+import CustomAdapter from './CustomAdapter';
+
+const router = new Router({
+  client,
+  botId: 'bot_abc123'
+});
+
+// Register custom adapter
+router.registerAdapter('custom', CustomAdapter);
+
+// Add adapter instance
+router.addAdapter('custom', {
+  apiKey: process.env.CUSTOM_API_KEY,
+  webhookUrl: 'https://yourapp.com/webhook'
+});
+
+router.listen(3000);
+```
+
+## Complete Example: Crisp Chat
+
+```javascript
+import { BaseAdapter } from '@boostgpt/router-sdk';
+import Crisp from 'crisp-api';
+
+class CrispAdapter extends BaseAdapter {
+  constructor(config) {
+    super();
+    this.identifier = config.identifier;
+    this.key = config.key;
+    this.client = null;
+  }
+
+  async connect() {
+    // Initialize Crisp client
+    this.client = new Crisp();
+    this.client.authenticate(this.identifier, this.key);
+
+    // Listen for messages
+    this.client.on('message:received', async (message) => {
+      if (message.type !== 'text') return;
+      if (message.from === 'operator') return;
+
+      // Transform message
+      const boostMessage = {
+        text: message.content,
+        id: message.fingerprint
+      };
+
+      const context = {
+        platform: 'crisp',
+        user: {
+          id: message.user.user_id,
+          name: message.user.nickname || 'User'
+        },
+        channel: message.session_id
+      };
+
+      // Handle with router
+      const response = await this.handleMessage(boostMessage, context);
+
+      // Send response
+      if (response) {
+        await this.send(response, context);
+      }
+    });
+
+    console.log('[Crisp] Connected');
+  }
+
+  async send(text, context) {
+    await this.client.website.sendMessageInConversation(
+      context.channel,
+      {
+        type: 'text',
+        content: text,
+        from: 'operator'
+      }
+    );
+  }
+
+  async disconnect() {
+    if (this.client) {
+      this.client.disconnect();
+    }
+  }
+}
+
+// Use it
+router.registerAdapter('crisp', CrispAdapter);
+router.addAdapter('crisp', {
+  identifier: process.env.CRISP_IDENTIFIER,
+  key: process.env.CRISP_KEY
+});
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="With Integrations" icon="plug" href="/examples/with-integrations">
+    Add MCP tools to your bot
+  </Card>
+  <Card title="Router SDK" icon="route" href="/sdk/router/overview">
+    Full Router SDK documentation
+  </Card>
+</CardGroup>

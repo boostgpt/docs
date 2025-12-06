@@ -129,11 +129,11 @@ The **only way** to use custom models in BoostGPT is through **Ollama**.
   <Step title="Configure BoostGPT">
     Set your Ollama host URL in the dashboard or via SDK:
 ```javascript
-    const bot = await client.bots.create({
-      name: 'My Bot',
-      provider: 'ollama',
+    const bot = await client.chat({
+      bot_id: 'my-bot-id',
+      provider_host: 'http://localhost:11434',  // or your server IP
       model: 'llama3.3:70b',
-      ollama_host: 'http://localhost:11434' // or your server IP
+      message: 'Hello, world!' 
     });
 ```
   </Step>
@@ -171,10 +171,9 @@ Each model has a **credit cost per message**. Credits are consumed when your age
 
 ### For Developers (SDK/API)
 ```javascript
-const bot = await client.bots.create({
+const bot = await client.createBot({
   name: 'Support Bot',
-  provider: 'openai',
-  model: 'gpt-4o-mini', // Fast & affordable
+  model: 'gpt-5.1', // Fast & affordable
   // Or for complex queries:
   // model: 'o1', // Advanced reasoning
 });

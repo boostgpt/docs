@@ -1,0 +1,55 @@
+---
+title: "Pexels"
+description: "Free stock photos and videos"
+---
+
+## Overview
+
+Connect Pexels to search and download free stock photos and videos.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Pexels** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Pexels**
+  </Step>
+  <Step title="Configure">
+    Enter your Pexels API Key
+  </Step>
+  <Step title="Test">
+    Playground: "Search for business photos"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Find videos of nature"
+
+Agent: Found 10 nature videos:
+       [Video URLs and credits]
+```
+
+## Integration Example
+
+**With Dropbox:**
+
+```text
+User: "Download Pexels videos and save to Dropbox"
+
+Agent: Downloaded 3 videos to Dropbox/Stock Videos
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Unsplash" icon="image" href="/integrations/connectors/unsplash">
+    Alternative stock photos
+  </Card>
+  <Card title="Dropbox" icon="dropbox" href="/integrations/connectors/dropbox">
+    File storage
+  </Card>
+</CardGroup>

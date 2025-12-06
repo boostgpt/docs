@@ -1,0 +1,230 @@
+---
+title: "OpenAPI Import"
+description: "Generate MCP servers from OpenAPI specifications"
+---
+
+## Overview
+
+Paste an OpenAPI spec URL and BoostGPT automatically generates a working MCP server. No coding required.
+
+## Quick Start
+
+<Steps>
+  <Step title="Get OpenAPI URL">
+    Find your API's OpenAPI specification URL:
+    ```text
+    https://api.yourservice.com/openapi.json
+    ```
+  </Step>
+
+  <Step title="Create Server">
+    - Go to **Dashboard -> MCP Servers**
+    - Click **Create Server**
+    - Select **Import OpenAPI**
+  </Step>
+
+  <Step title="Paste URL">
+    Paste your OpenAPI spec URL and click **Generate**
+  </Step>
+
+  <Step title="Server Ready">
+    BoostGPT generates your MCP server instantly:
+    ```text
+    https://mcp.your-server-id.boostgpt.co
+    ```
+  </Step>
+
+  <Step title="Connect to Agent">
+    - Agent -> **Tools** tab -> **Add Tool** -> **Add New**
+    - Enter your MCP URL
+    - Start using in **Playground**
+  </Step>
+</Steps>
+
+## OpenAPI Format
+
+Your OpenAPI spec should be in JSON or YAML format:
+
+```yaml
+openapi: 3.0.0
+info:
+  title: My API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com/v1
+paths:
+  /users:
+    get:
+      summary: List users
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+  /users:
+    post:
+      summary: Create user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+```
+
+## Auto-Generated Tools
+
+BoostGPT converts each API endpoint into an agent tool:
+
+| API Endpoint | Generated Tool | Description |
+|-------------|---------------|-------------|
+| `GET /users` | `list_users` | List users with optional limit |
+| `POST /users` | `create_user` | Create a new user |
+| `GET /users/{id}` | `get_user` | Get user by ID |
+| `PUT /users/{id}` | `update_user` | Update user information |
+| `DELETE /users/{id}` | `delete_user` | Delete user |
+
+## Example: CRM API
+
+**OpenAPI Spec:**
+```yaml
+openapi: 3.0.0
+info:
+  title: CRM API
+  version: 1.0.0
+paths:
+  /contacts:
+    post:
+      summary: Create contact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                company:
+                  type: string
+  /deals:
+    get:
+      summary: List deals
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+```
+
+**Generated Tools:**
+
+```text
+Agent can now use:
+
+1. create_contact
+   - Parameters: name, email, company
+   - Creates a new CRM contact
+
+2. list_deals
+   - Parameters: status (optional)
+   - Lists deals filtered by status
+```
+
+## Authentication
+
+Add authentication to your OpenAPI spec:
+
+```yaml
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    BearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - ApiKeyAuth: []
+```
+
+Configure credentials in **Dashboard -> MCP Servers -> Your Server -> Settings**
+
+## Testing
+
+Test your MCP server after creation:
+
+<Steps>
+  <Step title="Add to Agent">
+    Connect your MCP server to any agent
+  </Step>
+
+  <Step title="Open Playground">
+    Go to agent's **Playground** tab
+  </Step>
+
+  <Step title="Test Tools">
+    ```text
+    User: "List all users in the system"
+    Agent: *uses list_users tool* "Found 25 users..."
+
+    User: "Create a contact named John Doe"
+    Agent: *uses create_contact tool* "Contact created successfully"
+    ```
+  </Step>
+</Steps>
+
+## Common Issues
+
+<AccordionGroup>
+  <Accordion icon="link-2-off" title="Invalid OpenAPI URL">
+    Ensure your URL returns valid OpenAPI 3.0+ JSON or YAML. Test it in a browser first.
+  </Accordion>
+
+  <Accordion icon="lock" title="Authentication failing">
+    Add security schemes to your OpenAPI spec and configure credentials in MCP server settings.
+  </Accordion>
+
+  <Accordion icon="circle-x" title="Tools not working">
+    Check that your API endpoints return proper responses. Review error messages in agent Insights.
+  </Accordion>
+</AccordionGroup>
+
+## Best Practices
+
+1. **Clear endpoint descriptions** - AI uses descriptions to understand when to call tools
+2. **Include examples** - Add example requests/responses in your OpenAPI spec
+3. **Document parameters** - Describe what each parameter does
+4. **Use semantic naming** - Endpoint names like `/users` become tool names like `list_users`
+5. **Version your API** - Use `/v1/` in paths to support multiple versions
+
+## Public APIs
+
+Many public APIs provide OpenAPI specs:
+
+```text
+Stripe: https://raw.githubusercontent.com/stripe/openapi/master/openapi/spec3.json
+GitHub: https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json
+```
+
+Import these to create custom connectors for public services.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="lock" href="/integrations/custom/authentication">
+    Configure API authentication
+  </Card>
+  <Card title="Postman Import" icon="box" href="/integrations/custom/postman">
+    Alternative: Upload Postman collection
+  </Card>
+</CardGroup>

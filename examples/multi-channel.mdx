@@ -1,0 +1,400 @@
+---
+title: "Multi-Channel Bot"
+description: "Deploy your bot to Discord, Telegram, Slack, and more"
+---
+
+## Overview
+
+Use the BoostGPT Router SDK to deploy your bot across multiple platforms simultaneously.
+
+## Prerequisites
+
+```bash
+npm install @boostgpt/core-sdk @boostgpt/router-sdk
+```
+
+## Complete Example
+
+```javascript
+import { BoostGPT } from '@boostgpt/core-sdk';
+import { Router } from '@boostgpt/router-sdk';
+
+const client = new BoostGPT({
+  apiKey: process.env.BOOSTGPT_API_KEY
+});
+
+// Create router
+const router = new Router({
+  client,
+  botId: 'bot_abc123'  // Your bot ID
+});
+
+// Handle messages
+router.onMessage(async (message, context) => {
+  // Log message
+  console.log(`[${context.platform}] ${context.user.name}: ${message.text}`);
+
+  // Let AI handle response (return null)
+  return null;
+});
+
+// Handle commands
+router.onMessage(async (message, context) => {
+  if (message.text === '/help') {
+    return 'Available commands: /help, /about, /contact';
+  }
+
+  // Return null for AI to handle
+  return null;
+});
+
+// Deploy to platforms
+router.addAdapter('discord', {
+  token: process.env.DISCORD_TOKEN
+});
+
+router.addAdapter('telegram', {
+  token: process.env.TELEGRAM_TOKEN
+});
+
+router.addAdapter('slack', {
+  token: process.env.SLACK_TOKEN,
+  signingSecret: process.env.SLACK_SIGNING_SECRET
+});
+
+// Start router
+router.listen(3000);
+console.log('Multi-channel bot running on port 3000');
+```
+
+## Step-by-Step Setup
+
+### 1. Create Your Bot
+
+```javascript
+const botResult = await client.createBot({
+  name: 'Multi-Platform Assistant',
+  model: 'gpt-4o',
+  instruction: 'You are a helpful assistant available on multiple platforms.'
+});
+
+const botId = botResult.response.id;
+```
+
+### 2. Set Up Router
+
+```javascript
+import { Router } from '@boostgpt/router-sdk';
+
+const router = new Router({
+  client,
+  botId: botId
+});
+```
+
+### 3. Add Platform Adapters
+
+#### Discord
+
+```javascript
+router.addAdapter('discord', {
+  token: process.env.DISCORD_TOKEN
+});
+```
+
+Get Discord token:
+1. Go to [Discord Developer Portal](https://discord.com/developers)
+2. Create Application -> Bot -> Copy Token
+
+#### Telegram
+
+```javascript
+router.addAdapter('telegram', {
+  token: process.env.TELEGRAM_TOKEN
+});
+```
+
+Get Telegram token:
+1. Message [@BotFather](https://t.me/botfather)
+2. Create bot -> Copy token
+
+#### Slack
+
+```javascript
+router.addAdapter('slack', {
+  token: process.env.SLACK_TOKEN,
+  signingSecret: process.env.SLACK_SIGNING_SECRET
+});
+```
+
+Get Slack credentials:
+1. Go to [Slack API](https://api.slack.com/apps)
+2. Create App -> Install to Workspace
+3. Copy Bot Token and Signing Secret
+
+#### WhatsApp
+
+```javascript
+router.addAdapter('whatsapp', {
+  accountSid: process.env.TWILIO_ACCOUNT_SID,
+  authToken: process.env.TWILIO_AUTH_TOKEN,
+  phoneNumber: process.env.TWILIO_PHONE_NUMBER
+});
+```
+
+### 4. Message Handling
+
+#### Basic Handling
+
+```javascript
+router.onMessage(async (message, context) => {
+  // AI handles all messages
+  return null;
+});
+```
+
+#### Custom Commands
+
+```javascript
+router.onMessage(async (message, context) => {
+  const text = message.text.toLowerCase();
+
+  // Custom responses
+  if (text === '/start' || text === '/help') {
+    return `Welcome! I'm available on ${context.platform}. How can I help?`;
+  }
+
+  if (text === '/about') {
+    return 'I'm a multi-platform AI assistant powered by BoostGPT.';
+  }
+
+  // Let AI handle everything else
+  return null;
+});
+```
+
+#### Platform-Specific Logic
+
+```javascript
+router.onMessage(async (message, context) => {
+  // Different behavior per platform
+  if (context.platform === 'discord') {
+    // Discord-specific logic
+    if (message.text.startsWith('!')) {
+      // Handle Discord commands
+    }
+  }
+
+  if (context.platform === 'telegram') {
+    // Telegram-specific logic
+    if (message.text === '/start') {
+      return 'Welcome to Telegram! =K';
+    }
+  }
+
+  // Default: AI handles
+  return null;
+});
+```
+
+### 5. Context Handling
+
+```javascript
+router.onMessage(async (message, context) => {
+  // Access context information
+  console.log('Platform:', context.platform);  // 'discord', 'telegram', etc.
+  console.log('User:', context.user.name);
+  console.log('User ID:', context.user.id);
+  console.log('Channel:', context.channel);
+
+  // Use in responses
+  return `Hello ${context.user.name} from ${context.platform}!`;
+});
+```
+
+## Running the Bot
+
+### Environment Variables
+
+Create `.env` file:
+
+```bash
+# BoostGPT
+BOOSTGPT_API_KEY=your_api_key
+
+# Discord
+DISCORD_TOKEN=your_discord_token
+
+# Telegram
+TELEGRAM_TOKEN=your_telegram_token
+
+# Slack
+SLACK_TOKEN=xoxb-your-token
+SLACK_SIGNING_SECRET=your_secret
+
+# WhatsApp (Twilio)
+TWILIO_ACCOUNT_SID=your_sid
+TWILIO_AUTH_TOKEN=your_token
+TWILIO_PHONE_NUMBER=+1234567890
+```
+
+### Start the Bot
+
+```bash
+node multi-channel-bot.js
+```
+
+**Output:**
+```text
+[Discord] Connected
+[Telegram] Connected
+[Slack] Connected
+Multi-channel bot running on port 3000
+
+[discord] User123: Hello!
+[telegram] JohnDoe: Hi there
+[slack] team-member: Question about pricing
+```
+
+## Advanced Features
+
+### Rate Limiting
+
+```javascript
+const rateLimit = new Map();
+
+router.onMessage(async (message, context) => {
+  const userId = context.user.id;
+  const now = Date.now();
+
+  // Check rate limit
+  if (rateLimit.has(userId)) {
+    const lastMessage = rateLimit.get(userId);
+    if (now - lastMessage < 2000) {  // 2 second cooldown
+      return 'Please wait a moment before sending another message.';
+    }
+  }
+
+  rateLimit.set(userId, now);
+  return null;  // AI handles
+});
+```
+
+### User Sessions
+
+```javascript
+const sessions = new Map();
+
+router.onMessage(async (message, context) => {
+  const userId = context.user.id;
+
+  // Get or create session
+  if (!sessions.has(userId)) {
+    sessions.set(userId, {
+      startTime: Date.now(),
+      messageCount: 0
+    });
+  }
+
+  const session = sessions.get(userId);
+  session.messageCount++;
+
+  console.log(`User ${userId} has sent ${session.messageCount} messages`);
+
+  return null;
+});
+```
+
+### Analytics
+
+```javascript
+router.onMessage(async (message, context) => {
+  // Log analytics
+  await logEvent({
+    platform: context.platform,
+    userId: context.user.id,
+    message: message.text,
+    timestamp: new Date()
+  });
+
+  return null;
+});
+```
+
+## Deployment
+
+### Docker
+
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install --production
+COPY . .
+EXPOSE 3000
+CMD ["node", "multi-channel-bot.js"]
+```
+
+```bash
+docker build -t multi-channel-bot .
+docker run -p 3000:3000 --env-file .env multi-channel-bot
+```
+
+### Vercel
+
+```json
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "multi-channel-bot.js",
+      "use": "@vercel/node"
+    }
+  ]
+}
+```
+
+### Railway
+
+```bash
+# Install Railway CLI
+npm i -g @railway/cli
+
+# Deploy
+railway login
+railway init
+railway up
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion icon="link-slash" title="Platform not connecting">
+    Verify tokens are correct and bot has necessary permissions on each platform.
+  </Accordion>
+
+  <Accordion icon="ban" title="Messages not responding">
+    Check that you're returning `null` from message handler to let AI respond.
+  </Accordion>
+
+  <Accordion icon="clock" title="Slow responses">
+    Consider adding caching or increasing bot's max reply tokens limit.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Custom Adapter" icon="plug" href="/examples/custom-adapter">
+    Build custom platform adapter
+  </Card>
+  <Card title="With Integrations" icon="tools" href="/examples/with-integrations">
+    Add tools and integrations
+  </Card>
+  <Card title="Router SDK" icon="route" href="/sdk/router/overview">
+    Full Router SDK docs
+  </Card>
+  <Card title="Deployment" icon="rocket" href="/developers/deployment">
+    Production deployment guide
+  </Card>
+</CardGroup>

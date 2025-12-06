@@ -1,0 +1,54 @@
+---
+title: "Dropbox"
+description: "File sync and storage"
+---
+
+## Overview
+
+Connect Dropbox to manage files and folders in the cloud.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Dropbox** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Dropbox**
+  </Step>
+  <Step title="Configure">
+    Sign in to Dropbox and grant access (OAuth)
+  </Step>
+  <Step title="Test">
+    Playground: "List files in my Dropbox"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Upload budget.xlsx to Dropbox/Reports folder"
+
+Agent: Uploaded budget.xlsx to Dropbox/Reports
+```
+
+## Integration Example
+
+**With Gmail:**
+
+```text
+User: "Save Gmail attachments from invoices to Dropbox"
+
+Agent: Saved 5 invoice files to Dropbox/Invoices
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Google Drive" icon="google" href="/integrations/connectors/google-drive">
+    Alternative storage
+  </Card>
+  <Card title="OneDrive" icon="microsoft" href="/integrations/connectors/onedrive">
+    Microsoft storage
+  </Card>
+</CardGroup>

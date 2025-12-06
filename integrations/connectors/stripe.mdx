@@ -1,0 +1,60 @@
+---
+title: "Stripe"
+description: "Payment processing"
+---
+
+## Overview
+
+Connect Stripe to manage payments, customers, and subscriptions.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Stripe** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Stripe**
+  </Step>
+  <Step title="Configure">
+    Enter your Stripe API Key
+  </Step>
+  <Step title="Test">
+    Playground: "Show me recent payments"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Get details for payment pi_123xyz"
+
+Agent: Payment pi_123xyz:
+       - Amount: $499.00
+       - Status: Succeeded
+       - Customer: john@example.com
+```
+
+## Integration Example
+
+**With HubSpot:**
+
+```text
+User: "Update HubSpot deals when Stripe payments succeed"
+
+Agent: *monitors Stripe payments*
+       *updates HubSpot deal stages*
+
+       Updated 5 HubSpot deals to "Closed Won"
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Shopify" icon="shopify" href="/integrations/connectors/shopify">
+    E-commerce platform
+  </Card>
+  <Card title="HubSpot" icon="hubspot" href="/integrations/connectors/hubspot">
+    CRM integration
+  </Card>
+</CardGroup>

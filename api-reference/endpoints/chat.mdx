@@ -1,0 +1,38 @@
+---
+title: "Chat API"
+description: "Send messages and get responses"
+---
+
+## Endpoints
+
+All chat endpoints are documented in the Core SDK reference:
+
+<CardGroup cols={2}>
+  <Card title="Chat API" icon="message" href="/sdk/core/chat-api">
+    Send messages and handle responses
+  </Card>
+  <Card title="API Reference" icon="code" href="/sdk/core/api-reference">
+    Complete API documentation
+  </Card>
+</CardGroup>
+
+## Quick Reference
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/v1/bot/chat` | Send message to bot |
+| POST | `/v1/bot/search` | Search bot knowledge |
+
+## Using the SDK
+
+```javascript
+const result = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'Hello!',
+  chat_id: 'user-1'
+});
+
+console.log(result.response);
+```
+
+See [Chat API](/sdk/core/chat-api) for full documentation.

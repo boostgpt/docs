@@ -1,0 +1,65 @@
+---
+title: "Salesforce"
+description: "Enterprise CRM integration"
+---
+
+## Overview
+
+Connect Salesforce to manage leads, opportunities, accounts, and automate enterprise sales processes.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Salesforce** → **Deploy**
+  </Step>
+
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Salesforce**
+  </Step>
+
+  <Step title="Configure">
+    Sign in to Salesforce and grant CRM permissions (OAuth)
+  </Step>
+
+  <Step title="Test">
+    Playground: "Show me all open opportunities"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Find all opportunities closing this quarter worth over $50K"
+
+Agent: Found 8 opportunities:
+       1. Acme Corp - $75K - Proposal/Price Quote
+       2. TechStart - $120K - Negotiation/Review
+       ...
+       Total pipeline: $640,000
+```
+
+## Integration Example
+
+**With Gmail:**
+
+```text
+User: "Create Salesforce leads from all emails marked 'New Lead'"
+
+Agent: *searches Gmail for 'New Lead' label*
+       *extracts contact information*
+       *creates Salesforce leads*
+
+       Created 7 new leads in Salesforce from Gmail
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="HubSpot" icon="hubspot" href="/integrations/connectors/hubspot">
+    Alternative CRM
+  </Card>
+  <Card title="Gmail" icon="envelope" href="/integrations/connectors/gmail">
+    Sync emails with Salesforce
+  </Card>
+</CardGroup>

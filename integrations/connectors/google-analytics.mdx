@@ -1,0 +1,58 @@
+---
+title: "Google Analytics"
+description: "Web analytics platform"
+---
+
+## Overview
+
+Connect Google Analytics to track and analyze website traffic.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Google Analytics** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Google Analytics**
+  </Step>
+  <Step title="Configure">
+    Sign in with Google and grant Analytics access (OAuth)
+  </Step>
+  <Step title="Test">
+    Playground: "Show me today's page views"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "How many visitors did we get last week?"
+
+Agent: Last week's traffic:
+       - 12,450 users
+       - 18,230 page views
+       - Avg session: 3m 24s
+```
+
+## Integration Example
+
+**With Slack:**
+
+```text
+User: "Post daily Analytics report to #marketing"
+
+Agent: Posted to #marketing:
+       Yesterday: 1,234 users, 2,456 page views
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Mixpanel" icon="chart-bar" href="/integrations/connectors/mixpanel">
+    Product analytics
+  </Card>
+  <Card title="Slack" icon="slack" href="/integrations/connectors/slack">
+    Team notifications
+  </Card>
+</CardGroup>

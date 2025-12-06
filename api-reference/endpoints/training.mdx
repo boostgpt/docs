@@ -1,0 +1,41 @@
+---
+title: "Training API"
+description: "Add and manage training data"
+---
+
+## Endpoints
+
+All training endpoints are documented in the Core SDK reference:
+
+<CardGroup cols={2}>
+  <Card title="Training Data" icon="brain" href="/sdk/core/training-data">
+    Add and manage training sources
+  </Card>
+  <Card title="API Reference" icon="code" href="/sdk/core/api-reference">
+    Complete API documentation
+  </Card>
+</CardGroup>
+
+## Quick Reference
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/v1/bot/add-training` | Add training source |
+| POST | `/v1/bot/source/read` | Get training source |
+| POST | `/v1/bot/source/readall` | List all training |
+| POST | `/v1/bot/update-training` | Update training source |
+| POST | `/v1/bot/delete-training` | Delete training source |
+
+## Using the SDK
+
+```javascript
+const result = await client.startTraining({
+  bot_id: 'bot_abc123',
+  type: 'text',
+  source: 'Training content...'
+});
+
+console.log(result.response);
+```
+
+See [Training Data](/sdk/core/training-data) for full documentation.

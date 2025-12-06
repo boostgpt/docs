@@ -1,0 +1,55 @@
+---
+title: "Outlook Calendar"
+description: "Microsoft calendar integration"
+---
+
+## Overview
+
+Connect Outlook Calendar to manage events and meetings.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Outlook Calendar** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Outlook Calendar**
+  </Step>
+  <Step title="Configure">
+    Sign in with Microsoft account (OAuth)
+  </Step>
+  <Step title="Test">
+    Playground: "Show me my calendar for today"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Schedule a meeting for tomorrow at 2pm"
+
+Agent: Created Outlook event:
+       Tomorrow 2:00 PM - 3:00 PM
+```
+
+## Integration Example
+
+**With Outlook Email:**
+
+```text
+User: "Find meeting requests in Outlook email and add to calendar"
+
+Agent: Added 3 meetings to Outlook Calendar from email
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Google Calendar" icon="calendar" href="/integrations/connectors/google-calendar">
+    Alternative calendar
+  </Card>
+  <Card title="Outlook Email" icon="envelope" href="/integrations/connectors/outlook-email">
+    Email integration
+  </Card>
+</CardGroup>

@@ -1,0 +1,57 @@
+---
+title: "Google Drive"
+description: "Cloud storage and file sharing"
+---
+
+## Overview
+
+Connect Google Drive to upload, download, and manage files.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Google Drive** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Google Drive**
+  </Step>
+  <Step title="Configure">
+    Sign in with Google and grant Drive access (OAuth)
+  </Step>
+  <Step title="Test">
+    Playground: "List my recent files"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Upload the report.pdf to my Documents folder"
+
+Agent: Uploaded report.pdf to Google Drive/Documents
+```
+
+## Integration Example
+
+**With Gmail:**
+
+```text
+User: "Save all email attachments from today to Google Drive"
+
+Agent: *gets Gmail attachments*
+       *uploads to Drive*
+
+       Saved 8 attachments to Google Drive
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Dropbox" icon="dropbox" href="/integrations/connectors/dropbox">
+    Alternative storage
+  </Card>
+  <Card title="OneDrive" icon="microsoft" href="/integrations/connectors/onedrive">
+    Microsoft cloud storage
+  </Card>
+</CardGroup>

@@ -1,0 +1,58 @@
+---
+title: "Pipedrive"
+description: "Sales pipeline management"
+---
+
+## Overview
+
+Connect Pipedrive to manage deals, contacts, and sales pipeline.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Pipedrive** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Pipedrive**
+  </Step>
+  <Step title="Configure">
+    Enter your Pipedrive API Token
+  </Step>
+  <Step title="Test">
+    Playground: "Show me deals in the pipeline"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Create a deal: Acme Corp - $25,000"
+
+Agent: Created Pipedrive deal:
+       "Acme Corp" - $25,000
+```
+
+## Integration Example
+
+**With Gmail:**
+
+```text
+User: "Create Pipedrive deals from emails with 'Proposal' in subject"
+
+Agent: *searches Gmail*
+       *creates deals*
+
+       Created 4 deals in Pipedrive from Gmail
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="HubSpot" icon="hubspot" href="/integrations/connectors/hubspot">
+    Alternative CRM
+  </Card>
+  <Card title="Salesforce" icon="salesforce" href="/integrations/connectors/salesforce">
+    Enterprise CRM
+  </Card>
+</CardGroup>

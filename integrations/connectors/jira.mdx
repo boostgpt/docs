@@ -1,0 +1,61 @@
+---
+title: "Jira"
+description: "Track issues and manage projects"
+---
+
+## Overview
+
+Connect Jira to create and manage issues, projects, and sprints.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Jira** → **Deploy**
+  </Step>
+
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Jira**
+  </Step>
+
+  <Step title="Configure">
+    Enter your Jira domain, email, and API token
+  </Step>
+
+  <Step title="Test">
+    Playground: "Show me open bugs"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Create a bug: Login page not loading on Safari"
+
+Agent: Created Jira issue:
+       BUG-123: Login page not loading on Safari
+```
+
+## Integration Example
+
+**With GitHub:**
+
+```text
+User: "Create Jira issues from GitHub issues labeled 'bug'"
+
+Agent: *fetches GitHub issues*
+       *creates Jira issues*
+
+       Created 8 Jira issues from GitHub bugs
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="GitHub" icon="github" href="/integrations/connectors/github">
+    Code repository
+  </Card>
+  <Card title="Linear" icon="line-chart" href="/integrations/connectors/linear">
+    Alternative issue tracker
+  </Card>
+</CardGroup>

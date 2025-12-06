@@ -1,0 +1,55 @@
+---
+title: "GitHub"
+description: "Code repository management"
+---
+
+## Overview
+
+Connect GitHub to manage repositories, issues, and pull requests.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **GitHub** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **GitHub**
+  </Step>
+  <Step title="Configure">
+    Sign in to GitHub and grant access (OAuth)
+  </Step>
+  <Step title="Test">
+    Playground: "List my repositories"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Create an issue in my-repo: Fix login bug"
+
+Agent: Created GitHub issue #42:
+       "Fix login bug" in my-repo
+```
+
+## Integration Example
+
+**With Jira:**
+
+```text
+User: "Sync GitHub issues to Jira"
+
+Agent: Created 8 Jira tickets from GitHub issues
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Jira" icon="jira" href="/integrations/connectors/jira">
+    Issue tracking
+  </Card>
+  <Card title="Linear" icon="line-chart" href="/integrations/connectors/linear">
+    Alternative project tool
+  </Card>
+</CardGroup>

@@ -1,0 +1,298 @@
+---
+title: "Using with Claude Desktop"
+description: "Connect BoostGPT MCP servers to Claude Desktop"
+---
+
+## Overview
+
+Connect your BoostGPT MCP servers to Claude Desktop to use your custom tools with Claude.
+
+## Prerequisites
+
+- Claude Desktop app installed
+- At least one MCP server created in BoostGPT
+
+## Setup
+
+<Steps>
+  <Step title="Get MCP URL">
+    **Dashboard -> MCP Servers -> Your Server**
+
+    Copy your MCP URL:
+    ```text
+    https://mcp.your-server-id.boostgpt.co
+    ```
+  </Step>
+
+  <Step title="Open Claude Desktop Config">
+    Open Claude Desktop configuration file:
+
+    **macOS/Linux:**
+    ```bash
+    ~/Library/Application Support/Claude/claude_desktop_config.json
+    ```
+
+    **Windows:**
+    ```bash
+    %APPDATA%\Claude\claude_desktop_config.json
+    ```
+  </Step>
+
+  <Step title="Add MCP Server">
+    Add your BoostGPT MCP server to the config:
+
+    ```json
+    {
+      "mcpServers": {
+        "my-crm": {
+          "command": "npx",
+          "args": [
+            "mcp-remote",
+            "https://mcp.your-server-id.boostgpt.co"
+          ]
+        }
+      }
+    }
+    ```
+  </Step>
+
+  <Step title="Add Authentication">
+    If your MCP server requires authentication:
+
+    ```json
+    {
+      "mcpServers": {
+        "my-crm": {
+          "command": "npx",
+          "args": [
+            "mcp-remote",
+            "https://mcp.your-server-id.boostgpt.co",
+            "--header",
+            "Authorization: Bearer your-api-token"
+          ]
+        }
+      }
+    }
+    ```
+  </Step>
+
+  <Step title="Restart Claude Desktop">
+    Close and reopen Claude Desktop to load the new MCP server
+  </Step>
+
+  <Step title="Test">
+    In Claude Desktop, try using your custom tools:
+    ```text
+    You: "Look up customer john@acme.com"
+    Claude: *uses your MCP server* "Found customer..."
+    ```
+  </Step>
+</Steps>
+
+## Multiple MCP Servers
+
+Add multiple BoostGPT MCP servers:
+
+```json
+{
+  "mcpServers": {
+    "crm": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.crm-server.boostgpt.co"
+      ]
+    },
+    "inventory": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.inventory-server.boostgpt.co"
+      ]
+    },
+    "billing": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.billing-server.boostgpt.co"
+      ]
+    }
+  }
+}
+```
+
+Claude Desktop will have access to all tools from all servers.
+
+## Example Configuration
+
+Complete example with authentication:
+
+```json
+{
+  "mcpServers": {
+    "internal-crm": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.abc123.boostgpt.co",
+        "--header",
+        "Authorization: Bearer sk_live_abc123xy",
+         "--header",
+        "X-Custom-Header: Bearer custom-value"
+      ]
+    },
+    "company-database": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.def456.boostgpt.co",
+        "--header",
+        "X-API-Key: your-api-key"
+      ]
+    }
+  }
+}
+```
+
+## Authentication
+
+### API Key
+
+```json
+{
+  "mcpServers": {
+    "my-api": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.your-server.boostgpt.co",
+        "--header",
+        "X-API-Key: your-api-key"
+      ]
+    }
+  }
+}
+```
+
+### Bearer Token
+
+```json
+{
+  "mcpServers": {
+    "my-api": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.your-server.boostgpt.co",
+        "--header",
+        "Authorization: Bearer your-token"
+      ]
+    }
+  }
+}
+```
+
+Get your authentication details from:
+**Dashboard -> MCP Servers -> Your Server -> Settings**
+
+## Example Usage
+
+After setup, use your tools in Claude Desktop:
+
+```text
+You: "Query our CRM for customers in California"
+
+Claude: *uses your MCP server's query_customers tool*
+        Found 42 customers in California:
+        1. Acme Corp - Los Angeles
+        2. TechStart - San Francisco
+        ...
+
+You: "Create a deal for Acme Corp worth $25K"
+
+Claude: *uses create_deal tool*
+        Deal created successfully!
+        Deal ID: DEAL-12345
+
+You: "Send them a follow-up email"
+
+Claude: *uses send_email tool*
+        Email sent to contact@acmecorp.com
+```
+
+## Use Cases
+
+### Personal Assistant
+
+```text
+Connect your personal tools:
+- Calendar: Schedule meetings
+- Email: Send messages
+- Notes: Save information
+
+Claude becomes your AI assistant with access to your systems
+```
+
+### Development Workflow
+
+```text
+Connect development tools:
+- GitHub: Create issues, review PRs
+- Database: Query data
+- CI/CD: Trigger builds
+
+Claude helps with coding tasks using your tools
+```
+
+### Business Intelligence
+
+```text
+Connect analytics systems:
+- Database: Run queries
+- Reporting: Generate reports
+- Visualization: Create charts
+
+Claude analyzes your business data
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion icon="file-x" title="Config file not found">
+    Create the directory and file manually if it doesn't exist. Use the paths shown in Setup step 2.
+  </Accordion>
+
+  <Accordion icon="link-2-off" title="MCP server not connecting">
+    - Verify the URL is correct
+    - Check that your MCP server is active in Dashboard
+    - Restart Claude Desktop after config changes
+  </Accordion>
+
+  <Accordion icon="ban" title="Authentication errors">
+    Ensure headers match what your MCP server expects. Check Dashboard -> MCP Servers -> Settings.
+  </Accordion>
+
+  <Accordion icon="circle-x" title="Tools not appearing">
+    - Restart Claude Desktop
+    - Check for JSON syntax errors in config file
+    - Verify MCP server URL is accessible
+  </Accordion>
+</AccordionGroup>
+
+## Best Practices
+
+1. **Name servers clearly** - Use descriptive names in config
+3. **Test individually** - Add one MCP server at a time
+4. **Monitor usage** - Check logs in Dashboard -> MCP Servers
+5. **Keep updated** - Update authentication tokens when needed
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Create MCP Server" icon="server" href="/integrations/custom/overview">
+    Build custom MCP servers
+  </Card>
+  <Card title="BoostGPT Agents" icon="bot" href="/integrations/external/boostgpt-agents">
+    Use with BoostGPT agents
+  </Card>
+</CardGroup>

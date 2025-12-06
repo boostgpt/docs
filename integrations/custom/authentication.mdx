@@ -1,0 +1,343 @@
+---
+title: "Authentication"
+description: "Configure authentication for custom connectors"
+---
+
+## Overview
+
+BoostGPT supports multiple authentication methods for your custom MCP servers.
+
+## Supported Auth Methods
+
+<CardGroup cols={2}>
+  <Card title="API Key" icon="key">
+    Simple key-based authentication
+  </Card>
+  <Card title="Bearer Token" icon="shield">
+    JWT or OAuth access tokens
+  </Card>
+  <Card title="Basic Auth" icon="lock">
+    Username and password
+  </Card>
+  <Card title="OAuth 2.0" icon="unlock">
+    Full OAuth authorization flow
+  </Card>
+</CardGroup>
+
+## API Key Authentication
+
+### In OpenAPI Spec
+
+```yaml
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+security:
+  - ApiKeyAuth: []
+```
+
+### In Postman Collection
+
+```json
+{
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{api_key}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  }
+}
+```
+
+### Configuration
+
+After creating your MCP server:
+
+<Steps>
+  <Step title="Go to Settings">
+    **Dashboard -> MCP Servers -> Your Server -> Settings**
+  </Step>
+
+  <Step title="Authentication">
+    Select **API Key** as auth method
+  </Step>
+
+  <Step title="Configure">
+    - **Header Name**: `X-API-Key` (or your custom header)
+    - **API Key**: Enter your actual API key
+  </Step>
+
+  <Step title="Save">
+    Click **Save** - your MCP server will now use this key for all requests
+  </Step>
+</Steps>
+
+## Bearer Token Authentication
+
+### In OpenAPI Spec
+
+```yaml
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - BearerAuth: []
+```
+
+### In Postman Collection
+
+```json
+{
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}"
+      }
+    ]
+  }
+}
+```
+
+### Configuration
+
+<Steps>
+  <Step title="Go to Settings">
+    **Dashboard -> MCP Servers -> Your Server -> Settings**
+  </Step>
+
+  <Step title="Authentication">
+    Select **Bearer Token** as auth method
+  </Step>
+
+  <Step title="Enter Token">
+    Paste your bearer token or JWT
+  </Step>
+
+  <Step title="Save">
+    Token will be included in `Authorization: Bearer <token>` header
+  </Step>
+</Steps>
+
+## Basic Authentication
+
+### In OpenAPI Spec
+
+```yaml
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+security:
+  - BasicAuth: []
+```
+
+### In Postman Collection
+
+```json
+{
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{username}}"
+      },
+      {
+        "key": "password",
+        "value": "{{password}}"
+      }
+    ]
+  }
+}
+```
+
+### Configuration
+
+<Steps>
+  <Step title="Go to Settings">
+    **Dashboard -> MCP Servers -> Your Server -> Settings**
+  </Step>
+
+  <Step title="Authentication">
+    Select **Basic Auth** as auth method
+  </Step>
+
+  <Step title="Credentials">
+    - **Username**: Your username
+    - **Password**: Your password
+  </Step>
+
+  <Step title="Save">
+    Credentials will be Base64 encoded in `Authorization` header
+  </Step>
+</Steps>
+
+## OAuth 2.0
+
+### In OpenAPI Spec
+
+```yaml
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://oauth.example.com/authorize
+          tokenUrl: https://oauth.example.com/token
+          scopes:
+            read: Read access
+            write: Write access
+security:
+  - OAuth2: [read, write]
+```
+
+### Configuration
+
+<Steps>
+  <Step title="Go to Settings">
+    **Dashboard -> MCP Servers -> Your Server -> Settings**
+  </Step>
+
+  <Step title="Authentication">
+    Select **OAuth 2.0** as auth method
+  </Step>
+
+  <Step title="OAuth Settings">
+    - **Client ID**: Your OAuth client ID
+    - **Client Secret**: Your OAuth client secret
+    - **Authorization URL**: Provider's auth endpoint
+    - **Token URL**: Provider's token endpoint
+    - **Scopes**: Required scopes (e.g., `read write`)
+  </Step>
+
+  <Step title="Authorize">
+    Click **Authorize** to complete OAuth flow
+  </Step>
+</Steps>
+
+## Custom Headers
+
+Add custom headers to all requests:
+
+<Steps>
+  <Step title="Go to Settings">
+    **Dashboard -> MCP Servers -> Your Server -> Settings**
+  </Step>
+
+  <Step title="Custom Headers">
+    Click **Add Custom Header**
+  </Step>
+
+  <Step title="Configure">
+    - **Header Name**: `X-Custom-Header`
+    - **Header Value**: `your-value`
+  </Step>
+
+  <Step title="Save">
+    Custom headers will be included in all requests
+  </Step>
+</Steps>
+
+## Multiple Auth Methods
+
+Some APIs require multiple auth methods:
+
+```yaml
+# OpenAPI: API Key + Custom Header
+components:
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    CustomAuth:
+      type: apiKey
+      in: header
+      name: X-Custom-Auth
+security:
+  - ApiKey: []
+  - CustomAuth: []
+```
+
+Configure both in MCP server settings.
+
+## Security Best Practices
+
+1. **Never commit credentials** - Use environment variables in Postman
+2. **Rotate tokens regularly** - Update tokens periodically
+3. **Use OAuth when possible** - More secure than API keys
+4. **Limit scopes** - Request only necessary permissions
+5. **Monitor usage** - Check agent Insights for auth failures
+
+## Testing Authentication
+
+Test your auth configuration:
+
+<Steps>
+  <Step title="Connect to Agent">
+    Add your MCP server to an agent
+  </Step>
+
+  <Step title="Test in Playground">
+    ```text
+    User: "List users from my API"
+    Agent: *uses your MCP server with auth* "Found 10 users..."
+    ```
+  </Step>
+
+  <Step title="Check Logs">
+    Go to **Dashboard -> MCP Servers -> Your Server -> Logs** to see auth status
+  </Step>
+</Steps>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion icon="ban" title="401 Unauthorized">
+    - Verify your credentials are correct
+    - Check if token has expired
+    - Ensure header name matches API requirements
+  </Accordion>
+
+  <Accordion icon="lock" title="403 Forbidden">
+    - Check if your API key has required permissions
+    - Verify OAuth scopes include necessary access
+  </Accordion>
+
+  <Accordion icon="clock" title="Token expired">
+    - For Bearer tokens: Update token in settings
+    - For OAuth: Re-authorize to get new access token
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="OpenAPI Import" icon="file-code" href="/integrations/custom/openapi">
+    Import OpenAPI specification
+  </Card>
+  <Card title="Postman Import" icon="cube" href="/integrations/custom/postman">
+    Upload Postman collection
+  </Card>
+</CardGroup>

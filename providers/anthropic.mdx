@@ -47,18 +47,6 @@ Anthropic's Claude models are known for their safety, nuance, and strong perform
   </Card>
 </CardGroup>
 
-## Model Comparison
-
-| Model | Credits | Context | Speed | Reasoning | Best Use Case |
-|-------|---------|---------|-------|-----------|---------------|
-| **Claude Opus 4.1** | 5 | 200K | Medium | Exceptional | Complex analysis, creative writing |
-| **Claude Haiku 4.5** | 4 | 200K | Fast | Good | Quick responses, high-volume |
-| **Claude Sonnet 4.5** | 3 | 200K | Medium | Excellent | Balanced production use |
-| **Claude 3 Opus Extended** | 6 | 200K | Slow | Exceptional | Deep analytical tasks |
-
-<Info>
-  **Claude's Strengths**: Exceptional safety, nuanced understanding, detailed analysis, and maintaining context across long conversations.
-</Info>
 
 ## Setup
 
@@ -255,101 +243,6 @@ Configure how your Claude agent thinks and responds:
   </Accordion>
 </AccordionGroup>
 
-## Best Practices
-
-### Override Reasoning Modes Per Request
-
-You can override the reasoning mode set on your agent using the `reasoning_mode` parameter:
-
-```javascript
-// Override to Deep Thinking for complex analysis
-const chatResponse = await client.chat({
-  bot_id: 'your-bot-id',
-  reasoning_mode: 'react', // Deep Thinking mode (up to 5x credits)
-  message: 'Analyze the market trends and provide strategic recommendations'
-});
-
-if (chatResponse.err) {
-  console.error('Error:', chatResponse.err);
-} else {
-  console.log('Analysis:', chatResponse.response.chat.reply);
-}
-
-// Use Quick mode for simple queries
-const quickResponse = await client.chat({
-  bot_id: 'your-bot-id',
-  reasoning_mode: 'standard', // Quick mode (1x credits)
-  message: 'What is your name?'
-});
-```
-
-<Tip>
-  **Reasoning Mode Options:**
-  - `auto` - Automatically selects best approach (1-10x credits)
-  - `standard` - Quick, straightforward answers (1x credits)
-  - `interactive` - Research & Tools mode (up to 10x credits)
-  - `stepwise` - Step-by-Step explanations (up to 2x credits)
-  - `react` - Deep Thinking mode (up to 5x credits)
-</Tip>
-
-### Dynamic Reasoning Mode with Router
-
-```javascript
-// Router automatically uses your bot
-// Set reasoning mode in bot configuration or override per-request with Core SDK
-router.onMessage(async (message, context) => {
-  // Handle custom commands
-  if (message.content === '/ping') {
-    return 'Pong!';
-  }
-
-  // For most cases, just return null - router handles it
-  return null;
-});
-
-// For advanced per-request reasoning mode control, use Core SDK directly
-```
-
-### Leverage Claude's Safety
-
-```javascript
-// Claude excels at content moderation
-const moderateContent = async (userInput) => {
-  const response = await client.chat({
-    bot_id: 'moderator-bot',
-    message: `Is this content appropriate? "${userInput}"`,
-    reasoning_mode: 'standard' // Quick mode for moderation
-  });
-
-  if (response.err) {
-    console.error('Error:', response.err);
-    return null;
-  }
-
-  return response.response.chat.reply;
-};
-```
-
-### Use Extended Thinking for Complex Tasks
-
-```javascript
-// Use Extended Thinking model with Deep Thinking mode
-const analyzeStrategy = async (data) => {
-  const response = await client.chat({
-    bot_id: 'analyst-bot',
-    message: `Analyze this business data and provide strategic recommendations: ${data}`,
-    reasoning_mode: 'react', // Deep thinking mode (5x credits)
-    max_reply_tokens: 2500
-  });
-
-  if (response.err) {
-    console.error('Error:', response.err);
-    return null;
-  }
-
-  return response.response.chat.reply;
-};
-```
 
 ## Troubleshooting
 
@@ -387,7 +280,7 @@ const analyzeStrategy = async (data) => {
 ## Next Steps
 
 <CardGroup cols={2}>
-  <Card title="Model Comparison" icon="scale-balanced" href="/providers/model-comparison">
+  <Card title="Model Comparison" icon="scale" href="/providers/model-comparison">
     Compare Claude with other providers
   </Card>
 

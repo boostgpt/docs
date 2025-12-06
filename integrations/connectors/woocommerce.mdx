@@ -1,0 +1,55 @@
+---
+title: "WooCommerce"
+description: "WordPress e-commerce"
+---
+
+## Overview
+
+Connect WooCommerce to manage your WordPress online store.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **WooCommerce** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **WooCommerce**
+  </Step>
+  <Step title="Configure">
+    Enter your WooCommerce REST API credentials
+  </Step>
+  <Step title="Test">
+    Playground: "Show me product inventory"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Update stock for Product #123 to 50 units"
+
+Agent: Updated inventory:
+       Product #123 stock set to 50
+```
+
+## Integration Example
+
+**With Gmail:**
+
+```text
+User: "Email customers who ordered out-of-stock items"
+
+Agent: Sent 8 back-in-stock notifications via Gmail
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Shopify" icon="shopify" href="/integrations/connectors/shopify">
+    Alternative e-commerce
+  </Card>
+  <Card title="Stripe" icon="stripe" href="/integrations/connectors/stripe">
+    Payment processing
+  </Card>
+</CardGroup>

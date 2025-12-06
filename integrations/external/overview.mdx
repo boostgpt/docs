@@ -1,0 +1,149 @@
+---
+title: "External MCP Servers"
+description: "Use BoostGPT MCP servers with other AI agents"
+---
+
+## Overview
+
+Your BoostGPT MCP servers can be used with any AI agent that supports the MCP protocol, not just BoostGPT agents.
+
+## Supported AI Agents
+
+<CardGroup cols={3}>
+  <Card title="BoostGPT Agents" icon="bot" href="/integrations/external/boostgpt-agents">
+    Use with your BoostGPT agents
+  </Card>
+  <Card title="Claude Desktop" icon="brain" href="/integrations/external/claude-desktop">
+    Connect to Claude Desktop app
+  </Card>
+  <Card title="ChatGPT" icon="message-circle" href="/integrations/external/chatgpt">
+    Use with ChatGPT (via plugins)
+  </Card>
+</CardGroup>
+
+## How It Works
+
+When you create an MCP server in BoostGPT, you get a custom URL:
+
+```text
+https://mcp.your-server-id.boostgpt.co
+```
+
+This URL can be used with:
+- **BoostGPT agents** - Native integration
+- **Claude Desktop** - MCP protocol support
+- **ChatGPT** - Via custom plugin/action
+- **Other MCP-compatible agents** - Any agent supporting MCP
+
+## Getting Your MCP URL
+
+<Steps>
+  <Step title="Create MCP Server">
+    **Dashboard -> MCP Servers -> Create Server**
+  </Step>
+
+  <Step title="Get URL">
+    After creation, copy your MCP server URL:
+    ```text
+    https://mcp.abc123xyz.boostgpt.co
+    ```
+  </Step>
+
+  <Step title="Use Anywhere">
+    Connect this URL to any MCP-compatible AI agent
+  </Step>
+</Steps>
+
+## Use Cases
+
+### Internal Tools Everywhere
+
+Create once, use everywhere:
+
+```text
+1. Create MCP server from your internal API
+2. Get MCP URL: https://mcp.internal-crm.boostgpt.co
+3. Connect to:
+   - BoostGPT agents for customer support
+   - Claude Desktop for personal use
+   - Team's AI tools
+```
+
+### Team Collaboration
+
+Share MCP servers across your team:
+
+```text
+1. Create MCP server for company database
+2. Team members connect to their preferred AI agents
+3. Everyone has access to same tools
+```
+
+### Multi-Agent Workflows
+
+Use different agents for different tasks:
+
+```text
+- BoostGPT agent: Customer-facing chatbot
+- Claude Desktop: Internal analysis
+- Both use same MCP servers for data access
+```
+
+## Security
+
+### Authentication
+
+All MCP server requests require authentication:
+- **API Keys** - Configured in MCP server settings
+- **Rate Limiting** - Prevent abuse
+- **Access Logs** - Monitor usage
+
+### Permissions
+
+Control who can use your MCP servers:
+- **Dashboard -> MCP Servers -> Your Server -> Access**
+- Add team members or make public
+- Revoke access anytime
+
+## Best Practices
+
+1. **Name servers clearly** - Easy to identify purpose
+2. **Document tools** - Add descriptions for each endpoint
+3. **Monitor usage** - Check logs regularly
+4. **Rotate credentials** - Update API keys periodically
+5. **Version your APIs** - Support multiple MCP server versions
+
+## Example: Internal CRM
+
+Create an MCP server for your CRM and use it everywhere:
+
+```text
+1. Dashboard -> MCP Servers -> Create Server
+2. Import your CRM OpenAPI spec
+3. Get URL: https://mcp.company-crm.boostgpt.co
+
+Use with:
+- BoostGPT support agent
+- Claude Desktop for sales team
+- Custom internal tools
+```
+
+All agents can now:
+- Query customer data
+- Create contacts
+- Update deals
+- Generate reports
+
+## Next Steps
+
+<CardGroup cols={3}>
+  <Card title="BoostGPT Agents" icon="bot" href="/integrations/external/boostgpt-agents">
+    Connect to BoostGPT agents
+  </Card>
+  <Card title="Claude Desktop" icon="brain" href="/integrations/external/claude-desktop">
+    Use with Claude Desktop
+  </Card>
+  <Card title="ChatGPT" icon="message-circle" href="/integrations/external/chatgpt">
+    Connect to ChatGPT
+  </Card>
+</CardGroup>

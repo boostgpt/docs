@@ -1,0 +1,172 @@
+---
+title: "Bot with Integrations"
+description: "Build a bot with custom tools and MCP integrations"
+---
+
+## Overview
+
+Create a bot that uses MCP tools to access external services like Gmail, HubSpot, and custom APIs.
+
+## Prerequisites
+
+```bash
+npm install @boostgpt/core-sdk
+```
+
+## Complete Example
+
+```javascript
+import { BoostGPT } from '@boostgpt/core-sdk';
+
+const client = new BoostGPT({
+  apiKey: process.env.BOOSTGPT_API_KEY
+});
+
+async function main() {
+  // 1. Create bot
+  const botResult = await client.createBot({
+    name: 'Sales Assistant',
+    model: 'gpt-4o',
+    instruction: `You are a sales assistant with access to:
+    - CRM (search customers, create deals)
+    - Email (send messages)
+    - Calendar (schedule meetings)
+    
+    Help users with sales tasks using these tools.`
+  });
+
+  const botId = botResult.response.id;
+  console.log('Bot created:', botId);
+
+  // 2. Connect MCP tools
+  // Via Dashboard: Agent → Tools → Add Tool
+  // Add your MCP servers:
+  // - CRM: https://mcp.boostgpt.co/crm-server
+  // - Email: Gmail connector
+  // - Calendar: Google Calendar connector
+
+  // 3. Chat with bot (it will use tools automatically)
+  const chatResult = await client.chat({
+    bot_id: botId,
+    message: 'Find customer john@acme.com and schedule a follow-up call',
+    chat_id: 'sales-rep-1'
+  });
+
+  console.log('Bot:', chatResult.response);
+  // Bot will:
+  // 1. Search for customer in CRM
+  // 2. Check calendar for availability
+  // 3. Schedule meeting
+  // 4. Send calendar invite via email
+}
+
+main();
+```
+
+## Use Case: Customer Support
+
+```javascript
+// Bot with support tools
+const supportBot = await client.createBot({
+  name: 'Support Agent',
+  model: 'gpt-4o',
+  instruction: `You are a customer support agent with access to:
+  - Ticketing system
+  - Knowledge base
+  - Customer database
+  
+  Help resolve customer issues efficiently.`
+});
+
+// Connect tools via Dashboard:
+// - Zendesk connector
+// - Notion (knowledge base)
+// - Internal CRM MCP server
+
+// Test
+const response = await client.chat({
+  bot_id: supportBot.response.id,
+  message: 'Customer john@example.com reports login issues',
+  chat_id: 'support-session-1'
+});
+
+// Bot will:
+// - Look up customer in CRM
+// - Search knowledge base for login solutions
+// - Create support ticket
+// - Send resolution to customer
+```
+
+## Use Case: Sales Automation
+
+```javascript
+const salesBot = await client.createBot({
+  name: 'Sales Automation',
+  model: 'gpt-4o',
+  instruction: 'Automate sales workflows using CRM, email, and calendar tools.'
+});
+
+// Connect: HubSpot, Gmail, Google Calendar
+
+// Example workflow
+await client.chat({
+  bot_id: salesBot.response.id,
+  message: `For all leads from yesterday:
+  1. Check if they've been contacted
+  2. Send personalized intro email
+  3. Schedule follow-up for next week`,
+  chat_id: 'automation-1'
+});
+```
+
+## Creating Custom MCP Servers
+
+### 1. Create MCP Server from OpenAPI
+
+```text
+Dashboard → MCP Servers → Create Server
+→ Import OpenAPI
+→ Paste: https://api.yourservice.com/openapi.json
+→ Generate
+
+MCP URL: https://mcp.boostgpt.co/your-server-id
+```
+
+### 2. Connect to Bot
+
+```text
+Agent → Tools Tab → Add Tool → Add New
+→ Enter MCP URL
+→ Configure authentication
+→ Test in Playground
+```
+
+### 3. Use in Code
+
+```javascript
+// Bot automatically uses connected tools
+const result = await client.chat({
+  bot_id: botId,
+  message: 'Use my custom API to fetch user data',
+  chat_id: 'user-1'
+});
+
+// Bot will call your MCP server's tools
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Integrations" icon="plug" href="/integrations/introduction">
+    Browse available connectors
+  </Card>
+  <Card title="Custom MCP" icon="server" href="/integrations/custom/overview">
+    Build custom integrations
+  </Card>
+  <Card title="Core SDK" icon="code" href="/sdk/core/overview">
+    Full SDK documentation
+  </Card>
+  <Card title="API Reference" icon="book" href="/api-reference/introduction">
+    REST API docs
+  </Card>
+</CardGroup>

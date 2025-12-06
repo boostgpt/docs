@@ -1,0 +1,55 @@
+---
+title: "Datadog"
+description: "Monitoring and analytics platform"
+---
+
+## Overview
+
+Connect Datadog to monitor infrastructure and application performance.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Datadog** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Datadog**
+  </Step>
+  <Step title="Configure">
+    Enter your Datadog API Key and Application Key
+  </Step>
+  <Step title="Test">
+    Playground: "Show me system metrics"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Get CPU usage for the last hour"
+
+Agent: CPU usage (last hour):
+       Average: 45%, Peak: 78%
+```
+
+## Integration Example
+
+**With Slack:**
+
+```text
+User: "Alert #ops if CPU exceeds 80%"
+
+Agent: Monitoring Datadog, will alert #ops channel
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Sentry" icon="bug" href="/integrations/connectors/sentry">
+    Error tracking
+  </Card>
+  <Card title="Slack" icon="slack" href="/integrations/connectors/slack">
+    Team notifications
+  </Card>
+</CardGroup>

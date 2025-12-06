@@ -1,0 +1,406 @@
+---
+title: "Testing Integrations"
+description: "How to test your MCP integrations"
+---
+
+## Overview
+
+Test your MCP integrations thoroughly before deploying to production.
+
+## Testing Levels
+
+<CardGroup cols={3}>
+  <Card title="Unit Testing" icon="flask">
+    Test individual tools
+  </Card>
+  <Card title="Integration Testing" icon="link">
+    Test with live agents
+  </Card>
+  <Card title="Production Testing" icon="rocket">
+    Monitor in production
+  </Card>
+</CardGroup>
+
+## Unit Testing
+
+### Test Individual Tools
+
+Test each tool in isolation:
+
+<Steps>
+  <Step title="Create Test Agent">
+    Create a test agent specifically for testing integrations
+  </Step>
+
+  <Step title="Connect MCP Server">
+    **Test Agent ’ Tools ’ Add Tool** ’ Add your MCP server
+  </Step>
+
+  <Step title="Open Playground">
+    **Test Agent ’ Playground**
+  </Step>
+
+  <Step title="Test Each Tool">
+    ```text
+    Test create_customer:
+    "Create a test customer named John Doe, email john@test.com"
+
+    Test get_customer:
+    "Look up customer john@test.com"
+
+    Test update_customer:
+    "Update john@test.com phone to 555-1234"
+
+    Test delete_customer:
+    "Delete customer john@test.com"
+    ```
+  </Step>
+</Steps>
+
+### Test Parameters
+
+Test different parameter combinations:
+
+```text
+# Required parameters
+"Create customer with name John and email john@test.com"
+’ Should succeed
+
+# Missing required parameter
+"Create customer with name John"
+’ Should return error: "email is required"
+
+# Invalid parameter type
+"Create customer with email 12345"
+’ Should return error: "invalid email format"
+
+# Optional parameters
+"Create customer John, email john@test.com, phone 555-1234"
+’ Should succeed with optional phone
+```
+
+### Test Error Cases
+
+Test failure scenarios:
+
+```text
+# Not found
+"Get customer nonexistent@test.com"
+’ Should return: "Customer not found"
+
+# Duplicate
+"Create customer john@test.com" (already exists)
+’ Should return: "Customer already exists"
+
+# Invalid data
+"Create customer with email 'invalid-email'"
+’ Should return: "Invalid email format"
+```
+
+## Integration Testing
+
+### Test with Agents
+
+Test your MCP server with real agent workflows:
+
+#### Customer Support Flow
+
+```text
+Agent: Support Bot
+MCP Server: CRM + Email
+
+Test scenario:
+User: "Hi, I need help with my order"
+Agent: "Can you provide your email?"
+User: "john@acme.com"
+Agent: *looks up customer in CRM*
+       *finds order history*
+       "I see your order #12345..."
+```
+
+Verify:
+- [ ] Customer lookup works
+- [ ] Order history retrieved
+- [ ] Agent uses correct tools
+
+#### Sales Flow
+
+```text
+Agent: Sales Assistant
+MCP Server: CRM + Calendar + Email
+
+Test scenario:
+User: "Schedule a demo for Acme Corp"
+Agent: *creates contact in CRM*
+       *finds available calendar slots*
+       *schedules meeting*
+       *sends calendar invite via email*
+       "Demo scheduled for Jan 10 at 2pm"
+```
+
+Verify:
+- [ ] Contact created
+- [ ] Calendar checked
+- [ ] Meeting scheduled
+- [ ] Email sent
+
+### Multi-Tool Testing
+
+Test tools working together:
+
+```text
+Scenario: Lead to customer conversion
+
+1. Create lead:
+   "Add lead: Jane Doe from TechStart"
+   ’ Uses create_lead tool
+
+2. Qualify lead:
+   "Check if TechStart exists in database"
+   ’ Uses search_company tool
+
+3. Convert to customer:
+   "Convert Jane to customer with $50K deal"
+   ’ Uses convert_lead and create_deal tools
+
+4. Send welcome email:
+   "Email Jane the onboarding guide"
+   ’ Uses send_email tool
+```
+
+## Automated Testing
+
+### Test Scripts
+
+Create automated test scripts:
+
+```javascript
+// test-mcp-server.js
+const assert = require('assert');
+
+async function testMCPServer(mcpUrl) {
+  // Test create
+  console.log('Testing create_customer...');
+  const createResult = await callTool(mcpUrl, 'create_customer', {
+    name: 'Test User',
+    email: 'test@example.com'
+  });
+  assert(createResult.success, 'Create failed');
+  console.log(' Create successful');
+
+  // Test read
+  console.log('Testing get_customer...');
+  const getResult = await callTool(mcpUrl, 'get_customer', {
+    email: 'test@example.com'
+  });
+  assert(getResult.success, 'Get failed');
+  assert(getResult.customer.name === 'Test User', 'Name mismatch');
+  console.log(' Get successful');
+
+  // Test update
+  console.log('Testing update_customer...');
+  const updateResult = await callTool(mcpUrl, 'update_customer', {
+    email: 'test@example.com',
+    phone: '555-1234'
+  });
+  assert(updateResult.success, 'Update failed');
+  console.log(' Update successful');
+
+  // Test delete
+  console.log('Testing delete_customer...');
+  const deleteResult = await callTool(mcpUrl, 'delete_customer', {
+    email: 'test@example.com'
+  });
+  assert(deleteResult.success, 'Delete failed');
+  console.log(' Delete successful');
+
+  console.log('\nAll tests passed! ');
+}
+
+// Run tests
+testMCPServer('https://mcp.boostgpt.co/your-server-id');
+```
+
+### CI/CD Integration
+
+Add tests to your CI/CD pipeline:
+
+```yaml
+# .github/workflows/test-mcp.yml
+name: Test MCP Server
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Test MCP Server
+        run: |
+          node test-mcp-server.js
+        env:
+          MCP_URL: ${{ secrets.MCP_URL }}
+          API_KEY: ${{ secrets.API_KEY }}
+```
+
+## Performance Testing
+
+### Response Time
+
+Test tool response times:
+
+```text
+Test 1: Simple query
+"Get customer john@test.com"
+Expected: < 1 second
+Actual: 0.5 seconds 
+
+Test 2: Complex query
+"List all customers in California with orders over $1000"
+Expected: < 3 seconds
+Actual: 2.1 seconds 
+
+Test 3: Batch operation
+"Create 10 customers"
+Expected: < 5 seconds
+Actual: 4.2 seconds 
+```
+
+### Load Testing
+
+Test under high load:
+
+```javascript
+// Simulate 100 concurrent requests
+async function loadTest() {
+  const promises = [];
+  for (let i = 0; i < 100; i++) {
+    promises.push(
+      callTool(mcpUrl, 'get_customer', {
+        email: `test${i}@example.com`
+      })
+    );
+  }
+
+  const start = Date.now();
+  const results = await Promise.all(promises);
+  const duration = Date.now() - start;
+
+  const successCount = results.filter(r => r.success).length;
+  console.log(`Completed 100 requests in ${duration}ms`);
+  console.log(`Success rate: ${successCount}/100`);
+  console.log(`Average: ${duration / 100}ms per request`);
+}
+```
+
+## Production Testing
+
+### Gradual Rollout
+
+Deploy gradually to production:
+
+<Steps>
+  <Step title="Deploy to Test Agent">
+    Test with internal test agent first
+  </Step>
+
+  <Step title="Deploy to Staging">
+    Test with staging environment
+  </Step>
+
+  <Step title="Limited Production">
+    Deploy to 10% of users
+  </Step>
+
+  <Step title="Monitor">
+    Watch logs and metrics for 24 hours
+  </Step>
+
+  <Step title="Full Rollout">
+    Deploy to all users if no issues
+  </Step>
+</Steps>
+
+### Monitor Metrics
+
+Track key metrics in production:
+
+**Dashboard ’ MCP Servers ’ Your Server ’ Analytics**
+
+| Metric | Target | Alert If |
+|--------|--------|----------|
+| Success rate | >95% | <90% |
+| Response time | <2s avg | >5s avg |
+| Error rate | <5% | >10% |
+| Requests/min | Varies | Sudden spike |
+
+### A/B Testing
+
+Test changes with A/B testing:
+
+```text
+Version A (Current):
+- MCP Server v1.0
+- 50% of users
+
+Version B (New):
+- MCP Server v1.1 with optimizations
+- 50% of users
+
+Compare:
+- Response times
+- Error rates
+- User satisfaction
+```
+
+## Troubleshooting Tests
+
+<AccordionGroup>
+  <Accordion icon="ban" title="Test failing unexpectedly">
+    - Check MCP server is running
+    - Verify authentication credentials
+    - Check API service status
+    - Review error logs
+  </Accordion>
+
+  <Accordion icon="clock" title="Timeouts">
+    - Increase timeout limits
+    - Optimize API calls
+    - Check network connectivity
+    - Review server performance
+  </Accordion>
+
+  <Accordion icon="circle-xmark" title="Inconsistent results">
+    - Check for race conditions
+    - Verify test data cleanup
+    - Review caching behavior
+    - Test in isolation
+  </Accordion>
+</AccordionGroup>
+
+## Test Checklist
+
+Before deploying to production:
+
+- [ ] All tools tested individually
+- [ ] Error cases handled properly
+- [ ] Parameter validation working
+- [ ] Authentication working
+- [ ] Response times acceptable
+- [ ] Load testing passed
+- [ ] Integration flows tested
+- [ ] Documentation updated
+- [ ] Logs reviewed
+- [ ] Monitoring configured
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Debugging Guide" icon="bug" href="/integrations/guides/debugging">
+    Learn how to debug issues
+  </Card>
+  <Card title="Best Practices" icon="star" href="/integrations/guides/best-practices">
+    Follow integration best practices
+  </Card>
+</CardGroup>

@@ -1,0 +1,55 @@
+---
+title: "Unsplash"
+description: "Free stock photography"
+---
+
+## Overview
+
+Connect Unsplash to search and download high-quality stock photos.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Unsplash** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Unsplash**
+  </Step>
+  <Step title="Configure">
+    Enter your Unsplash Access Key
+  </Step>
+  <Step title="Test">
+    Playground: "Find photos of mountains"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Find a photo of sunset over ocean"
+
+Agent: Found 10 sunset photos:
+       [Photo URLs and credits]
+```
+
+## Integration Example
+
+**With Google Drive:**
+
+```text
+User: "Download Unsplash photos and save to Google Drive"
+
+Agent: Downloaded 5 photos to Drive/Stock Images
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Pexels" icon="images" href="/integrations/connectors/pexels">
+    Alternative stock photos
+  </Card>
+  <Card title="Google Drive" icon="google" href="/integrations/connectors/google-drive">
+    File storage
+  </Card>
+</CardGroup>

@@ -10,7 +10,7 @@ DeepSeek offers powerful AI models with specialized reasoning capabilities. Deep
 ## Available Models
 
 <CardGroup cols={2}>
-  <Card title="DeepSeek V3" icon="comments">
+  <Card title="DeepSeek V3" icon="brain-circuit">
     **1 credit** " General-purpose chat model
 
     - 64K context window
@@ -28,17 +28,6 @@ DeepSeek offers powerful AI models with specialized reasoning capabilities. Deep
     - **Reasoning model** for complex problems
   </Card>
 </CardGroup>
-
-## Model Comparison
-
-| Model | Credits | Context | Speed | Reasoning | Best Use Case |
-|-------|---------|---------|-------|-----------|---------------|
-| **DeepSeek V3** | 1 | 64K | Fast | Good | Everyday conversations |
-| **DeepSeek R1** | 2 | 64K | Medium | Excellent | Complex reasoning, analysis |
-
-<Info>
-  **DeepSeek's Strength**: Exceptional reasoning capabilities at affordable prices. R1 model offers advanced logical thinking.
-</Info>
 
 ## Setup
 
@@ -137,7 +126,7 @@ DeepSeek offers powerful AI models with specialized reasoning capabilities. Deep
 ## Model Selection Guide
 
 <AccordionGroup>
-  <Accordion icon="comments" title="DeepSeek V3 - General Chat">
+  <Accordion icon="brain-circuit" title="DeepSeek V3 - General Chat">
     **Best for:**
     - Customer support chatbots
     - General conversations
@@ -160,51 +149,6 @@ DeepSeek offers powerful AI models with specialized reasoning capabilities. Deep
   </Accordion>
 </AccordionGroup>
 
-## Best Practices
-
-### Use R1 for Complex Reasoning
-
-```javascript
-// Use DeepSeek R1 for analytical tasks
-const analyzeCode = async (code) => {
-  const response = await client.chat({
-    bot_id: 'your-bot-id',
-    message: `Analyze this code and identify potential issues:\n\n${code}`,
-    model: 'deepseek-reasoner',
-    max_reply_tokens: 2000 // Higher for reasoning models
-  });
-
-  if (response.err) {
-    console.error('Error:', response.err);
-  } else {
-    console.log('Analysis:', response.response.chat.reply);
-  }
-};
-```
-
-### Optimize Costs with Dynamic Model Selection
-
-```javascript
-// Use V3 for simple queries, R1 for complex ones
-router.onMessage(async (message, context) => {
-  const needsReasoning = message.content.includes('analyze') ||
-                         message.content.includes('debug') ||
-                         message.content.includes('solve');
-
-  // Use different bots for different complexity levels
-  const bot_id = needsReasoning ?
-    process.env.DEEPSEEK_R1_BOT_ID :
-    process.env.DEEPSEEK_V3_BOT_ID;
-
-  const response = await context.boostgpt.chat({
-    bot_id,
-    message: message.content,
-    channel: context.channel
-  });
-
-  return response.response.chat.reply;
-});
-```
 
 ## Next Steps
 
@@ -213,7 +157,7 @@ router.onMessage(async (message, context) => {
     Deep dive into DeepSeek R1
   </Card>
 
-  <Card title="Model Comparison" icon="scale-balanced" href="/providers/model-comparison">
+  <Card title="Model Comparison" icon="scale" href="/providers/model-comparison">
     Compare DeepSeek with others
   </Card>
 

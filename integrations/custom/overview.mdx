@@ -1,0 +1,142 @@
+---
+title: "Custom Integrations"
+description: "Build your own MCP connectors"
+---
+
+## Overview
+
+Create custom MCP connectors to connect your agents to any service or API. BoostGPT automatically generates working MCP servers from your API specifications.
+
+## Two Ways to Build
+
+<CardGroup cols={2}>
+  <Card title="OpenAPI Import" icon="file-code" href="/integrations/custom/openapi">
+    Paste an OpenAPI spec URL
+  </Card>
+  <Card title="Postman Collection" icon="box" href="/integrations/custom/postman">
+    Upload a Postman collection
+  </Card>
+</CardGroup>
+
+## How It Works
+
+<Steps>
+  <Step title="Go to MCP Servers">
+    **Dashboard → MCP Servers**
+  </Step>
+
+  <Step title="Create Server">
+    Click **Create Server**
+  </Step>
+
+  <Step title="Choose Method">
+    - **Import OpenAPI**: Paste your OpenAPI spec URL
+    - **Upload Postman**: Drop in your Postman collection
+  </Step>
+
+  <Step title="Server Generated">
+    BoostGPT automatically generates your MCP server with a custom remote URL
+  </Step>
+
+  <Step title="Connect to Agent">
+    Use your MCP server URL with any BoostGPT agent or other AI agent
+  </Step>
+</Steps>
+
+## What You Get
+
+After creating your server, you receive:
+
+- **Custom MCP URL** - `https://mcp.your-server-id.boostgpt.co`
+- **Auto-generated tools** - All API endpoints become agent tools
+- **Managed hosting** - No deployment needed
+- **Authentication handling** - API keys and OAuth managed automatically
+
+## Example Use Cases
+
+### Internal CRM Integration
+
+```yaml
+# Import your internal CRM OpenAPI spec
+# All CRM endpoints become agent tools:
+# - create_contact
+# - get_deals
+# - update_opportunity
+```
+
+### Custom Database
+
+```json
+// Upload Postman collection with database queries
+// Agent can now:
+// - query_users
+// - update_records
+// - generate_reports
+```
+
+### Legacy API Integration
+
+```text
+Connect to old REST APIs that don't have pre-built connectors:
+- ERP systems
+- Internal tools
+- Custom workflows
+```
+
+## Authentication
+
+BoostGPT handles authentication for your custom connectors:
+
+- **API Keys** - Managed securely
+- **OAuth 2.0** - Full OAuth flow handled
+- **Bearer Tokens** - Token management
+- **Basic Auth** - Username/password
+
+<Card title="Authentication Setup" icon="lock" href="/integrations/custom/authentication">
+  Configure authentication for your connector
+</Card>
+
+## Quick Start Example
+
+**1. Get your OpenAPI spec URL:**
+```text
+https://api.yourservice.com/openapi.json
+```
+
+**2. Create server:**
+- Dashboard → MCP Servers → Create Server
+- Paste OpenAPI URL
+- Click Generate
+
+**3. Use with agent:**
+- Agent → Tools → Add Tool → Add New
+- Enter your MCP URL: `https://mcp.boostgpt.co/your-server-id`
+- Start using in Playground
+
+## Benefits
+
+### No Coding Required
+Import your API spec and get a working MCP server instantly.
+
+### Auto-Generated Tools
+All your API endpoints become agent tools automatically.
+
+### Managed Hosting
+BoostGPT hosts your MCP server - no infrastructure needed.
+
+### Works Everywhere
+Use your MCP URL with any BoostGPT agent or external AI agents.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="OpenAPI Import" icon="file-code" href="/integrations/custom/openapi">
+    Generate from OpenAPI spec
+  </Card>
+  <Card title="Postman Collection" icon="box" href="/integrations/custom/postman">
+    Import Postman collections
+  </Card>
+  <Card title="Authentication" icon="lock" href="/integrations/custom/authentication">
+    Configure authentication
+  </Card>
+</CardGroup>

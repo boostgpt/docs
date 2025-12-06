@@ -1,0 +1,54 @@
+---
+title: "Authentication"
+description: "Authenticate API requests"
+---
+
+## API Keys
+
+All API requests require an API key passed in the `Authorization` header:
+
+```bash
+Authorization: Bearer YOUR_API_KEY
+```
+
+## Getting Your API Key
+
+<Steps>
+  <Step title="Sign In">
+    Go to [app.boostgpt.co](https://app.boostgpt.co)
+  </Step>
+
+  <Step title="Generate Key">
+    **Dashboard → Settings → API Keys → Create New Key**
+  </Step>
+
+  <Step title="Copy Key">
+    Copy and securely store your API key
+  </Step>
+</Steps>
+
+## Example Request
+
+```bash
+curl https://api.boostgpt.co/v1/bots \
+  -H "Authorization: Bearer sk_live_abc123xyz" \
+  -H "Content-Type: application/json"
+```
+
+## Security
+
+- **Keep keys secret** - Never expose in client-side code
+- **Use environment variables** - Store in `.env` files
+- **Rotate regularly** - Generate new keys periodically
+- **Delete unused keys** - Remove old keys from dashboard
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Errors" icon="circle-alert" href="/api-reference/errors">
+    Error responses
+  </Card>
+  <Card title="Rate Limits" icon="gauge" href="/api-reference/rate-limits">
+    API rate limits
+  </Card>
+</CardGroup>

@@ -1,0 +1,58 @@
+---
+title: "Vercel"
+description: "Deployment platform"
+---
+
+## Overview
+
+Connect Vercel to manage deployments and projects.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Vercel** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Vercel**
+  </Step>
+  <Step title="Configure">
+    Enter your Vercel API Token
+  </Step>
+  <Step title="Test">
+    Playground: "List my Vercel projects"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Get status of my latest deployment"
+
+Agent: Latest deployment:
+       - Project: my-app
+       - Status: Ready
+       - URL: https://my-app.vercel.app
+```
+
+## Integration Example
+
+**With Slack:**
+
+```text
+User: "Post deployment status to #engineering"
+
+Agent: Posted to #engineering:
+       ✅ my-app deployed successfully
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="GitHub" icon="github" href="/integrations/connectors/github">
+    Code repository
+  </Card>
+  <Card title="Netlify" icon="globe" href="/integrations/connectors/netlify">
+    Alternative deployment
+  </Card>
+</CardGroup>

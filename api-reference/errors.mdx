@@ -1,0 +1,73 @@
+---
+title: "Errors"
+description: "API error responses"
+---
+
+## Error Format
+
+All errors return this format:
+
+```json
+{
+  "err": "Error message here",
+  "response": null
+}
+```
+
+## HTTP Status Codes
+
+| Code | Description |
+|------|-------------|
+| `200` | Success |
+| `400` | Bad Request - Invalid parameters |
+| `401` | Unauthorized - Invalid API key |
+| `403` | Forbidden - Insufficient permissions |
+| `404` | Not Found - Resource doesn't exist |
+| `429` | Too Many Requests - Rate limit exceeded |
+| `500` | Server Error - Something went wrong |
+
+## Common Errors
+
+### Invalid API Key
+
+```json
+{
+  "err": "Invalid API key",
+  "response": null
+}
+```
+
+**Solution:** Check your API key in Dashboard → Settings
+
+### Bot Not Found
+
+```json
+{
+  "err": "Bot not found",
+  "response": null
+}
+```
+
+**Solution:** Verify bot ID is correct
+
+### Rate Limit Exceeded
+
+```json
+{
+  "err": "Rate limit exceeded",
+  "response": null
+}
+```
+
+**Solution:** Wait or upgrade your plan
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="lock" href="/api-reference/authentication">
+    API authentication
+  </Card>
+  <Card title="Rate Limits" icon="gauge" href="/api-reference/rate-limits">
+    Rate limit details
+  </Card>
+</CardGroup>

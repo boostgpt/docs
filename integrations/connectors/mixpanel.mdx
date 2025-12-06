@@ -1,0 +1,56 @@
+---
+title: "Mixpanel"
+description: "Product analytics"
+---
+
+## Overview
+
+Connect Mixpanel to track user events and product analytics.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Mixpanel** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Mixpanel**
+  </Step>
+  <Step title="Configure">
+    Enter your Mixpanel Project Token and API Secret
+  </Step>
+  <Step title="Test">
+    Playground: "Show me top events from last week"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "How many signups did we get this month?"
+
+Agent: January signups: 342 users
+       15% increase from December
+```
+
+## Integration Example
+
+**With Slack:**
+
+```text
+User: "Post weekly Mixpanel metrics to #product"
+
+Agent: Posted to #product:
+       This week: 1,234 signups, 89% activation rate
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Google Analytics" icon="chart-line" href="/integrations/connectors/google-analytics">
+    Web analytics
+  </Card>
+  <Card title="Slack" icon="slack" href="/integrations/connectors/slack">
+    Team notifications
+  </Card>
+</CardGroup>

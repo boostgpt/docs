@@ -1,0 +1,54 @@
+---
+title: "Sentry"
+description: "Error tracking and monitoring"
+---
+
+## Overview
+
+Connect Sentry to track application errors and performance issues.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Sentry** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Sentry**
+  </Step>
+  <Step title="Configure">
+    Enter your Sentry Auth Token
+  </Step>
+  <Step title="Test">
+    Playground: "Show me recent errors"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "How many errors in the last 24 hours?"
+
+Agent: Sentry errors (24h): 12 errors across 3 issues
+```
+
+## Integration Example
+
+**With Slack:**
+
+```text
+User: "Post critical Sentry errors to #engineering"
+
+Agent: Posted 2 critical errors to #engineering
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Datadog" icon="chart-line" href="/integrations/connectors/datadog">
+    Infrastructure monitoring
+  </Card>
+  <Card title="GitHub" icon="github" href="/integrations/connectors/github">
+    Code repository
+  </Card>
+</CardGroup>

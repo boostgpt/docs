@@ -60,20 +60,6 @@ Google's Gemini models offer industry-leading context windows (up to 2 million t
   </Card>
 </CardGroup>
 
-## Model Comparison
-
-| Model | Credits | Context | Speed | Type | Best Use Case |
-|-------|---------|---------|-------|------|---------------|
-| **Gemini 3 Pro Preview** | 5 | 2M | Medium | Preview | Cutting-edge, massive context |
-| **Gemini 2.5 Pro** | 3 | 2M | Slow | Stable | Complex analysis, long docs |
-| **Gemini 2.5 Flash** | 2 | 1M | Fast | Stable | Production workhorse |
-| **Gemini 2.5 Flash Lite** | 1 | 1M | Very Fast | Stable | Cost-effective, high volume |
-| **Gemini 2.0 Flash Thinking** | 3 | 1M | Medium | Reasoning | Analytical tasks |
-
-<Info>
-  **Context Window Champion**: Gemini models offer up to 2 million tokens - enough for entire codebases or books! That's 10x more than competitors.
-</Info>
-
 ## Setup
 
 ### Using BoostGPT-Hosted API Keys
@@ -237,92 +223,6 @@ Google's Gemini models offer industry-leading context windows (up to 2 million t
   </Accordion>
 </AccordionGroup>
 
-## Key Features
-
-### Massive Context Windows
-
-<Tip>
-  Gemini models can process up to **2 million tokens** - roughly 1.5 million words or 3,000 pages in a single request!
-</Tip>
-
-```javascript
-// Process entire codebase in one request
-const analyzeCodebase = async (entireCodebase) => {
-  const response = await client.chat({
-    bot_id: 'your-bot-id',
-    model: 'gemini-2.5-pro',
-    message: `Analyze this entire codebase:\n\n${entireCodebase}`
-  });
-
-  if (response.err) {
-    console.error('Error:', response.err);
-  } else {
-    console.log('Analysis:', response.response.chat.reply);
-  }
-};
-```
-
-### Use Flash Thinking for Reasoning
-
-```javascript
-// Override to use reasoning model
-const debugCode = async (code) => {
-  const response = await client.chat({
-    bot_id: 'your-bot-id',
-    reasoning_mode: 'react', // Deep thinking
-    message: `Debug this code:\n\n${code}`,
-    max_reply_tokens: 2000
-  });
-
-  return response.response.chat.reply;
-};
-```
-
-## Best Practices
-
-### Leverage Long Context
-
-```javascript
-// Maintain extensive conversation history
-router.onMessage(async (message, context) => {
-  const response = await context.boostgpt.chat({
-    bot_id: context.adapter.botId,
-    message: message.content,
-    channel: context.channel
-    // Gemini's 1M-2M context allows keeping full history
-  });
-
-  return response.response.chat.reply;
-});
-```
-
-### Optimize Cost vs Context
-
-```javascript
-// Use Flash Lite for simple tasks, Pro for long context
-const needsLongContext = conversationHistory.length > 50;
-
-const response = await client.chat({
-  bot_id: needsLongContext ? proBot : liteBot,
-  message: userMessage
-});
-```
-
-## Performance Characteristics
-
-### Speed
-
-- **Gemini 2.5 Flash Lite**: &lt;2s response time
-- **Gemini 2.5 Flash**: 2-4s response time
-- **Gemini 2.0 Flash Thinking**: 4-6s (reasoning)
-- **Gemini 2.5 Pro**: 5-10s (massive context)
-
-### Context Windows
-
-- **Gemini 3 Pro Preview**: 2,000,000 tokens
-- **Gemini 2.5 Pro**: 2,000,000 tokens
-- **Gemini 2.5 Flash/Lite**: 1,000,000 tokens
-- **Gemini 2.0 Flash Thinking**: 1,000,000 tokens
 
 ## Troubleshooting
 
@@ -356,24 +256,11 @@ const response = await client.chat({
   </Accordion>
 </AccordionGroup>
 
-## Comparison with Competitors
-
-| Feature | Gemini 2.5 Pro | GPT-5 | Claude Sonnet 4.5 |
-|---------|----------------|-------|-------------------|
-| Context Window | **2M tokens** | 200K | 200K |
-| Speed | Slow | Medium | Medium |
-| Cost (Credits) | 3 | 5 | 3 |
-| Reasoning | Exceptional | Exceptional | Excellent |
-| Best For | Long documents | Creative tasks | Balanced use |
-
-<Check>
-  **Winner for context**: Gemini offers 10x the context window of competitors!
-</Check>
 
 ## Next Steps
 
 <CardGroup cols={2}>
-  <Card title="Model Comparison" icon="scale-balanced" href="/providers/model-comparison">
+  <Card title="Model Comparison" icon="scale" href="/providers/model-comparison">
     Compare all providers
   </Card>
 

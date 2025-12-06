@@ -1,0 +1,58 @@
+---
+title: "ClickUp"
+description: "Work management platform"
+---
+
+## Overview
+
+Connect ClickUp to manage tasks, projects, and team workflows.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **ClickUp** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **ClickUp**
+  </Step>
+  <Step title="Configure">
+    Enter your ClickUp API Key
+  </Step>
+  <Step title="Test">
+    Playground: "Show me my tasks for today"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Create a task: Review Q4 budget, due Friday"
+
+Agent: Created ClickUp task:
+       "Review Q4 budget" - Due Jan 10
+```
+
+## Integration Example
+
+**With Gmail:**
+
+```text
+User: "Create ClickUp tasks from emails labeled 'Action Required'"
+
+Agent: *searches Gmail*
+       *creates tasks*
+
+       Created 7 ClickUp tasks from Gmail
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Asana" icon="list-check" href="/integrations/connectors/asana">
+    Alternative project tool
+  </Card>
+  <Card title="Monday.com" icon="calendar-days" href="/integrations/connectors/monday">
+    Team collaboration
+  </Card>
+</CardGroup>

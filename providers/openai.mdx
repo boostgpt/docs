@@ -237,108 +237,6 @@ OpenAI provides the GPT family of models, including the latest GPT-5 series and 
   </Accordion>
 </AccordionGroup>
 
-## Performance Characteristics
-
-### Speed Comparison
-
-| Model | Speed | Typical Response Time |
-|-------|-------|----------------------|
-| GPT-4.1 Nano | ��� Very Fast | < 1s |
-| GPT-5 Nano | ��� Very Fast | < 2s |
-| GPT-4o Mini | �� Fast | 1-2s |
-| GPT-5 Mini | �� Fast | 2-3s |
-| GPT-4o | � Medium | 3-5s |
-| GPT-5 | � Medium | 3-5s |
-| O1 Mini | = Medium | 5-10s |
-| O1 | = Slow | 10-20s |
-
-### Context Windows
-
-- **GPT-5, GPT-5.1, O1**: 200,000 tokens (longest)
-- **GPT-4o, GPT-4.1 Mini, GPT-5 Nano**: 128,000 tokens
-- **GPT-4.1 Nano**: 64,000 tokens
-
-<Tip>
-  Longer context windows allow your bot to remember more conversation history and process longer documents.
-</Tip>
-
-## Best Practices
-
-### Optimize for Cost
-
-```javascript
-// Create bots with different models for different purposes
-const cheapBot = await client.createBot({
-  name: 'Quick Responses Bot',
-  model: 'gpt-4o-mini', // 1 credit - for simple queries
-  instruction: 'Provide quick, concise answers.'
-});
-
-const powerBot = await client.createBot({
-  name: 'Complex Analysis Bot',
-  model: 'gpt-5', // 5 credits - for complex tasks
-  instruction: 'Provide detailed analysis and explanations.'
-});
-
-// Router uses the bot specified in defaultBotId
-// For dynamic model selection, create separate bots and switch between them
-router.onMessage(async (message, context) => {
-  // Handle custom logic or return null for AI response
-  if (message.content === '/stats') {
-    return 'Bot running on GPT-5 Mini';
-  }
-
-  // Return null - router handles the message with your bot
-  return null;
-});
-```
-
-### Leverage Reasoning Models
-
-```javascript
-// Use O1 Mini for analytical tasks
-const response = await client.chat({
-  bot_id: 'your-bot-id',
-  message: 'Debug this Python code and explain the errors',
-  model: 'o1-mini', // Reasoning model
-  max_reply_tokens: 3000 // Higher for reasoning models
-});
-
-if (response.err) {
-  console.error('Error:', response.err);
-} else {
-  console.log('Analysis:', response.response.chat.reply);
-}
-```
-
-### Handle Rate Limits
-
-<Warning>
-  OpenAI has rate limits based on your API tier. BoostGPT automatically handles retries, but consider implementing request queuing for high-volume applications.
-</Warning>
-
-```javascript
-// Implement exponential backoff
-const sendWithRetry = async (messageData, maxRetries = 3) => {
-  for (let i = 0; i < maxRetries; i++) {
-    const response = await client.chat(messageData);
-
-    if (response.err && response.err.status === 429 && i < maxRetries - 1) {
-      // Rate limited, wait and retry
-      await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
-      continue;
-    }
-
-    return response;
-  }
-};
-
-// Usage
-const result = await sendWithRetry({
-  bot_id: 'your-bot-id',
-  message: 'Your message here'
-});
-```
 
 ## Troubleshooting
 
@@ -383,7 +281,7 @@ const result = await sendWithRetry({
 ## Next Steps
 
 <CardGroup cols={2}>
-  <Card title="Model Comparison" icon="scale-balanced" href="/providers/model-comparison">
+  <Card title="Model Comparison" icon="scale" href="/providers/model-comparison">
     Compare OpenAI models with other providers
   </Card>
 

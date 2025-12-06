@@ -1,0 +1,58 @@
+---
+title: "Twilio"
+description: "SMS and voice communication"
+---
+
+## Overview
+
+Connect Twilio to send SMS messages and make phone calls.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Twilio** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Twilio**
+  </Step>
+  <Step title="Configure">
+    Enter your Twilio Account SID and Auth Token
+  </Step>
+  <Step title="Test">
+    Playground: "Send SMS to +1234567890 saying 'Test message'"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Send SMS to +1555123456 about the meeting at 2pm"
+
+Agent: SMS sent to +1555123456:
+       "Reminder: Meeting at 2pm today"
+```
+
+## Integration Example
+
+**With HubSpot:**
+
+```text
+User: "Send SMS reminders to all contacts with meetings today"
+
+Agent: *fetches HubSpot contacts with meetings*
+       *sends SMS via Twilio*
+
+       Sent 8 SMS reminders via Twilio
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Gmail" icon="envelope" href="/integrations/connectors/gmail">
+    Email communication
+  </Card>
+  <Card title="Slack" icon="slack" href="/integrations/connectors/slack">
+    Team messaging
+  </Card>
+</CardGroup>

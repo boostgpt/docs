@@ -1,0 +1,327 @@
+---
+title: "Postman Collection Import"
+description: "Create MCP servers from Postman collections"
+---
+
+## Overview
+
+Upload a Postman collection and BoostGPT automatically generates a working MCP server. Your custom integration is live in under 5 minutes.
+
+## Quick Start
+
+<Steps>
+  <Step title="Export from Postman">
+    In Postman:
+    - Select your collection
+    - Click **Export**
+    - Choose **Collection v2.1**
+    - Save the JSON file
+  </Step>
+
+  <Step title="Create Server">
+    - Go to **Dashboard -> MCP Servers**
+    - Click **Create Server**
+    - Select **Upload Postman Collection**
+  </Step>
+
+  <Step title="Upload File">
+    Drop your Postman collection JSON file
+  </Step>
+
+  <Step title="Server Generated">
+    BoostGPT generates your MCP server:
+    ```text
+    https://mcp.your-server-id.boostgpt.co
+    ```
+  </Step>
+
+  <Step title="Connect to Agent">
+    - Agent -> **Tools** tab -> **Add Tool** -> **Add New**
+    - Enter your MCP URL
+    - Ready to use!
+  </Step>
+</Steps>
+
+## Postman Collection Format
+
+Your collection should be in Postman Collection v2.1 format:
+
+```json
+{
+  "info": {
+    "name": "My API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get Users",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.example.com/users?limit=10",
+          "host": ["api", "example", "com"],
+          "path": ["users"],
+          "query": [
+            {
+              "key": "limit",
+              "value": "10"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"John\", \"email\": \"john@example.com\"}"
+        },
+        "url": "https://api.example.com/users"
+      }
+    }
+  ]
+}
+```
+
+## Auto-Generated Tools
+
+Each Postman request becomes an agent tool:
+
+| Postman Request | Generated Tool | Description |
+|----------------|---------------|-------------|
+| GET /users | `get_users` | Fetches user list |
+| POST /users | `create_user` | Creates new user |
+| GET /users/:id | `get_user_by_id` | Gets single user |
+| PUT /users/:id | `update_user` | Updates user info |
+| DELETE /users/:id | `delete_user` | Deletes user |
+
+## Example: E-commerce API
+
+**Postman Collection:**
+
+```json
+{
+  "info": {
+    "name": "E-commerce API"
+  },
+  "item": [
+    {
+      "name": "Get Products",
+      "request": {
+        "method": "GET",
+        "url": "https://api.shop.com/products"
+      }
+    },
+    {
+      "name": "Create Order",
+      "request": {
+        "method": "POST",
+        "url": "https://api.shop.com/orders",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"product_id\": \"123\", \"quantity\": 2}"
+        }
+      }
+    },
+    {
+      "name": "Get Order Status",
+      "request": {
+        "method": "GET",
+        "url": "https://api.shop.com/orders/:orderId"
+      }
+    }
+  ]
+}
+```
+
+**Generated Tools:**
+
+```text
+Agent can now:
+
+1. get_products
+   - Lists available products
+
+2. create_order
+   - Parameters: product_id, quantity
+   - Creates new order
+
+3. get_order_status
+   - Parameters: orderId
+   - Checks order status
+```
+
+## Authentication
+
+Add authentication to your Postman collection:
+
+### API Key
+
+```json
+{
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{api_key}}"
+      }
+    ]
+  }
+}
+```
+
+### Bearer Token
+
+```json
+{
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}"
+      }
+    ]
+  }
+}
+```
+
+Configure credentials in **Dashboard -> MCP Servers -> Your Server -> Settings**
+
+## Variables
+
+Use Postman variables for dynamic values:
+
+```json
+{
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://api.example.com"
+    },
+    {
+      "key": "api_key",
+      "value": "your-api-key"
+    }
+  ]
+}
+```
+
+Set variable values in MCP server settings after upload.
+
+## Testing
+
+Test your MCP server:
+
+```text
+User: "Get all products from the store"
+
+Agent: *uses get_products tool*
+       Found 50 products:
+       1. Product A - $29.99
+       2. Product B - $49.99
+       ...
+
+User: "Create an order for product 123, quantity 2"
+
+Agent: *uses create_order tool*
+       Order created successfully!
+       Order ID: ORD-456
+```
+
+## Organizing Collections
+
+Use folders in Postman for better organization:
+
+```json
+{
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "List Users",
+          "request": {...}
+        },
+        {
+          "name": "Create User",
+          "request": {...}
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "List Orders",
+          "request": {...}
+        }
+      ]
+    }
+  ]
+}
+```
+
+Tools are namespaced: `users_list_users`, `orders_list_orders`
+
+## Common Issues
+
+<AccordionGroup>
+  <Accordion icon="file-slash" title="Invalid collection format">
+    Export as Collection v2.1 from Postman. Older formats aren't supported.
+  </Accordion>
+
+  <Accordion icon="lock" title="Authentication not working">
+    Add auth to your collection or configure credentials in MCP server settings after upload.
+  </Accordion>
+
+  <Accordion icon="circle-xmark" title="Request failing">
+    Test requests in Postman first to ensure they work. Check URLs and parameters.
+  </Accordion>
+
+  <Accordion icon="wrench" title="Variables not resolving">
+    Set variable values in Dashboard -> MCP Servers -> Your Server -> Settings
+  </Accordion>
+</AccordionGroup>
+
+## Best Practices
+
+1. **Name requests clearly** - "Get User" becomes `get_user` tool
+2. **Add descriptions** - Help AI understand when to use each tool
+3. **Include examples** - Add example requests in Postman
+4. **Test first** - Verify requests work in Postman before uploading
+5. **Use folders** - Organize related endpoints together
+6. **Document parameters** - Add parameter descriptions in Postman
+
+## Example Collections
+
+Download starter templates:
+
+- **REST API Template** - Basic CRUD operations
+- **E-commerce Template** - Product and order management
+- **CRM Template** - Contact and deal management
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="lock" href="/integrations/custom/authentication">
+    Configure API authentication
+  </Card>
+  <Card title="OpenAPI Import" icon="file-code" href="/integrations/custom/openapi">
+    Alternative: Import OpenAPI spec
+  </Card>
+</CardGroup>

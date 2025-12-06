@@ -1,0 +1,54 @@
+---
+title: "Mapbox"
+description: "Maps and location services"
+---
+
+## Overview
+
+Connect Mapbox for mapping, geocoding, and location data.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Mapbox** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Mapbox**
+  </Step>
+  <Step title="Configure">
+    Enter your Mapbox Access Token
+  </Step>
+  <Step title="Test">
+    Playground: "Geocode '123 Main St, New York, NY'"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Get coordinates for '1600 Pennsylvania Ave, Washington DC'"
+
+Agent: Coordinates: 38.8977° N, 77.0365° W
+```
+
+## Integration Example
+
+**With HubSpot:**
+
+```text
+User: "Add location coordinates to HubSpot contacts"
+
+Agent: Updated 50 HubSpot contacts with coordinates
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="OpenWeatherMap" icon="cloud" href="/integrations/connectors/openweathermap">
+    Weather data
+  </Card>
+  <Card title="HubSpot" icon="hubspot" href="/integrations/connectors/hubspot">
+    CRM integration
+  </Card>
+</CardGroup>

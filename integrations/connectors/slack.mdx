@@ -1,0 +1,61 @@
+---
+title: "Slack"
+description: "Send messages and manage your Slack workspace"
+---
+
+## Overview
+
+Connect Slack to send messages, manage channels, and automate team communication.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard ’ Integrations ’ Connectors** ’ Find **Slack** ’ **Deploy**
+  </Step>
+
+  <Step title="Add to Agent">
+    Agent ’ **Tools** tab ’ **Add Tool** ’ Select **Slack**
+  </Step>
+
+  <Step title="Configure">
+    Sign in to Slack and authorize your workspace (OAuth)
+  </Step>
+
+  <Step title="Test">
+    Playground: "Send a message to #general saying hello"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Post to #engineering that the deploy is complete"
+
+Agent: Message sent to #engineering:
+       "Deploy completed successfully at 3:45 PM"
+```
+
+## Integration Example
+
+**With HubSpot:**
+
+```text
+User: "Post new HubSpot deals to #sales"
+
+Agent: *checks HubSpot for new deals*
+       *posts to Slack*
+
+       Posted to #sales: "New deal: Acme Corp - $25K"
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Discord" icon="discord" href="/integrations/connectors/discord">
+    Alternative team chat
+  </Card>
+  <Card title="Gmail" icon="envelope" href="/integrations/connectors/gmail">
+    Forward emails to Slack
+  </Card>
+</CardGroup>

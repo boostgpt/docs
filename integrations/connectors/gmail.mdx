@@ -1,0 +1,62 @@
+---
+title: "Gmail"
+description: "Send and manage emails with Gmail"
+---
+
+## Overview
+
+Connect Gmail to send, read, and manage emails through your agent.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Gmail** → **Deploy**
+  </Step>
+
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Gmail**
+  </Step>
+
+  <Step title="Configure">
+    Sign in with Google and grant Gmail permissions (OAuth)
+  </Step>
+
+  <Step title="Test">
+    Playground: "Send an email to john@example.com saying hello"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Send an email to sarah@company.com with subject 'Meeting Tomorrow'
+       and say we'll meet at 2pm"
+
+Agent: I've sent the email to sarah@company.com
+```
+
+## Integration Example
+
+**With HubSpot:**
+
+```text
+User: "Find all emails from leads in HubSpot and reply to them"
+
+Agent: *searches HubSpot for leads*
+       *searches Gmail for their emails*
+       *sends personalized replies*
+
+       Sent 5 follow-up emails to HubSpot leads
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Google Calendar" icon="calendar" href="/integrations/connectors/google-calendar">
+    Schedule meetings from emails
+  </Card>
+  <Card title="HubSpot" icon="hubspot" href="/integrations/connectors/hubspot">
+    Create contacts from emails
+  </Card>
+</CardGroup>

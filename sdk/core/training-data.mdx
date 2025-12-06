@@ -6,9 +6,9 @@ description: "Add knowledge and context to your bots"
 ## Add Training Content
 
 ```javascript
-const result = await client.addTraining({
+const result = await client.startTraining({
   bot_id: 'bot_abc123',
-  content: 'Our company offers 24/7 customer support at support@example.com',
+  source: 'Our company offers 24/7 customer support at support@example.com',
   type: 'text'
 });
 
@@ -24,65 +24,124 @@ if (result.err) {
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `bot_id` | string | Yes | Bot ID to train |
-| `content` | string | Yes | Training content (text) |
-| `type` | string | No | Content type (default: `text`) |
-| `metadata` | object | No | Custom metadata |
+| `source` | string \| array | Yes | Training content (string for `text`/`website`, array for `file`/`webpage`) |
+| `type` | string | No | `text`, `website`, `file`, or `webpage` (default: `text`) |
 
 ### Response
+
+Training is queued and returns status:
 
 ```javascript
 {
   err: null,
   response: {
-    id: 'training_xyz789',
+    id: 'source_xyz789',
     bot_id: 'bot_abc123',
-    content: 'Our company offers 24/7 customer support...',
+    source: 'Our company offers 24/7 customer support...',
+    type: 'text',
+    status: 'processing', // 'processing', 'success', or 'failed'
+    tokens: 150,
     created_at: '2025-01-01T12:00:00Z'
   }
 }
 ```
 
-## Add Multiple Training Items
+For `file`, `website`, and `webpage` types, an additional `links` field is included:
 
 ```javascript
-const trainingData = [
-  'We are open Monday-Friday 9am-5pm EST',
-  'Free shipping on orders over $50',
-  'Returns accepted within 30 days',
-  'Contact support: support@example.com or (555) 123-4567'
-];
-
-for (const content of trainingData) {
-  const result = await client.addTraining({
+{
+  err: null,
+  response: {
+    id: 'source_xyz789',
     bot_id: 'bot_abc123',
-    content
-  });
-
-  if (result.err) {
-    console.error('Failed to add:', content, result.err);
+    source: ['https://example.com/page1', 'https://example.com/page2'],
+    type: 'webpage',
+    status: 'processing',
+    tokens: 0, // Populated after processing
+    links: ['https://example.com/page1', 'https://example.com/page2'],
+    created_at: '2025-01-01T12:00:00Z'
   }
 }
 ```
 
-## Add Training with Metadata
+## Training from Text
 
 ```javascript
-const result = await client.addTraining({
+const result = await client.startTraining({
   bot_id: 'bot_abc123',
-  content: 'Our premium plan costs $99/month',
-  metadata: {
-    category: 'pricing',
-    plan: 'premium',
-    last_updated: '2025-01-01'
-  }
+  source: 'We are open Monday-Friday 9am-5pm EST',
+  type: 'text'
 });
+
+console.log('Status:', result.response.status); // 'processing'
+console.log('Tokens:', result.response.tokens);
 ```
 
-## List Training Data
+## Training from Website
 
 ```javascript
-const result = await client.listTraining({
-  bot_id: 'bot_abc123'
+const result = await client.startTraining({
+  bot_id: 'bot_abc123',
+  source: 'https://example.com',
+  type: 'website'
+});
+
+console.log('Status:', result.response.status); // 'processing'
+console.log('Links:', result.response.links); // Crawled pages
+```
+
+## Training from Files
+
+```javascript
+const result = await client.startTraining({
+  bot_id: 'bot_abc123',
+  source: ['file1.pdf', 'file2.docx'],
+  type: 'file'
+});
+
+console.log('Status:', result.response.status); // 'processing'
+console.log('Links:', result.response.links);
+```
+
+## Training from Webpages
+
+```javascript
+const result = await client.startTraining({
+  bot_id: 'bot_abc123',
+  source: [
+    'https://example.com/page1',
+    'https://example.com/page2',
+    'https://example.com/page3'
+  ],
+  type: 'webpage'
+});
+
+console.log('Status:', result.response.status); // 'processing'
+console.log('Links:', result.response.links);
+```
+
+## Get Training Item
+
+```javascript
+const result = await client.fetchTraining({
+  bot_id: 'bot_abc123',
+  source_id: 'source_xyz789'
+});
+
+if (result.err) {
+  console.error('Error:', result.err);
+} else {
+  console.log('Training item:', result.response);
+}
+```
+
+## List All Training Data
+
+```javascript
+const result = await client.fetchTrainings({
+  bot_id: 'bot_abc123',
+  page: 1,
+  per_page: 10
 });
 
 if (result.err) {
@@ -112,12 +171,32 @@ if (result.err) {
 }
 ```
 
+## Update Training Data
+
+```javascript
+const result = await client.updateTraining({
+  bot_id: 'bot_abc123',
+  source_id: 'source_xyz789',
+  source: 'Updated content here',
+  type: 'text'
+});
+
+if (result.err) {
+  console.error('Error:', result.err);
+} else {
+  console.log('Status:', result.response.status); // 'processing'
+  console.log('Tokens:', result.response.tokens);
+}
+```
+
+Update returns the same format as `startTraining`, including status, tokens, and links (for `file`, `website`, `webpage` types).
+
 ## Delete Training Data
 
 ```javascript
 const result = await client.deleteTraining({
   bot_id: 'bot_abc123',
-  training_id: 'training_xyz789'
+  source_id: 'source_xyz789'
 });
 
 if (result.err) {
@@ -129,58 +208,78 @@ if (result.err) {
 
 ## Best Practices
 
-### 1. Keep Content Focused
+### 1. Choose the Right Type
 
 ```javascript
-// Good - Specific and clear
-await client.addTraining({
+// Text content
+await client.startTraining({
   bot_id: 'bot_abc123',
-  content: 'Returns are accepted within 30 days of purchase with original receipt'
+  source: 'Returns are accepted within 30 days of purchase',
+  type: 'text'
 });
 
-// Bad - Too vague
-await client.addTraining({
+// Website (crawls entire site)
+await client.startTraining({
   bot_id: 'bot_abc123',
-  content: 'We have a return policy'
+  source: 'https://docs.example.com',
+  type: 'website'
+});
+
+// Specific webpages (array of URLs)
+await client.startTraining({
+  bot_id: 'bot_abc123',
+  source: ['https://example.com/faq', 'https://example.com/pricing'],
+  type: 'webpage'
+});
+
+// Files (PDFs, DOCX, etc.)
+await client.startTraining({
+  bot_id: 'bot_abc123',
+  source: ['manual.pdf', 'guide.docx'],
+  type: 'file'
 });
 ```
 
-### 2. Structure FAQs
+### 2. Check Training Status
 
 ```javascript
-const faqs = [
-  {
-    question: 'What are your business hours?',
-    answer: 'We are open Monday-Friday 9am-5pm EST'
-  },
-  {
-    question: 'Do you offer free shipping?',
-    answer: 'Yes, free shipping on orders over $50'
-  }
-];
+// Start training
+const training = await client.startTraining({
+  bot_id: 'bot_abc123',
+  source: 'https://example.com',
+  type: 'website'
+});
 
-for (const faq of faqs) {
-  await client.addTraining({
-    bot_id: 'bot_abc123',
-    content: `Q: ${faq.question}\nA: ${faq.answer}`
-  });
+// Check status later
+const status = await client.fetchTraining({
+  bot_id: 'bot_abc123',
+  source_id: training.response.id
+});
+
+if (status.response.status === 'success') {
+  console.log('Training completed!');
+  console.log('Total tokens:', status.response.tokens);
+  console.log('Pages crawled:', status.response.links.length);
+} else if (status.response.status === 'failed') {
+  console.error('Training failed');
 }
 ```
 
-### 3. Update Regularly
+### 3. Monitor Token Usage
 
 ```javascript
-// Delete old pricing
-await client.deleteTraining({
+// Fetch all training to see token usage
+const trainings = await client.fetchTrainings({
   bot_id: 'bot_abc123',
-  training_id: 'old_pricing_id'
+  page: 1,
+  per_page: 100
 });
 
-// Add new pricing
-await client.addTraining({
-  bot_id: 'bot_abc123',
-  content: 'Premium plan: $199/month (updated Jan 2025)'
-});
+const totalTokens = trainings.response.reduce((sum, item) => {
+  return sum + (item.tokens || 0);
+}, 0);
+
+console.log('Total tokens used:', totalTokens);
 ```
 
 ## Training Limits by Plan
@@ -225,10 +324,11 @@ async function setupBot() {
     'Free shipping on orders over $50'
   ];
 
-  for (const content of trainingContent) {
-    await client.addTraining({
+  for (const source of trainingContent) {
+    await client.startTraining({
       bot_id: bot.response.id,
-      content
+      source,
+      type: 'text'
     });
   }
 

@@ -1,0 +1,61 @@
+---
+title: "Trello"
+description: "Manage Kanban boards and cards"
+---
+
+## Overview
+
+Connect Trello to create and manage boards, lists, and cards.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Trello** → **Deploy**
+  </Step>
+
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Trello**
+  </Step>
+
+  <Step title="Configure">
+    Enter your Trello API Key and Token
+  </Step>
+
+  <Step title="Test">
+    Playground: "Create a card in my Todo list"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Add a card to my 'In Progress' list: Review pull request #42"
+
+Agent: Created Trello card in 'In Progress':
+       "Review pull request #42"
+```
+
+## Integration Example
+
+**With Gmail:**
+
+```text
+User: "Create Trello cards from emails labeled 'Task'"
+
+Agent: *searches Gmail for 'Task' label*
+       *creates Trello cards*
+
+       Created 4 Trello cards from Gmail tasks
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Asana" icon="list-check" href="/integrations/connectors/asana">
+    Alternative project management
+  </Card>
+  <Card title="Notion" icon="note" href="/integrations/connectors/notion">
+    Knowledge base
+  </Card>
+</CardGroup>

@@ -1,0 +1,134 @@
+---
+title: "Using with ChatGPT"
+description: "Connect BoostGPT MCP servers to ChatGPT"
+---
+
+## Overview
+
+Use your BoostGPT MCP servers with ChatGPT by creating custom GPT actions.
+
+## Prerequisites
+
+- ChatGPT Plus or Enterprise subscription
+- At least one MCP server created in BoostGPT
+
+## Setup
+
+<Steps>
+  <Step title="Get MCP URL">
+    **Dashboard -> MCP Servers -> Your Server**
+
+    Copy your MCP URL:
+    ```text
+    https://mcp.your-server-id.boostgpt.co
+    ```
+  </Step>
+
+  <Step title="Create Custom GPT">
+    1. Go to [ChatGPT](https://chat.openai.com)
+    2. Click **Explore GPTs**
+    3. Click **Create a GPT**
+  </Step>
+
+  <Step title="Configure Actions">
+    In the GPT Builder:
+
+    1. Click **Configure** tab
+    2. Scroll to **Actions**
+    3. Click **Create new action**
+  </Step>
+
+  <Step title="Add MCP Server">
+    Import your MCP server:
+
+    1. Get server URL: `https://mcp.your-server-id.boostgpt.co`
+    2. Paste into **Sever url** field
+  </Step>
+
+  <Step title="Add Authentication">
+    If your MCP server requires authentication:
+
+    1. Click **Authentication**
+    2. Select **API Key**
+    3. Add your API key from Dashboard -> MCP Servers -> Settings
+  </Step>
+
+  <Step title="Test">
+    Use your custom GPT:
+    ```text
+    You: "Look up customer john@acme.com"
+    GPT: *uses your MCP action* "Found customer..."
+    ```
+  </Step>
+</Steps>
+
+## Authentication
+
+### API Key Authentication
+
+In GPT Actions configuration:
+
+1. **Authentication Type**: API Key
+2. **API Key**: Your key from Dashboard -> MCP Servers -> Settings
+3. **Auth Type**: Bearer (or Custom depending on your setup)
+
+
+## Example Usage
+
+After setup, your custom GPT can use your MCP tools:
+
+```text
+You: "Look up all customers in California"
+
+GPT: *uses your MCP server's query_customers tool*
+     Found 42 customers in California:
+     - Acme Corp (Los Angeles)
+     - TechStart (San Francisco)
+     ...
+
+You: "Create a $25K deal for Acme Corp"
+
+GPT: *uses create_deal tool*
+     Deal created:
+     - Customer: Acme Corp
+     - Amount: $25,000
+     - Deal ID: DEAL-789
+
+You: "Email them about the deal"
+
+GPT: *uses send_email tool*
+     Email sent to contact@acmecorp.com
+```
+
+
+## Best Practices
+1. **Name servers clearly** - Use descriptive names in config
+2. **Monitor usage** - Check Dashboard -> MCP Servers -> Logs
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion icon="link-2-off" title="Action not connecting">
+    Verify your MCP URL is correct and accessible. Test it directly in your browser.
+  </Accordion>
+
+  <Accordion icon="ban" title="Authentication errors">
+    Ensure the API key in GPT Actions matches what's configured in your MCP server settings.
+  </Accordion>
+
+  <Accordion icon="clock" title="Timeouts">
+    Optimize your MCP server to respond quickly. ChatGPT actions have strict timeout limits.
+  </Accordion>
+
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Create MCP Server" icon="server" href="/integrations/custom/overview">
+    Build custom MCP servers
+  </Card>
+  <Card title="Claude Desktop" icon="message" href="/integrations/external/claude-desktop">
+    Use with Claude Desktop
+  </Card>
+</CardGroup>

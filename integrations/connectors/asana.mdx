@@ -1,0 +1,61 @@
+---
+title: "Asana"
+description: "Manage projects and tasks"
+---
+
+## Overview
+
+Connect Asana to create and manage projects, tasks, and teams.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Asana** → **Deploy**
+  </Step>
+
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Asana**
+  </Step>
+
+  <Step title="Configure">
+    Sign in to Asana and grant access (OAuth)
+  </Step>
+
+  <Step title="Test">
+    Playground: "Show me my tasks for today"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Create a task: Review Q1 budget, due next Friday"
+
+Agent: Created Asana task:
+       "Review Q1 budget" - Due Jan 10, 2025
+```
+
+## Integration Example
+
+**With Gmail:**
+
+```text
+User: "Convert my Gmail drafts into Asana tasks"
+
+Agent: *gets Gmail drafts*
+       *creates Asana tasks*
+
+       Created 5 Asana tasks from Gmail drafts
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Trello" icon="trello" href="/integrations/connectors/trello">
+    Alternative task management
+  </Card>
+  <Card title="Monday.com" icon="calendar-days" href="/integrations/connectors/monday">
+    Team collaboration
+  </Card>
+</CardGroup>

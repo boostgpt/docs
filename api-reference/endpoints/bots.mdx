@@ -1,0 +1,48 @@
+---
+title: "Bots API"
+description: "Create and manage bots"
+---
+
+## Endpoints
+
+All bot endpoints are documented in the Core SDK reference:
+
+<CardGroup cols={2}>
+  <Card title="Bot Management" icon="robot" href="/sdk/core/bot-management">
+    Create, read, update, delete bots
+  </Card>
+  <Card title="API Reference" icon="code" href="/sdk/core/api-reference">
+    Complete API documentation
+  </Card>
+</CardGroup>
+
+## Quick Reference
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/v1/bot/create` | Create new bot |
+| POST | `/v1/bot/read` | Get bot details |
+| POST | `/v1/bot/list` | List all bots |
+| POST | `/v1/bot/update` | Update bot |
+| POST | `/v1/bot/reset` | Reset bot (delete training) |
+| POST | `/v1/bot/delete` | Delete bot |
+
+## Using the SDK
+
+We recommend using the Core SDK instead of direct API calls:
+
+```javascript
+import { BoostGPT } from '@boostgpt/core-sdk';
+
+const client = new BoostGPT({
+  apiKey: process.env.BOOSTGPT_API_KEY
+});
+
+// Create bot
+const result = await client.createBot({
+  name: 'My Bot',
+  model: 'gpt-4o'
+});
+```
+
+See [Bot Management](/sdk/core/bot-management) for full documentation.

@@ -1,0 +1,54 @@
+---
+title: "OneDrive"
+description: "Microsoft cloud storage"
+---
+
+## Overview
+
+Connect OneDrive to manage files in Microsoft's cloud storage.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **OneDrive** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **OneDrive**
+  </Step>
+  <Step title="Configure">
+    Sign in with Microsoft account (OAuth)
+  </Step>
+  <Step title="Test">
+    Playground: "List my OneDrive files"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Upload presentation.pptx to OneDrive/Work folder"
+
+Agent: Uploaded presentation.pptx to OneDrive/Work
+```
+
+## Integration Example
+
+**With Outlook:**
+
+```text
+User: "Save Outlook email attachments to OneDrive"
+
+Agent: Saved 12 attachments to OneDrive/Email Attachments
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Google Drive" icon="google" href="/integrations/connectors/google-drive">
+    Google storage
+  </Card>
+  <Card title="Dropbox" icon="dropbox" href="/integrations/connectors/dropbox">
+    Alternative storage
+  </Card>
+</CardGroup>

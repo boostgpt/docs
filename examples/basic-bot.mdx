@@ -1,0 +1,250 @@
+---
+title: "Basic Bot Example"
+description: "Build a simple AI agent from scratch"
+---
+
+## Overview
+
+Create a basic AI agent using the BoostGPT Core SDK in under 5 minutes.
+
+## Prerequisites
+
+```bash
+npm install @boostgpt/core-sdk
+```
+
+## Complete Example
+
+```javascript
+import { BoostGPT } from '@boostgpt/core-sdk';
+
+// Initialize client
+const client = new BoostGPT({
+  apiKey: process.env.BOOSTGPT_API_KEY
+});
+
+async function main() {
+  // 1. Create a bot
+  console.log('Creating bot...');
+  const botResult = await client.createBot({
+    name: 'Customer Support Assistant',
+    model: 'gpt-4o',
+    instruction: 'You are a helpful customer support agent. Be friendly and concise.'
+  });
+
+  if (botResult.err) {
+    console.error('Error creating bot:', botResult.err);
+    return;
+  }
+
+  const botId = botResult.response.id;
+  console.log('Bot created:', botId);
+
+  // 2. Add training data
+  console.log('\nAdding training data...');
+  const trainingResult = await client.startTraining({
+    bot_id: botId,
+    type: 'text',
+    source: `
+      Q: What are your business hours?
+      A: We're open Monday-Friday, 9am-5pm EST.
+
+      Q: How do I reset my password?
+      A: Click "Forgot Password" on the login page and follow the instructions.
+
+      Q: What's your return policy?
+      A: We accept returns within 30 days of purchase.
+    `
+  });
+
+  if (trainingResult.err) {
+    console.error('Error adding training:', trainingResult.err);
+    return;
+  }
+
+  console.log('Training queued:', trainingResult.response.id);
+
+  // Wait for training to process
+  console.log('Waiting for training to complete...');
+  await new Promise(resolve => setTimeout(resolve, 3000));
+
+  // 3. Chat with bot
+  console.log('\nTesting bot...');
+  const chatResult = await client.chat({
+    bot_id: botId,
+    message: 'What are your business hours?',
+    chat_id: 'user-123'
+  });
+
+  if (chatResult.err) {
+    console.error('Error chatting:', chatResult.err);
+    return;
+  }
+
+  console.log('Bot response:', chatResult.response);
+}
+
+main();
+```
+
+## Step-by-Step Breakdown
+
+### 1. Initialize Client
+
+```javascript
+import { BoostGPT } from '@boostgpt/core-sdk';
+
+const client = new BoostGPT({
+  apiKey: process.env.BOOSTGPT_API_KEY
+});
+```
+
+Get your API key from: **Dashboard -> Settings -> API Keys**
+
+### 2. Create Bot
+
+```javascript
+const botResult = await client.createBot({
+  name: 'Customer Support Assistant',
+  model: 'gpt-4o',
+  instruction: 'You are a helpful customer support agent.'
+});
+
+const botId = botResult.response.id;
+```
+
+### 3. Add Training Data
+
+```javascript
+await client.startTraining({
+  bot_id: botId,
+  type: 'text',
+  source: 'Your training content here...'
+});
+```
+
+### 4. Chat with Bot
+
+```javascript
+const chatResult = await client.chat({
+  bot_id: botId,
+  message: 'User question',
+  chat_id: 'user-123'
+});
+
+console.log(chatResult.response);
+```
+
+## Running the Example
+
+```bash
+# Set API key
+export BOOSTGPT_API_KEY=your_api_key
+
+# Run
+node basic-bot.js
+```
+
+**Output:**
+```text
+Creating bot...
+Bot created: bot_abc123
+
+Adding training data...
+Training queued: source_xyz789
+Waiting for training to complete...
+
+Testing bot...
+Bot response: We're open Monday-Friday, 9am-5pm EST.
+```
+
+## Adding More Features
+
+### Stream Responses
+
+```javascript
+const chatResult = await client.chat({
+  bot_id: botId,
+  message: 'Tell me about your services',
+  stream: true
+});
+
+// Handle streaming
+for await (const chunk of chatResult.response) {
+  process.stdout.write(chunk);
+}
+```
+
+### Multiple Training Sources
+
+```javascript
+// Add FAQ
+await client.startTraining({
+  bot_id: botId,
+  type: 'text',
+  source: 'FAQ content...'
+});
+
+// Add from website
+await client.startTraining({
+  bot_id: botId,
+  type: 'website',
+  source: 'https://example.com'
+});
+
+// Add files
+await client.startTraining({
+  bot_id: botId,
+  type: 'file',
+  source: ['manual.pdf', 'guide.docx']
+});
+```
+
+### Custom Model Settings
+
+```javascript
+const chatResult = await client.chat({
+  bot_id: botId,
+  message: 'Question',
+  model: 'gpt-4o-mini',  // Override model
+  max_reply_tokens: 500,   // Limit response length
+  reasoning_mode: 'stepwise'  // Use step-by-step reasoning
+});
+```
+
+## Error Handling
+
+Always handle errors:
+
+```javascript
+const result = await client.createBot({
+  name: 'My Bot',
+  model: 'gpt-4o'
+});
+
+if (result.err) {
+  console.error('Error:', result.err);
+  // Handle error
+  return;
+}
+
+// Use result.response
+const botId = result.response.id;
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Multi-Channel Bot" icon="messages" href="/examples/multi-channel">
+    Deploy bot to multiple platforms
+  </Card>
+  <Card title="With Integrations" icon="plug" href="/examples/with-integrations">
+    Add custom tools and integrations
+  </Card>
+  <Card title="SDK Reference" icon="code" href="/sdk/core/overview">
+    Full SDK documentation
+  </Card>
+  <Card title="API Reference" icon="book" href="/api-reference/introduction">
+    REST API documentation
+  </Card>
+</CardGroup>

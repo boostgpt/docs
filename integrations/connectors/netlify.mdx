@@ -1,0 +1,55 @@
+---
+title: "Netlify"
+description: "Web hosting and deployment"
+---
+
+## Overview
+
+Connect Netlify to manage deployments and sites.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Netlify** → **Deploy**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Netlify**
+  </Step>
+  <Step title="Configure">
+    Enter your Netlify Personal Access Token
+  </Step>
+  <Step title="Test">
+    Playground: "List my Netlify sites"
+  </Step>
+</Steps>
+
+## Example Usage
+
+```text
+User: "Trigger a deployment for my-site"
+
+Agent: Deployment started for my-site
+       Deploy ID: 123abc...
+```
+
+## Integration Example
+
+**With GitHub:**
+
+```text
+User: "Deploy Netlify when GitHub PR is merged"
+
+Agent: Monitoring GitHub PRs, will trigger Netlify deploys
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Vercel" icon="triangle" href="/integrations/connectors/vercel">
+    Alternative deployment
+  </Card>
+  <Card title="GitHub" icon="github" href="/integrations/connectors/github">
+    Code repository
+  </Card>
+</CardGroup>

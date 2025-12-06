@@ -1,4 +1,358 @@
 ---
 title: Product updates
 description: 'Stay updated with the latest BoostGPT features and improvements'
+rss: true
+noindex: true
 ---
+
+<Update label="December 2025" tags={["New releases"]} rss={{ title: "Advanced Reasoning Models & Multi-Provider Support", description: "Support for 50+ AI models across 9 providers with advanced reasoning capabilities" }}>
+
+  ## Reasoning models support
+
+  - **OpenAI O-Series**: O1, O1 Mini, O3 Mini with extended thinking
+  - **Claude 3 Opus**: Extended thinking capabilities
+  - **Google Gemini**: 2.0 Flash Thinking mode
+  - **xAI Grok**: Grok 3 Reasoning
+  - **DeepSeek R1**: Cost-effective reasoning model
+  - Multiple reasoning modes: `auto`, `standard`, `stepwise`, `react`, `interactive`
+
+  ## Expanded model catalog
+
+  - **50+ models** across 9 AI providers
+  - **GPT-5 series**: GPT-5, GPT-5.1, GPT-5-mini, GPT-5-nano
+  - **GPT-4.1 series**: GPT-4.1, GPT-4.1-mini
+  - **Claude 4.5 series**: claude-sonnet-4-5, claude-haiku-4-5
+  - **Gemini**: Gemini 3, Gemini 2.5 Pro, Gemini 2.5 Flash Lite
+  - **Grok**: Grok 4.1, Grok 4, Grok 3 variants
+
+  ## New provider support
+
+  - xAI integration
+  - DeepSeek integration
+  - Existing: OpenAI, Google, Anthropic, Mistral, Cohere, Groq, Ollama
+
+  Learn more about [reasoning models](/providers/reasoning-models) and [available models](/models).
+
+</Update>
+
+<Update label="December 2025" tags={["New releases"]} rss={{ title: "Model Context Protocol (MCP) Integration", description: "Build and deploy MCP servers with 30+ pre-built connectors" }}>
+
+  ## MCP server generation
+
+  - **Auto-generate from OpenAPI specs**: Convert any OpenAPI specification to MCP server
+  - **Postman collection import**: Transform Postman collections into MCP servers
+  - **Managed hosting**: Custom MCP URLs at `https://mcp.your-server-id.boostgpt.co`
+  - **External compatibility**: Use with Claude Desktop, ChatGPT, and other MCP-compatible agents
+
+  ## Pre-built connector library
+
+  **45+ ready-to-use connectors** including:
+  - **Calendar**: Calendly, Google Calendar, Cal.com, Outlook
+  - **Email**: Gmail, Outlook, SendGrid, Mailchimp, Twilio
+  - **CRM**: HubSpot, Salesforce, Pipedrive, Zoho
+  - **Productivity**: Notion, Asana, Jira, Linear, Trello, ClickUp, Monday.com
+  - **Storage**: Google Drive, Dropbox, OneDrive
+  - **Development**: GitHub, Vercel, Netlify
+  - **Analytics**: Google Analytics, Mixpanel, Datadog, Sentry
+  - **AI & Media**: Stability AI, Runway, Kling AI, Luma Labs, Unsplash, Pexels
+  - **E-Commerce**: Shopify, WooCommerce, Stripe
+  - **Communication**: Discord, Slack
+
+  Learn more about [MCP integrations](/integrations/mcp-overview).
+
+</Update>
+
+<Update label="December 2025" tags={["New releases"]} rss={{ title: "Router SDK & Multi-Platform Deployment", description: "Deploy agents across Discord, Telegram, Slack, WhatsApp, and custom platforms" }}>
+
+  ## Multi-platform support
+
+  - **Discord**: Full Discord bot integration
+  - **Telegram**: Telegram bot adapter
+  - **Slack**: Slack workspace integration
+  - **WhatsApp**: WhatsApp Business API support
+  - **Crisp**: Live chat integration
+  - **Custom adapters**: Build your own platform adapters
+
+  ## Custom adapter framework
+
+  - Standardized adapter interface
+  - Example Twitter adapter provided
+  - Event-driven architecture
+  - Message routing and context management
+
+  Explore the [Router SDK documentation](/sdk/router/overview).
+
+</Update>
+
+<Update label="December 2025" tags={["New releases"]} rss={{ title: "Webhooks & Real-Time Events", description: "Subscribe to real-time events with secure webhook delivery" }}>
+
+  ## Event subscriptions
+
+  - `bot.created` - New bot creation events
+  - `bot.updated` - Bot configuration changes
+  - `bot.deleted` - Bot deletion events
+  - `chat.message` - New chat message events
+  - `subscriber.added` - New subscriber capture
+  - `training.added` - Training data additions
+
+  ## Security features
+
+  - HMAC SHA-256 signature verification
+  - `x-boostgpt-signature` header validation
+  - Secure event delivery
+  - Webhook testing with ngrok support
+
+  Learn more about [webhooks](/developers/webhooks).
+
+</Update>
+
+<Update label="December 2025" tags={["Improvements"]} rss={{ title: "Enhanced Chat API", description: "Advanced chat parameters including reasoning mode, temperature control, and BYOK support" }}>
+
+  ## Advanced chat parameters
+
+  - **reasoning_mode**: Choose from `auto`, `standard`, `stepwise`, `react`, `interactive`
+  - **temperature**: Control model creativity (0-1 range)
+  - **model override**: Change models per request
+  - **provider_host**: Self-hosted Ollama support
+  - **provider_key**: Bring Your Own Key (BYOK) for any provider
+  - **source_ids**: Target specific training sources
+  - **memory control**: Toggle agent memory per request
+
+  ## Response customization
+
+  - Real-time streaming with `stream` parameter
+  - Token limit control with `max_reply_tokens`
+  - Instruction override per request
+  - Conversation context with `chat_id`
+
+  Refer to the [Chat API documentation](/sdk/core/chat-api).
+
+</Update>
+
+<Update label="December 2025" tags={["Improvements"]} rss={{ title: "Training Data Enhancements", description: "Improved training with status tracking, token monitoring, and advanced source management" }}>
+
+  ## Training capabilities
+
+  - **Multiple source types**: Text, websites, files, multiple URLs
+  - **Status tracking**: Monitor processing status (`processing`, `success`, `failed`)
+  - **Token usage**: Track tokens per training item
+  - **Source management**: Update and delete training data
+  - **Website crawling**: Train on entire domains
+
+  ## Supported formats
+
+  - PDF documents
+  - Word documents (DOCX)
+  - Text files
+  - Markdown files
+  - CSV files
+  - PowerPoint presentations
+
+  Learn more about [training data management](/sdk/core/training-data).
+
+</Update>
+
+<Update label="June 2023" tags={["Improvements"]} rss={{ title: "Enhanced Chatbot Builder", description: "File upload, chat UI improvements, retry functionality, and network stream management" }}>
+
+  ## File upload functionality
+
+  - Added file upload capability to chatbot builder source management
+  - Users can now upload files directly within the source management feature
+  - Train your AI bot with local documents more efficiently
+
+  ## Chat UI improvements
+
+  - Updated chat interface to display messages in bubbles
+  - Redesigned for more engaging and intuitive user experience
+  - Enhanced aesthetics and readability of chat feature
+
+  ## Message retry functionality
+
+  - Implemented "failed to send. Retry" feature for chat messages
+  - Informative prompts when network issues prevent message delivery
+  - Option to retry sending failed messages
+  - Improved message delivery status visibility
+
+  ## Network connectivity handling
+
+  - Event stream automatically stops when network connection is lost
+  - Prevents unnecessary data requests and reduces potential errors
+  - Smoother user experience during network interruptions
+  - Prevents data inconsistencies
+
+</Update>
+
+<Update label="June 2023" tags={["New releases"]} rss={{ title: "Build Your Own AI Assistant", description: "Create personalized AI assistants, Zapier integration, and subscriber growth tools" }}>
+
+  ## Build your own AI Assistant
+
+  - Create fully personalized AI Assistants
+  - Customize and configure according to specific requirements
+  - Enhanced flexibility and versatility
+
+  ## Zapier integration
+
+  - Automate chatbot workflows with Zapier integration
+  - Seamless data exchange between chatbot and other applications
+  - Streamlined processes and improved productivity
+
+  ## Subscriber list growth
+
+  - Leverage AI Assistant to grow subscriber lists
+  - Facilitate seamless interaction and engagement
+  - Enhanced subscription management capabilities
+
+  Read more about these updates in our [newsletter](https://boostgpt.co/newsletter).
+
+</Update>
+
+<Update label="June 2023" tags={["New releases"]} rss={{ title: "Subscriber API Endpoint", description: "New endpoint to fetch all bot subscribers" }}>
+
+  ## bot/subscriber/readall endpoint
+
+  - New API endpoint to fetch all subscribers associated with a bot
+  - Retrieve comprehensive list of subscribers in a single request
+  - Streamlined method for accessing subscriber data
+  - Simplified subscriber information retrieval for analysis, management, and reporting
+
+  Refer to the [API reference](/api-reference/endpoint/subscriber/readall).
+
+</Update>
+
+<Update label="June 2023" tags={["New releases"]} rss={{ title: "Chat List Endpoint", description: "Fetch all chats in a bot" }}>
+
+  ## bot/chat/readall endpoint
+
+  - Introducing chats pulling functionality for chatbots
+  - Effortlessly retrieve all chats in a bot
+  - Access valuable insights and information
+  - Enhance analysis and improve customer support
+  - Drive data-driven decisions
+
+  Refer to the [API reference](/api-reference/endpoint/chat/readall).
+
+</Update>
+
+<Update label="May 2023" tags={["New releases"]} rss={{ title: "Chat History Endpoint", description: "Retrieve chat history for specific conversations" }}>
+
+  ## bot/chat/read endpoint
+
+  - Chat history pulling functionality for specific static chat_id
+  - Effortlessly retrieve chat history
+  - Access past conversations for enhanced analysis
+  - Improve customer support with conversation insights
+  - Drive data-driven decisions
+
+  Refer to the [API reference](/api-reference/endpoint/chat/read).
+
+</Update>
+
+<Update label="May 2023" tags={["New releases"]} rss={{ title: "Chat Deletion Endpoint", description: "Delete chat history for specific conversations" }}>
+
+  ## bot/chat/delete endpoint
+
+  - Enable chat history deletion for specific static chat_id
+  - Users can reset conversations with the bot
+  - Enhanced user control over chat history
+  - Promotes fresh starts with the bot
+
+  Refer to the [API reference](/api-reference/endpoint/chat/delete).
+
+</Update>
+
+<Update label="May 2023" tags={["Improvements"]} rss={{ title: "Streaming Support", description: "Control response behavior with stream parameter" }}>
+
+  ## Response streaming control
+
+  - Added "stream" parameter to bot/chat endpoint
+  - Customize response delivery behavior
+  - Choose between partial progress updates or complete response
+  - Set stream to `true` for real-time updates or `false` to wait for complete response
+
+  Refer to the updated [API reference](/api-reference/endpoint/chat).
+
+</Update>
+
+<Update label="May 2023" tags={["Improvements"]} rss={{ title: "Conversational AI", description: "Support for conversational engagement with AI Bot" }}>
+
+  ## Conversational chat support
+
+  - Introduced chat_id parameter to bot/chat endpoint
+  - Engage with AI bot in conversational manner
+  - Maintain context across multiple messages
+  - Enhanced user experience with continuous conversations
+
+  Refer to the updated [API reference](/api-reference/endpoint/chat).
+
+</Update>
+
+<Update label="May 2023" tags={["Improvements"]} rss={{ title: "Multiple File Links", description: "Support for multiple file links in bot training" }}>
+
+  ## Multiple file link support
+
+  - Added support for multiple file links in bot training
+  - Updated source/create and source/update endpoints
+  - Train bots using wider variety of file sources
+  - Improved accuracy and effectiveness with diverse training data
+
+  ### Supported file types
+
+  - CSV files
+  - PowerPoint presentations (PPT)
+  - Word documents (DOC)
+  - PDF documents
+  - Markdown files (MD)
+  - Text files (TXT)
+
+  Example request:
+
+  ```json
+  {
+    "project_id": "13c8cc4a-ddef-11ed-b5a3-33d8a09a24e3",
+    "bot_id": "bc65f4aa-e41a-11ed-ad91-a2ce1f33a089",
+    "tags": ["terms", "privacy"],
+    "type": "file",
+    "source": [
+      "https://www.example.com/path-to-your-file.csv",
+      "https://www.example.com/path-to-your-file.ppt",
+      "https://www.example.com/path-to-your-file.doc",
+      "https://www.example.com/path-to-your-file.pdf",
+      "https://www.example.com/path-to-your-file.md",
+      "https://www.example.com/path-to-your-file.txt"
+    ]
+  }
+  ```
+
+  Refer to the [API reference](/api-reference/endpoint/source/create).
+
+</Update>
+
+<Update label="May 2023" tags={["Improvements"]} rss={{ title: "Multiple Webpage Links", description: "Support for multiple webpage links in bot training" }}>
+
+  ## Multiple webpage link support
+
+  - Added support for multiple webpage links when training bots
+  - Updated source/create and source/update endpoints
+  - Enhanced training capabilities with multiple web sources
+  - Improved bot accuracy and response quality
+
+  Example request:
+
+  ```json
+  {
+    "project_id": "13c8cc4a-ddef-11ed-b5a3-33d8a09a24e3",
+    "bot_id": "bc65f4aa-e41a-11ed-ad91-a2ce1f33a089",
+    "tags": ["property", "rent"],
+    "type": "webpage",
+    "source": [
+      "https://www.propertyfinder.ae/en/rent/properties-for-rent.html?page=7",
+      "https://www.propertyfinder.ae/en/rent/properties-for-rent.html?page=6",
+      "https://www.propertyfinder.ae/en/rent/properties-for-rent.html?page=4",
+      "https://www.propertyfinder.ae/en/rent/properties-for-rent.html?page=2"
+    ]
+  }
+  ```
+
+  Refer to the [API reference](/api-reference/endpoint/source/create).
+
+</Update>

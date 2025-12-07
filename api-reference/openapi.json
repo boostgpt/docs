@@ -583,6 +583,467 @@
         }
       }
     },
+    "/v1/bot/tool": {
+      "get": {
+        "summary": "List Tools",
+        "tags": [
+          "Tools"
+        ],
+        "description": "Get all tools configured for an agent",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            },
+            "description": "Page number"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            },
+            "description": "Items per page"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter criteria as JSON string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tools retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ToolListResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Tool",
+        "tags": [
+          "Tools"
+        ],
+        "description": "Create a new tool configuration for an agent",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateToolRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tool created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ToolResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/tool/{id}": {
+      "get": {
+        "summary": "Get Tool",
+        "tags": [
+          "Tools"
+        ],
+        "description": "Get a specific tool configuration",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Tool ID"
+          },
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tool retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ToolResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tool not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Tool",
+        "tags": [
+          "Tools"
+        ],
+        "description": "Update an existing tool configuration",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Tool ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateToolRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tool updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ToolResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tool not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Tool",
+        "tags": [
+          "Tools"
+        ],
+        "description": "Delete a tool configuration",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Tool ID"
+          },
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tool deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/tool/{id}/configure": {
+      "put": {
+        "summary": "Configure Tool Settings",
+        "tags": [
+          "Tools"
+        ],
+        "description": "Configure multiple tool settings at once (bulk toggle)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Tool ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfigureToolsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tools configured successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/tool/{id}/refresh": {
+      "post": {
+        "summary": "Refresh Tools",
+        "tags": [
+          "Tools"
+        ],
+        "description": "Refresh tools from MCP server",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Tool ID"
+          },
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tools refreshed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/tool/{id}/toggle": {
+      "post": {
+        "summary": "Toggle Tool",
+        "tags": [
+          "Tools"
+        ],
+        "description": "Toggle specific tool active status",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Tool ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ToggleToolRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tool toggled successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/tool/{id}/test": {
+      "post": {
+        "summary": "Test Tool Connection",
+        "tags": [
+          "Tools"
+        ],
+        "description": "Test connection to a tool server",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Tool ID"
+          },
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Connection test completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestConnectionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/bot/chat": {
       "post": {
         "summary": "Chat with Agent",
@@ -795,7 +1256,218 @@
         }
       }
     },
-    "/v1/bot/subscriber/readall": {
+    "/v1/bot/chat/execute-tool": {
+      "post": {
+        "summary": "Execute Tool",
+        "tags": [
+          "Chat"
+        ],
+        "description": "Execute a tool within a chat session (single or batch execution)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExecuteToolRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tool executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecuteToolResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/chat/message/vote": {
+      "put": {
+        "summary": "Vote on Message",
+        "tags": [
+          "Chat"
+        ],
+        "description": "Upvote or downvote a chat message",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoteMessageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Vote recorded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/chat/message/vote-status": {
+      "get": {
+        "summary": "Get Vote Status",
+        "tags": [
+          "Chat"
+        ],
+        "description": "Get the vote status for a specific chat message",
+        "parameters": [
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Message ID"
+          },
+          {
+            "name": "voter_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Voter ID"
+          },
+          {
+            "name": "voter_type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["member"]
+            },
+            "description": "Type of voter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Vote status retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoteStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/chat/message/delete": {
+      "delete": {
+        "summary": "Delete Message",
+        "tags": [
+          "Chat"
+        ],
+        "description": "Delete a specific chat message",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "chat_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Chat ID"
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Message ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+     "/v1/bot/subscriber/readall": {
       "get": {
         "summary": "List Subscribers",
         "tags": [
@@ -840,6 +1512,375 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SubscriberListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/stats/votes": {
+      "get": {
+        "summary": "Get Vote Statistics",
+        "tags": [
+          "Analytics"
+        ],
+        "description": "Get all vote statistics for an agent",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Vote statistics retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoteStatsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/stats/summary": {
+      "get": {
+        "summary": "Get Summary Statistics",
+        "tags": [
+          "Analytics"
+        ],
+        "description": "Get summary statistics for an agent",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Summary statistics retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SummaryStatsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/stats/dashboard": {
+      "get": {
+        "summary": "Get Dashboard Statistics",
+        "tags": [
+          "Analytics"
+        ],
+        "description": "Get dashboard statistics for an agent",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dashboard statistics retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardStatsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/stats/tools": {
+      "get": {
+        "summary": "Get Tool Usage Statistics",
+        "tags": [
+          "Analytics"
+        ],
+        "description": "Get tool usage statistics for an agent",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tool usage statistics retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ToolUsageStatsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/stats/workflows": {
+      "get": {
+        "summary": "Get Workflow Statistics",
+        "tags": [
+          "Analytics"
+        ],
+        "description": "Get workflow statistics for an agent",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workflow statistics retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkflowStatsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/stats/performance": {
+      "get": {
+        "summary": "Get Performance Metrics",
+        "tags": [
+          "Analytics"
+        ],
+        "description": "Get performance metrics for an agent",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Performance metrics retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PerformanceMetricsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/stats/behavior": {
+      "get": {
+        "summary": "Get User Behavior Statistics",
+        "tags": [
+          "Analytics"
+        ],
+        "description": "Get user behavior statistics for an agent",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User behavior statistics retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserBehaviorStatsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/stats/errors": {
+      "get": {
+        "summary": "Get Error Analysis",
+        "tags": [
+          "Analytics"
+        ],
+        "description": "Get error analysis for an agent",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Error analysis retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorAnalysisResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/stats/reasoning-summary": {
+      "get": {
+        "summary": "Get Reasoning Summary",
+        "tags": [
+          "Analytics"
+        ],
+        "description": "Get reasoning summary statistics for an agent",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reasoning summary retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReasoningSummaryResponse"
                 }
               }
             }
@@ -2550,6 +3591,649 @@
             "description": "Error code"
           }
         }
+      },
+      "ExecuteToolRequest": {
+        "type": "object",
+        "required": ["project_id", "bot_id", "chat_id", "execution_data"],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "Project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "Agent ID"
+          },
+          "chat_id": {
+            "type": "string",
+            "description": "Chat ID"
+          },
+          "model": {
+            "type": "string",
+            "description": "Override model for execution"
+          },
+          "instruction": {
+            "type": "string",
+            "maxLength": 1000,
+            "description": "Custom instruction"
+          },
+          "bypass_rate_limit": {
+            "type": "boolean",
+            "description": "Bypass rate limiting"
+          },
+          "execution_data": {
+            "type": "object",
+            "required": ["executionId", "originalQuery"],
+            "properties": {
+              "executionId": {
+                "type": "string",
+                "pattern": "^exec_\\d+_[a-f0-9-]+$",
+                "description": "Execution ID in format exec_timestamp_uuid"
+              },
+              "executionType": {
+                "type": "string",
+                "enum": ["SINGLE", "BATCH"],
+                "default": "SINGLE",
+                "description": "Type of execution - single tool or batch"
+              },
+              "originalQuery": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2000,
+                "description": "Original user query"
+              },
+              "context": {
+                "type": "string",
+                "maxLength": 5000,
+                "description": "Execution context"
+              },
+              "toolName": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100,
+                "description": "Tool name (for SINGLE execution)"
+              },
+              "parameters": {
+                "type": "object",
+                "description": "Tool parameters (for SINGLE execution)"
+              },
+              "tools": {
+                "type": "array",
+                "maxItems": 20,
+                "description": "Array of tools to execute (for BATCH execution)",
+                "items": {
+                  "type": "object",
+                  "required": ["name", "parameters"],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 100,
+                      "description": "Tool name"
+                    },
+                    "parameters": {
+                      "type": "object",
+                      "description": "Tool parameters"
+                    }
+                  }
+                }
+              },
+              "executedTools": {
+                "type": "array",
+                "maxItems": 50,
+                "description": "Previously executed tools in context",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "executionId": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ExecuteToolResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Execution success status"
+          },
+          "result": {
+            "type": "object",
+            "description": "Tool execution result"
+          },
+          "executionId": {
+            "type": "string",
+            "description": "Execution ID"
+          }
+        }
+      },
+      "VoteMessageRequest": {
+        "type": "object",
+        "required": ["project_id", "bot_id", "voter_id", "type", "voter_type"],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "Project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "Agent ID"
+          },
+          "voter_id": {
+            "type": "string",
+            "description": "Voter ID"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["upvote", "downvote"],
+            "description": "Vote type"
+          },
+          "voter_type": {
+            "type": "string",
+            "enum": ["member"],
+            "description": "Type of voter"
+          }
+        }
+      },
+      "VoteStatusResponse": {
+        "type": "object",
+        "properties": {
+          "voted": {
+            "type": "boolean",
+            "description": "Whether user has voted"
+          },
+          "vote_type": {
+            "type": "string",
+            "enum": ["upvote", "downvote", null],
+            "nullable": true,
+            "description": "Type of vote cast"
+          }
+        }
+      },
+      "CreateToolRequest": {
+        "type": "object",
+        "required": ["project_id", "bot_id", "server_label", "server_url", "transport"],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "Project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "Agent ID"
+          },
+          "server_label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "description": "Human-readable label for the MCP server"
+          },
+          "server_url": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 500,
+            "description": "MCP server URL"
+          },
+          "transport": {
+            "type": "string",
+            "enum": ["http", "sse"],
+            "description": "Transport protocol"
+          },
+          "require_approval": {
+            "type": "string",
+            "enum": ["never", "always", "tool-specific"],
+            "default": "never",
+            "description": "Tool approval requirement"
+          },
+          "headers": {
+            "type": "object",
+            "description": "Custom headers for MCP server requests"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["mcp"],
+            "default": "mcp",
+            "description": "Tool type"
+          }
+        }
+      },
+      "UpdateToolRequest": {
+        "type": "object",
+        "required": ["project_id", "bot_id"],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "Project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "Agent ID"
+          },
+          "server_label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "description": "Updated server label"
+          },
+          "server_url": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 500,
+            "description": "Updated server URL"
+          },
+          "transport": {
+            "type": "string",
+            "enum": ["http", "sse"],
+            "description": "Updated transport protocol"
+          },
+          "require_approval": {
+            "type": "string",
+            "enum": ["never", "always", "tool-specific"],
+            "description": "Updated approval requirement"
+          },
+          "headers": {
+            "type": "object",
+            "description": "Updated headers"
+          },
+          "is_enabled": {
+            "type": "boolean",
+            "description": "Enable or disable the tool"
+          }
+        }
+      },
+      "ToolResponse": {
+        "type": "object",
+        "properties": {
+          "tool": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "Tool ID"
+              },
+              "server_label": {
+                "type": "string",
+                "description": "Server label"
+              },
+              "server_url": {
+                "type": "string",
+                "description": "Server URL"
+              },
+              "transport": {
+                "type": "string",
+                "description": "Transport protocol"
+              },
+              "require_approval": {
+                "type": "string",
+                "description": "Approval requirement"
+              },
+              "headers": {
+                "type": "object",
+                "description": "Custom headers"
+              },
+              "is_enabled": {
+                "type": "boolean",
+                "description": "Whether tool is enabled"
+              },
+              "type": {
+                "type": "string",
+                "description": "Tool type"
+              },
+              "tools": {
+                "type": "array",
+                "description": "Available tools from this server",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "is_active": {
+                      "type": "boolean"
+                    },
+                    "schema": {
+                      "type": "object"
+                    }
+                  }
+                }
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        }
+      },
+      "ToolListResponse": {
+        "type": "object",
+        "properties": {
+          "tools": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ToolResponse"
+            }
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
+        }
+      },
+      "ConfigureToolsRequest": {
+        "type": "object",
+        "required": ["project_id", "bot_id", "tools"],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "Project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "Agent ID"
+          },
+          "tools": {
+            "type": "array",
+            "description": "Array of tool configurations",
+            "items": {
+              "type": "object",
+              "required": ["name", "is_active"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Tool name"
+                },
+                "is_active": {
+                  "type": "boolean",
+                  "description": "Whether tool is active"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ToggleToolRequest": {
+        "type": "object",
+        "required": ["project_id", "bot_id", "tool_name", "is_active"],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "Project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "Agent ID"
+          },
+          "tool_name": {
+            "type": "string",
+            "description": "Tool name to toggle"
+          },
+          "is_active": {
+            "type": "boolean",
+            "description": "New active status"
+          }
+        }
+      },
+      "TestConnectionResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Connection test result"
+          },
+          "message": {
+            "type": "string",
+            "description": "Test result message"
+          },
+          "tools_count": {
+            "type": "integer",
+            "description": "Number of tools discovered"
+          }
+        }
+      },
+      "VoteStatsResponse": {
+        "type": "object",
+        "properties": {
+          "total_upvotes": {
+            "type": "integer",
+            "description": "Total upvotes"
+          },
+          "total_downvotes": {
+            "type": "integer",
+            "description": "Total downvotes"
+          },
+          "vote_ratio": {
+            "type": "number",
+            "description": "Upvote to downvote ratio"
+          },
+          "votes_by_date": {
+            "type": "array",
+            "description": "Vote statistics by date",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "SummaryStatsResponse": {
+        "type": "object",
+        "properties": {
+          "total_messages": {
+            "type": "integer",
+            "description": "Total messages processed"
+          },
+          "total_chats": {
+            "type": "integer",
+            "description": "Total chat sessions"
+          },
+          "total_users": {
+            "type": "integer",
+            "description": "Total unique users"
+          },
+          "average_response_time": {
+            "type": "number",
+            "description": "Average response time in ms"
+          }
+        }
+      },
+      "DashboardStatsResponse": {
+        "type": "object",
+        "properties": {
+          "overview": {
+            "type": "object",
+            "description": "Overview statistics"
+          },
+          "recent_activity": {
+            "type": "array",
+            "description": "Recent activity"
+          },
+          "trends": {
+            "type": "object",
+            "description": "Usage trends"
+          }
+        }
+      },
+      "ToolUsageStatsResponse": {
+        "type": "object",
+        "properties": {
+          "total_tool_calls": {
+            "type": "integer",
+            "description": "Total tool execution count"
+          },
+          "tools_by_usage": {
+            "type": "array",
+            "description": "Tools ranked by usage frequency",
+            "items": {
+              "type": "object",
+              "properties": {
+                "tool_name": {
+                  "type": "string"
+                },
+                "usage_count": {
+                  "type": "integer"
+                },
+                "success_rate": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "average_execution_time": {
+            "type": "number",
+            "description": "Average tool execution time in ms"
+          }
+        }
+      },
+      "WorkflowStatsResponse": {
+        "type": "object",
+        "properties": {
+          "total_workflows": {
+            "type": "integer",
+            "description": "Total workflow executions"
+          },
+          "completion_rate": {
+            "type": "number",
+            "description": "Workflow completion rate"
+          },
+          "common_patterns": {
+            "type": "array",
+            "description": "Common workflow patterns"
+          }
+        }
+      },
+      "PerformanceMetricsResponse": {
+        "type": "object",
+        "properties": {
+          "average_response_time": {
+            "type": "number",
+            "description": "Average response time in ms"
+          },
+          "p95_response_time": {
+            "type": "number",
+            "description": "95th percentile response time"
+          },
+          "p99_response_time": {
+            "type": "number",
+            "description": "99th percentile response time"
+          },
+          "success_rate": {
+            "type": "number",
+            "description": "Success rate percentage"
+          },
+          "throughput": {
+            "type": "number",
+            "description": "Requests per second"
+          }
+        }
+      },
+      "UserBehaviorStatsResponse": {
+        "type": "object",
+        "properties": {
+          "average_session_length": {
+            "type": "number",
+            "description": "Average session length in minutes"
+          },
+          "messages_per_session": {
+            "type": "number",
+            "description": "Average messages per session"
+          },
+          "return_rate": {
+            "type": "number",
+            "description": "User return rate percentage"
+          },
+          "peak_usage_hours": {
+            "type": "array",
+            "description": "Peak usage hours",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "ErrorAnalysisResponse": {
+        "type": "object",
+        "properties": {
+          "total_errors": {
+            "type": "integer",
+            "description": "Total error count"
+          },
+          "error_rate": {
+            "type": "number",
+            "description": "Error rate percentage"
+          },
+          "errors_by_type": {
+            "type": "array",
+            "description": "Errors categorized by type",
+            "items": {
+              "type": "object",
+              "properties": {
+                "error_type": {
+                  "type": "string"
+                },
+                "count": {
+                  "type": "integer"
+                },
+                "percentage": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "recent_errors": {
+            "type": "array",
+            "description": "Recent error occurrences"
+          }
+        }
+      },
+      "ReasoningSummaryResponse": {
+        "type": "object",
+        "properties": {
+          "reasoning_types_used": {
+            "type": "object",
+            "description": "Distribution of reasoning types",
+            "properties": {
+              "standard": {
+                "type": "integer"
+              },
+              "interactive": {
+                "type": "integer"
+              },
+              "stepwise": {
+                "type": "integer"
+              },
+              "react": {
+                "type": "integer"
+              }
+            }
+          },
+          "average_reasoning_steps": {
+            "type": "number",
+            "description": "Average number of reasoning steps"
+          },
+          "average_reasoning_time": {
+            "type": "number",
+            "description": "Average reasoning time in ms"
+          },
+          "reasoning_tokens_used": {
+            "type": "integer",
+            "description": "Total reasoning tokens consumed"
+          }
+        }
       }
     }
   },
@@ -2574,6 +4258,14 @@
     {
       "name": "Subscribers",
       "description": "Operations for managing subscribers and leads"
+    },
+    {
+      "name": "Tools",
+      "description": "Operations for managing agent tools and MCP server integrations"
+    },
+    {
+      "name": "Analytics",
+      "description": "Operations for retrieving agent statistics and analytics"
     }
   ]
 }

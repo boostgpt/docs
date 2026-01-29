@@ -1,0 +1,228 @@
+---
+title: "Prompt Templates"
+description: "Using context variables to create dynamic agent prompts"
+---
+
+## Template Syntax
+
+Prompt templates use `{{variable}}` syntax to inject context data.
+
+```
+User {{user_name}} needs help with {{issue_type}}.
+Current page: {{current_page}}
+```
+
+When triggered with:
+```javascript
+boostgpt.trigger('support_needed', {
+  user_name: 'Sarah',
+  issue_type: 'payment',
+  current_page: '/checkout'
+});
+```
+
+Your agent receives:
+```
+User Sarah needs help with payment.
+Current page: /checkout
+```
+
+## Variable Rules
+
+### Case Sensitivity
+
+Variable names are case-sensitive:
+- `{{userName}}` ≠ `{{username}}` ≠ `{{UserName}}`
+
+Match the exact case used in your trigger call.
+
+### Missing Variables
+
+If a variable isn't provided in context:
+- The placeholder remains as-is: `{{missing_var}}`
+- Consider providing defaults or handling in your template
+
+```
+User: {{user_name}}
+{{#if user_email}}Email: {{user_email}}{{/if}}
+```
+
+### Special Characters
+
+Context values are included as-is. Escape special characters if needed:
+- User input might contain quotes, HTML, etc.
+- Consider sanitizing sensitive data before passing
+
+## Template Examples
+
+### E-commerce
+
+```
+🛒 CHECKOUT ASSISTANCE REQUEST
+
+Customer Information:
+- Name: {{customer_name}}
+- Email: {{customer_email}}
+- Account status: {{account_type}}
+
+Cart Summary:
+- Total value: {{cart_total}}
+- Items: {{item_count}}
+- Discount applied: {{discount_code}}
+
+Issue Detected:
+The customer has been on the checkout page for {{time_on_page}} seconds
+without completing their purchase.
+
+Last action: {{last_action}}
+Error message (if any): {{error_message}}
+
+Instructions:
+1. Greet them warmly and acknowledge they may need assistance
+2. Offer to help with any questions about their order
+3. Address common concerns: shipping, returns, payment security
+4. If they mention a specific issue, provide targeted help
+```
+
+### SaaS Onboarding
+
+```
+📋 ONBOARDING HELP REQUEST
+
+User: {{user_name}} ({{user_email}})
+Plan: {{plan_name}}
+Signed up: {{signup_date}}
+
+Current Progress:
+- Step: {{current_step}} of {{total_steps}}
+- Step name: {{step_name}}
+- Time on this step: {{time_on_step}} seconds
+- Previous steps completed: {{completed_steps}}
+
+This user appears to be stuck. Common issues at this step:
+{{common_issues_at_step}}
+
+Help them proceed to the next step. Be encouraging and provide
+clear, simple instructions.
+```
+
+### Error Recovery
+
+```
+⚠️ ERROR ASSISTANCE
+
+User encountered an error:
+- Error code: {{error_code}}
+- Error message: {{error_message}}
+- Page: {{current_page}}
+- Action attempted: {{attempted_action}}
+
+User context:
+- Browser: {{browser}}
+- Device: {{device_type}}
+
+This error typically occurs when: {{error_explanation}}
+
+Help the user:
+1. Acknowledge the frustration of encountering an error
+2. Explain what might have caused it in simple terms
+3. Provide steps to resolve or work around the issue
+4. Offer to escalate to human support if needed
+```
+
+## Building Natural Messages
+
+For events without custom templates, the system builds a natural message from context:
+
+**Context:**
+```javascript
+{
+  event: 'checkout_error',
+  cart_value: '$149',
+  error_type: 'payment_declined',
+  user_email: 'user@example.com'
+}
+```
+
+**Auto-generated message:**
+```
+The user encountered a checkout_error event.
+
+Context:
+- cart_value: $149
+- error_type: payment_declined
+- user_email: user@example.com
+
+Please assist them based on this information.
+```
+
+Custom templates are recommended for better agent responses.
+
+## User Data in Templates
+
+Pass user information via the `user` option:
+
+```javascript
+boostgpt.trigger('help_needed', {
+  page: '/settings'
+}, {
+  user: {
+    id: 'user_123',
+    email: 'sarah@example.com',
+    name: 'Sarah Chen',
+    plan: 'pro'
+  }
+});
+```
+
+Access in templates:
+```
+User: {{user.name}} ({{user.email}})
+Plan: {{user.plan}}
+User ID: {{user.id}}
+```
+
+## Tips for Effective Templates
+
+<AccordionGroup>
+  <Accordion title="Be specific about the situation">
+    Don't just say "user needs help" — describe the exact scenario:
+    - What were they trying to do?
+    - What went wrong or where did they get stuck?
+    - What's their current state?
+  </Accordion>
+
+  <Accordion title="Include actionable instructions">
+    Tell your agent how to help:
+    - What solutions to offer
+    - What tone to use
+    - What to avoid saying
+    - When to escalate
+  </Accordion>
+
+  <Accordion title="Provide context for better responses">
+    More context = better help:
+    - User's history with your product
+    - Common issues at this point
+    - Relevant policies or limitations
+  </Accordion>
+
+  <Accordion title="Keep it scannable">
+    Use formatting to make templates easy to read:
+    - Headers and sections
+    - Bullet points for lists
+    - Clear labels for data
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Installation" icon="code" href="/saas/trigger-script/installation">
+    Add the trigger script to your site
+  </Card>
+
+  <Card title="Configuration" icon="settings" href="/saas/trigger-script/configuration">
+    All trigger options
+  </Card>
+</CardGroup>

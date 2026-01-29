@@ -89,6 +89,50 @@
                   }
                 ]
               },
+               {
+                "group": "SaaS",
+                "pages": [
+                    {
+                      "group": "Getting Started",
+                      "pages": [
+                        "saas/introduction",
+                        "saas/quickstart"
+                      ]
+                    },
+                    {
+                      "group": "Events",
+                      "pages": [
+                        "saas/events/overview",
+                        "saas/events/creating-events",
+                        "saas/events/prompt-templates"
+                      ]
+                    },
+                    {
+                      "group": "Trigger Script",
+                      "pages": [
+                        "saas/trigger-script/installation",
+                        "saas/trigger-script/configuration",
+                        "saas/trigger-script/trigger-types",
+                        "saas/trigger-script/api-reference"
+                      ]
+                    },
+                    {
+                      "group": "Use Case Guides",
+                      "pages": [
+                        "saas/guides/checkout-abandonment",
+                        "saas/guides/onboarding-friction",
+                        "saas/guides/feature-discovery",
+                        "saas/guides/error-handling"
+                      ]
+                    },
+                    {
+                      "group": "Reference",
+                      "pages": [
+                        "saas/best-practices"
+                      ]
+                    }
+                ]
+              },
               {
                 "group": "Developers",
                 "pages": [

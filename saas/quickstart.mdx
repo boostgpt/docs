@@ -1,0 +1,133 @@
+---
+title: "Quickstart"
+description: "Set up your first proactive trigger in 5 minutes"
+---
+
+## Prerequisites
+
+Before you begin, make sure you have:
+- A BoostGPT account ([sign up free](https://app.boostgpt.co/signup))
+- An AI agent created and trained with your content
+- Access to your website's code
+
+## Step 1: Create an Event
+
+Events define the friction points where you want to engage users.
+
+1. Go to your agent's **Events** page in the dashboard
+2. Click **Create Event**
+3. Fill in the details:
+   - **Name**: `checkout_abandoned` (use snake_case, no spaces)
+   - **Label**: "Checkout Abandoned" (display name)
+   - **Description**: "User started checkout but didn't complete"
+   - **Prompt Template**:
+     ```
+     A user abandoned their checkout. Cart value: {{cart_value}}.
+     Help them complete their purchase.
+     ```
+4. Click **Save**
+
+## Step 2: Add the Trigger Script
+
+Add this script to your website, preferably in the `<head>` section:
+
+```html
+<script src="https://embed.boostgpt.co/trigger.js"></script>
+<script>
+  boostgpt.init({ botId: 'YOUR_AGENT_UUID' });
+</script>
+```
+
+Replace `YOUR_AGENT_UUID` with your agent's UUID from the dashboard.
+
+## Step 3: Trigger on Friction Points
+
+Call `boostgpt.trigger()` when users hit friction points:
+
+```javascript
+// Example: Trigger when user is about to leave checkout
+window.addEventListener('beforeunload', function(e) {
+  if (isOnCheckoutPage() && cartHasItems()) {
+    boostgpt.trigger('checkout_abandoned', {
+      cart_value: '$149.00',
+      items: 3
+    });
+  }
+});
+```
+
+Or trigger after inactivity:
+
+```javascript
+// Example: Trigger after 30 seconds of inactivity on checkout
+let timeout;
+function resetTimer() {
+  clearTimeout(timeout);
+  timeout = setTimeout(function() {
+    if (isOnCheckoutPage()) {
+      boostgpt.trigger('checkout_abandoned', {
+        cart_value: getCartValue()
+      });
+    }
+  }, 30000);
+}
+
+document.addEventListener('mousemove', resetTimer);
+document.addEventListener('keypress', resetTimer);
+```
+
+## Step 4: Test Your Trigger
+
+1. Open your website in a browser
+2. Navigate to the page where you added the trigger
+3. Trigger the condition (e.g., sit idle for 30 seconds)
+4. You should see the trigger UI appear
+5. Click it to start a conversation with context
+
+## Customizing the Trigger UI
+
+By default, triggers show as a floating button. Customize the appearance:
+
+```javascript
+boostgpt.trigger('checkout_abandoned', {
+  cart_value: '$149.00'
+}, {
+  type: 'toast',                    // 'button', 'toast', 'banner', or 'inline'
+  position: 'bottom-right',         // Placement on screen
+  message: 'Need help checking out?', // For toast type
+  buttonColor: '#EF4444',           // Your brand color
+  delay: 1000                       // Delay before showing (ms)
+});
+```
+
+## What Happens When User Clicks
+
+When the user clicks the trigger:
+
+1. The trigger script calls the BoostGPT API with the event and context
+2. Your agent receives a message built from the prompt template + context
+3. The agent generates a contextual response
+4. User is redirected to a chat with the agent already responding
+
+**Example agent message:**
+> "Hi! I noticed you were about to leave without completing your order. Your cart has $149.00 worth of items. Is there anything I can help with? Maybe you have questions about shipping, returns, or payment options?"
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Events Overview" icon="bolt" href="/saas/events/overview">
+    Learn more about events and context
+  </Card>
+
+  <Card title="Trigger Types" icon="palette" href="/saas/trigger-script/trigger-types">
+    Explore button, toast, banner, and inline styles
+  </Card>
+
+  <Card title="Configuration" icon="gear" href="/saas/trigger-script/configuration">
+    All available options
+  </Card>
+
+  <Card title="Use Case Guides" icon="book" href="/saas/guides/checkout-abandonment">
+    Real-world implementation examples
+  </Card>
+</CardGroup>

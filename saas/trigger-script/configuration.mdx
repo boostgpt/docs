@@ -1,0 +1,236 @@
+---
+title: "Configuration"
+description: "All init() and trigger() options"
+---
+
+## Initialization
+
+Initialize the script with your agent ID:
+
+```javascript
+boostgpt.init({
+  botId: 'your-agent-uuid'  // Required
+});
+```
+
+### Init Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `botId` | string | — | **Required**. Your agent's UUID |
+
+## Triggering Events
+
+```javascript
+boostgpt.trigger(eventName, context, options);
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `eventName` | string | Yes | The event identifier |
+| `context` | object | No | Data to pass to your agent |
+| `options` | object | No | Trigger appearance and behavior |
+
+### Basic Example
+
+```javascript
+boostgpt.trigger('checkout_help', {
+  cart_value: '$149',
+  items: 3
+});
+```
+
+### With Options
+
+```javascript
+boostgpt.trigger('checkout_help', {
+  cart_value: '$149'
+}, {
+  type: 'toast',
+  position: 'bottom-right',
+  message: 'Need help checking out?'
+});
+```
+
+## Common Options
+
+These options work with all trigger types:
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `type` | string | `"button"` | Trigger style: `"button"`, `"toast"`, `"banner"`, `"inline"` |
+| `position` | string | `"bottom-right"` | Screen position (see below) |
+| `delay` | number | `0` | Delay before showing (milliseconds) |
+| `openInNewTab` | boolean | `false` | Open chat in new tab |
+| `loadingText` | string | `"Thinking..."` | Text shown while loading |
+| `zIndex` | number | `999999` | CSS z-index |
+| `dismissible` | boolean | `true` | Show dismiss button |
+| `autoShow` | boolean | `true` | Auto-show on trigger() |
+| `offsetX` | string | `"20px"` | Horizontal offset from edge |
+| `offsetY` | string | `"20px"` | Vertical offset from edge |
+
+### Position Values
+
+| Type | Available Positions |
+|------|---------------------|
+| Button/Toast/Inline | `"bottom-right"`, `"bottom-left"`, `"top-right"`, `"top-left"` |
+| Banner | `"top"`, `"bottom"` |
+
+## Button Options
+
+For `type: 'button'`:
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `buttonText` | string | `"Need help?"` | Button label |
+| `buttonColor` | string | `"#7788BB"` | Background color |
+| `textColor` | string | `"#FFFFFF"` | Text color |
+| `showIcon` | boolean | `true` | Show chat icon |
+| `borderRadius` | string | `"50px"` | Border radius |
+| `fontSize` | string | `"14px"` | Font size |
+| `fontWeight` | string | `"600"` | Font weight |
+| `padding` | string | `"12px 20px"` | Button padding |
+| `boxShadow` | string | `"0 4px 12px rgba(0,0,0,0.15)"` | Box shadow |
+
+```javascript
+boostgpt.trigger('help', {}, {
+  type: 'button',
+  buttonText: 'Get Help',
+  buttonColor: '#EF4444',
+  textColor: '#FFFFFF',
+  borderRadius: '8px'
+});
+```
+
+## Toast Options
+
+For `type: 'toast'`:
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `message` | string | `"Need help? Click to chat..."` | Single chat bubble text |
+| `messages` | array | `null` | Multiple chat bubbles (stacked) |
+| `avatar` | string | `null` | Avatar image URL (uses agent avatar if null) |
+| `title` | string | `null` | Agent name (uses agent name if null) |
+| `toastBackground` | string | `"#ffffff"` | Toast background color |
+| `toastTextColor` | string | `"#374151"` | Toast text color |
+| `buttonColor` | string | `"#7788BB"` | Action button color |
+
+```javascript
+// Single message
+boostgpt.trigger('onboarding_help', {}, {
+  type: 'toast',
+  message: 'Stuck on this step? I can help!',
+  title: 'Support Bot'
+});
+
+// Stacked messages
+boostgpt.trigger('welcome', {}, {
+  type: 'toast',
+  messages: [
+    'Hey there! 👋',
+    'Need any help getting started?',
+    'Click here to chat!'
+  ]
+});
+```
+
+## Banner Options
+
+For `type: 'banner'`:
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `bannerText` | string | `"Need help? Click here..."` | Banner message |
+| `bannerColor` | string | `"#7788BB"` | Background color |
+| `bannerTextColor` | string | `"#FFFFFF"` | Text color |
+| `bannerPadding` | string | `"14px 20px"` | Padding |
+| `buttonText` | string | `"Chat Now"` | CTA button text |
+
+```javascript
+boostgpt.trigger('promo', {}, {
+  type: 'banner',
+  position: 'top',
+  bannerText: 'Questions about our sale? Chat with us!',
+  bannerColor: '#10B981',
+  buttonText: 'Ask Now'
+});
+```
+
+## Inline Options
+
+For `type: 'inline'`:
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `container` | string/element | `null` | CSS selector or DOM element |
+| `buttonText` | string | `"Need help?"` | Button label |
+| `buttonColor` | string | `"#7788BB"` | Background color |
+| `textColor` | string | `"#FFFFFF"` | Text color |
+| `showIcon` | boolean | `true` | Show chat icon |
+| `borderRadius` | string | `"8px"` | Border radius |
+| `fontSize` | string | `"14px"` | Font size |
+| `padding` | string | `"12px 20px"` | Padding |
+
+```html
+<div id="help-trigger"></div>
+
+<script>
+boostgpt.trigger('inline_help', {}, {
+  type: 'inline',
+  container: '#help-trigger',
+  buttonText: 'Chat with Support',
+  buttonColor: '#4F46E5'
+});
+</script>
+```
+
+## User Data
+
+Pass user information for personalized experiences:
+
+```javascript
+boostgpt.trigger('support', {
+  issue: 'billing'
+}, {
+  user: {
+    id: 'user_123',
+    email: 'sarah@example.com',
+    name: 'Sarah Chen',
+    plan: 'pro',
+    // Add any custom fields
+    company: 'Acme Inc'
+  }
+});
+```
+
+User data is:
+- Passed to your agent in the message context
+- Logged for analytics
+- Available in prompt templates as `{{user.field}}`
+
+## Dismissing Triggers
+
+Remove active triggers programmatically:
+
+```javascript
+// Dismiss all triggers
+boostgpt.dismissAll();
+
+// Dismiss specific event
+boostgpt.dismiss('checkout_help');
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Trigger Types" icon="palette" href="/saas/trigger-script/trigger-types">
+    Visual guide to each type
+  </Card>
+
+  <Card title="API Reference" icon="code" href="/saas/trigger-script/api-reference">
+    Complete API documentation
+  </Card>
+</CardGroup>

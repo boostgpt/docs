@@ -1,0 +1,317 @@
+---
+title: "Error Handling"
+description: "Help users recover gracefully from errors"
+---
+
+## The Problem
+
+Errors frustrate users and often lead to abandonment:
+- Cryptic error messages they don't understand
+- No clear path to resolution
+- Feeling stuck and helpless
+- Lost work or progress
+- Distrust in the platform
+
+## The Solution
+
+Turn error moments into support opportunities with contextual AI assistance.
+
+## Implementation
+
+### Step 1: Create Error Events
+
+**Event: `error_payment_failed`**
+```
+💳 PAYMENT ERROR
+
+A user's payment has failed.
+
+Error Details:
+- Error code: {{error_code}}
+- Error message: {{error_message}}
+- Card type: {{card_type}}
+- Amount: {{amount}}
+
+User Context:
+- Plan attempting: {{plan_name}}
+- Retry count: {{retry_count}}
+
+Common causes for this error:
+{{#if error_code === 'insufficient_funds'}}
+- Card has insufficient funds
+- Daily limit reached
+{{/if}}
+{{#if error_code === 'card_declined'}}
+- Bank declined the transaction
+- Card flagged for suspicious activity
+- International transaction blocked
+{{/if}}
+
+Help them resolve the payment issue. Be empathetic - payment failures
+are stressful. Offer alternatives like different card or contact bank.
+```
+
+**Event: `error_api_failure`**
+```
+⚠️ API ERROR
+
+An API request has failed for the user.
+
+Error Details:
+- Endpoint: {{endpoint}}
+- Status code: {{status_code}}
+- Error: {{error_message}}
+- Request ID: {{request_id}}
+
+User Action:
+- What they tried: {{attempted_action}}
+- Page: {{current_page}}
+
+Help them understand what happened and how to resolve it.
+If it's a temporary issue, suggest retrying.
+If it's a configuration issue, help them fix it.
+For persistent issues, offer to escalate to support.
+```
+
+### Step 2: Integrate with Error Handling
+
+```javascript
+// Global error handler
+class ErrorAssistant {
+  constructor() {
+    this.setupGlobalHandlers();
+  }
+
+  setupGlobalHandlers() {
+    // Catch unhandled promise rejections
+    window.addEventListener('unhandledrejection', (event) => {
+      this.handleError('unhandled_rejection', {
+        message: event.reason?.message || 'Unknown error',
+        stack: event.reason?.stack
+      });
+    });
+
+    // Catch API errors
+    this.interceptFetch();
+  }
+
+  interceptFetch() {
+    const originalFetch = window.fetch;
+    window.fetch = async (...args) => {
+      try {
+        const response = await originalFetch(...args);
+        if (!response.ok) {
+          this.handleApiError(response, args[0]);
+        }
+        return response;
+      } catch (error) {
+        this.handleNetworkError(error, args[0]);
+        throw error;
+      }
+    };
+  }
+
+  handleApiError(response, url) {
+    const errorMap = {
+      400: 'bad_request',
+      401: 'unauthorized',
+      403: 'forbidden',
+      404: 'not_found',
+      422: 'validation_error',
+      429: 'rate_limited',
+      500: 'server_error',
+      502: 'bad_gateway',
+      503: 'service_unavailable'
+    };
+
+    const errorType = errorMap[response.status] || 'unknown_error';
+
+    // Don't trigger for minor errors
+    if ([401, 404].includes(response.status)) return;
+
+    boostgpt.trigger(`error_${errorType}`, {
+      status_code: response.status,
+      endpoint: url,
+      attempted_action: this.getCurrentAction(),
+      current_page: window.location.pathname
+    }, this.getOptionsForError(errorType));
+  }
+
+  handleNetworkError(error, url) {
+    boostgpt.trigger('error_network', {
+      error_message: error.message,
+      endpoint: url,
+      is_online: navigator.onLine
+    }, {
+      type: 'toast',
+      messages: [
+        'Connection issue detected',
+        navigator.onLine
+          ? 'There seems to be a problem reaching our servers.'
+          : 'You appear to be offline.',
+        'Want help troubleshooting?'
+      ],
+      buttonColor: '#DC2626'
+    });
+  }
+
+  getOptionsForError(errorType) {
+    const configs = {
+      rate_limited: {
+        type: 'banner',
+        position: 'top',
+        bannerText: 'You\'re making requests too quickly. Need help understanding rate limits?',
+        bannerColor: '#F59E0B'
+      },
+      server_error: {
+        type: 'toast',
+        messages: [
+          'Oops! Something went wrong on our end.',
+          'Our team has been notified.',
+          'Can I help you with anything while we fix this?'
+        ],
+        buttonColor: '#DC2626'
+      },
+      validation_error: {
+        type: 'toast',
+        message: 'There was an issue with your request. Want help fixing it?',
+        buttonColor: '#F59E0B'
+      }
+    };
+
+    return configs[errorType] || {
+      type: 'toast',
+      message: 'Something went wrong. Can I help?',
+      buttonColor: '#DC2626'
+    };
+  }
+
+  getCurrentAction() {
+    // Infer from page/URL/recent activity
+    return document.querySelector('[data-current-action]')?.dataset.currentAction || 'unknown';
+  }
+}
+
+// Initialize
+const errorAssistant = new ErrorAssistant();
+```
+
+### Step 3: Handle Specific Error Types
+
+**Payment Errors**
+```javascript
+// In your payment component
+async function processPayment(paymentData) {
+  try {
+    const result = await api.processPayment(paymentData);
+    // Success
+  } catch (error) {
+    boostgpt.trigger('error_payment_failed', {
+      error_code: error.code,
+      error_message: error.message,
+      card_type: paymentData.cardType,
+      amount: paymentData.amount,
+      plan_name: selectedPlan.name,
+      retry_count: retryCount
+    }, {
+      type: 'toast',
+      position: 'bottom-right',
+      messages: [
+        'Your payment couldn\'t be processed.',
+        getPaymentErrorHint(error.code),
+        'Want me to help troubleshoot?'
+      ],
+      buttonColor: '#DC2626'
+    });
+  }
+}
+
+function getPaymentErrorHint(code) {
+  const hints = {
+    'insufficient_funds': 'It looks like a funds issue.',
+    'card_declined': 'Your bank declined the transaction.',
+    'expired_card': 'The card might be expired.',
+    'invalid_cvc': 'The security code doesn\'t match.'
+  };
+  return hints[code] || 'There was an issue with your card.';
+}
+```
+
+**Form Validation Errors**
+```javascript
+// When form validation fails
+function handleValidationErrors(errors) {
+  if (errors.length > 2) {
+    // Multiple errors - offer help
+    boostgpt.trigger('error_form_validation', {
+      error_count: errors.length,
+      fields_with_errors: errors.map(e => e.field).join(', '),
+      form_name: currentForm
+    }, {
+      type: 'toast',
+      message: 'Having trouble with the form? I can explain what\'s needed.',
+      buttonColor: '#F59E0B'
+    });
+  }
+}
+```
+
+## Error Types and Responses
+
+| Error Type | Trigger Style | Tone |
+|------------|---------------|------|
+| Payment Failed | Toast (urgent) | Empathetic, solution-focused |
+| Validation Error | Toast | Helpful, clarifying |
+| Rate Limited | Banner | Informative, educational |
+| Server Error | Toast | Apologetic, reassuring |
+| Network Error | Toast | Technical, troubleshooting |
+| Permission Denied | Toast | Explanatory, directive |
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Be empathetic, not robotic">
+    ❌ "Error code 422: Validation failed"
+    ✅ "Oops! A few things need fixing. Want me to help?"
+  </Accordion>
+
+  <Accordion title="Don't trigger on every error">
+    Skip triggers for:
+    - 401 (unauthorized) - just redirect to login
+    - 404 (not found) - show 404 page
+    - Minor validation errors
+  </Accordion>
+
+  <Accordion title="Include actionable context">
+    Tell your agent what the user was trying to do:
+    - What action they attempted
+    - What went wrong
+    - What solutions are available
+  </Accordion>
+
+  <Accordion title="Log for debugging">
+    Always include request IDs and error codes so support
+    can investigate if the user escalates.
+  </Accordion>
+</AccordionGroup>
+
+## Measuring Success
+
+| Metric | Description |
+|--------|-------------|
+| Error Resolution Rate | % of errors resolved after chat |
+| Abandonment After Error | Users who leave after an error |
+| Support Escalation Rate | Errors requiring human support |
+| Time to Resolution | How quickly users recover |
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Best Practices" icon="lightbulb" href="/saas/best-practices">
+    General trigger optimization
+  </Card>
+
+  <Card title="Checkout Abandonment" icon="shopping-cart" href="/saas/guides/checkout-abandonment">
+    Recover abandoned carts
+  </Card>
+</CardGroup>

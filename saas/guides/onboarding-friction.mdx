@@ -1,0 +1,256 @@
+---
+title: "Onboarding Friction"
+description: "Help users who get stuck during signup or setup"
+---
+
+## The Problem
+
+Users often abandon during onboarding:
+- Confused by required information
+- Stuck on configuration steps
+- Don't understand value propositions
+- Technical issues (API keys, integrations)
+- Decision paralysis with too many options
+
+## The Solution
+
+Proactively detect when users are struggling and offer contextual assistance.
+
+## Implementation
+
+### Step 1: Create Events for Each Step
+
+Create an event for each onboarding step where users commonly get stuck:
+
+**Event: `onboarding_step1_stuck`**
+```
+📋 ONBOARDING ASSISTANCE - Account Setup
+
+User is on step 1 (Account Setup) and may need help.
+
+User Information:
+- Email: {{user_email}}
+- Time on step: {{time_on_step}} seconds
+- Fields completed: {{completed_fields}}
+
+Common issues at this step:
+- Unsure what company name to use
+- Password requirements confusion
+- Already have an account but forgot
+
+Help them complete their account setup. Be encouraging and patient.
+If they already have an account, help them find the password reset.
+```
+
+**Event: `onboarding_integration_stuck`**
+```
+🔧 ONBOARDING ASSISTANCE - Integration Setup
+
+User is stuck setting up an integration.
+
+Integration Details:
+- Type: {{integration_type}}
+- Error (if any): {{error_message}}
+- Time on step: {{time_on_step}} seconds
+
+Common issues:
+- Can't find API key
+- Permissions not set correctly
+- Firewall blocking connection
+
+Provide step-by-step guidance for the {{integration_type}} integration.
+If there's an error, explain what it means and how to fix it.
+```
+
+### Step 2: Track Progress and Detect Friction
+
+```javascript
+class OnboardingTracker {
+  constructor() {
+    this.stepStartTime = Date.now();
+    this.currentStep = this.getCurrentStep();
+    this.triggered = {};
+    this.thresholds = {
+      'account-setup': 60,      // 60 seconds
+      'profile': 45,
+      'team-invite': 90,
+      'integration': 120,       // 2 minutes - more complex
+      'first-project': 90
+    };
+  }
+
+  getCurrentStep() {
+    // Detect from URL or DOM
+    return document.querySelector('[data-onboarding-step]')?.dataset.onboardingStep;
+  }
+
+  startTracking() {
+    this.checkInterval = setInterval(() => this.checkForFriction(), 5000);
+  }
+
+  stopTracking() {
+    clearInterval(this.checkInterval);
+  }
+
+  checkForFriction() {
+    const step = this.getCurrentStep();
+    const timeOnStep = (Date.now() - this.stepStartTime) / 1000;
+    const threshold = this.thresholds[step] || 60;
+
+    if (timeOnStep > threshold && !this.triggered[step]) {
+      this.triggerHelp(step, timeOnStep);
+      this.triggered[step] = true;
+    }
+  }
+
+  triggerHelp(step, timeOnStep) {
+    const eventName = `onboarding_${step.replace('-', '_')}_stuck`;
+
+    boostgpt.trigger(eventName, {
+      user_email: getUserEmail(),
+      time_on_step: Math.round(timeOnStep),
+      completed_fields: getCompletedFields(),
+      step_name: step,
+      error_message: getVisibleError()
+    }, {
+      type: 'toast',
+      position: 'bottom-right',
+      title: 'Setup Assistant',
+      message: this.getMessageForStep(step)
+    });
+  }
+
+  getMessageForStep(step) {
+    const messages = {
+      'account-setup': 'Need help setting up your account?',
+      'profile': 'Having trouble with your profile?',
+      'team-invite': 'Want help inviting your team?',
+      'integration': 'Stuck on the integration? I can walk you through it!',
+      'first-project': 'Need help creating your first project?'
+    };
+    return messages[step] || 'Need any help?';
+  }
+
+  onStepChange(newStep) {
+    this.currentStep = newStep;
+    this.stepStartTime = Date.now();
+  }
+}
+
+// Initialize
+const tracker = new OnboardingTracker();
+tracker.startTracking();
+
+// Update on navigation
+window.addEventListener('popstate', () => {
+  tracker.onStepChange(tracker.getCurrentStep());
+});
+```
+
+### Step 3: Handle Common Friction Points
+
+**Form Validation Errors**
+```javascript
+// Trigger when user submits form with errors multiple times
+let errorCount = 0;
+
+document.querySelector('form').addEventListener('submit', function(e) {
+  const errors = document.querySelectorAll('.error-message:visible');
+  if (errors.length > 0) {
+    errorCount++;
+    if (errorCount >= 2) {
+      boostgpt.trigger('onboarding_form_errors', {
+        step: getCurrentStep(),
+        errors: Array.from(errors).map(e => e.textContent).join(', '),
+        attempt_count: errorCount
+      }, {
+        type: 'toast',
+        message: 'Having trouble with the form? I can help clarify what\'s needed.'
+      });
+    }
+  }
+});
+```
+
+**API Key Configuration**
+```javascript
+// Trigger when integration test fails
+async function testIntegration() {
+  try {
+    const result = await api.testConnection();
+    // Success
+  } catch (error) {
+    boostgpt.trigger('integration_test_failed', {
+      integration: selectedIntegration,
+      error_code: error.code,
+      error_message: error.message
+    }, {
+      type: 'toast',
+      messages: [
+        'Hmm, the connection test failed.',
+        `Error: ${error.message}`,
+        'Want me to help troubleshoot?'
+      ],
+      buttonColor: '#DC2626'
+    });
+  }
+}
+```
+
+## Trigger Styles by Step
+
+| Step | Recommended Type | Rationale |
+|------|------------------|-----------|
+| Account Setup | Toast | Friendly, conversational |
+| Profile | Button | Less intrusive for simple step |
+| Team Invite | Toast | May need explanation of roles |
+| Integration | Toast + Messages | Complex, needs detailed help |
+| First Project | Toast | Encouraging, feature discovery |
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Set appropriate time thresholds">
+    Not all steps are equal:
+    - Simple forms: 30-60 seconds
+    - Complex setup: 90-180 seconds
+    - Integration/API: 120-300 seconds
+  </Accordion>
+
+  <Accordion title="Consider completion percentage">
+    A user 90% done likely just needs a nudge.
+    A user 10% done might be confused about the whole process.
+  </Accordion>
+
+  <Accordion title="Provide step-specific help">
+    Generic "need help?" is less effective than
+    "Having trouble connecting your Stripe account?"
+  </Accordion>
+
+  <Accordion title="Celebrate progress">
+    Consider triggers that encourage, not just rescue:
+    "Great job on step 2! Just 2 more steps to go."
+  </Accordion>
+</AccordionGroup>
+
+## Measuring Success
+
+| Metric | Description |
+|--------|-------------|
+| Step Completion Rate | % of users completing each step |
+| Time to Complete | Average time per step |
+| Drop-off Points | Where users abandon most |
+| Trigger Engagement | % of triggers clicked |
+| Assisted Completions | Onboardings completed after chat |
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Feature Discovery" icon="sparkles" href="/saas/guides/feature-discovery">
+    Proactively introduce features
+  </Card>
+
+  <Card title="Error Handling" icon="triangle-alert" href="/saas/guides/error-handling">
+    Help users recover from errors
+  </Card>
+</CardGroup>

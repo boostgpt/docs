@@ -1,0 +1,338 @@
+---
+title: "API Reference"
+description: "Complete trigger.js API documentation"
+---
+
+## Global Object
+
+The script creates a global `window.boostgpt` object with the following methods:
+
+## Methods
+
+### init(config)
+
+Initialize the trigger script with your agent configuration.
+
+```javascript
+boostgpt.init({
+  botId: 'your-agent-uuid'
+});
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `config` | object | Yes | Configuration object |
+| `config.botId` | string | Yes | Your agent's UUID |
+
+**Returns:** `void`
+
+---
+
+### trigger(eventName, context, options)
+
+Trigger an event and display the trigger UI.
+
+```javascript
+boostgpt.trigger('checkout_help', {
+  cart_value: '$149'
+}, {
+  type: 'toast',
+  message: 'Need help?'
+});
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `eventName` | string | Yes | Event identifier |
+| `context` | object | No | Data to pass to your agent |
+| `options` | object | No | Display and behavior options |
+
+**Returns:** `void`
+
+**Context Object:**
+Any key-value pairs you want to pass to your agent. These are injected into prompt templates.
+
+```javascript
+{
+  cart_value: '$149',
+  items_count: 3,
+  user_name: 'Sarah',
+  current_page: '/checkout',
+  // ... any custom data
+}
+```
+
+**Options Object:**
+See [Configuration](/saas/trigger-script/configuration) for full options reference.
+
+---
+
+### dismiss(eventName)
+
+Remove a specific trigger from the page.
+
+```javascript
+boostgpt.dismiss('checkout_help');
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `eventName` | string | Yes | Event identifier to dismiss |
+
+**Returns:** `void`
+
+---
+
+### dismissAll()
+
+Remove all active triggers from the page.
+
+```javascript
+boostgpt.dismissAll();
+```
+
+**Parameters:** None
+
+**Returns:** `void`
+
+---
+
+### isLoaded()
+
+Check if the trigger script is initialized.
+
+```javascript
+if (boostgpt.isLoaded()) {
+  boostgpt.trigger('help', {});
+}
+```
+
+**Parameters:** None
+
+**Returns:** `boolean`
+
+---
+
+## Events
+
+The trigger script dispatches custom events on the document:
+
+### boostgpt:trigger:shown
+
+Fired when a trigger UI is displayed.
+
+```javascript
+document.addEventListener('boostgpt:trigger:shown', function(e) {
+  console.log('Trigger shown:', e.detail.eventName);
+});
+```
+
+**Event Detail:**
+```javascript
+{
+  eventName: 'checkout_help',
+  options: { ... }
+}
+```
+
+### boostgpt:trigger:clicked
+
+Fired when a user clicks the trigger UI.
+
+```javascript
+document.addEventListener('boostgpt:trigger:clicked', function(e) {
+  console.log('Trigger clicked:', e.detail.eventName);
+  // Track in analytics
+  analytics.track('Trigger Clicked', { event: e.detail.eventName });
+});
+```
+
+**Event Detail:**
+```javascript
+{
+  eventName: 'checkout_help',
+  context: { ... }
+}
+```
+
+### boostgpt:trigger:dismissed
+
+Fired when a trigger is dismissed (by user or programmatically).
+
+```javascript
+document.addEventListener('boostgpt:trigger:dismissed', function(e) {
+  console.log('Trigger dismissed:', e.detail.eventName);
+});
+```
+
+**Event Detail:**
+```javascript
+{
+  eventName: 'checkout_help',
+  reason: 'user' | 'programmatic'
+}
+```
+
+### boostgpt:chat:started
+
+Fired when a chat is successfully created after clicking trigger.
+
+```javascript
+document.addEventListener('boostgpt:chat:started', function(e) {
+  console.log('Chat started:', e.detail.chatUrl);
+});
+```
+
+**Event Detail:**
+```javascript
+{
+  eventName: 'checkout_help',
+  chatId: 'chat-uuid',
+  chatUrl: 'https://app.boostgpt.co/chat/...'
+}
+```
+
+## HTTP API
+
+When users click triggers, the script calls:
+
+### POST /v1/bot/trigger
+
+Creates a new chat with context.
+
+**Request:**
+```json
+{
+  "bot_id": "agent-uuid",
+  "event": "checkout_help",
+  "context": {
+    "cart_value": "$149"
+  },
+  "source_url": "https://example.com/checkout",
+  "user": {
+    "id": "user_123",
+    "email": "user@example.com"
+  }
+}
+```
+
+**Response (Success):**
+```json
+{
+  "success": true,
+  "chat_id": "chat-uuid",
+  "chat_url": "https://app.boostgpt.co/chat/agent-uuid/chat-uuid"
+}
+```
+
+**Response (Error):**
+```json
+{
+  "success": false,
+  "error": "Bot not found",
+  "code": "BOT_NOT_FOUND"
+}
+```
+
+**Error Codes:**
+
+| Code | HTTP Status | Description |
+|------|-------------|-------------|
+| `BOT_NOT_FOUND` | 404 | Agent doesn't exist or is inactive |
+| `RATE_LIMITED` | 429 | IP rate limit exceeded |
+| `PLAN_LIMIT_EXCEEDED` | 402 | Monthly trigger limit reached |
+| `INVALID_REQUEST` | 400 | Missing required fields |
+
+## TypeScript Types
+
+```typescript
+interface BoostGPTConfig {
+  botId: string;
+}
+
+interface TriggerContext {
+  [key: string]: string | number | boolean | object;
+}
+
+interface TriggerOptions {
+  // Common
+  type?: 'button' | 'toast' | 'banner' | 'inline';
+  position?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left' | 'top' | 'bottom';
+  delay?: number;
+  openInNewTab?: boolean;
+  loadingText?: string;
+  zIndex?: number;
+  dismissible?: boolean;
+  autoShow?: boolean;
+  offsetX?: string;
+  offsetY?: string;
+  user?: UserData;
+
+  // Button
+  buttonText?: string;
+  buttonColor?: string;
+  textColor?: string;
+  showIcon?: boolean;
+  borderRadius?: string;
+  fontSize?: string;
+  fontWeight?: string;
+  padding?: string;
+  boxShadow?: string;
+
+  // Toast
+  message?: string;
+  messages?: string[];
+  avatar?: string;
+  title?: string;
+  toastBackground?: string;
+  toastTextColor?: string;
+
+  // Banner
+  bannerText?: string;
+  bannerColor?: string;
+  bannerTextColor?: string;
+  bannerPadding?: string;
+
+  // Inline
+  container?: string | HTMLElement;
+}
+
+interface UserData {
+  id?: string;
+  email?: string;
+  name?: string;
+  [key: string]: string | undefined;
+}
+
+interface BoostGPT {
+  init(config: BoostGPTConfig): void;
+  trigger(eventName: string, context?: TriggerContext, options?: TriggerOptions): void;
+  dismiss(eventName: string): void;
+  dismissAll(): void;
+  isLoaded(): boolean;
+}
+
+declare global {
+  interface Window {
+    boostgpt: BoostGPT;
+  }
+}
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Configuration" icon="settings" href="/saas/trigger-script/configuration">
+    Options reference with examples
+  </Card>
+
+  <Card title="Best Practices" icon="lightbulb" href="/saas/best-practices">
+    Tips for effective triggers
+  </Card>
+</CardGroup>

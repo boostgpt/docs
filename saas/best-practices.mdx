@@ -1,0 +1,246 @@
+---
+title: "Best Practices"
+description: "Tips for effective proactive triggers"
+---
+
+## Timing
+
+<AccordionGroup>
+  <Accordion title="Don't trigger immediately">
+    Give users time to orient themselves before offering help.
+
+    **Recommended delays:**
+    - Simple pages: 30-45 seconds
+    - Complex forms: 45-90 seconds
+    - Technical setup: 90-180 seconds
+  </Accordion>
+
+  <Accordion title="Detect genuine friction, not exploration">
+    Distinguish between:
+    - User reading carefully (good)
+    - User stuck and frustrated (needs help)
+
+    Use multiple signals: time + inactivity + scroll position.
+  </Accordion>
+
+  <Accordion title="Use exit intent carefully">
+    Exit intent (mouse leaving window) is powerful but can feel aggressive.
+    Reserve for high-value pages like checkout.
+  </Accordion>
+</AccordionGroup>
+
+## Frequency
+
+<AccordionGroup>
+  <Accordion title="Limit triggers per session">
+    - Max 2-3 triggers per session
+    - Never more than 1 at a time
+    - Wait 5+ minutes between triggers
+  </Accordion>
+
+  <Accordion title="Respect dismissals">
+    If a user dismisses a trigger:
+    - Don't show the same trigger again that session
+    - Consider a 24-hour cooldown for that event
+    - Track dismissal patterns to improve targeting
+  </Accordion>
+
+  <Accordion title="Avoid trigger fatigue">
+    Users who see too many triggers become blind to them.
+    Quality over quantity - fewer, better-timed triggers perform better.
+  </Accordion>
+</AccordionGroup>
+
+## Messaging
+
+<AccordionGroup>
+  <Accordion title="Be specific, not generic">
+    ❌ "Need help?"
+    ✅ "Having trouble with payment? I can help!"
+
+    ❌ "Click here for support"
+    ✅ "Stuck on this step? I can walk you through it."
+  </Accordion>
+
+  <Accordion title="Match your brand voice">
+    If your brand is:
+    - Professional: "Need assistance with checkout?"
+    - Friendly: "Hey! Can I help with that?"
+    - Technical: "Encountering an issue? Let's debug together."
+  </Accordion>
+
+  <Accordion title="Create urgency without pressure">
+    ✅ "Your cart is saved for 30 minutes"
+    ❌ "Buy now or lose your cart!"
+
+    ✅ "Questions before you go?"
+    ❌ "Don't leave! We need you!"
+  </Accordion>
+</AccordionGroup>
+
+## Context
+
+<AccordionGroup>
+  <Accordion title="Pass relevant data">
+    The more context your agent has, the better it can help:
+
+    ```javascript
+    // Good
+    boostgpt.trigger('checkout_help', {
+      cart_value: '$149',
+      items: 3,
+      user_name: 'Sarah',
+      time_on_page: 45,
+      current_step: 'payment'
+    });
+
+    // Not as helpful
+    boostgpt.trigger('help', {});
+    ```
+  </Accordion>
+
+  <Accordion title="Include user info when available">
+    ```javascript
+    {
+      user: {
+        id: 'user_123',
+        name: 'Sarah Chen',
+        email: 'sarah@example.com',
+        plan: 'pro',
+        account_age: '6 months'
+      }
+    }
+    ```
+
+    This enables personalized responses.
+  </Accordion>
+
+  <Accordion title="Capture the user's journey">
+    Include:
+    - Current page/step
+    - Previous pages visited
+    - Actions already taken
+    - Time spent
+  </Accordion>
+</AccordionGroup>
+
+## Trigger Types
+
+<AccordionGroup>
+  <Accordion title="Match type to context">
+    | Situation | Best Type |
+    |-----------|-----------|
+    | General availability | Button |
+    | Proactive outreach | Toast |
+    | Urgent/important | Banner |
+    | Contextual help | Inline |
+  </Accordion>
+
+  <Accordion title="Toast for engagement">
+    Toasts feel personal and conversational.
+    Use them when you want higher engagement.
+    Stacked messages create a chat-like experience.
+  </Accordion>
+
+  <Accordion title="Button for persistence">
+    Buttons are less intrusive and always available.
+    Good for "just in case" help without interrupting flow.
+  </Accordion>
+</AccordionGroup>
+
+## Training Your Agent
+
+<AccordionGroup>
+  <Accordion title="Include relevant knowledge">
+    Your agent should know:
+    - Product features and pricing
+    - Common issues and solutions
+    - Policies (shipping, returns, refunds)
+    - Technical documentation
+  </Accordion>
+
+  <Accordion title="Write good prompt templates">
+    Templates should:
+    - Describe the situation clearly
+    - Include all relevant context
+    - Provide instructions on how to help
+    - Set the right tone
+  </Accordion>
+
+  <Accordion title="Test with real scenarios">
+    Before deploying, test:
+    - Common user questions
+    - Edge cases
+    - Error scenarios
+    - Various context combinations
+  </Accordion>
+</AccordionGroup>
+
+## Analytics & Optimization
+
+<AccordionGroup>
+  <Accordion title="Track key metrics">
+    | Metric | What It Tells You |
+    |--------|-------------------|
+    | Trigger Rate | How often conditions are met |
+    | View Rate | How often users see triggers |
+    | Engagement Rate | How often users click |
+    | Resolution Rate | How often chat helps |
+    | Conversion Lift | Impact on desired outcomes |
+  </Accordion>
+
+  <Accordion title="A/B test everything">
+    Test variations of:
+    - Trigger timing
+    - Message copy
+    - Trigger type (toast vs button)
+    - Position
+    - Colors
+  </Accordion>
+
+  <Accordion title="Iterate based on data">
+    - High view, low click: Message isn't compelling
+    - High click, low resolution: Agent needs better training
+    - Low view: Trigger timing/conditions need adjustment
+  </Accordion>
+</AccordionGroup>
+
+## Common Mistakes
+
+<Warning>
+  **Don't do these:**
+</Warning>
+
+1. **Triggering on page load** - Let users settle first
+2. **Too many triggers** - Causes fatigue and annoyance
+3. **Generic messages** - "Need help?" is forgettable
+4. **Blocking the page** - Never prevent users from continuing
+5. **No dismiss option** - Always let users close triggers
+6. **Same trigger repeatedly** - Respect when users say no
+7. **Ignoring mobile** - Test on all devices
+8. **No analytics** - You can't improve what you don't measure
+
+## Checklist
+
+Before launching triggers, verify:
+
+- [ ] Timing feels natural, not aggressive
+- [ ] Messages are specific and helpful
+- [ ] Agent is trained on relevant content
+- [ ] Dismissals are respected
+- [ ] Works on mobile devices
+- [ ] Analytics tracking is in place
+- [ ] Rate limits won't be exceeded
+- [ ] Legal/privacy requirements are met
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/saas/quickstart">
+    Set up your first trigger
+  </Card>
+
+  <Card title="Use Case Guides" icon="book" href="/saas/guides/checkout-abandonment">
+    Real-world implementations
+  </Card>
+</CardGroup>

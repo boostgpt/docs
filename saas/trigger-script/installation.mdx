@@ -1,0 +1,223 @@
+---
+title: "Installation"
+description: "Add the trigger script to your website"
+---
+
+## Quick Setup
+
+Add the BoostGPT trigger script to your website:
+
+```html
+<script src="https://embed.boostgpt.co/trigger.js"></script>
+<script>
+  boostgpt.init({ botId: 'YOUR_AGENT_UUID' });
+</script>
+```
+
+Replace `YOUR_AGENT_UUID` with your agent's UUID from the dashboard.
+
+## Finding Your Agent UUID
+
+1. Go to your BoostGPT dashboard
+2. Navigate to **Agents**
+3. Click on your agent
+4. Find the UUID in the URL: `app.boostgpt.co/agents/[UUID]/...`
+5. Or check the **Events** page for the installation snippet
+
+## Installation Options
+
+### In HTML Head
+
+For static sites, add to your `<head>` section:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My App</title>
+  <script src="https://embed.boostgpt.co/trigger.js"></script>
+  <script>
+    boostgpt.init({ botId: 'your-agent-uuid' });
+  </script>
+</head>
+<body>
+  ...
+</body>
+</html>
+```
+
+### React / Next.js
+
+Using a useEffect hook:
+
+```jsx
+// components/BoostGPTTrigger.js
+import { useEffect } from 'react';
+
+export default function BoostGPTTrigger({ botId }) {
+  useEffect(() => {
+    // Load script
+    const script = document.createElement('script');
+    script.src = 'https://embed.boostgpt.co/trigger.js';
+    script.async = true;
+    script.onload = () => {
+      window.boostgpt.init({ botId });
+    };
+    document.head.appendChild(script);
+
+    return () => {
+      // Cleanup on unmount
+      if (window.boostgpt) {
+        window.boostgpt.dismissAll();
+      }
+    };
+  }, [botId]);
+
+  return null;
+}
+
+// Usage in _app.js or layout
+<BoostGPTTrigger botId="your-agent-uuid" />
+```
+
+### Vue.js / Nuxt
+
+As a plugin:
+
+```javascript
+// plugins/boostgpt.client.js
+export default ({ }, inject) => {
+  const loadScript = () => {
+    return new Promise((resolve, reject) => {
+      if (window.boostgpt) {
+        resolve(window.boostgpt);
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://embed.boostgpt.co/trigger.js';
+      script.async = true;
+      script.onload = () => {
+        window.boostgpt.init({ botId: 'your-agent-uuid' });
+        resolve(window.boostgpt);
+      };
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  };
+
+  inject('boostgpt', {
+    load: loadScript,
+    trigger: (...args) => window.boostgpt?.trigger(...args),
+    dismiss: () => window.boostgpt?.dismissAll()
+  });
+};
+```
+
+### Angular
+
+As a service:
+
+```typescript
+// services/boostgpt.service.ts
+import { Injectable } from '@angular/core';
+
+@Injectable({ providedIn: 'root' })
+export class BoostGPTService {
+  private loaded = false;
+
+  async load(botId: string): Promise<void> {
+    if (this.loaded) return;
+
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://embed.boostgpt.co/trigger.js';
+      script.async = true;
+      script.onload = () => {
+        (window as any).boostgpt.init({ botId });
+        this.loaded = true;
+        resolve();
+      };
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  trigger(event: string, context?: object, options?: object): void {
+    (window as any).boostgpt?.trigger(event, context, options);
+  }
+
+  dismiss(): void {
+    (window as any).boostgpt?.dismissAll();
+  }
+}
+```
+
+## Script Loading
+
+The script is lightweight (~8KB gzipped) and loads asynchronously. It:
+
+- Doesn't block page rendering
+- Creates the global `window.boostgpt` object
+- Handles multiple calls gracefully (idempotent)
+
+## Verifying Installation
+
+After adding the script, verify it's working:
+
+```javascript
+// In browser console
+console.log(window.boostgpt); // Should show BoostGPT object
+
+// Test a trigger
+boostgpt.trigger('test_event', { test: true });
+// Should show trigger UI
+```
+
+## Troubleshooting
+
+### Script Not Loading
+
+Check for:
+- Console errors (blocked by CSP, network issues)
+- Correct script URL
+- Script in accessible location (not inside conditional)
+
+### boostgpt is undefined
+
+The script loads asynchronously. Wait for it:
+
+```javascript
+function waitForBoostGPT(callback) {
+  if (window.boostgpt) {
+    callback(window.boostgpt);
+  } else {
+    setTimeout(() => waitForBoostGPT(callback), 100);
+  }
+}
+
+waitForBoostGPT((bg) => {
+  bg.init({ botId: 'your-agent-uuid' });
+});
+```
+
+### Content Security Policy
+
+If your site has a strict CSP, add:
+
+```
+script-src https://embed.boostgpt.co;
+connect-src https://api.boostgpt.co;
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Configuration" icon="settings" href="/saas/trigger-script/configuration">
+    Customize trigger behavior
+  </Card>
+
+  <Card title="Trigger Types" icon="palette" href="/saas/trigger-script/trigger-types">
+    Choose button, toast, banner, or inline
+  </Card>
+</CardGroup>

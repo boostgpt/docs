@@ -1,0 +1,121 @@
+---
+title: "Creating Events"
+description: "How to create and manage events in the dashboard"
+---
+
+## Accessing the Events Page
+
+1. Log in to your BoostGPT dashboard
+2. Navigate to **Agents** and select your agent
+3. Click **Events** in the sidebar
+
+## Creating a New Event
+
+Click **Create Event** to open the event form.
+
+### Basic Information
+
+| Field | Description | Example |
+|-------|-------------|---------|
+| **Name** | Unique identifier (no spaces, use snake_case) | `checkout_abandoned` |
+| **Label** | Display name shown in dashboard | "Checkout Abandoned" |
+| **Description** | Notes about this event | "Triggered when user leaves checkout page" |
+
+### Prompt Template
+
+The prompt template defines what message your agent receives when this event triggers.
+
+**Without template:**
+Your agent receives a generic message built from the context data.
+
+**With template:**
+Your agent receives a customized message with context variables injected.
+
+```
+User named {{user_name}} ({{user_email}}) abandoned their cart.
+
+Cart details:
+- Value: {{cart_value}}
+- Items: {{items_count}}
+- Last item viewed: {{last_item}}
+
+Time on checkout page: {{time_on_page}} seconds.
+
+Help them complete their purchase. Be friendly and offer assistance
+with any concerns about shipping, payment, or the products.
+```
+
+### Active Status
+
+Toggle whether this event is active. Inactive events:
+- Won't respond to trigger calls
+- Won't count toward your trigger limit
+- Are useful for temporarily disabling triggers
+
+## Managing Events
+
+### Events List
+
+The Events tab shows all your events with:
+- Event name and label
+- Trigger count (this month)
+- Active/inactive status
+- Quick actions (edit, delete, toggle)
+
+### Editing Events
+
+Click the edit button on any event to modify:
+- Label and description
+- Prompt template
+- Active status
+
+Note: Event **names** cannot be changed after creation. If you need a different name, create a new event.
+
+### Deleting Events
+
+Delete events you no longer need. This:
+- Removes the event definition
+- Does not delete historical trigger logs
+- Future trigger calls for this event name will auto-create a new event
+
+## Event Limits
+
+Your plan determines how many triggers you can make per month:
+
+| Plan | Triggers/Month |
+|------|----------------|
+| Free | 100 |
+| Starter | 1,000 |
+| Pro | 5,000 |
+| Prime | 20,000 |
+| Scale | Unlimited |
+
+Limits apply to total triggers across all events, not per event.
+
+## Trigger Logs
+
+View trigger history in the **Logs** tab:
+
+- Timestamp of each trigger
+- Event name triggered
+- Context data passed
+- User info (if provided)
+- Source URL
+- Resulting chat URL
+
+Use logs to:
+- Debug trigger implementations
+- Analyze user friction patterns
+- Understand which events fire most often
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Prompt Templates" icon="message-square" href="/saas/events/prompt-templates">
+    Advanced template techniques
+  </Card>
+
+  <Card title="Installation" icon="code" href="/saas/trigger-script/installation">
+    Add the trigger script to your site
+  </Card>
+</CardGroup>

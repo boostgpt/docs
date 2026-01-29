@@ -1,0 +1,214 @@
+---
+title: "Checkout Abandonment"
+description: "Recover abandoned carts with proactive AI assistance"
+---
+
+## The Problem
+
+Cart abandonment rates average 70%. Users leave for many reasons:
+- Unexpected shipping costs
+- Complicated checkout process
+- Security concerns
+- Distractions or comparison shopping
+- Payment issues
+
+## The Solution
+
+Deploy proactive triggers that engage users before they leave, addressing their concerns in real-time.
+
+## Implementation
+
+### Step 1: Create the Event
+
+Create an event in your dashboard:
+
+- **Name**: `checkout_abandoned`
+- **Label**: "Checkout Abandonment"
+- **Prompt Template**:
+
+```
+🛒 CHECKOUT ASSISTANCE
+
+A customer needs help completing their purchase.
+
+Cart Information:
+- Total: {{cart_total}}
+- Items: {{item_count}}
+- Last item added: {{last_item}}
+
+Customer Context:
+- Time on checkout: {{time_on_page}} seconds
+- Page: {{checkout_step}}
+- Previous purchases: {{previous_orders}}
+
+Common reasons for abandonment at this stage:
+1. Shipping cost concerns
+2. Payment security questions
+3. Return policy questions
+4. Discount code requests
+5. Product questions
+
+Instructions:
+- Greet them warmly, acknowledge they may have questions
+- Ask if there's anything specific holding them back
+- Be ready to explain shipping, returns, and payment security
+- If they mention price, you can offer assistance finding applicable discounts
+- Don't be pushy - respect if they want to think about it
+```
+
+### Step 2: Detect Abandonment Signals
+
+Trigger when users show abandonment behavior:
+
+```javascript
+// Track time on checkout page
+let checkoutStartTime = Date.now();
+let triggered = false;
+
+// Trigger after 45 seconds of inactivity
+let inactivityTimer;
+function resetInactivityTimer() {
+  clearTimeout(inactivityTimer);
+  if (!triggered) {
+    inactivityTimer = setTimeout(triggerHelp, 45000);
+  }
+}
+
+// Trigger on exit intent
+document.addEventListener('mouseleave', function(e) {
+  if (e.clientY < 0 && !triggered) {
+    triggerHelp();
+  }
+});
+
+// Reset on user activity
+['mousemove', 'keypress', 'scroll', 'click'].forEach(event => {
+  document.addEventListener(event, resetInactivityTimer);
+});
+
+function triggerHelp() {
+  if (triggered) return;
+  triggered = true;
+
+  const timeOnPage = Math.round((Date.now() - checkoutStartTime) / 1000);
+
+  boostgpt.trigger('checkout_abandoned', {
+    cart_total: getCartTotal(),
+    item_count: getCartItemCount(),
+    last_item: getLastItemName(),
+    time_on_page: timeOnPage,
+    checkout_step: getCurrentStep(),
+    previous_orders: getUserOrderCount()
+  }, {
+    type: 'toast',
+    position: 'bottom-right',
+    title: 'Shopping Assistant',
+    message: 'Having trouble checking out? I can help!',
+    buttonColor: '#10B981'
+  });
+}
+
+// Start tracking
+if (isCheckoutPage()) {
+  resetInactivityTimer();
+}
+```
+
+### Step 3: Customize the Trigger Style
+
+Choose the right approach based on your brand:
+
+**Friendly Toast (Recommended)**
+```javascript
+{
+  type: 'toast',
+  title: 'Sarah from Support',
+  avatar: '/images/sarah-avatar.jpg',
+  messages: [
+    'Hey! 👋',
+    'I noticed you might have some questions about your order.',
+    'Happy to help with shipping, returns, or anything else!'
+  ]
+}
+```
+
+**Subtle Button**
+```javascript
+{
+  type: 'button',
+  buttonText: 'Questions? Chat now',
+  buttonColor: '#059669',
+  position: 'bottom-right'
+}
+```
+
+**Urgent Banner (for flash sales)**
+```javascript
+{
+  type: 'banner',
+  position: 'top',
+  bannerText: 'Sale ends in 2 hours! Need help checking out?',
+  bannerColor: '#DC2626',
+  buttonText: 'Get Help'
+}
+```
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Time the trigger right">
+    - Don't trigger immediately - give users time to browse
+    - 30-60 seconds of inactivity is a good threshold
+    - Exit intent is highly effective but can feel aggressive
+  </Accordion>
+
+  <Accordion title="Don't be pushy">
+    - One trigger per session is usually enough
+    - Respect user's decision if they dismiss
+    - Avoid blocking the checkout process
+  </Accordion>
+
+  <Accordion title="Personalize when possible">
+    - Use customer name if available
+    - Reference specific items in cart
+    - Mention relevant policies (free shipping threshold, etc.)
+  </Accordion>
+
+  <Accordion title="Train your agent well">
+    - Include shipping and return policies in training
+    - Add common FAQs
+    - Enable the agent to check order status if applicable
+  </Accordion>
+</AccordionGroup>
+
+## Measuring Success
+
+Track these metrics in your analytics:
+
+| Metric | How to Measure |
+|--------|----------------|
+| Trigger Rate | Triggers fired / Checkout page visits |
+| Engagement Rate | Triggers clicked / Triggers shown |
+| Recovery Rate | Completed orders after chat / Chats started |
+| Revenue Recovered | Sum of orders completed after chat |
+
+## Example Results
+
+| Metric | Before | After |
+|--------|--------|-------|
+| Cart Abandonment Rate | 72% | 61% |
+| Checkout Completion | 28% | 39% |
+| Trigger Engagement | N/A | 12% |
+| Monthly Recovered Revenue | $0 | $15,400 |
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Onboarding Friction" icon="user-plus" href="/saas/guides/onboarding-friction">
+    Help stuck users complete signup
+  </Card>
+
+  <Card title="Best Practices" icon="lightbulb" href="/saas/best-practices">
+    General trigger optimization
+  </Card>
+</CardGroup>

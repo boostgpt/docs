@@ -1,0 +1,265 @@
+---
+title: "Feature Discovery"
+description: "Proactively introduce features users might find useful"
+---
+
+## The Problem
+
+Users often don't know about features that could help them:
+- Hidden in menus they never explore
+- Released after they signed up
+- Seem advanced or intimidating
+- Not obviously relevant to their use case
+
+## The Solution
+
+Use behavioral signals to proactively introduce relevant features at the right moment.
+
+## Implementation
+
+### Step 1: Define Feature Events
+
+Create events for features you want to promote:
+
+**Event: `feature_discovery_bulk_import`**
+```
+✨ FEATURE DISCOVERY - Bulk Import
+
+User might benefit from bulk import. They've added {{items_added}} items manually.
+
+Feature Details:
+- Bulk import from CSV/Excel
+- Supports up to 10,000 rows at once
+- Auto-maps common column names
+
+User Context:
+- Items added manually: {{items_added}}
+- Time spent adding: {{time_spent}} minutes
+- Current page: {{current_page}}
+
+Instructions:
+- Introduce the bulk import feature naturally
+- Explain how it would save them time
+- Offer to walk them through the first import
+- Don't be pushy - they may prefer manual entry
+```
+
+**Event: `feature_discovery_keyboard_shortcuts`**
+```
+⌨️ FEATURE DISCOVERY - Keyboard Shortcuts
+
+Power user detected! They might love our keyboard shortcuts.
+
+User Activity:
+- Actions in last hour: {{action_count}}
+- Most used features: {{top_features}}
+- Using keyboard: {{keyboard_usage}}%
+
+Keyboard shortcuts available:
+- Cmd/Ctrl + K: Quick search
+- Cmd/Ctrl + N: New item
+- Cmd/Ctrl + S: Save
+- ?: Show all shortcuts
+
+Introduce shortcuts as a way to speed up their workflow.
+```
+
+### Step 2: Detect Behavioral Signals
+
+```javascript
+class FeatureDiscovery {
+  constructor() {
+    this.userActivity = {
+      manualAdds: 0,
+      searches: 0,
+      exports: 0,
+      actionCount: 0,
+      keyboardUsage: 0
+    };
+    this.discoveredFeatures = new Set(
+      JSON.parse(localStorage.getItem('discovered_features') || '[]')
+    );
+  }
+
+  track(action, data = {}) {
+    this.userActivity.actionCount++;
+
+    switch (action) {
+      case 'item_added_manually':
+        this.userActivity.manualAdds++;
+        if (this.userActivity.manualAdds === 10) {
+          this.suggestFeature('bulk_import');
+        }
+        break;
+
+      case 'search_performed':
+        this.userActivity.searches++;
+        if (this.userActivity.searches > 20 && !this.discoveredFeatures.has('saved_filters')) {
+          this.suggestFeature('saved_filters');
+        }
+        break;
+
+      case 'export_clicked':
+        this.userActivity.exports++;
+        if (this.userActivity.exports === 3) {
+          this.suggestFeature('api_access');
+        }
+        break;
+
+      case 'keyboard_shortcut_used':
+        // They already know about shortcuts
+        this.discoveredFeatures.add('keyboard_shortcuts');
+        break;
+    }
+
+    // Power user detection
+    if (this.userActivity.actionCount > 50 && !this.discoveredFeatures.has('keyboard_shortcuts')) {
+      this.suggestFeature('keyboard_shortcuts');
+    }
+  }
+
+  suggestFeature(featureId) {
+    if (this.discoveredFeatures.has(featureId)) return;
+
+    const feature = this.features[featureId];
+    if (!feature) return;
+
+    boostgpt.trigger(`feature_discovery_${featureId}`, {
+      ...this.userActivity,
+      feature_id: featureId
+    }, {
+      type: 'toast',
+      position: 'bottom-right',
+      title: 'Pro Tip',
+      message: feature.teaser,
+      buttonColor: '#6366F1'
+    });
+
+    this.discoveredFeatures.add(featureId);
+    localStorage.setItem('discovered_features', JSON.stringify([...this.discoveredFeatures]));
+  }
+
+  features = {
+    bulk_import: {
+      teaser: 'Did you know you can import items in bulk? Could save you hours!'
+    },
+    saved_filters: {
+      teaser: 'You search a lot! Want to learn about saved filters?'
+    },
+    keyboard_shortcuts: {
+      teaser: 'Power user spotted! Want to learn our keyboard shortcuts?'
+    },
+    api_access: {
+      teaser: 'Exporting often? Our API might be perfect for your workflow.'
+    },
+    automation: {
+      teaser: 'This seems repetitive. Want to learn about automations?'
+    }
+  };
+}
+
+// Initialize and use
+const discovery = new FeatureDiscovery();
+
+// Track throughout your app
+document.querySelector('.add-item-btn').addEventListener('click', () => {
+  discovery.track('item_added_manually');
+});
+```
+
+### Step 3: Context-Aware Suggestions
+
+```javascript
+// Suggest features based on current context
+function checkContextualFeatures() {
+  const page = getCurrentPage();
+  const userPlan = getUserPlan();
+
+  // On reports page, suggest exports
+  if (page === 'reports' && !discovery.discoveredFeatures.has('scheduled_reports')) {
+    boostgpt.trigger('feature_discovery_scheduled_reports', {
+      current_page: page,
+      report_count: getReportCount()
+    }, {
+      type: 'inline',
+      container: '#feature-callout',
+      buttonText: 'Learn about scheduled reports',
+      buttonColor: '#8B5CF6'
+    });
+  }
+
+  // Near plan limits, suggest upgrade features
+  if (userPlan === 'starter' && getUsagePercent() > 80) {
+    boostgpt.trigger('feature_discovery_pro_features', {
+      current_plan: userPlan,
+      usage_percent: getUsagePercent()
+    }, {
+      type: 'banner',
+      position: 'top',
+      bannerText: 'You\'re using 80% of your plan. Chat with us about Pro features!',
+      bannerColor: '#7C3AED'
+    });
+  }
+}
+```
+
+## Trigger Timing
+
+| Signal | Feature | Timing |
+|--------|---------|--------|
+| 10 manual entries | Bulk Import | Immediately after 10th |
+| 20+ searches | Saved Filters | On next search |
+| 50+ actions/hour | Keyboard Shortcuts | After 5 min of activity |
+| 3 exports | API Access | On 3rd export |
+| High plan usage | Pro Features | When > 80% usage |
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Don't interrupt critical flows">
+    Never interrupt:
+    - Active editing
+    - Payment flows
+    - Export processes
+
+    Wait for natural pauses in activity.
+  </Accordion>
+
+  <Accordion title="Respect dismissals">
+    If a user dismisses a feature suggestion:
+    - Don't show it again for at least 7 days
+    - Consider it "discovered" even if declined
+  </Accordion>
+
+  <Accordion title="Personalize the pitch">
+    Instead of: "Check out bulk import!"
+    Try: "You've added 10 items manually. Bulk import could save you time!"
+  </Accordion>
+
+  <Accordion title="Limit frequency">
+    - Max 1 feature suggestion per session
+    - Max 3 per week
+    - Never more than 1 banner at a time
+  </Accordion>
+</AccordionGroup>
+
+## Measuring Success
+
+| Metric | Description |
+|--------|-------------|
+| Feature Adoption | % of users who try suggested feature |
+| Time to Discovery | Days from signup to feature use |
+| Engagement Rate | % of suggestions clicked |
+| Feature Retention | Users still using feature after 30 days |
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Error Handling" icon="triangle-alert" href="/saas/guides/error-handling">
+    Help users recover from errors
+  </Card>
+
+  <Card title="Best Practices" icon="lightbulb" href="/saas/best-practices">
+    General trigger optimization
+  </Card>
+</CardGroup>

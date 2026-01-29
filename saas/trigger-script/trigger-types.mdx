@@ -1,0 +1,223 @@
+---
+title: "Trigger Types"
+description: "Choose the right trigger style for your use case"
+---
+
+## Overview
+
+BoostGPT supports four trigger types, each suited for different scenarios:
+
+| Type | Best For | Visibility |
+|------|----------|------------|
+| **Button** | General help, persistent CTA | Medium - floating button |
+| **Toast** | Conversational, friendly outreach | High - chat bubble with avatar |
+| **Banner** | Urgent/important messages | Very High - full-width strip |
+| **Inline** | Contextual help in specific areas | Low - embedded in page |
+
+## Button Type
+
+A floating action button in one corner of the screen.
+
+```javascript
+boostgpt.trigger('help', {}, {
+  type: 'button',
+  position: 'bottom-right',
+  buttonText: 'Need help?',
+  buttonColor: '#7788BB',
+  textColor: '#FFFFFF',
+  showIcon: true
+});
+```
+
+### When to Use
+
+- General "get help" functionality
+- Persistent availability indicator
+- Minimal intrusion
+- E-commerce checkout pages
+- Settings/configuration pages
+
+### Button Options
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `buttonText` | "Need help?" | Button label |
+| `buttonColor` | "#7788BB" | Background color |
+| `textColor` | "#FFFFFF" | Text color |
+| `showIcon` | true | Show chat icon |
+| `borderRadius` | "50px" | Border radius (pill shape) |
+| `fontSize` | "14px" | Text size |
+| `fontWeight` | "600" | Text weight |
+| `padding` | "12px 20px" | Internal spacing |
+| `boxShadow` | "0 4px 12px rgba(0,0,0,0.15)" | Shadow |
+
+## Toast Type
+
+A chat bubble that looks like a message from your agent.
+
+```javascript
+boostgpt.trigger('onboarding_stuck', {}, {
+  type: 'toast',
+  position: 'bottom-right',
+  title: 'Support Bot',
+  message: 'Looks like you might be stuck. Need a hand?',
+  toastBackground: '#ffffff',
+  toastTextColor: '#374151'
+});
+```
+
+### Stacked Messages
+
+Create a conversational feel with multiple bubbles:
+
+```javascript
+boostgpt.trigger('welcome', {}, {
+  type: 'toast',
+  messages: [
+    'Hey there! 👋',
+    'I noticed you\'re checking out our pricing.',
+    'Have any questions? I\'m here to help!'
+  ]
+});
+```
+
+### When to Use
+
+- Friendly, conversational outreach
+- Onboarding assistance
+- Feature discovery
+- When personalization matters
+- Higher engagement needed
+
+### Toast Options
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `message` | "Need help?..." | Single message text |
+| `messages` | null | Array of messages (stacked) |
+| `avatar` | null | Avatar URL (uses agent's if null) |
+| `title` | null | Name shown (uses agent's if null) |
+| `toastBackground` | "#ffffff" | Background color |
+| `toastTextColor` | "#374151" | Text color |
+| `buttonColor` | "#7788BB" | Action button color |
+
+## Banner Type
+
+A full-width notification strip at the top or bottom of the page.
+
+```javascript
+boostgpt.trigger('sale_help', {}, {
+  type: 'banner',
+  position: 'top',
+  bannerText: 'Questions about our summer sale? Chat with us!',
+  bannerColor: '#10B981',
+  bannerTextColor: '#FFFFFF',
+  buttonText: 'Ask Now'
+});
+```
+
+### When to Use
+
+- Time-sensitive announcements
+- Site-wide promotions
+- Important notices
+- High-visibility needed
+- Urgent support availability
+
+### Banner Options
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `bannerText` | "Need help?..." | Message text |
+| `bannerColor` | "#7788BB" | Background color |
+| `bannerTextColor` | "#FFFFFF" | Text color |
+| `bannerPadding` | "14px 20px" | Internal spacing |
+| `buttonText` | "Chat Now" | CTA button text |
+| `position` | "top" | "top" or "bottom" only |
+
+## Inline Type
+
+Renders inside a specific container element on your page.
+
+```html
+<!-- Your page -->
+<div class="help-section">
+  <p>Having trouble? We're here to help.</p>
+  <div id="help-button"></div>
+</div>
+
+<script>
+boostgpt.trigger('section_help', {
+  section: 'billing'
+}, {
+  type: 'inline',
+  container: '#help-button',
+  buttonText: 'Chat with Support',
+  buttonColor: '#4F46E5'
+});
+</script>
+```
+
+### When to Use
+
+- Contextual help for specific sections
+- Embedded in existing UI
+- Form assistance
+- FAQ supplements
+- Documentation pages
+
+### Inline Options
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `container` | null | CSS selector or DOM element |
+| `buttonText` | "Need help?" | Button label |
+| `buttonColor` | "#7788BB" | Background color |
+| `textColor` | "#FFFFFF" | Text color |
+| `showIcon` | true | Show chat icon |
+| `borderRadius` | "8px" | Border radius |
+| `fontSize` | "14px" | Text size |
+| `padding` | "12px 20px" | Internal spacing |
+
+## Comparison Table
+
+| Feature | Button | Toast | Banner | Inline |
+|---------|--------|-------|--------|--------|
+| Visibility | Medium | High | Very High | Low |
+| Intrusiveness | Low | Medium | High | None |
+| Personalization | Low | High | Medium | Medium |
+| Position Flexibility | 4 corners | 4 corners | Top/Bottom | Any element |
+| Best Engagement | General | Conversational | Urgent | Contextual |
+| Multiple Instances | No | No | No | Yes |
+
+## Choosing the Right Type
+
+<AccordionGroup>
+  <Accordion title="For general help availability">
+    Use **Button**. It's unobtrusive but always visible.
+  </Accordion>
+
+  <Accordion title="For proactive engagement">
+    Use **Toast**. The conversational format feels personal and inviting.
+  </Accordion>
+
+  <Accordion title="For urgent messages">
+    Use **Banner**. High visibility ensures users see it.
+  </Accordion>
+
+  <Accordion title="For contextual assistance">
+    Use **Inline**. Embed help exactly where users need it.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Configuration" icon="settings" href="/saas/trigger-script/configuration">
+    All available options
+  </Card>
+
+  <Card title="Use Case Guides" icon="book" href="/saas/guides/checkout-abandonment">
+    Real-world examples
+  </Card>
+</CardGroup>

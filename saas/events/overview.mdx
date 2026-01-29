@@ -1,0 +1,127 @@
+---
+title: "Events Overview"
+description: "Understand how events and context work together"
+---
+
+## What Are Events?
+
+Events represent friction points in your application where users might need help. Each event has:
+
+- **Name**: A unique identifier (e.g., `checkout_abandoned`, `signup_stuck`)
+- **Label**: A human-readable display name
+- **Description**: What this event represents
+- **Prompt Template**: Instructions for your agent with context placeholders
+
+## The Trigger Flow
+
+```
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│   Your Code     │────▶│  Trigger API    │────▶│   Your Agent    │
+│                 │     │                 │     │                 │
+│ trigger(event,  │     │ Builds message  │     │ Responds with   │
+│   context)      │     │ from template   │     │ context         │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
+```
+
+1. **Your code** detects a friction point and calls `boostgpt.trigger()`
+2. **The API** finds the event, builds a message using the template and context
+3. **Your agent** receives the message and generates a helpful response
+4. **The user** sees the trigger UI, clicks, and starts a conversation
+
+## Context Variables
+
+Context is the data you pass with each trigger. It gets injected into the prompt template.
+
+```javascript
+// Your trigger call
+boostgpt.trigger('checkout_abandoned', {
+  cart_value: '$149.00',
+  items_count: 3,
+  user_name: 'Sarah'
+});
+```
+
+```
+// Your prompt template
+A user named {{user_name}} abandoned checkout with {{items_count}} items
+worth {{cart_value}}. Help them complete their purchase.
+```
+
+```
+// Resulting message to agent
+A user named Sarah abandoned checkout with 3 items worth $149.00.
+Help them complete their purchase.
+```
+
+## Auto-Created Events
+
+If you trigger an event that doesn't exist, it's automatically created with:
+- **Name**: The event name you provided
+- **Label**: Auto-generated from name (e.g., `checkout_abandoned` → "Checkout Abandoned")
+- **Prompt Template**: Default template that includes all context
+
+This lets you start triggering immediately without pre-configuring events.
+
+## Event Properties
+
+| Property | Required | Description |
+|----------|----------|-------------|
+| `name` | Yes | Unique identifier (snake_case recommended) |
+| `label` | No | Display name in dashboard |
+| `description` | No | Notes about when/why this event triggers |
+| `prompt_template` | No | Template with `{{variable}}` placeholders |
+| `is_active` | No | Whether this event is enabled (default: true) |
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Use descriptive event names">
+    Names should clearly indicate the friction point:
+    - ✅ `checkout_payment_failed`
+    - ✅ `onboarding_step3_stuck`
+    - ❌ `event1`
+    - ❌ `help_needed`
+  </Accordion>
+
+  <Accordion title="Include relevant context">
+    Pass information that helps your agent provide better assistance:
+    - Current page or step
+    - Error messages (if applicable)
+    - User's progress or history
+    - Product/cart details
+  </Accordion>
+
+  <Accordion title="Write clear prompt templates">
+    Templates should give your agent enough context to help immediately:
+    ```
+    // Good template
+    User is stuck on the {{step_name}} step of onboarding.
+    They've been on this page for {{time_spent}} seconds.
+    Error shown (if any): {{error_message}}.
+    Help them proceed.
+
+    // Too vague
+    User needs help with {{step}}.
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Event Lifecycle
+
+1. **Created**: Event is defined in dashboard or auto-created on first trigger
+2. **Triggered**: User hits friction point, your code calls `boostgpt.trigger()`
+3. **Logged**: Trigger is recorded for analytics (timestamp, context, IP, etc.)
+4. **Chat Created**: New conversation starts with context-aware first message
+5. **Resolved**: User gets help, friction point addressed
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Creating Events" icon="plus" href="/saas/events/creating-events">
+    Step-by-step guide to creating events
+  </Card>
+
+  <Card title="Prompt Templates" icon="message-square" href="/saas/events/prompt-templates">
+    Master context variables and templates
+  </Card>
+</CardGroup>

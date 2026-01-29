@@ -1,0 +1,101 @@
+---
+title: "SaaS"
+description: "Proactive AI agents that engage users at friction points"
+---
+
+## Proactive AI Agents for SaaS
+
+Turn user friction into engagement opportunities. BoostGPT's trigger system lets you deploy AI agents exactly when your users need help most.
+
+## What You Can Do
+
+<CardGroup cols={2}>
+  <Card title="Create Events" icon="bolt">
+    Define friction points and customize agent responses
+  </Card>
+
+  <Card title="Install Trigger Script" icon="code">
+    Add one script to your site, trigger from anywhere
+  </Card>
+
+  <Card title="Customize Triggers" icon="palette">
+    Choose button, toast, banner, or inline styles
+  </Card>
+
+  <Card title="Track Analytics" icon="chart-line">
+    Monitor trigger performance and conversions
+  </Card>
+</CardGroup>
+
+## How It Works
+
+```
+User hits friction point → Your code calls boostgpt.trigger()
+    → Trigger UI appears → User clicks → Agent responds with context
+    → User gets help → Friction resolved
+```
+
+**Example Flow:**
+1. User abandons checkout with items in cart
+2. Your code detects this and calls `boostgpt.trigger('checkout_abandoned', { cartValue: '$149' })`
+3. A friendly chat button appears: "Having trouble checking out?"
+4. User clicks, agent already knows their situation and offers help
+5. User completes purchase
+
+## Use Cases
+
+- **Checkout Abandonment** - Re-engage users who start but don't complete purchases
+- **Onboarding Friction** - Help users who get stuck during signup or setup
+- **Feature Discovery** - Proactively introduce features users might find useful
+- **Error Recovery** - Offer assistance when users encounter errors
+- **Upgrade Prompts** - Guide users hitting plan limits toward upgrades
+
+{/* ## Pricing
+
+| Plan | Triggers/Month | Price |
+|------|----------------|-------|
+| **Free** | 100 | $0 |
+| **Starter** | 1,000 | $49/mo |
+| **Pro** | 5,000 | $199/mo |
+| **Prime** | 20,000 | $499/mo |
+| **Scale** | Unlimited | Custom | */}
+
+## Get Started
+
+<Steps>
+  <Step title="Create an Agent">
+    Build an AI agent trained on your product and support content
+  </Step>
+
+  <Step title="Define Events">
+    Create events for each friction point you want to address
+  </Step>
+
+  <Step title="Install Script">
+    Add the trigger script to your website or app
+  </Step>
+
+  <Step title="Trigger on Friction">
+    Call `boostgpt.trigger()` when users hit friction points
+  </Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/saas/quickstart">
+    Set up your first trigger in 5 minutes
+  </Card>
+
+  <Card title="Events Overview" icon="bolt" href="/saas/events/overview">
+    Learn how events and context work
+  </Card>
+
+  <Card title="Trigger Types" icon="palette" href="/saas/trigger-script/trigger-types">
+    Choose the right trigger style
+  </Card>
+
+  <Card title="Best Practices" icon="lightbulb" href="/saas/best-practices">
+    Tips for effective triggers
+  </Card>
+</CardGroup>

@@ -61,6 +61,7 @@ These options work with all trigger types:
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `type` | string | `"button"` | Trigger style: `"button"`, `"toast"`, `"banner"`, `"inline"` |
+| `botId` | string | `null` | Override the agent for this trigger (uses init botId if not set) |
 | `position` | string | `"bottom-right"` | Screen position (see below) |
 | `delay` | number | `0` | Delay before showing (milliseconds) |
 | `openInNewTab` | boolean | `false` | Open chat in new tab |
@@ -187,6 +188,42 @@ boostgpt.trigger('inline_help', {}, {
 </script>
 ```
 
+## Screenshot Options
+
+Capture a screenshot of the page when the trigger is clicked. The screenshot is sent to your agent as an attachment, providing visual context.
+
+<Warning>
+Screenshot capture requires the `html2canvas` library. Load it before trigger.js:
+```html
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://embed.boostgpt.co/trigger.js"></script>
+```
+</Warning>
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `captureScreenshot` | boolean | `false` | Enable screenshot capture |
+| `screenshotQuality` | number | `0.8` | JPEG quality (0.0 - 1.0) |
+| `screenshotMaxWidth` | number | `1280` | Maximum screenshot width |
+| `screenshotMaxHeight` | number | `800` | Maximum screenshot height |
+
+```javascript
+boostgpt.trigger('checkout_error', {
+  error_code: '500',
+  step: 'payment'
+}, {
+  type: 'toast',
+  message: 'Having trouble? I can see your screen to help!',
+  captureScreenshot: true,
+  screenshotQuality: 0.7
+});
+```
+
+Your agent receives:
+- The user's message with context
+- The page URL (`source_url`)
+- A screenshot attachment showing exactly what the user sees
+
 ## User Data
 
 Pass user information for personalized experiences:
@@ -210,6 +247,36 @@ User data is:
 - Passed to your agent in the message context
 - Logged for analytics
 - Available in prompt templates as `{{user.field}}`
+
+## Multiple Bots
+
+Override the botId per trigger to route different events to different agents:
+
+```javascript
+// Initialize with your primary bot
+boostgpt.init({ botId: 'support-bot-uuid' });
+
+// Use default bot (from init)
+boostgpt.trigger('general_help', {});
+
+// Override for sales bot
+boostgpt.trigger('pricing_question', {
+  product: 'Enterprise'
+}, {
+  botId: 'sales-bot-uuid',  // Different bot!
+  type: 'toast',
+  message: 'Questions about pricing?'
+});
+
+// Override for billing bot
+boostgpt.trigger('billing_issue', {}, {
+  botId: 'billing-bot-uuid'
+});
+```
+
+<Tip>
+Use botId overrides when you have specialized agents for different purposes (sales, billing, technical support) on the same page.
+</Tip>
 
 ## Dismissing Triggers
 

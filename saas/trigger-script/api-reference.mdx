@@ -218,7 +218,8 @@ Creates a new chat with context.
   "user": {
     "id": "user_123",
     "email": "user@example.com"
-  }
+  },
+  "screenshot": "data:image/jpeg;base64,..."  // Optional - base64 screenshot
 }
 ```
 
@@ -263,6 +264,7 @@ interface TriggerContext {
 interface TriggerOptions {
   // Common
   type?: 'button' | 'toast' | 'banner' | 'inline';
+  botId?: string;
   position?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left' | 'top' | 'bottom';
   delay?: number;
   openInNewTab?: boolean;
@@ -273,6 +275,12 @@ interface TriggerOptions {
   offsetX?: string;
   offsetY?: string;
   user?: UserData;
+
+  // Screenshot
+  captureScreenshot?: boolean;
+  screenshotQuality?: number;
+  screenshotMaxWidth?: number;
+  screenshotMaxHeight?: number;
 
   // Button
   buttonText?: string;

@@ -153,6 +153,35 @@ export class BoostGPTService {
 }
 ```
 
+## Optional: Screenshot Capture
+
+To capture screenshots when triggers fire, load html2canvas before trigger.js:
+
+```html
+<!-- Optional: Enable screenshot capture -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<!-- Required: Trigger script -->
+<script src="https://embed.boostgpt.co/trigger.js"></script>
+<script>
+  boostgpt.init({ botId: 'your-agent-uuid' });
+</script>
+```
+
+Then enable per-trigger:
+
+```javascript
+boostgpt.trigger('checkout_error', {
+  error_code: '500'
+}, {
+  captureScreenshot: true  // Capture and send screenshot
+});
+```
+
+<Note>
+html2canvas adds ~40KB (gzipped) to your page. Only include it if you need screenshot functionality.
+</Note>
+
 ## Script Loading
 
 The script is lightweight (~8KB gzipped) and loads asynchronously. It:

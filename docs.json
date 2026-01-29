@@ -41,9 +41,7 @@
             "group": "Getting Started",
             "icon": "rocket",
             "pages": [
-              "index",
-              "quickstart",
-              "authentication"
+              "index"
             ]
           },
           {

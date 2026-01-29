@@ -5,6 +5,47 @@ rss: true
 noindex: true
 ---
 
+<Update label="January 2026" tags={["New releases"]} rss={{ title: "Proactive Agent Events & Trigger System", description: "Engage users proactively with contextual triggers, screenshot capture, and multi-bot support" }}>
+
+  ## Proactive trigger system
+
+  Transform your agents from passive chatbots into proactive assistants that reach out at the right moment:
+
+  - **Smart triggers**: Fire events based on user behavior (errors, cart abandonment, page visits)
+  - **Multiple UI types**: Button, toast notification, banner, or inline embed
+  - **Customizable appearance**: Colors, text, positioning, animations
+  - **Delayed triggers**: Show help after a configurable delay
+
+  ## Screenshot capture
+
+  Capture visual context when triggers fire to give your agent full situational awareness:
+
+  - **Automatic screenshots**: Capture the page when users click the trigger
+  - **Quality control**: Configurable JPEG quality and max dimensions
+  - **Privacy-first**: Opt-in only, users must enable per-trigger
+  - **Requires html2canvas**: Lightweight dependency (~40KB gzipped)
+
+  ## Multi-bot routing
+
+  Route different events to specialized agents on the same page:
+
+  - **Per-trigger botId**: Override the default agent for specific triggers
+  - **Specialized agents**: Sales bot for pricing, support bot for errors, billing bot for invoices
+  - **No re-initialization**: Switch between bots without calling init() again
+
+  ## Rich context passing
+
+  Provide your agents with full situational context:
+
+  - **Source URL**: Agents know which page the user is on
+  - **Custom context**: Pass any data (cart value, error codes, user info)
+  - **User identification**: Associate triggers with logged-in users
+  - **Prompt templates**: Use `{{context.field}}` in agent instructions
+
+  Get started with the [Trigger Script documentation](/saas/trigger-script/installation).
+
+</Update>
+
 <Update label="December 2025" tags={["New releases"]} rss={{ title: "Advanced Reasoning Models & Multi-Provider Support", description: "Support for 50+ AI models across 9 providers with advanced reasoning capabilities" }}>
 
   ## Reasoning models support

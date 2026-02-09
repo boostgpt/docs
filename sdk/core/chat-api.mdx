@@ -185,6 +185,41 @@ if (result.err) {
 }
 ```
 
+## Edit Chat Mode
+
+Edit mode enables iterative code editing — instead of regenerating full code each time, the AI returns targeted changes that are merged into the original code automatically.
+
+```javascript
+// First, get a response with code
+const initial = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'Build a login form in HTML',
+  chat_id: chatId
+});
+
+// Then edit the code from that response
+const edit = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'Add email validation and a forgot password link',
+  chat_id: chatId,
+  chat_mode: 'edit',
+  reference_message_id: initial.response.message_id // UUID of the message to edit
+});
+
+console.log(edit.response); // Merged code with changes applied
+```
+
+### Edit Mode Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `chat_mode` | string | No | `'default'` or `'edit'` (default: `'default'`) |
+| `reference_message_id` | string | When `chat_mode` is `'edit'` | UUID of the system message containing code to edit |
+
+<Info>
+Edit mode forces `reasoning_mode: 'standard'` (1 LLM call) regardless of the bot's configured reasoning mode. The response contains the fully merged code with the original language identifier preserved (e.g., ` ```html `). If the edit cannot be applied, it automatically falls back to full code regeneration.
+</Info>
+
 ## Error Handling
 
 ```javascript

@@ -5,6 +5,23 @@ rss: true
 noindex: true
 ---
 
+<Update label="February 2026" tags={["New releases"]} rss={{ title: "Edit Chat Mode", description: "Iterative code editing with search/replace diffs" }}>
+
+  ## Edit chat mode
+
+  Iterative code editing without regenerating the full response:
+
+  - **Edit mode** (`chat_mode: 'edit'`) — AI returns targeted search/replace changes merged into the original code
+  - **Reference message** (`reference_message_id`) — target a specific system message for editing
+  - **Toggle switch** — Chat/Edit toggle next to the send button, auto-selects last code message
+  - **Edit button** — per-message "Edit" action on system messages with code blocks
+  - **Language preservation** — merged code retains the original language identifier (e.g., ```html)
+  - **Automatic fallback** — if changes can't be applied, falls back to full code regeneration
+
+  See the [Chat API documentation](/sdk/core/chat-api#edit-chat-mode) for usage details.
+
+</Update>
+
 <Update label="January 2026" tags={["New releases"]} rss={{ title: "Proactive Agent Events & Trigger System", description: "Engage users proactively with contextual triggers, screenshot capture, and multi-bot support" }}>
 
   ## Proactive trigger system

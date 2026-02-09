@@ -215,6 +215,14 @@ await client.chat({
   Override bot's default token limit
 </ParamField>
 
+<ParamField path="chat_mode" type="string" default="default">
+  Chat mode: `default` for normal chat, `edit` for iterative code editing. Edit mode applies targeted changes to existing code instead of regenerating it.
+</ParamField>
+
+<ParamField path="reference_message_id" type="string">
+  UUID of the system message containing code to edit. Required when `chat_mode` is `edit`.
+</ParamField>
+
 **Response:**
 
 ```javascript

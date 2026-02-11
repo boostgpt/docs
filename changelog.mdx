@@ -5,6 +5,22 @@ rss: true
 noindex: true
 ---
 
+<Update label="February 2026" tags={["New releases"]} rss={{ title: "Plan Chat Mode", description: "Conversational planning before tool execution" }}>
+
+  ## Plan chat mode
+
+  Conversational "plan-then-execute" workflow for multi-step tasks:
+
+  - **Plan mode** (`chat_mode: 'plan'`) — AI proposes a step-by-step plan before executing any tools
+  - **Approve / Modify / New** — approve to execute, reply with changes to revise, or start a fresh plan
+  - **Tool-aware plans** — the AI considers all available tools (built-in and connected integrations) when generating plans
+  - **Thinking indicator** — streamed `thinking_token` events show plan generation progress in the UI
+  - **Direct answers** — if no tools are needed, bypasses planning and responds directly
+
+  See the [Chat API documentation](/sdk/core/chat-api#plan-chat-mode) for usage details.
+
+</Update>
+
 <Update label="February 2026" tags={["New releases"]} rss={{ title: "Edit Chat Mode", description: "Iterative code editing with search/replace diffs" }}>
 
   ## Edit chat mode

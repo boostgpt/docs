@@ -220,6 +220,52 @@ console.log(edit.response); // Merged code with changes applied
 Edit mode forces `reasoning_mode: 'standard'` (1 LLM call) regardless of the bot's configured reasoning mode. The response contains the fully merged code with the original language identifier preserved (e.g., ` ```html `). If the edit cannot be applied, it automatically falls back to full code regeneration.
 </Info>
 
+## Plan Chat Mode
+
+Plan mode enables a conversational "plan-then-execute" workflow — the AI proposes a step-by-step plan before executing any tools, giving you the opportunity to review, modify, or approve.
+
+```javascript
+// Step 1: Request a plan
+const plan = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'Find a professional studio background image and update the page',
+  chat_id: chatId,
+  chat_mode: 'plan'
+});
+
+console.log(plan.response); // AI proposes a step-by-step plan
+
+// Step 2: Approve the plan to execute it
+const result = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'Looks good, go ahead',
+  chat_id: chatId,
+  chat_mode: 'plan'
+});
+
+console.log(result.response); // Executed result
+
+// Or modify the plan instead
+const revised = await client.chat({
+  bot_id: 'bot_abc123',
+  message: 'Actually, search for a darker background instead',
+  chat_id: chatId,
+  chat_mode: 'plan'
+});
+
+console.log(revised.response); // Revised plan
+```
+
+### Plan Mode Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `chat_mode` | string | No | `'default'`, `'edit'`, or `'plan'` (default: `'default'`) |
+
+<Info>
+Plan mode classifies each message as one of three intents: **approve** (execute the proposed plan), **modify** (revise the plan), or **new** (generate a fresh plan). The AI is aware of all available tools (built-in and connected integrations) when generating plans. If no tools are needed, it bypasses planning and returns a direct answer. Plan generation costs 2 credits; execution costs are additional based on the tools used.
+</Info>
+
 ## Error Handling
 
 ```javascript

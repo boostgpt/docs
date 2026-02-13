@@ -1,0 +1,153 @@
+---
+title: "User Memory"
+description: "Manage per-user memories stored by your agent"
+---
+
+## Overview
+
+When **User Memory** is enabled on your agent, it automatically remembers details about each user across conversations. Use these endpoints to list, count, and delete memories programmatically.
+
+<Info>
+User Memory is a per-user feature — each user gets their own private memory store. Enable it in your agent's **Settings → Features & Options → Access to Memory**.
+</Info>
+
+## List Memories
+
+Retrieve memories stored for a specific user or all users on the bot.
+
+```javascript
+const result = await client.request({
+  method: 'GET',
+  path: '/bot/memory/readall',
+  params: {
+    bot_id: 'bot_abc123',
+    user_uuid: 'user_uuid_here', // optional
+    type: 'semantic',            // optional
+    page: 1,                     // optional
+    per_page: 50                 // optional
+  }
+});
+
+console.log(result.memories);
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `bot_id` | string | Yes | Bot ID |
+| `user_uuid` | string | No | Filter by user UUID |
+| `type` | string | No | Filter by type: `semantic`, `episodic`, `procedural`, or `all` (default: all) |
+| `page` | number | No | Page number (default: `1`) |
+| `per_page` | number | No | Results per page (default: `50`) |
+
+### Response
+
+```json
+{
+  "total": 12,
+  "memories": [
+    {
+      "uuid": "mem_abc123",
+      "content": "User prefers dark mode and minimal UI",
+      "type": "semantic",
+      "is_active": true,
+      "created_at": "2026-02-10T14:30:00.000Z",
+      "user": {
+        "uuid": "user_uuid_here",
+        "name": "John"
+      }
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "per_page": 50,
+    "total": 12,
+    "total_pages": 1
+  }
+}
+```
+
+## Count Memories
+
+Get the total number of active memories for a specific user.
+
+```javascript
+const result = await client.request({
+  method: 'GET',
+  path: '/bot/memory/count',
+  params: {
+    bot_id: 'bot_abc123',
+    user_uuid: 'user_uuid_here'
+  }
+});
+
+console.log(result.count); // 12
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `bot_id` | string | Yes | Bot ID |
+| `user_uuid` | string | Yes | User UUID to count memories for |
+
+### Response
+
+```json
+{
+  "count": 12
+}
+```
+
+## Delete a Memory
+
+Delete a specific memory by its ID.
+
+```javascript
+const result = await client.request({
+  method: 'DELETE',
+  path: '/bot/memory/mem_abc123',
+  params: {
+    bot_id: 'bot_abc123'
+  }
+});
+
+console.log(result.success); // true
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `bot_id` | string | Yes | Bot ID |
+| `memory_id` | string | Yes | Memory UUID (path parameter) |
+
+### Response
+
+```json
+{
+  "success": true
+}
+```
+
+## Memory Types
+
+Memories are categorized into three types:
+
+| Type | Description | Example |
+|------|-------------|---------|
+| `semantic` | Facts and knowledge about the user | "User's company is Acme Corp" |
+| `episodic` | Events and interactions | "User reported a billing issue on Feb 5" |
+| `procedural` | Preferences and workflows | "User prefers step-by-step explanations" |
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Chat API" icon="message-bot" href="/sdk/core/chat-api">
+    Send messages and receive AI responses
+  </Card>
+  <Card title="User Memory (Creators)" icon="brain" href="/creators/user-memory">
+    Learn how User Memory works for your agent
+  </Card>
+</CardGroup>

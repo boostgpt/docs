@@ -1887,6 +1887,648 @@
           }
         }
       }
+    },
+    "/v1/bot/heartbeat/configure": {
+      "post": {
+        "summary": "Configure Heartbeat",
+        "tags": ["Heartbeat"],
+        "description": "Create or update a heartbeat configuration for an agent",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfigureHeartbeatRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Heartbeat configured successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "heartbeat": { "$ref": "#/components/schemas/HeartbeatObject" }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "Invalid parameters", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "403": { "description": "Heartbeat not enabled or plan limit reached", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/v1/bot/heartbeat/read": {
+      "get": {
+        "summary": "Get Heartbeat",
+        "tags": ["Heartbeat"],
+        "description": "Get a single heartbeat configuration by UUID",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" },
+          { "name": "heartbeat_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Heartbeat UUID" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Heartbeat details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "heartbeat": { "$ref": "#/components/schemas/HeartbeatObject" }
+                  }
+                }
+              }
+            }
+          },
+          "404": { "description": "Heartbeat not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/v1/bot/heartbeat/readall": {
+      "get": {
+        "summary": "List Heartbeats",
+        "tags": ["Heartbeat"],
+        "description": "List all heartbeat configurations for an agent",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" },
+          { "name": "member_id", "in": "query", "required": false, "schema": { "type": "string" }, "description": "Filter by subscriber member ID" }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of heartbeats",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "heartbeats": { "type": "array", "items": { "$ref": "#/components/schemas/HeartbeatObject" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/heartbeat/enable": {
+      "post": {
+        "summary": "Enable Heartbeat",
+        "tags": ["Heartbeat"],
+        "description": "Activate a heartbeat so it runs on its schedule",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/HeartbeatActionRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Heartbeat enabled",
+            "content": { "application/json": { "schema": { "type": "object", "properties": { "heartbeat": { "$ref": "#/components/schemas/HeartbeatObject" } } } } }
+          },
+          "403": { "description": "Heartbeat feature not enabled for this agent", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "404": { "description": "Heartbeat not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/v1/bot/heartbeat/disable": {
+      "post": {
+        "summary": "Disable Heartbeat",
+        "tags": ["Heartbeat"],
+        "description": "Pause a heartbeat without deleting its configuration",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/HeartbeatActionRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Heartbeat disabled",
+            "content": { "application/json": { "schema": { "type": "object", "properties": { "heartbeat": { "$ref": "#/components/schemas/HeartbeatObject" } } } } }
+          },
+          "404": { "description": "Heartbeat not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/v1/bot/heartbeat/trigger": {
+      "post": {
+        "summary": "Trigger Heartbeat",
+        "tags": ["Heartbeat"],
+        "description": "Manually trigger a single heartbeat execution for testing",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/HeartbeatActionRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Heartbeat execution result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "status": { "type": "string", "enum": ["success", "error", "skipped"] },
+                        "response": { "type": "string", "description": "Agent response text" },
+                        "duration_ms": { "type": "integer" },
+                        "tokens_used": { "type": "integer" },
+                        "credits_charged": { "type": "integer" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Heartbeat feature not enabled for this agent", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "404": { "description": "Heartbeat not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/v1/bot/heartbeat/delete": {
+      "delete": {
+        "summary": "Delete Heartbeat",
+        "tags": ["Heartbeat"],
+        "description": "Permanently delete a heartbeat configuration",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" },
+          { "name": "heartbeat_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Heartbeat UUID" }
+        ],
+        "responses": {
+          "200": { "description": "Heartbeat deleted", "content": { "application/json": { "schema": { "type": "object", "properties": { "message": { "type": "string" } } } } } },
+          "404": { "description": "Heartbeat not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/v1/bot/heartbeat/logs": {
+      "get": {
+        "summary": "Get Heartbeat Logs",
+        "tags": ["Heartbeat"],
+        "description": "Retrieve execution history for a bot's heartbeats",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" },
+          { "name": "heartbeat_id", "in": "query", "required": false, "schema": { "type": "string" }, "description": "Filter by heartbeat UUID" },
+          { "name": "member_id", "in": "query", "required": false, "schema": { "type": "string" }, "description": "Filter by subscriber" },
+          { "name": "status", "in": "query", "required": false, "schema": { "type": "string", "enum": ["success", "error", "skipped"] }, "description": "Filter by status" },
+          { "name": "page", "in": "query", "required": false, "schema": { "type": "integer", "default": 1 }, "description": "Page number" },
+          { "name": "per_page", "in": "query", "required": false, "schema": { "type": "integer", "default": 20 }, "description": "Results per page" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Execution logs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": { "type": "integer" },
+                    "logs": { "type": "array", "items": { "$ref": "#/components/schemas/HeartbeatLogObject" } },
+                    "pagination": { "$ref": "#/components/schemas/Pagination" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/heartbeat/stats": {
+      "get": {
+        "summary": "Get Heartbeat Stats",
+        "tags": ["Heartbeat"],
+        "description": "Get aggregated execution statistics for a bot's heartbeats",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" },
+          { "name": "days", "in": "query", "required": false, "schema": { "type": "integer", "default": 30 }, "description": "Number of days to aggregate" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Execution statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "stats": { "$ref": "#/components/schemas/HeartbeatStatsObject" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/memory/readall": {
+      "get": {
+        "summary": "List User Memories",
+        "tags": ["User Memory"],
+        "description": "List all user memory entries for an agent",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" },
+          { "name": "user_uuid", "in": "query", "required": false, "schema": { "type": "string", "format": "uuid" }, "description": "Filter by user UUID" },
+          { "name": "type", "in": "query", "required": false, "schema": { "type": "string", "enum": ["semantic", "episodic", "procedural", "all"] }, "description": "Filter by memory type" }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of memories",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": { "type": "integer" },
+                    "memories": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/UserMemoryObject" }
+                    },
+                    "pagination": { "$ref": "#/components/schemas/Pagination" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/memory/count": {
+      "get": {
+        "summary": "Count User Memories",
+        "tags": ["User Memory"],
+        "description": "Get the total count of memory entries for a specific user",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" },
+          { "name": "user_uuid", "in": "query", "required": true, "schema": { "type": "string", "format": "uuid" }, "description": "User UUID" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Memory count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/memory/{memory_id}": {
+      "delete": {
+        "summary": "Delete User Memory",
+        "tags": ["User Memory"],
+        "description": "Delete a specific user memory entry",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" },
+          { "name": "memory_id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" }, "description": "Memory UUID" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Memory deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/email/address": {
+      "get": {
+        "summary": "Get Email Address",
+        "tags": ["Email"],
+        "description": "Get the agent's email address and email settings",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email address and settings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email_address": { "type": "string", "description": "Agent's email address" },
+                    "subdomain": { "type": "string" },
+                    "domain": { "type": "string" },
+                    "email_enabled": { "type": "boolean" },
+                    "email_auto_reply": { "type": "boolean" },
+                    "email_notifications": { "type": "boolean" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/email/settings": {
+      "put": {
+        "summary": "Update Email Settings",
+        "tags": ["Email"],
+        "description": "Update email configuration for an agent",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["project_id", "bot_id"],
+                "properties": {
+                  "project_id": { "type": "string", "description": "Project ID" },
+                  "bot_id": { "type": "string", "description": "Agent ID" },
+                  "email_enabled": { "type": "boolean", "description": "Enable/disable email" },
+                  "email_auto_reply": { "type": "boolean", "description": "Enable/disable auto-reply" },
+                  "email_notifications": { "type": "boolean", "description": "Enable/disable notifications" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Settings updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "email_address": { "type": "string" },
+                    "updated_at": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/email/stats": {
+      "get": {
+        "summary": "Get Email Stats",
+        "tags": ["Email"],
+        "description": "Get email statistics for an agent",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" },
+          { "name": "timeRange", "in": "query", "required": false, "schema": { "type": "string", "default": "30d" }, "description": "Time range (e.g., '7d', '30d')" },
+          { "name": "includeTimeSeries", "in": "query", "required": false, "schema": { "type": "boolean", "default": false }, "description": "Include time series data" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timeRange": { "type": "string" },
+                    "stats": {
+                      "type": "object",
+                      "properties": {
+                        "total": { "type": "integer" },
+                        "inbound": { "type": "integer" },
+                        "outbound": { "type": "integer" },
+                        "unread": { "type": "integer" },
+                        "processed": { "type": "integer" },
+                        "failed": { "type": "integer" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/email/readall": {
+      "get": {
+        "summary": "List Emails",
+        "tags": ["Email"],
+        "description": "Fetch all emails for an agent with pagination",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" },
+          { "name": "page", "in": "query", "required": false, "schema": { "type": "integer", "default": 1 }, "description": "Page number" },
+          { "name": "per_page", "in": "query", "required": false, "schema": { "type": "integer", "default": 50 }, "description": "Results per page" },
+          { "name": "status", "in": "query", "required": false, "schema": { "type": "string" }, "description": "Filter by status" },
+          { "name": "direction", "in": "query", "required": false, "schema": { "type": "string", "enum": ["inbound", "outbound"] }, "description": "Filter by direction" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": { "type": "integer" },
+                    "emails": { "type": "array", "items": { "$ref": "#/components/schemas/EmailObject" } },
+                    "pagination": { "$ref": "#/components/schemas/Pagination" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/email/read": {
+      "get": {
+        "summary": "Get Email",
+        "tags": ["Email"],
+        "description": "Fetch a single email with its conversation history",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" },
+          { "name": "email_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Email UUID" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email with conversation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": { "$ref": "#/components/schemas/EmailObject" },
+                    "conversation": { "type": "array", "items": { "type": "object" } }
+                  }
+                }
+              }
+            }
+          },
+          "404": { "description": "Email not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/v1/bot/email/reply": {
+      "post": {
+        "summary": "Reply to Email",
+        "tags": ["Email"],
+        "description": "Send a manual reply to an email",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["project_id", "bot_id", "email_id", "content"],
+                "properties": {
+                  "project_id": { "type": "string", "description": "Project ID" },
+                  "bot_id": { "type": "string", "description": "Agent ID" },
+                  "email_id": { "type": "string", "description": "Email UUID to reply to" },
+                  "content": { "type": "string", "description": "Reply content" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Reply sent", "content": { "application/json": { "schema": { "type": "object", "properties": { "success": { "type": "boolean" }, "message": { "type": "string" } } } } } }
+        }
+      }
+    },
+    "/v1/bot/email/delete": {
+      "delete": {
+        "summary": "Delete Email",
+        "tags": ["Email"],
+        "description": "Delete a specific email",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" },
+          { "name": "email_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Email UUID" }
+        ],
+        "responses": {
+          "200": { "description": "Email deleted", "content": { "application/json": { "schema": { "type": "object", "properties": { "success": { "type": "boolean" }, "message": { "type": "string" } } } } } }
+        }
+      }
+    },
+    "/v1/bot/trigger/config": {
+      "get": {
+        "summary": "Get Trigger Config",
+        "tags": ["Triggers"],
+        "description": "Get the trigger configuration for an agent (public, no auth required)",
+        "parameters": [
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trigger configuration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "config": {
+                      "type": "object",
+                      "properties": {
+                        "name": { "type": "string", "description": "Agent name" },
+                        "domain": { "type": "string", "description": "Agent domain URL" },
+                        "avatar": { "type": "string", "description": "Agent avatar URL" },
+                        "accent_color": { "type": "string", "description": "Accent color hex code" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v1/bot/trigger": {
+      "post": {
+        "summary": "Fire Trigger Event",
+        "tags": ["Triggers"],
+        "description": "Fire a proactive trigger event for an agent (public, no auth required, rate limited to 60 req/min)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["bot_id", "event"],
+                "properties": {
+                  "bot_id": { "type": "string", "description": "Agent ID" },
+                  "event": { "type": "string", "description": "Event name (e.g., 'checkout_error')" },
+                  "context": { "type": "object", "description": "Custom context key-value pairs" },
+                  "source_url": { "type": "string", "description": "Page URL where trigger fired" },
+                  "user": {
+                    "type": "object",
+                    "description": "User information",
+                    "properties": {
+                      "name": { "type": "string" },
+                      "email": { "type": "string" },
+                      "id": { "type": "string" }
+                    }
+                  },
+                  "screenshot": { "type": "string", "description": "Base64 data URL of page screenshot (max 5MB)" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Trigger fired successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "chat_id": { "type": "string", "description": "Chat session UUID" },
+                    "chat_url": { "type": "string", "description": "URL to chat interface" },
+                    "event": { "type": "string", "description": "Event name" }
+                  }
+                }
+              }
+            }
+          },
+          "429": { "description": "Rate limit exceeded" }
+        },
+        "security": []
+      }
     }
   },
   "components": {
@@ -2448,6 +3090,11 @@
             "type": "integer",
             "description": "Updated status",
             "enum": [0, 1]
+          },
+          "heartbeat": {
+            "type": "integer",
+            "description": "Enable heartbeat (autonomous scheduling) for this agent (0 = off, 1 = on)",
+            "enum": [0, 1]
           }
         }
       },
@@ -2517,6 +3164,11 @@
           "top": {
             "type": "integer",
             "description": "Updated top value (if changed)"
+          },
+          "heartbeat": {
+            "type": "integer",
+            "description": "Updated heartbeat setting (if changed)",
+            "enum": [0, 1]
           }
         },
         "required": ["id", "updated_at"]
@@ -2609,6 +3261,10 @@
           "memory": {
             "type": "integer",
             "description": "Whether memory is enabled (0 = no, 1 = yes)"
+          },
+          "heartbeat": {
+            "type": "integer",
+            "description": "Whether heartbeat (autonomous scheduling) is enabled (0 = no, 1 = yes)"
           },
           "hide_branding": {
             "type": "integer",
@@ -4234,6 +4890,124 @@
             "description": "Total reasoning tokens consumed"
           }
         }
+      },
+      "ConfigureHeartbeatRequest": {
+        "type": "object",
+        "required": ["project_id", "bot_id", "prompt"],
+        "properties": {
+          "project_id": { "type": "string", "description": "Project ID" },
+          "bot_id": { "type": "string", "description": "Agent ID" },
+          "prompt": { "type": "string", "description": "Instruction the agent executes each run" },
+          "interval_minutes": { "type": "integer", "description": "Run interval in minutes (default: 30)", "default": 30 },
+          "enabled": { "type": "boolean", "description": "Whether the heartbeat is active (default: false)", "default": false },
+          "active_hours_start": { "type": "string", "description": "Active window start in HH:MM format" },
+          "active_hours_end": { "type": "string", "description": "Active window end in HH:MM format" },
+          "active_days": { "type": "string", "description": "Comma-separated days 1-7 (1=Monday)" },
+          "timezone": { "type": "string", "description": "Timezone for active hours (default: UTC)", "default": "UTC" },
+          "credit_budget": { "type": "integer", "nullable": true, "description": "Max credits per billing period (null = unlimited)" },
+          "max_consecutive_errors": { "type": "integer", "description": "Auto-pause after this many consecutive failures (default: 5)", "default": 5 },
+          "member_id": { "type": "string", "nullable": true, "description": "Subscriber member ID for subscriber-specific heartbeats" }
+        }
+      },
+      "HeartbeatActionRequest": {
+        "type": "object",
+        "required": ["project_id", "bot_id", "heartbeat_id"],
+        "properties": {
+          "project_id": { "type": "string", "description": "Project ID" },
+          "bot_id": { "type": "string", "description": "Agent ID" },
+          "heartbeat_id": { "type": "string", "description": "Heartbeat UUID" }
+        }
+      },
+      "HeartbeatObject": {
+        "type": "object",
+        "properties": {
+          "uuid": { "type": "string", "description": "Heartbeat UUID" },
+          "bot_id": { "type": "integer" },
+          "member_id": { "type": "integer", "nullable": true },
+          "prompt": { "type": "string" },
+          "interval_minutes": { "type": "integer" },
+          "enabled": { "type": "integer", "enum": [0, 1] },
+          "active_hours_start": { "type": "string", "nullable": true },
+          "active_hours_end": { "type": "string", "nullable": true },
+          "active_days": { "type": "string", "nullable": true },
+          "timezone": { "type": "string" },
+          "credit_budget": { "type": "integer", "nullable": true },
+          "credits_used": { "type": "integer" },
+          "last_executed_at": { "type": "string", "nullable": true },
+          "last_status": { "type": "string", "nullable": true, "enum": ["success", "error", "skipped"] },
+          "execution_count": { "type": "integer" },
+          "error_count": { "type": "integer" },
+          "max_consecutive_errors": { "type": "integer" },
+          "created_at": { "type": "string" },
+          "updated_at": { "type": "string" }
+        }
+      },
+      "HeartbeatLogObject": {
+        "type": "object",
+        "properties": {
+          "uuid": { "type": "string" },
+          "type": { "type": "string", "enum": ["heartbeat", "scheduled_task", "agent_message"] },
+          "status": { "type": "string", "enum": ["success", "error", "skipped", "cancelled"] },
+          "prompt": { "type": "string" },
+          "response": { "type": "string" },
+          "duration_ms": { "type": "integer" },
+          "tokens_used": { "type": "integer" },
+          "credits_charged": { "type": "integer" },
+          "error_message": { "type": "string", "nullable": true },
+          "created_at": { "type": "string" }
+        }
+      },
+      "HeartbeatStatsObject": {
+        "type": "object",
+        "properties": {
+          "total_executions": { "type": "integer" },
+          "success_count": { "type": "integer" },
+          "error_count": { "type": "integer" },
+          "skipped_count": { "type": "integer" },
+          "success_rate": { "type": "number" },
+          "total_tokens": { "type": "integer" },
+          "total_credits": { "type": "integer" },
+          "avg_duration_ms": { "type": "number" },
+          "active_heartbeats": { "type": "integer" },
+          "by_type": { "type": "object", "description": "Per-type breakdown" },
+          "time_series": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": { "type": "string" },
+                "total": { "type": "integer" },
+                "success": { "type": "integer" },
+                "error": { "type": "integer" }
+              }
+            }
+          }
+        }
+      },
+      "UserMemoryObject": {
+        "type": "object",
+        "properties": {
+          "uuid": { "type": "string" },
+          "type": { "type": "string", "enum": ["semantic", "episodic", "procedural"] },
+          "content": { "type": "string" },
+          "is_active": { "type": "boolean" },
+          "created_at": { "type": "string" },
+          "updated_at": { "type": "string" }
+        }
+      },
+      "EmailObject": {
+        "type": "object",
+        "properties": {
+          "uuid": { "type": "string" },
+          "direction": { "type": "string", "enum": ["inbound", "outbound"] },
+          "from_address": { "type": "string" },
+          "to_address": { "type": "string" },
+          "subject": { "type": "string" },
+          "text_body": { "type": "string", "nullable": true },
+          "status": { "type": "string" },
+          "created_at": { "type": "string" },
+          "updated_at": { "type": "string" }
+        }
       }
     }
   },
@@ -4266,6 +5040,22 @@
     {
       "name": "Analytics",
       "description": "Operations for retrieving agent statistics and analytics"
+    },
+    {
+      "name": "Heartbeat",
+      "description": "Operations for managing autonomous agent scheduling and execution"
+    },
+    {
+      "name": "User Memory",
+      "description": "Operations for managing per-user memory entries"
+    },
+    {
+      "name": "Email",
+      "description": "Operations for managing agent email functionality"
+    },
+    {
+      "name": "Triggers",
+      "description": "Operations for firing proactive agent trigger events"
     }
   ]
 }

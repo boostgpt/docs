@@ -63,6 +63,8 @@
                     "group": "Features",
                     "pages": [
                       "creators/lead-capture",
+                      "creators/user-memory",
+                      "creators/heartbeat",
                       "creators/branding",
                       "creators/analytics",
                       "creators/deploy"
@@ -150,6 +152,8 @@
                         "sdk/core/bot-management",
                         "sdk/core/chat-api",
                         "sdk/core/training-data",
+                        "sdk/core/user-memory",
+                        "sdk/core/heartbeat",
                         "sdk/core/api-reference"
                       ]
                     },

@@ -5,6 +5,62 @@ rss: true
 noindex: true
 ---
 
+<Update label="February 2026" tags={["New releases"]} rss={{ title: "Heartbeat — Autonomous Agent Scheduling", description: "Agents run autonomously on a timer with built-in safety controls and full API access" }}>
+
+  ## Heartbeat scheduling
+
+  Transform agents from passive chatbots into proactive autonomous assistants:
+
+  - **Autonomous execution** — agents wake up on a timer, execute a prompt, use connected tools, and report back
+  - **Flexible scheduling** — configurable intervals, active hours, active days, and timezone support
+  - **notify_user** — agents can send notifications (email, in-app) to subscribers during execution
+  - **schedule_task** — agents can create their own recurring tasks for follow-up actions
+  - **message_agent** — agent-to-agent async communication for multi-agent workflows
+
+  ## Safety controls
+
+  - **Circuit breaker** — auto-pause after consecutive failures (configurable threshold)
+  - **Credit budgets** — per-heartbeat spending limits that reset monthly
+  - **Plan-tier caps** — maximum heartbeats per agent and minimum intervals enforced per plan
+  - **Bot-level toggle** — per-agent heartbeat enable/disable in Settings → Features & Options
+
+  ## Execution dashboard
+
+  - **Logs** — every execution with status, duration, tokens, and credits charged
+  - **Activity chart** — daily visualization of execution volume
+  - **Stats** — success rate, type breakdowns, and time-series data
+
+  ## API access
+
+  Full heartbeat management via the external API (`/v1/bot/heartbeat/*`) — create, list, enable, disable, trigger, delete, view logs, and get stats programmatically.
+
+  See the [Heartbeat guide](/creators/heartbeat) for no-code setup or the [Heartbeat API](/sdk/core/heartbeat) for programmatic access.
+
+</Update>
+
+<Update label="February 2026" tags={["New releases"]} rss={{ title: "User Memory & Context Compaction", description: "Agents remember user preferences across conversations with automatic context management" }}>
+
+  ## User memory
+
+  Agents now remember user preferences, facts, and context across conversations:
+
+  - **Automatic memory** — agents learn and store important details (names, preferences, decisions) from natural conversation
+  - **Per-user isolation** — each user has their own private memory store, separate from agent training data
+  - **Memory bootstrap** — relevant memories are automatically injected into context at the start of each conversation
+  - **Vector-powered recall** — memories are semantically searchable, so the most relevant context surfaces automatically
+  - **Memory management** — view and delete per-user memories from the **Subscribers** page in the dashboard
+
+  ## Context compaction
+
+  Long conversations no longer hit context window limits:
+
+  - **Automatic compaction** — when conversation context reaches 70% of the model's limit, older messages are summarized
+  - **Memory-safe** — important facts are extracted and saved to user memory before compaction
+  - **Model-aware** — compaction threshold adapts to each model's actual context window size
+  - **Transparent** — recent messages are preserved intact, only older history is summarized
+
+</Update>
+
 <Update label="February 2026" tags={["New releases"]} rss={{ title: "Plan Chat Mode", description: "Conversational planning before tool execution" }}>
 
   ## Plan chat mode

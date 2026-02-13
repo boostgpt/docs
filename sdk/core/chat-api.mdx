@@ -32,7 +32,7 @@ if (result.err) {
 | `max_reply_tokens` | number | No | Override max tokens |
 | `chat_id` | string | No | Chat ID to maintain conversation context |
 | `stream` | boolean | No | Stream response (default: `false`) |
-| `memory` | boolean | No | Use agent's memory (default: `true`) |
+| `memory` | boolean | No | Use agent's training data (default: `true`) |
 | `reasoning_mode` | string | No | `auto`, `standard`, `stepwise`, `react`, `interactive` |
 
 ### Response
@@ -152,9 +152,9 @@ const result = await client.chat({
 });
 ```
 
-## Disable Memory
+## Disable Training Data
 
-Disable agent's memory for a specific request:
+Skip the agent's training data for a specific request:
 
 ```javascript
 const result = await client.chat({

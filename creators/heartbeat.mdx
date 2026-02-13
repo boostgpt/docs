@@ -1,0 +1,102 @@
+---
+title: "Heartbeat"
+description: "Your agent runs autonomously on a schedule"
+---
+
+## What is Heartbeat?
+
+Heartbeat turns your agent from a passive chatbot into an autonomous assistant. Instead of waiting for someone to send a message, your agent wakes up on a schedule, executes a prompt, uses its connected tools, and can notify users — all without human interaction.
+
+<Info>
+**Heartbeat vs Chat**: Chat is reactive — users ask, the agent responds. Heartbeat is proactive — the agent runs on its own, checks things, takes actions, and reports back.
+</Info>
+
+## How to Enable
+
+1. Go to your agent's **Settings** page
+2. Scroll to **Features & Options**
+3. Toggle **Heartbeat** on
+
+<Warning>
+Heartbeat is available on **Starter** plans and above. Free and Hobby plans will see an "Upgrade" badge on the toggle.
+</Warning>
+
+Once enabled, a new **Heartbeat** tab will appear on your agent's page where you can create and manage heartbeat configurations.
+
+## Creating a Heartbeat
+
+Navigate to the **Heartbeat** tab on your agent's page and click **Create Heartbeat**.
+
+### Configuration Options
+
+| Setting | Description |
+|---------|-------------|
+| **Prompt** | The instruction your agent executes each time it runs (e.g., "Check for new support tickets and summarize them") |
+| **Interval** | How often the agent runs (minimum depends on your plan) |
+| **Active Hours** | Start and end time to restrict when the agent runs (e.g., 09:00–17:00) |
+| **Active Days** | Which days of the week the agent should run (e.g., Monday–Friday) |
+| **Timezone** | Timezone for active hours and days |
+| **Credit Budget** | Maximum credits this heartbeat can consume per billing period (optional) |
+
+### Plan Limits
+
+| Plan | Max Heartbeats per Agent | Minimum Interval |
+|------|--------------------------|------------------|
+| Starter | 3 | 15 minutes |
+| Pro | 10 | 5 minutes |
+| Prime | 20 | 5 minutes |
+
+## Execution & Notifications
+
+When a heartbeat fires, the agent:
+
+1. Receives the configured prompt
+2. Uses any connected tools (CRM, email, calendar, etc.) to gather information or take actions
+3. Can send notifications to users via the **notify_user** capability
+4. Logs the execution result (success, error, or skipped)
+
+Each heartbeat gets a fresh conversation thread daily, so the agent starts with clean context each day while retaining long-term knowledge through its memory.
+
+## Scheduled Tasks
+
+Agents with heartbeat enabled can also create their own recurring tasks. During a heartbeat execution, the agent may decide to schedule follow-up actions using the **schedule_task** capability — for example, "remind the user about their appointment tomorrow at 9 AM."
+
+Scheduled tasks have their own limits per plan and per subscriber.
+
+## Execution Logs & Stats
+
+The **Heartbeat** tab provides:
+
+- **Execution logs** — Every run with status (success/error/skipped), duration, tokens used, and credits charged
+- **Activity chart** — Daily visualization of execution volume
+- **Stats breakdown** — Success rate, total executions, active heartbeats, and per-type breakdowns
+- **Filtering** — Filter logs by status, heartbeat, or date range
+
+## Safety Features
+
+Heartbeats include built-in safety controls:
+
+- **Circuit breaker** — If a heartbeat fails 5 consecutive times (configurable), it automatically pauses to prevent runaway errors
+- **Credit budget** — Set a maximum credit spend per billing period. The heartbeat pauses when the budget is exhausted and resets monthly
+- **Plan-tier caps** — Maximum heartbeats per agent and minimum intervals are enforced per plan
+- **Active hours** — Restrict execution to business hours to avoid off-hours actions
+
+## Best Practices
+
+- Enable for agents that monitor, report, or take recurring actions (daily summaries, ticket checks, status updates)
+- Set a credit budget to prevent unexpected costs
+- Use active hours to avoid running during off-hours
+- Review execution logs regularly, especially after first enabling
+- Start with longer intervals and decrease as you gain confidence
+- Connect the tools your agent needs before creating heartbeats
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="User Memory" icon="brain" href="/creators/user-memory">
+    Let your agent remember users across conversations
+  </Card>
+  <Card title="Integrations" icon="plug" href="/creators/integrations/overview">
+    Connect tools for your agent to use
+  </Card>
+</CardGroup>

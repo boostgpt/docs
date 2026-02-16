@@ -61,6 +61,22 @@ noindex: true
 
 </Update>
 
+<Update label="February 2026" tags={["Breaking changes"]} rss={{ title: "Agent Reasoning Mode", description: "New autonomous agent mode replaces interactive, stepwise, and react reasoning types" }}>
+
+  ## Agent reasoning mode
+
+  The reasoning system has been simplified to three modes:
+
+  - **`auto`** — automatically selects the best approach for each request
+  - **`standard`** — quick, single-pass answers (1x credit)
+  - **`agent`** — autonomous multi-step reasoning with tool use (up to 10x credit)
+
+  The `agent` mode replaces the previous `interactive`, `stepwise`, and `react` modes with a unified autonomous agent loop that can read files, search, edit code, execute tools, and plan multi-step workflows.
+
+  **Deprecated:** `interactive`, `stepwise`, and `react` reasoning modes are no longer supported. Use `agent` instead.
+
+</Update>
+
 <Update label="February 2026" tags={["New releases"]} rss={{ title: "Plan Chat Mode", description: "Conversational planning before tool execution" }}>
 
   ## Plan chat mode
@@ -144,7 +160,7 @@ noindex: true
   - **Google Gemini**: 2.0 Flash Thinking mode
   - **xAI Grok**: Grok 3 Reasoning
   - **DeepSeek R1**: Cost-effective reasoning model
-  - Multiple reasoning modes: `auto`, `standard`, `stepwise`, `react`, `interactive`
+  - Multiple reasoning modes: `auto`, `standard`, `agent`
 
   ## Expanded model catalog
 
@@ -274,7 +290,7 @@ noindex: true
 
   ## Advanced chat parameters
 
-  - **reasoning_mode**: Choose from `auto`, `standard`, `stepwise`, `react`, `interactive`
+  - **reasoning_mode**: Choose from `auto`, `standard`, `agent`
   - **temperature**: Control model creativity (0-1 range)
   - **model override**: Change models per request
   - **provider_host**: Self-hosted Ollama support

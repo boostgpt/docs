@@ -48,7 +48,7 @@ await client.createBot({
 </ParamField>
 
 <ParamField path="reasoning_mode" type="string">
-  Reasoning mode: `auto`, `standard`, `stepwise`, `react`, `interactive`
+  Reasoning mode: `auto`, `standard`, `agent`
 </ParamField>
 
 <ParamField path="status" type="string" default="active">
@@ -103,7 +103,7 @@ await client.updateBot({
   model: 'gpt-5.1',
   instruction: 'New instruction',
   max_reply_tokens: 1500,
-  reasoning_mode: 'react',
+  reasoning_mode: 'agent',
   status: 'active'
 });
 ```
@@ -162,7 +162,7 @@ await client.chat({
   provider_host: 'http://localhost:11434', // For Ollama
   instruction: 'Optional override',
   source_ids: ['source1', 'source2'],
-  reasoning_mode: 'react',
+  reasoning_mode: 'agent',
   max_reply_tokens: 1000
 });
 ```
@@ -208,15 +208,15 @@ await client.chat({
 </ParamField>
 
 <ParamField path="reasoning_mode" type="string">
-  Override reasoning mode: `auto`, `standard`, `stepwise`, `react`, `interactive`
+  Override reasoning mode: `auto`, `standard`, `agent`
 </ParamField>
 
 <ParamField path="max_reply_tokens" type="number">
   Override bot's default token limit
 </ParamField>
 
-<ParamField path="chat_mode" type="string" default="default">
-  Chat mode: `default` for normal chat, `edit` for iterative code editing, `plan` for conversational planning before tool execution. Edit mode applies targeted changes to existing code instead of regenerating it. Plan mode proposes a step-by-step plan for review before executing.
+<ParamField path="chat_mode" type="string" default="ask">
+  Chat mode: `ask` for normal chat, `edit` for iterative code editing, `plan` for conversational planning before tool execution. Edit mode applies targeted changes to existing code instead of regenerating it. Plan mode proposes a step-by-step plan for review before executing.
 </ParamField>
 
 <ParamField path="reference_message_id" type="string">

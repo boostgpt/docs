@@ -167,7 +167,7 @@ Reasoning models employ a different approach:
     const response = await client.chat({
       bot_id: 'debug-bot',
       message: `Debug this function:\n\n${codeSnippet}`,
-      reasoning_mode: 'stepwise', // Step-by-step analysis
+      reasoning_mode: 'agent', // Autonomous multi-step analysis
       max_reply_tokens: 2500
     });
     ```
@@ -286,9 +286,7 @@ All reasoning models support these modes:
 |------|-------------|-------------------|
 | `auto` | Automatically selects best approach | Varies |
 | `standard` | Quick, straightforward answers | 1x |
-| `stepwise` | Breaks problems into steps with sources | Up to 2x |
-| `react` | Deep thinking with reflection cycles | Up to 5x |
-| `interactive` | Uses tools to gather info and perform calculations | Up to 10x |
+| `agent` | Autonomous multi-step reasoning with tool use | Up to 10x |
 
 ```javascript
 // Use reasoning model with different modes
@@ -308,16 +306,10 @@ const quickAnswer = await client.chat({
   reasoning_mode: 'standard' // Quick mode (1x credit)
 });
 
-const deepThinking = await client.chat({
+const agentMode = await client.chat({
   bot_id: reasoningBot.response.id,
-  message: 'Develop a 5-year business strategy',
-  reasoning_mode: 'react' // Deep Thinking (up to 5x credit)
-});
-
-const withTools = await client.chat({
-  bot_id: reasoningBot.response.id,
-  message: 'Research current market trends and analyze',
-  reasoning_mode: 'interactive' // Uses tools (up to 10x credit)
+  message: 'Research current market trends and develop a strategy',
+  reasoning_mode: 'agent' // Autonomous multi-step with tools (up to 10x credit)
 });
 ```
 
@@ -484,7 +476,7 @@ const strategize = async (businessData) => {
   const response = await client.chat({
     bot_id: 'strategy-bot',
     message: `Given this data:\n${businessData}\n\nDevelop a comprehensive strategy`,
-    reasoning_mode: 'react', // Deep thinking (up to 5x credit)
+    reasoning_mode: 'agent', // Autonomous multi-step with tools (up to 10x credit)
     max_reply_tokens: 3000
   });
 

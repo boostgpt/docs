@@ -3512,9 +3512,19 @@
           },
           "reasoning_mode": {
             "type": "string",
-            "enum": ["standard", "interactive", "stepwise", "react"],
-            "description": "Reasoning mode for the agent response (standard, interactive, stepwise, or react)",
-            "default": "standard"
+            "enum": ["auto", "standard", "agent"],
+            "description": "Reasoning mode for the agent response. 'auto' selects the best approach automatically, 'standard' for quick single-pass answers (1x credit), 'agent' for autonomous multi-step reasoning with tool use (up to 10x credit)",
+            "default": "auto"
+          },
+          "chat_mode": {
+            "type": "string",
+            "enum": ["ask", "edit", "plan"],
+            "description": "Chat mode. 'ask' for normal chat, 'edit' for iterative code editing with search/replace, 'plan' for conversational plan-then-execute workflow",
+            "default": "ask"
+          },
+          "reference_message_id": {
+            "type": "string",
+            "description": "UUID of the system message containing code to edit. Required when chat_mode is 'edit'"
           }
         }
       },
@@ -3617,94 +3627,94 @@
               },
               "type": {
                 "type": "string",
-                "description": "Response type (interactive mode: 'tool_approval_required')"
+                "description": "Response type (agent mode: 'tool_approval_required')"
               },
               "tool": {
                 "$ref": "#/components/schemas/ToolInfo",
-                "description": "Tool information (interactive mode only)"
+                "description": "Tool information (agent mode only)"
               },
               "requiresApproval": {
                 "type": "boolean",
-                "description": "Whether tool execution requires approval (interactive mode)"
+                "description": "Whether tool execution requires approval (agent mode)"
               },
               "executionId": {
                 "type": "string",
-                "description": "Execution ID (interactive mode)"
+                "description": "Execution ID (agent mode)"
               },
               "originalQuery": {
                 "type": "string",
-                "description": "Original user query (interactive mode)"
+                "description": "Original user query (agent mode)"
               },
               "context": {
                 "type": "string",
-                "description": "Conversation context (interactive mode)"
+                "description": "Conversation context (agent mode)"
               },
               "executedTools": {
                 "type": "array",
-                "description": "List of executed tools (interactive mode)",
+                "description": "List of executed tools (agent mode)",
                 "items": {
                   "type": "object"
                 }
               },
               "isComplete": {
                 "type": "boolean",
-                "description": "Whether reasoning is complete (interactive mode)"
+                "description": "Whether reasoning is complete (agent mode)"
               },
               "availableTools": {
                 "type": "integer",
-                "description": "Number of available tools (interactive mode)"
+                "description": "Number of available tools (agent mode)"
               },
               "stepInfo": {
                 "type": "string",
-                "description": "Step information (interactive mode)"
+                "description": "Step information (agent mode)"
               },
               "hasMoreSteps": {
                 "type": "boolean",
-                "description": "Whether more steps remain (interactive mode)"
+                "description": "Whether more steps remain (agent mode)"
               },
               "finalAnswer": {
                 "type": "string",
-                "description": "Final answer (stepwise/react modes)"
+                "description": "Final answer (agent mode)"
               },
               "reasoningSteps": {
                 "type": "array",
-                "description": "Reasoning steps (stepwise mode)",
+                "description": "Reasoning steps (agent mode)",
                 "items": {
                   "$ref": "#/components/schemas/ReasoningStep"
                 }
               },
               "sources": {
                 "type": "array",
-                "description": "Sources used (stepwise/react modes)",
+                "description": "Sources used (agent mode)",
                 "items": {
                   "$ref": "#/components/schemas/SourceMeta"
                 }
               },
               "totalSteps": {
                 "type": "integer",
-                "description": "Total number of reasoning steps (stepwise mode)"
+                "description": "Total number of reasoning steps (agent mode)"
               },
               "reasoning": {
                 "type": "array",
-                "description": "Detailed reasoning cycles (stepwise/react modes)",
+                "description": "Detailed reasoning cycles (agent mode)",
                 "items": {
                   "$ref": "#/components/schemas/ReasoningStep"
                 }
               },
               "reasoningCycles": {
                 "type": "array",
-                "description": "Reasoning cycles (react mode)",
+                "description": "Reasoning cycles (agent mode)",
                 "items": {
                   "$ref": "#/components/schemas/ReasoningStep"
                 }
               },
               "totalCycles": {
                 "type": "integer",
-                "description": "Total reasoning cycles (react mode)"
+                "description": "Total reasoning cycles (agent mode)"
               },
               "converged": {
                 "type": "boolean",
-                "description": "Whether reasoning converged (react mode)"
+                "description": "Whether reasoning converged (agent mode)"
               }
             }
           }
@@ -3975,7 +3985,7 @@
                 },
                 "reasoning_type": {
                   "type": "string",
-                  "description": "Type of reasoning used (e.g., standard, interactive, stepwise, react)"
+                  "description": "Type of reasoning used (e.g., standard, agent)"
                 },
                 "estimated_time_ms": {
                   "type": "string",
@@ -4866,13 +4876,7 @@
               "standard": {
                 "type": "integer"
               },
-              "interactive": {
-                "type": "integer"
-              },
-              "stepwise": {
-                "type": "integer"
-              },
-              "react": {
+              "agent": {
                 "type": "integer"
               }
             }

@@ -4126,10 +4126,6 @@
             "type": "object",
             "description": "Tool parameters"
           },
-          "parameterExplanation": {
-            "type": "string",
-            "description": "Explanation of parameters"
-          },
           "reasoning": {
             "type": "string",
             "description": "Reasoning for tool use"

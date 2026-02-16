@@ -2139,6 +2139,241 @@
         }
       }
     },
+    "/v1/bot/workspace/readall": {
+      "get": {
+        "summary": "List Workspaces",
+        "tags": ["Workspace"],
+        "description": "List all workspaces for an agent and the authenticated user",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of workspaces",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workspaces": { "type": "array", "items": { "$ref": "#/components/schemas/WorkspaceObject" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/workspace/create": {
+      "post": {
+        "summary": "Create Workspace",
+        "tags": ["Workspace"],
+        "description": "Create a new workspace for an agent",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateWorkspaceRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Workspace created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workspace": { "$ref": "#/components/schemas/WorkspaceObject" }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Plan limit reached", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/v1/bot/workspace/delete": {
+      "delete": {
+        "summary": "Delete Workspace",
+        "tags": ["Workspace"],
+        "description": "Delete a workspace and all its files. The default workspace cannot be deleted.",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" },
+          { "name": "workspace_uuid", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Workspace UUID" }
+        ],
+        "responses": {
+          "200": { "description": "Workspace deleted", "content": { "application/json": { "schema": { "type": "object", "properties": { "success": { "type": "boolean" }, "message": { "type": "string" } } } } } },
+          "400": { "description": "Cannot delete default workspace", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/v1/bot/workspace/files": {
+      "get": {
+        "summary": "List Files",
+        "tags": ["Workspace"],
+        "description": "List all files in a workspace",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" },
+          { "name": "workspace_uuid", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Workspace UUID" }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of files",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "files": { "type": "array", "items": { "$ref": "#/components/schemas/WorkspaceFileObject" } }
+                  }
+                }
+              }
+            }
+          },
+          "404": { "description": "Workspace not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/v1/bot/workspace/file": {
+      "get": {
+        "summary": "Read File",
+        "tags": ["Workspace"],
+        "description": "Read a single file from a workspace",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" },
+          { "name": "workspace_uuid", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Workspace UUID" },
+          { "name": "file_uuid", "in": "query", "required": true, "schema": { "type": "string" }, "description": "File UUID" }
+        ],
+        "responses": {
+          "200": {
+            "description": "File content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": { "$ref": "#/components/schemas/WorkspaceFileObject" }
+                  }
+                }
+              }
+            }
+          },
+          "404": { "description": "File not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      },
+      "post": {
+        "summary": "Create File",
+        "tags": ["Workspace"],
+        "description": "Create a new file in a workspace",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateFileRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "File created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": { "$ref": "#/components/schemas/WorkspaceFileObject" }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "File limit reached", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "404": { "description": "Workspace not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      },
+      "put": {
+        "summary": "Update File",
+        "tags": ["Workspace"],
+        "description": "Update the content of a file in a workspace",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateFileRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "File updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": { "$ref": "#/components/schemas/WorkspaceFileObject" }
+                  }
+                }
+              }
+            }
+          },
+          "404": { "description": "File not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      },
+      "delete": {
+        "summary": "Delete File",
+        "tags": ["Workspace"],
+        "description": "Delete a file from a workspace (soft delete)",
+        "parameters": [
+          { "name": "project_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Project ID" },
+          { "name": "bot_id", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Agent ID" },
+          { "name": "workspace_uuid", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Workspace UUID" },
+          { "name": "file_uuid", "in": "query", "required": true, "schema": { "type": "string" }, "description": "File UUID" }
+        ],
+        "responses": {
+          "200": { "description": "File deleted", "content": { "application/json": { "schema": { "type": "object", "properties": { "success": { "type": "boolean" }, "message": { "type": "string" } } } } } },
+          "404": { "description": "File not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/v1/bot/workspace/file/rename": {
+      "put": {
+        "summary": "Rename/Move File",
+        "tags": ["Workspace"],
+        "description": "Rename or move a file (or folder) within a workspace",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RenameFileRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "File renamed/moved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": { "$ref": "#/components/schemas/WorkspaceFileObject" }
+                  }
+                }
+              }
+            }
+          },
+          "404": { "description": "File not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
     "/v1/bot/memory/readall": {
       "get": {
         "summary": "List User Memories",
@@ -3519,12 +3754,8 @@
           "chat_mode": {
             "type": "string",
             "enum": ["ask", "edit", "plan"],
-            "description": "Chat mode. 'ask' for normal chat, 'edit' for iterative code editing with search/replace, 'plan' for conversational plan-then-execute workflow",
+            "description": "Chat mode. 'ask' for normal chat, 'edit' for agent-powered code editing, 'plan' for conversational plan-then-execute workflow",
             "default": "ask"
-          },
-          "reference_message_id": {
-            "type": "string",
-            "description": "UUID of the system message containing code to edit. Required when chat_mode is 'edit'"
           }
         }
       },
@@ -4287,6 +4518,12 @@
             "type": "boolean",
             "description": "Bypass rate limiting"
           },
+          "chat_mode": {
+            "type": "string",
+            "enum": ["ask", "edit", "plan"],
+            "description": "Chat mode. 'ask' for normal chat, 'edit' for agent-powered code editing, 'plan' for conversational plan-then-execute workflow",
+            "default": "ask"
+          },
           "execution_data": {
             "type": "object",
             "required": ["executionId", "originalQuery"],
@@ -4986,6 +5223,76 @@
               }
             }
           }
+        }
+      },
+      "WorkspaceObject": {
+        "type": "object",
+        "properties": {
+          "uuid": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string", "nullable": true },
+          "is_default": { "type": "integer", "enum": [0, 1] },
+          "created_at": { "type": "string" },
+          "updated_at": { "type": "string" }
+        }
+      },
+      "WorkspaceFileObject": {
+        "type": "object",
+        "properties": {
+          "uuid": { "type": "string" },
+          "file_path": { "type": "string", "description": "Virtual file path (e.g., /src/app.js)" },
+          "language": { "type": "string", "description": "Programming language" },
+          "content": { "type": "string", "description": "File content (included in read responses)" },
+          "version": { "type": "integer", "description": "File version number" },
+          "size_bytes": { "type": "integer", "nullable": true },
+          "last_edited_by": { "type": "string", "enum": ["agent", "user"] },
+          "created_at": { "type": "string" },
+          "updated_at": { "type": "string" }
+        }
+      },
+      "CreateWorkspaceRequest": {
+        "type": "object",
+        "required": ["project_id", "bot_id", "name"],
+        "properties": {
+          "project_id": { "type": "string", "description": "Project ID" },
+          "bot_id": { "type": "string", "description": "Agent ID" },
+          "name": { "type": "string", "description": "Workspace name" },
+          "description": { "type": "string", "description": "Workspace description" }
+        }
+      },
+      "CreateFileRequest": {
+        "type": "object",
+        "required": ["project_id", "bot_id", "workspace_uuid", "file_path"],
+        "properties": {
+          "project_id": { "type": "string", "description": "Project ID" },
+          "bot_id": { "type": "string", "description": "Agent ID" },
+          "workspace_uuid": { "type": "string", "description": "Workspace UUID" },
+          "file_path": { "type": "string", "description": "Virtual file path (e.g., /src/app.js)" },
+          "content": { "type": "string", "description": "File content" },
+          "language": { "type": "string", "description": "Programming language" }
+        }
+      },
+      "UpdateFileRequest": {
+        "type": "object",
+        "required": ["project_id", "bot_id", "workspace_uuid", "file_uuid", "content"],
+        "properties": {
+          "project_id": { "type": "string", "description": "Project ID" },
+          "bot_id": { "type": "string", "description": "Agent ID" },
+          "workspace_uuid": { "type": "string", "description": "Workspace UUID" },
+          "file_uuid": { "type": "string", "description": "File UUID" },
+          "content": { "type": "string", "description": "New file content" }
+        }
+      },
+      "RenameFileRequest": {
+        "type": "object",
+        "required": ["project_id", "bot_id", "workspace_uuid", "old_path", "new_path"],
+        "properties": {
+          "project_id": { "type": "string", "description": "Project ID" },
+          "bot_id": { "type": "string", "description": "Agent ID" },
+          "workspace_uuid": { "type": "string", "description": "Workspace UUID" },
+          "old_path": { "type": "string", "description": "Current file path" },
+          "new_path": { "type": "string", "description": "New file path" },
+          "is_folder": { "type": "boolean", "description": "Move all files under path prefix (folder rename)", "default": false }
         }
       },
       "UserMemoryObject": {

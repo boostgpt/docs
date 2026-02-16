@@ -1,0 +1,70 @@
+---
+title: "Workspaces"
+description: "Your agent's sandbox file system"
+---
+
+## What are Workspaces?
+
+Workspaces give your agent a sandbox file system — a place where it can create, read, edit, search, and delete files. When your agent uses **Agent** reasoning mode, it automatically has access to file tools that let it write code, generate documents, and manage project files.
+
+<Info>
+**Workspace vs Training Data**: Training data teaches your agent *what it knows*. Workspaces give your agent *a place to work* — creating and editing files like a developer would.
+</Info>
+
+## How It Works
+
+Workspaces are automatically created when needed:
+
+- **For logged-in users** — each user gets their own workspace per agent, so files are private
+- **For anonymous visitors** — each chat conversation gets its own isolated workspace
+
+No setup is required. When your agent is in **Agent** reasoning mode, the file tools are available automatically.
+
+## What Your Agent Can Do
+
+In Agent mode, your agent has access to these built-in file tools:
+
+| Tool | What it does |
+|------|-------------|
+| **Write** | Create new files or overwrite existing ones |
+| **Read** | Read file contents (can read specific line ranges) |
+| **Edit** | Make precise, targeted changes to existing files |
+| **Search** | Find patterns across all workspace files |
+| **Delete** | Remove files from the workspace |
+
+## File Explorer
+
+When your agent creates or edits files, they appear in the **Workspace** panel on the chat page:
+
+- **File tree** — browse all files organized by folder structure
+- **Syntax highlighting** — code files are displayed with proper syntax coloring
+- **Real-time updates** — files appear or update instantly when the agent makes changes
+- **Manual editing** — you can edit file contents directly in the viewer
+
+## Managing Workspaces
+
+From the chat page, you can:
+
+- **View files** — click any file in the workspace panel to view its contents
+- **Create files** — add files manually via the workspace panel
+- **Rename/move** — right-click files to rename or move them
+- **Delete files** — remove files you no longer need
+- **Switch workspaces** — if you have multiple workspaces, switch between them
+
+## Best Practices
+
+- Use Agent reasoning mode for tasks that involve creating or editing files
+- Be specific in your instructions — "Create an HTML login form with email and password fields" works better than "make a form"
+- Your agent can work across multiple files in a single turn — ask for a complete project structure
+- Files persist across conversations, so you can return later to continue working
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Heartbeat" icon="heart-pulse" href="/creators/heartbeat">
+    Schedule your agent to run autonomously
+  </Card>
+  <Card title="Integrations" icon="plug" href="/creators/integrations/overview">
+    Connect tools for your agent to use
+  </Card>
+</CardGroup>

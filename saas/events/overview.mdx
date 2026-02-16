@@ -72,28 +72,15 @@ This lets you start triggering immediately without pre-configuring events.
 | `prompt_template` | No | Template with `{{variable}}` placeholders |
 | `is_active` | No | Whether this event is enabled (default: true) |
 
-## Edit Mode Progress Events
-
-When using `chat_mode: 'edit'`, the following progress events are emitted during processing:
-
-| Event | Description |
-|-------|-------------|
-| `editing` | Edit mode LLM call started — analyzing the requested code changes |
-| `applying_patches` | Backend is applying search/replace diffs to the original code |
-| `fallback` | No diffs matched — falling back to full code regeneration |
-
-These events only fire during edit mode requests and can be used to show progress indicators in your UI.
-
 ## Plan Mode Progress Events
 
 When using `chat_mode: 'plan'`, the following progress events are emitted during processing:
 
 | Event | Description |
 |-------|-------------|
-| `thinking_token` | Streamed tokens while the plan is being generated (shown as a thinking indicator in the UI) |
-| `generating` | Plan synthesis started — the AI is preparing a polished plan response (message: "Preparing plan...") |
+| `generating` | Plan synthesis started — the AI is preparing a polished plan response |
 
-These events only fire during plan mode requests. Once a plan is approved and execution begins, standard tool execution events are emitted instead.
+These events only fire during plan mode requests. Once a plan is approved and execution begins, standard agent tool execution events are emitted instead.
 
 ## Best Practices
 

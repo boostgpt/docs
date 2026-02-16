@@ -216,11 +216,7 @@ await client.chat({
 </ParamField>
 
 <ParamField path="chat_mode" type="string" default="ask">
-  Chat mode: `ask` for normal chat, `edit` for iterative code editing, `plan` for conversational planning before tool execution. Edit mode applies targeted changes to existing code instead of regenerating it. Plan mode proposes a step-by-step plan for review before executing.
-</ParamField>
-
-<ParamField path="reference_message_id" type="string">
-  UUID of the system message containing code to edit. Required when `chat_mode` is `edit`.
+  Chat mode: `ask` for normal chat, `edit` for agent-powered code editing, `plan` for conversational planning before tool execution. Edit mode routes through the agent reasoning pipeline to make targeted file changes. Plan mode proposes a step-by-step plan for review before executing.
 </ParamField>
 
 **Response:**

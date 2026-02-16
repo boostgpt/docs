@@ -5,6 +5,69 @@ rss: true
 noindex: true
 ---
 
+<Update label="February 2026" tags={["New releases"]} rss={{ title: "Workspaces — Sandbox File System", description: "Agents can create, edit, and manage files in isolated sandbox workspaces" }}>
+
+  ## Workspaces
+
+  Agents now have a sandbox file system — isolated workspaces where they can create, read, edit, search, and delete files:
+
+  - **Built-in tools** — `write`, `read`, `edit`, `grep`, and `delete` tools available to agents in `agent` reasoning mode
+  - **Per-user isolation** — authenticated users get their own workspace per agent, anonymous users get a chat-scoped workspace
+  - **File explorer** — built-in file tree UI with syntax-highlighted code viewer
+  - **Real-time sync** — files created or edited by the agent appear instantly in the workspace explorer
+  - **REST API** — full workspace and file management via the API for programmatic access
+
+  See the [Workspaces documentation](/sdk/core/workspaces) for usage details.
+
+</Update>
+
+<Update label="February 2026" tags={["Breaking changes"]} rss={{ title: "Agent Reasoning Mode", description: "New autonomous agent mode replaces interactive, stepwise, and react reasoning types" }}>
+
+  ## Agent reasoning mode
+
+  The reasoning system has been simplified to three modes:
+
+  - **`auto`** — automatically selects the best approach for each request
+  - **`standard`** — quick, single-pass answers (1x credit)
+  - **`agent`** — autonomous multi-step reasoning with tool use (up to 10x credit)
+
+  The `agent` mode replaces the previous `interactive`, `stepwise`, and `react` modes with a unified autonomous agent loop that can read files, search, edit code, execute tools, and plan multi-step workflows.
+
+  **Deprecated:** `interactive`, `stepwise`, and `react` reasoning modes are no longer supported. Use `agent` instead.
+
+</Update>
+
+<Update label="February 2026" tags={["New releases"]} rss={{ title: "Plan Chat Mode", description: "Conversational planning before tool execution" }}>
+
+  ## Plan chat mode
+
+  Conversational "plan-then-execute" workflow for multi-step tasks:
+
+  - **Plan mode** (`chat_mode: 'plan'`) — AI proposes a step-by-step plan before executing any tools
+  - **Approve / Modify / New** — approve to execute, reply with changes to revise, or start a fresh plan
+  - **Tool-aware plans** — the AI considers all available tools (built-in and connected integrations) when generating plans
+  - **Direct answers** — if no tools are needed, bypasses planning and responds directly
+
+  See the [Chat API documentation](/sdk/core/chat-api#plan-chat-mode) for usage details.
+
+</Update>
+
+<Update label="February 2026" tags={["New releases"]} rss={{ title: "Edit Chat Mode", description: "Agent-powered code editing with built-in edit tool" }}>
+
+  ## Edit chat mode
+
+  Agent-powered code editing through the agent reasoning pipeline:
+
+  - **Edit mode** (`chat_mode: 'edit'`) — routes your request through the agent, which uses the built-in `edit` tool for targeted file changes
+  - **Toggle switch** — Chat/Edit/Plan toggle next to the send button
+  - **Edit button** — per-message "Edit" action on system messages with code blocks
+  - **Smart editing** — the agent analyzes your request, locates the right file, and applies precise string replacements
+  - **Multi-step edits** — the agent can chain multiple edits across files in a single turn
+
+  See the [Chat API documentation](/sdk/core/chat-api#edit-chat-mode) for usage details.
+
+</Update>
+
 <Update label="February 2026" tags={["New releases"]} rss={{ title: "Heartbeat — Autonomous Agent Scheduling", description: "Agents run autonomously on a timer with built-in safety controls and full API access" }}>
 
   ## Heartbeat scheduling
@@ -61,54 +124,6 @@ noindex: true
 
 </Update>
 
-<Update label="February 2026" tags={["Breaking changes"]} rss={{ title: "Agent Reasoning Mode", description: "New autonomous agent mode replaces interactive, stepwise, and react reasoning types" }}>
-
-  ## Agent reasoning mode
-
-  The reasoning system has been simplified to three modes:
-
-  - **`auto`** — automatically selects the best approach for each request
-  - **`standard`** — quick, single-pass answers (1x credit)
-  - **`agent`** — autonomous multi-step reasoning with tool use (up to 10x credit)
-
-  The `agent` mode replaces the previous `interactive`, `stepwise`, and `react` modes with a unified autonomous agent loop that can read files, search, edit code, execute tools, and plan multi-step workflows.
-
-  **Deprecated:** `interactive`, `stepwise`, and `react` reasoning modes are no longer supported. Use `agent` instead.
-
-</Update>
-
-<Update label="February 2026" tags={["New releases"]} rss={{ title: "Plan Chat Mode", description: "Conversational planning before tool execution" }}>
-
-  ## Plan chat mode
-
-  Conversational "plan-then-execute" workflow for multi-step tasks:
-
-  - **Plan mode** (`chat_mode: 'plan'`) — AI proposes a step-by-step plan before executing any tools
-  - **Approve / Modify / New** — approve to execute, reply with changes to revise, or start a fresh plan
-  - **Tool-aware plans** — the AI considers all available tools (built-in and connected integrations) when generating plans
-  - **Thinking indicator** — streamed `thinking_token` events show plan generation progress in the UI
-  - **Direct answers** — if no tools are needed, bypasses planning and responds directly
-
-  See the [Chat API documentation](/sdk/core/chat-api#plan-chat-mode) for usage details.
-
-</Update>
-
-<Update label="February 2026" tags={["New releases"]} rss={{ title: "Edit Chat Mode", description: "Iterative code editing with search/replace diffs" }}>
-
-  ## Edit chat mode
-
-  Iterative code editing without regenerating the full response:
-
-  - **Edit mode** (`chat_mode: 'edit'`) — AI returns targeted search/replace changes merged into the original code
-  - **Reference message** (`reference_message_id`) — target a specific system message for editing
-  - **Toggle switch** — Chat/Edit toggle next to the send button, auto-selects last code message
-  - **Edit button** — per-message "Edit" action on system messages with code blocks
-  - **Language preservation** — merged code retains the original language identifier (e.g., ```html)
-  - **Automatic fallback** — if changes can't be applied, falls back to full code regeneration
-
-  See the [Chat API documentation](/sdk/core/chat-api#edit-chat-mode) for usage details.
-
-</Update>
 
 <Update label="January 2026" tags={["New releases"]} rss={{ title: "Proactive Agent Events & Trigger System", description: "Engage users proactively with contextual triggers, screenshot capture, and multi-bot support" }}>
 

@@ -185,26 +185,18 @@ if (result.err) {
 
 ## Edit Chat Mode
 
-Edit mode enables iterative code editing — instead of regenerating full code each time, the AI returns targeted changes that are merged into the original code automatically.
+Edit mode routes your request through the agent reasoning pipeline, where the agent uses the built-in `edit` tool to make targeted code changes in your workspace files.
 
 ```javascript
-// First, get a response with code
-const initial = await client.chat({
+// Send an edit request — the agent finds and edits the relevant file
+const result = await client.chat({
   bot_id: 'bot_abc123',
-  message: 'Build a login form in HTML',
-  chat_id: chatId
-});
-
-// Then edit the code from that response
-const edit = await client.chat({
-  bot_id: 'bot_abc123',
-  message: 'Add email validation and a forgot password link',
+  message: 'Add email validation to the login form',
   chat_id: chatId,
-  chat_mode: 'edit',
-  reference_message_id: initial.response.message_id // UUID of the message to edit
+  chat_mode: 'edit'
 });
 
-console.log(edit.response); // Merged code with changes applied
+console.log(result.response); // Agent's summary of changes made
 ```
 
 ### Edit Mode Parameters
@@ -212,10 +204,9 @@ console.log(edit.response); // Merged code with changes applied
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `chat_mode` | string | No | `'ask'`, `'edit'`, or `'plan'` (default: `'ask'`) |
-| `reference_message_id` | string | When `chat_mode` is `'edit'` | UUID of the system message containing code to edit |
 
 <Info>
-Edit mode applies targeted search/replace changes to existing code instead of regenerating it. The response contains the fully merged code with the original language identifier preserved (e.g., ` ```html `). If the edit cannot be applied, it automatically falls back to full code regeneration.
+Edit mode forces agent reasoning — the AI analyzes your request, identifies the target file in the workspace, and applies precise string replacements using the built-in `edit` tool. The agent can chain multiple edits in a single turn. No `reference_message_id` is needed.
 </Info>
 
 ## Plan Chat Mode

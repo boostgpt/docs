@@ -1,0 +1,211 @@
+---
+title: "Workspaces"
+description: "Sandbox file system for AI agents"
+---
+
+## Overview
+
+Workspaces provide agents with an isolated sandbox file system. When an agent uses `agent` reasoning mode, it has access to built-in file tools (`write`, `read`, `edit`, `grep`, `delete`) that operate on workspace files.
+
+Each workspace is scoped per-agent and per-user:
+- **Authenticated users** — each user gets their own workspace per agent
+- **Anonymous users** — each chat conversation gets an isolated workspace
+
+## Built-in File Tools
+
+When an agent runs in `agent` reasoning mode, these tools are automatically available:
+
+| Tool | Description | Approval |
+|------|-------------|----------|
+| `write` | Create or overwrite a file | Conditional |
+| `read` | Read file content (supports line ranges) | Auto |
+| `edit` | Exact string replacement in a file | Conditional |
+| `grep` | Regex search across workspace files | Auto |
+| `delete` | Soft-delete a file | Conditional |
+
+<Info>
+Tools marked "Conditional" require user approval before execution (configurable per agent). Tools marked "Auto" execute without approval.
+</Info>
+
+### write
+
+Create a new file or overwrite an existing one:
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `file_path` | string | Yes | Virtual file path (e.g., `/src/app.js`) |
+| `content` | string | Yes | Full file content |
+| `language` | string | No | Programming language hint |
+
+### read
+
+Read a file's content, optionally by line range:
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `file_path` | string | Yes | Virtual file path to read |
+| `start_line` | integer | No | Start line (1-based) |
+| `end_line` | integer | No | End line (1-based, inclusive) |
+
+### edit
+
+Apply an exact string replacement to a file:
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `file_path` | string | Yes | Virtual file path to edit |
+| `old_string` | string | Yes | Exact text to find (must match uniquely) |
+| `new_string` | string | Yes | Replacement text (empty string to delete) |
+
+### grep
+
+Search across workspace files using regex:
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `pattern` | string | Yes | Search pattern (regex supported) |
+| `file_path` | string | No | Restrict to a specific file |
+| `include` | string | No | File extension filter (e.g., `.js`) |
+
+### delete
+
+Remove a file from the workspace (soft delete):
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `file_path` | string | Yes | Virtual file path to delete |
+
+## REST API
+
+Manage workspaces and files programmatically. All endpoints require API key authentication.
+
+### List Workspaces
+
+```
+GET /v1/bot/workspace/readall?project_id={project_id}&bot_id={bot_id}
+```
+
+**Response:**
+```json
+{
+  "workspaces": [
+    {
+      "uuid": "ws_abc123",
+      "name": "Default",
+      "is_default": 1,
+      "created_at": "2026-02-01T12:00:00Z"
+    }
+  ]
+}
+```
+
+### Create Workspace
+
+```
+POST /v1/bot/workspace/create
+```
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID |
+| `bot_id` | string | Yes | Bot ID |
+| `name` | string | Yes | Workspace name |
+| `description` | string | No | Workspace description |
+
+### Delete Workspace
+
+```
+DELETE /v1/bot/workspace/delete?project_id={project_id}&bot_id={bot_id}&workspace_uuid={uuid}
+```
+
+<Warning>
+The default workspace cannot be deleted.
+</Warning>
+
+### List Files
+
+```
+GET /v1/bot/workspace/files?project_id={project_id}&bot_id={bot_id}&workspace_uuid={uuid}
+```
+
+**Response:**
+```json
+{
+  "files": [
+    {
+      "uuid": "file_xyz",
+      "file_path": "/src/app.js",
+      "language": "javascript",
+      "version": 3,
+      "created_at": "2026-02-01T12:00:00Z"
+    }
+  ]
+}
+```
+
+### Read File
+
+```
+GET /v1/bot/workspace/file?project_id={project_id}&bot_id={bot_id}&workspace_uuid={uuid}&file_uuid={file_uuid}
+```
+
+### Create File
+
+```
+POST /v1/bot/workspace/file
+```
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID |
+| `bot_id` | string | Yes | Bot ID |
+| `workspace_uuid` | string | Yes | Workspace UUID |
+| `file_path` | string | Yes | Virtual file path (e.g., `/src/app.js`) |
+| `content` | string | No | File content |
+| `language` | string | No | Programming language |
+
+### Update File
+
+```
+PUT /v1/bot/workspace/file
+```
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID |
+| `bot_id` | string | Yes | Bot ID |
+| `workspace_uuid` | string | Yes | Workspace UUID |
+| `file_uuid` | string | Yes | File UUID |
+| `content` | string | Yes | New file content |
+
+### Delete File
+
+```
+DELETE /v1/bot/workspace/file?project_id={project_id}&bot_id={bot_id}&workspace_uuid={uuid}&file_uuid={file_uuid}
+```
+
+### Rename/Move File
+
+```
+PUT /v1/bot/workspace/file/rename
+```
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID |
+| `bot_id` | string | Yes | Bot ID |
+| `workspace_uuid` | string | Yes | Workspace UUID |
+| `old_path` | string | Yes | Current file path |
+| `new_path` | string | Yes | New file path |
+| `is_folder` | boolean | No | Move all files under path prefix (folder rename) |
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Chat API" icon="message-bot" href="/sdk/core/chat-api">
+    Send messages and receive AI responses
+  </Card>
+  <Card title="API Reference" icon="code" href="/sdk/core/api-reference">
+    Complete API documentation
+  </Card>
+</CardGroup>

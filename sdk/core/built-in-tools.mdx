@@ -1,0 +1,268 @@
+---
+title: "Built-in Tools"
+description: "Complete reference for all agent built-in tools"
+---
+
+## Overview
+
+When an agent uses `agent` reasoning mode, it has access to 20 built-in tools. These tools are automatically available — no configuration required.
+
+### Approval Levels
+
+| Level | Behavior | Description |
+|-------|----------|-------------|
+| **Auto** | Executes without user interaction | Read-only and low-risk operations |
+| **Conditional** | Configurable per agent | Write operations that modify workspace files |
+| **Always** | Always requires user approval | Actions that need explicit user consent |
+
+## Summary
+
+| Tool | Category | Approval | Description |
+|------|----------|----------|-------------|
+| `search_memory` | Knowledge | Auto | Vector search through knowledge base |
+| `screenshot` | Knowledge | Auto | Capture web page screenshot |
+| `remember` | Memory | Auto | Save to user long-term memory |
+| `recall` | Memory | Auto | Search user memories |
+| `list_memories` | Memory | Auto | List all user memories |
+| `forget` | Memory | Auto | Remove a user memory |
+| `write` | Files | Conditional | Create or overwrite a file |
+| `read` | Files | Auto | Read file content |
+| `edit` | Files | Conditional | Exact string replacement |
+| `grep` | Files | Auto | Regex search across files |
+| `delete` | Files | Conditional | Soft-delete a file |
+| `create_plan` | Planning | Auto | Register a plan |
+| `update_plan` | Planning | Auto | Modify plan or advance todos |
+| `read_plan` | Planning | Auto | Read current plan state |
+| `accept_plan` | Planning | Always | Submit plan for user approval |
+| `ask_user` | Communication | Always | Ask structured questions |
+| `notify_user` | Communication | Auto | Send proactive notification |
+| `message_agent` | Communication | Auto | Message another agent |
+| `schedule_task` | Automation | Auto | Create recurring task |
+| `think` | Utility | Auto | Internal reasoning |
+
+---
+
+## Knowledge & Search
+
+### search_memory
+
+Search through the bot's knowledge base and uploaded documents using vector similarity.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `query` | string | Yes | The search query to find relevant information |
+| `top` | integer | No | Number of results to return (default: 10) |
+
+### screenshot
+
+Capture a visual screenshot of a web page. Returns an image URL for vision-capable AI analysis.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `url` | string | Yes | URL of the web page to screenshot |
+| `width` | integer | No | Viewport width in pixels (default: 1920) |
+| `height` | integer | No | Viewport height in pixels (default: 1080) |
+| `fullPage` | boolean | No | Capture full scrollable page (default: false) |
+| `device` | string | No | Device preset (e.g., `iphone-15`, `ipad-pro-12.9`, `pixel-7`, `desktop-1080p`) |
+| `theme` | string | No | Color scheme: `light` or `dark` (default: light) |
+| `quality` | integer | No | JPEG quality 1-100 (default: 80) |
+| `format` | string | No | Output format: `jpg` or `png` (default: jpg) |
+| `blockCookieBanners` | boolean | No | Block cookie consent banners (default: false) |
+| `blockAds` | boolean | No | Block advertisements (default: false) |
+| `blockChatWidgets` | boolean | No | Block chat widgets (default: false) |
+| `blockPopups` | boolean | No | Block popups and modals (default: false) |
+| `hideSelectors` | array | No | CSS selectors to hide before capture |
+| `clickSelectors` | array | No | CSS selectors to click before capture |
+| `timeout` | integer | No | Page load timeout in ms (default: 30000) |
+
+---
+
+## User Memory
+
+<Info>
+User Memory must be enabled on the agent. Enable it in **Settings → Features & Options → Access to Memory**, or set `memory: true` via the [Bot Management API](/sdk/core/bot-management).
+</Info>
+
+### remember
+
+Save or update information in long-term memory for the current user. Automatically detects whether to create a new memory or update an existing one.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `content` | string | Yes | The information to remember |
+| `type` | string | No | Memory type: `semantic`, `episodic`, or `procedural` (default: semantic) |
+| `tags` | array | No | Tags for categorization |
+
+### recall
+
+Search through saved memories for the current user.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `query` | string | Yes | What to search for in memories |
+| `type` | string | No | Filter by type: `semantic`, `episodic`, `procedural`, or `all` (default: all) |
+| `top` | integer | No | Number of results to return (default: 5) |
+
+### list_memories
+
+List all saved memories for the current user, ordered by most recent.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `type` | string | No | Filter by type: `semantic`, `episodic`, `procedural`, or `all` (default: all) |
+| `limit` | integer | No | Max memories to return (default: 10) |
+
+### forget
+
+Remove a specific memory about the current user.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `query` | string | Yes | Description of the memory to forget |
+
+---
+
+## File Operations
+
+File tools operate on the agent's sandbox [Workspace](/sdk/core/workspaces). See the [Workspaces documentation](/sdk/core/workspaces) for full details including REST API endpoints.
+
+| Tool | Approval | Description |
+|------|----------|-------------|
+| `write` | Conditional | Create or overwrite a file — params: `file_path`, `content`, `language` |
+| `read` | Auto | Read file content — params: `file_path`, `start_line`, `end_line` |
+| `edit` | Conditional | Exact string replacement — params: `file_path`, `old_string`, `new_string` |
+| `grep` | Auto | Regex search across files — params: `pattern`, `file_path`, `include` |
+| `delete` | Conditional | Soft-delete a file — params: `file_path` |
+
+---
+
+## Planning
+
+Planning tools enable agents to create structured plans, track progress through todos, and get user approval before executing.
+
+### create_plan
+
+Register a plan after writing the plan document to a workspace file. First use `write` to create the plan file at `/.plans/{title}.md`, then call this tool.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `title` | string | Yes | A concise title for the plan |
+| `plan_file_path` | string | Yes | Path to the plan `.md` file (e.g., `/.plans/add-dark-mode.md`) |
+| `todos` | array | No | Todo descriptions (in plan mode, typically added after acceptance) |
+
+### update_plan
+
+Update the active plan. Can modify title, replace todos, change status, or advance to the next todo.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `title` | string | No | New title for the plan |
+| `todos` | array | No | Replacement todos array (replaces all todos, resets status to pending) |
+| `status` | string | No | Set status: `cancelled` or `completed` |
+| `advance_todo` | boolean | No | Mark current todo complete and advance to next |
+| `todo_result` | string | No | Summary of what was accomplished (used with `advance_todo`) |
+
+<Warning>
+Setting `todos` replaces the entire todo list and resets all statuses to pending. Use `advance_todo: true` to mark individual todos as completed.
+</Warning>
+
+### read_plan
+
+Read the current active plan. Returns title, status, todos with completion state, and current todo index. No parameters.
+
+### accept_plan
+
+Submit the current draft plan for user approval. No parameters. Always requires user approval before proceeding.
+
+<Info>
+After a plan is accepted, the agent typically adds execution todos via `update_plan` and then works through them step by step.
+</Info>
+
+---
+
+## Communication
+
+### ask_user
+
+Ask the user 1-4 structured questions with selectable options. Always requires approval — the user sees the questions and picks answers.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `questions` | array | Yes | Array of 1-4 question objects |
+
+Each question object:
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `question` | string | Yes | The question to ask |
+| `options` | array | Yes | 2-4 answer options (strings) |
+
+### notify_user
+
+Send a proactive notification to the user when something needs their attention.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `title` | string | Yes | Short notification title |
+| `message` | string | Yes | Detailed notification message |
+| `priority` | string | No | Priority: `low`, `normal`, or `urgent` (default: normal) |
+| `action_url` | string | No | URL the user can click to take action |
+
+### message_agent
+
+Send a message to another agent in the same project. Delivered asynchronously.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `target_agent` | string | Yes | Name or UUID of the target agent |
+| `message` | string | Yes | The message to send |
+| `context` | string | No | Additional context to include |
+
+---
+
+## Automation
+
+### schedule_task
+
+Create a recurring scheduled task that runs automatically.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | Yes | Short descriptive name for the task |
+| `prompt` | string | Yes | The instruction to execute on each run |
+| `schedule_type` | string | No | Frequency: `interval`, `daily`, `weekly`, or `once` (default: interval) |
+| `schedule_config` | object | No | Schedule details (varies by `schedule_type`) |
+| `description` | string | No | Longer description of the task |
+| `timezone` | string | No | Timezone for schedule (default: UTC) |
+| `max_executions` | integer | No | Maximum number of runs (null = unlimited) |
+
+---
+
+## Utility
+
+### think
+
+Reason aloud and plan next steps without producing any user-visible output. Useful for the agent to organize its thoughts before acting.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `thought` | string | Yes | Reasoning, analysis, or planning thoughts |
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Workspaces" icon="folder" href="/sdk/core/workspaces">
+    File tools details and REST API
+  </Card>
+  <Card title="User Memory" icon="brain" href="/sdk/core/user-memory">
+    Memory management REST API
+  </Card>
+  <Card title="Chat API" icon="message-bot" href="/sdk/core/chat-api">
+    Send messages and receive AI responses
+  </Card>
+  <Card title="Heartbeat API" icon="heart-pulse" href="/sdk/core/heartbeat">
+    Autonomous agent schedules
+  </Card>
+</CardGroup>

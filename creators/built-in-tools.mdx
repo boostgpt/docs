@@ -1,0 +1,122 @@
+---
+title: "Built-in Tools"
+description: "Everything your agent can do in Agent mode"
+---
+
+## What are Built-in Tools?
+
+When your agent runs in **Agent** reasoning mode, it has access to a powerful set of built-in tools. These tools let your agent search knowledge, manage files, remember users, plan complex tasks, and more — all without any setup or configuration.
+
+<Info>
+Built-in tools are only available in **Agent** reasoning mode. Switch your agent's reasoning mode in **Settings → Reasoning**.
+</Info>
+
+## Available Tools
+
+### Knowledge & Research
+
+Your agent can search its training data and capture web pages:
+
+| Tool | What it does |
+|------|-------------|
+| **Search Knowledge** | Searches through your agent's uploaded documents and training data using AI-powered similarity search |
+| **Screenshot** | Captures a visual screenshot of any web page — useful for analyzing designs, checking content, or monitoring pages |
+
+### User Memory
+
+When [User Memory](/creators/user-memory) is enabled, your agent can manage what it remembers about each user:
+
+| Tool | What it does |
+|------|-------------|
+| **Remember** | Saves important details about the user (name, preferences, decisions) to long-term memory |
+| **Recall** | Searches through saved memories to find relevant information |
+| **List Memories** | Shows all saved memories for the current user |
+| **Forget** | Removes a specific memory about the user |
+
+### File Operations
+
+When your agent has access to a [Workspace](/creators/workspaces), it can create and manage files:
+
+| Tool | What it does |
+|------|-------------|
+| **Write** | Creates new files or overwrites existing ones |
+| **Read** | Reads file contents (can target specific line ranges) |
+| **Edit** | Makes precise, targeted changes to existing files |
+| **Search** | Finds patterns across all workspace files using regex |
+| **Delete** | Removes files from the workspace |
+
+### Planning
+
+For complex tasks, your agent can create structured plans and execute them step by step:
+
+| Tool | What it does |
+|------|-------------|
+| **Create Plan** | Writes a detailed plan document and registers it for tracking |
+| **Update Plan** | Modifies the plan, advances to the next step, or marks steps complete |
+| **Read Plan** | Checks the current plan's status and progress |
+| **Accept Plan** | Submits a draft plan for your approval before execution begins |
+
+<Info>
+Plans always require your approval before the agent starts executing. This gives you a chance to review, modify, or reject the approach.
+</Info>
+
+### Communication
+
+Your agent can interact with users and other agents:
+
+| Tool | What it does |
+|------|-------------|
+| **Ask User** | Presents structured questions with selectable options — great for gathering preferences or confirming approaches |
+| **Notify User** | Sends a proactive notification when something needs attention |
+| **Message Agent** | Sends a message to another agent in your project for cross-agent collaboration |
+
+### Automation
+
+Your agent can set up tasks that run on a schedule:
+
+| Tool | What it does |
+|------|-------------|
+| **Schedule Task** | Creates a recurring task that runs automatically (e.g., daily reports, weekly checks) |
+
+### Reasoning
+
+Your agent has an internal thinking tool:
+
+| Tool | What it does |
+|------|-------------|
+| **Think** | Reasons through a problem step-by-step without showing the thinking to the user — helps the agent plan its approach |
+
+## Tool Approval Levels
+
+Built-in tools have three approval levels that control when your agent needs permission to act:
+
+| Level | Behavior | Examples |
+|-------|----------|---------|
+| **Auto** | Executes immediately without asking | Search, Read, Think, Recall |
+| **Conditional** | May require approval depending on your settings | Write, Edit, Delete |
+| **Always** | Always asks for your approval first | Accept Plan, Ask User |
+
+## Best Practices
+
+- Use **Agent** reasoning mode for tasks that require multiple tools (research + writing, reading + editing)
+- Let your agent create plans for complex multi-step tasks — review the plan before approving
+- Enable **User Memory** for agents with repeat users to provide personalized experiences
+- The **Ask User** tool is great for gathering requirements before the agent starts working
+- Use **Schedule Task** for automated monitoring, reporting, or maintenance workflows
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Workspaces" icon="folder" href="/creators/workspaces">
+    Learn about your agent's sandbox file system
+  </Card>
+  <Card title="User Memory" icon="brain" href="/creators/user-memory">
+    How your agent remembers users across conversations
+  </Card>
+  <Card title="Training Your Agent" icon="graduation-cap" href="/creators/training-your-agent">
+    Teach your agent what it needs to know
+  </Card>
+  <Card title="Technical Reference" icon="code" href="/sdk/core/built-in-tools">
+    Detailed parameter schemas for developers
+  </Card>
+</CardGroup>

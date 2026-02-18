@@ -66,6 +66,7 @@
                       "creators/user-memory",
                       "creators/heartbeat",
                       "creators/workspaces",
+                      "creators/built-in-tools",
                       "creators/branding",
                       "creators/analytics",
                       "creators/deploy"
@@ -156,6 +157,7 @@
                         "sdk/core/user-memory",
                         "sdk/core/heartbeat",
                         "sdk/core/workspaces",
+                        "sdk/core/built-in-tools",
                         "sdk/core/api-reference"
                       ]
                     },

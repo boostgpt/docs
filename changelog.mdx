@@ -5,6 +5,26 @@ rss: true
 noindex: true
 ---
 
+<Update label="February 2026" tags={["New releases"]} rss={{ title: "20 Built-in Agent Tools", description: "Complete toolkit for autonomous agents — knowledge search, user memory, file operations, planning, communication, and automation" }}>
+
+  ## Built-in agent tools
+
+  Agents in `agent` reasoning mode now have access to **20 built-in tools** across 7 categories — no configuration required:
+
+  - **Knowledge** — `search_memory` for vector search through training data, `screenshot` for capturing web pages
+  - **User Memory** — `remember`, `recall`, `list_memories`, `forget` for managing per-user long-term memory
+  - **Files** — `write`, `read`, `edit`, `grep`, `delete` for sandbox workspace operations
+  - **Planning** — `create_plan`, `update_plan`, `read_plan`, `accept_plan` for structured multi-step workflows
+  - **Communication** — `ask_user` for structured questions with selectable options, `notify_user` for proactive notifications, `message_agent` for cross-agent messaging
+  - **Automation** — `schedule_task` for recurring scheduled tasks
+  - **Utility** — `think` for internal reasoning without user-visible output
+
+  Tools use three approval levels: **Auto** (executes immediately), **Conditional** (configurable per agent), and **Always** (requires explicit user approval).
+
+  See the [creator guide](/creators/built-in-tools) for an overview or the [SDK reference](/sdk/core/built-in-tools) for detailed parameter schemas.
+
+</Update>
+
 <Update label="February 2026" tags={["New releases"]} rss={{ title: "Workspaces — Sandbox File System", description: "Agents can create, edit, and manage files in isolated sandbox workspaces" }}>
 
   ## Workspaces

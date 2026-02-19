@@ -5,7 +5,7 @@ description: "Complete reference for all agent built-in tools"
 
 ## Overview
 
-When an agent uses `agent` reasoning mode, it has access to 21 built-in tools. These tools are automatically available — no configuration required.
+When an agent uses `agent` reasoning mode, it has access to 22 built-in tools. These tools are automatically available — no configuration required.
 
 ### Approval Levels
 
@@ -39,6 +39,7 @@ When an agent uses `agent` reasoning mode, it has access to 21 built-in tools. T
 | `notify_user` | Communication | Auto | Send proactive notification |
 | `message_agent` | Communication | Auto | Message another agent |
 | `schedule_task` | Automation | Auto | Create recurring task |
+| `command` | Execution | Conditional | Run code/commands in sandbox |
 | `think` | Utility | Auto | Internal reasoning |
 
 ---
@@ -244,6 +245,22 @@ Create a recurring scheduled task that runs automatically.
 | `description` | string | No | Longer description of the task |
 | `timezone` | string | No | Timezone for schedule (default: UTC) |
 | `max_executions` | integer | No | Maximum number of runs (null = unlimited) |
+
+---
+
+## Code Execution
+
+### command
+
+Run code or shell commands in an isolated sandbox environment. The sandbox has access to all workspace files under `/workspace` and has network access. Requires both **Workspace** and **Code Sandbox** to be enabled on the agent.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `command` | string | Yes | The shell command to run (e.g., `python main.py`, `npm install express`, `node server.js`, `curl https://example.com`) |
+
+<Info>
+The sandbox auto-detects the runtime (Python or Node.js) based on workspace file extensions. Files modified by the command are automatically synced back to the workspace. Each execution has a 30-second timeout.
+</Info>
 
 ---
 

@@ -71,6 +71,14 @@ Your agent can interact with users and other agents:
 | **Notify User** | Sends a proactive notification when something needs attention |
 | **Message Agent** | Sends a message to another agent in your project for cross-agent collaboration |
 
+### Code Execution
+
+When your agent has access to a [Workspace](/creators/workspaces) and **Code Sandbox** is enabled, it can run code and shell commands:
+
+| Tool | What it does |
+|------|-------------|
+| **Command** | Runs shell commands in an isolated sandbox environment (e.g., `npm install`, `python script.py`, `curl`, `wget`). Has access to all workspace files. |
+
 ### Automation
 
 Your agent can set up tasks that run on a schedule:
@@ -94,7 +102,7 @@ Built-in tools have three approval levels that control when your agent needs per
 | Level | Behavior | Examples |
 |-------|----------|---------|
 | **Auto** | Executes immediately without asking | Search, Read, Think, Recall |
-| **Conditional** | May require approval depending on your settings | Write, Edit, Delete |
+| **Conditional** | May require approval depending on your settings | Write, Edit, Delete, Command |
 | **Always** | Always asks for your approval first | Accept Plan, Ask User |
 
 ## Best Practices

@@ -5,7 +5,7 @@ description: "Complete reference for all agent built-in tools"
 
 ## Overview
 
-When an agent uses `agent` reasoning mode, it has access to 20 built-in tools. These tools are automatically available — no configuration required.
+When an agent uses `agent` reasoning mode, it has access to 21 built-in tools. These tools are automatically available — no configuration required.
 
 ### Approval Levels
 
@@ -21,6 +21,7 @@ When an agent uses `agent` reasoning mode, it has access to 20 built-in tools. T
 |------|----------|----------|-------------|
 | `search_memory` | Knowledge | Auto | Vector search through knowledge base |
 | `screenshot` | Knowledge | Auto | Capture web page screenshot |
+| `web_fetch` | Knowledge | Auto | Extract page content as markdown |
 | `remember` | Memory | Auto | Save to user long-term memory |
 | `recall` | Memory | Auto | Search user memories |
 | `list_memories` | Memory | Auto | List all user memories |
@@ -74,6 +75,14 @@ Capture a visual screenshot of a web page. Returns an image URL for vision-capab
 | `hideSelectors` | array | No | CSS selectors to hide before capture |
 | `clickSelectors` | array | No | CSS selectors to click before capture |
 | `timeout` | integer | No | Page load timeout in ms (default: 30000) |
+
+### web_fetch
+
+Extract the content of a web page as structured markdown with metadata (title, description, word count). Unlike `screenshot` which captures a visual image, `web_fetch` returns the page's text content.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `url` | string | Yes | URL of the web page to extract content from |
 
 ---
 

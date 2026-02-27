@@ -7,6 +7,10 @@ description: "Complete reference for all agent built-in tools"
 
 When an agent uses `agent` reasoning mode, it has access to 22 built-in tools. These tools are automatically available — no configuration required.
 
+<Info>
+File tools (`write`, `read`, `edit`, `grep`, `delete`, `ls`) and the `command` tool require the agent's **Workspace** setting to be enabled. Planning tools (`create_plan`, `update_plan`, `read_plan`, `accept_plan`) require plan mode (`chat_mode: 'plan'`), which also requires workspace.
+</Info>
+
 ### Approval Levels
 
 | Level | Behavior | Description |

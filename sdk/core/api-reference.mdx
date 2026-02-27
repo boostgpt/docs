@@ -216,7 +216,7 @@ await client.chat({
 </ParamField>
 
 <ParamField path="chat_mode" type="string" default="ask">
-  Chat mode: `ask` for normal chat, `edit` for agent-powered code editing, `plan` for conversational planning before tool execution. Edit mode routes through the agent reasoning pipeline to make targeted file changes. Plan mode proposes a step-by-step plan for review before executing.
+  Chat mode: `ask` for normal chat, `edit` for agent-powered code editing, `plan` for conversational planning before tool execution. Edit mode routes through the agent reasoning pipeline to make targeted file changes. Plan mode proposes a step-by-step plan for review before executing. Both `edit` and `plan` require workspace to be enabled — if disabled, requests fall back to `ask`.
 </ParamField>
 
 **Response:**

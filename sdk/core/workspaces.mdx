@@ -7,6 +7,10 @@ description: "Sandbox file system for AI agents"
 
 Workspaces provide agents with an isolated sandbox file system. When an agent uses `agent` reasoning mode, it has access to built-in file tools (`write`, `read`, `edit`, `grep`, `delete`) that operate on workspace files.
 
+<Info>
+Workspaces must be enabled for agents to use file tools, edit mode (`chat_mode: 'edit'`), and plan mode (`chat_mode: 'plan'`). When workspace is disabled, these tools are removed and chat mode falls back to `ask`.
+</Info>
+
 Each workspace is scoped per-agent and per-user:
 - **Authenticated users** — each user gets their own workspace per agent
 - **Anonymous users** — each chat conversation gets an isolated workspace

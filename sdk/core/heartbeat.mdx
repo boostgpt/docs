@@ -26,12 +26,9 @@ POST /v1/bot/heartbeat/configure
 | `project_id` | string | Yes | Project UUID |
 | `bot_id` | string | Yes | Bot UUID |
 | `prompt` | string | Yes | The instruction the agent executes each run |
-| `interval_minutes` | number | No | How often the agent runs in minutes (default: 30) |
+| `cron_pattern` | string | No | Cron expression for scheduling (e.g., `0 9 * * 1` for every Monday at 9am) |
 | `enabled` | boolean | No | Whether the heartbeat is active (default: `false`) |
-| `active_hours_start` | string | No | Start of active window in `HH:MM` format |
-| `active_hours_end` | string | No | End of active window in `HH:MM` format |
-| `active_days` | string | No | Comma-separated days `1-7` (1=Monday) |
-| `timezone` | string | No | Timezone for active hours (default: `UTC`) |
+| `timezone` | string | No | Timezone for scheduling (default: `UTC`) |
 | `credit_budget` | number | No | Max credits per billing period (`null` = unlimited) |
 | `max_consecutive_errors` | number | No | Auto-pause after this many consecutive failures (default: 5) |
 | `member_id` | string | No | Subscriber member ID (for subscriber-specific heartbeats) |
@@ -49,11 +46,8 @@ const response = await fetch('https://api.boostgpt.co/v1/bot/heartbeat/configure
     project_id: 'proj_abc123',
     bot_id: 'bot_xyz789',
     prompt: 'Check for new support tickets and summarize any urgent ones',
-    interval_minutes: 60,
+    cron_pattern: '0 9 * * 1,2,3,4,5',
     enabled: true,
-    active_hours_start: '09:00',
-    active_hours_end: '17:00',
-    active_days: '1,2,3,4,5',
     timezone: 'America/New_York',
     credit_budget: 100
   })
@@ -70,11 +64,8 @@ const { heartbeat } = await response.json();
     "uuid": "hb_abc123",
     "bot_id": 1,
     "prompt": "Check for new support tickets and summarize any urgent ones",
-    "interval_minutes": 60,
+    "cron_pattern": "0 9 * * 1,2,3,4,5",
     "enabled": 1,
-    "active_hours_start": "09:00",
-    "active_hours_end": "17:00",
-    "active_days": "1,2,3,4,5",
     "timezone": "America/New_York",
     "credit_budget": 100,
     "credits_used": 0,
@@ -111,7 +102,7 @@ GET /v1/bot/heartbeat/readall?project_id=proj_abc123&bot_id=bot_xyz789
     {
       "uuid": "hb_abc123",
       "prompt": "Check for new support tickets...",
-      "interval_minutes": 60,
+      "cron_pattern": "0 9 * * 1,2,3,4,5",
       "enabled": 1,
       "last_status": "success",
       "execution_count": 42,

@@ -32,19 +32,20 @@ Navigate to the **Heartbeat** tab on your agent's page and click **Create Heartb
 | Setting | Description |
 |---------|-------------|
 | **Prompt** | The instruction your agent executes each time it runs (e.g., "Check for new support tickets and summarize them") |
-| **Interval** | How often the agent runs (minimum depends on your plan) |
-| **Active Hours** | Start and end time to restrict when the agent runs (e.g., 09:00–17:00) |
-| **Active Days** | Which days of the week the agent should run (e.g., Monday–Friday) |
-| **Timezone** | Timezone for active hours and days |
+| **Frequency** | How often the agent runs: Every hour, Every day, Every week, or Every month |
+| **Time** | What time to run (for daily, weekly, and monthly frequencies) |
+| **Day of Week** | Which day to run on (for weekly frequency) |
+| **Day of Month** | Which day to run on, 1–28 (for monthly frequency) |
+| **Timezone** | Timezone for scheduling |
 | **Credit Budget** | Maximum credits this heartbeat can consume per billing period (optional) |
 
 ### Plan Limits
 
-| Plan | Max Heartbeats per Agent | Minimum Interval |
-|------|--------------------------|------------------|
-| Starter | 3 | 15 minutes |
-| Pro | 10 | 5 minutes |
-| Prime | 20 | 5 minutes |
+| Plan | Max Heartbeats per Agent | Minimum Frequency |
+|------|--------------------------|-------------------|
+| Starter | 3 | Hourly |
+| Pro | 10 | Hourly |
+| Prime | 20 | Hourly |
 
 ## Execution & Notifications
 
@@ -78,16 +79,15 @@ Heartbeats include built-in safety controls:
 
 - **Circuit breaker** — If a heartbeat fails 5 consecutive times (configurable), it automatically pauses to prevent runaway errors
 - **Credit budget** — Set a maximum credit spend per billing period. The heartbeat pauses when the budget is exhausted and resets monthly
-- **Plan-tier caps** — Maximum heartbeats per agent and minimum intervals are enforced per plan
-- **Active hours** — Restrict execution to business hours to avoid off-hours actions
+- **Plan-tier caps** — Maximum heartbeats per agent are enforced per plan
+- **Frequency-based scheduling** — Choose from hourly, daily, weekly, or monthly with precise time and day controls
 
 ## Best Practices
 
 - Enable for agents that monitor, report, or take recurring actions (daily summaries, ticket checks, status updates)
 - Set a credit budget to prevent unexpected costs
-- Use active hours to avoid running during off-hours
+- Choose the right frequency: hourly for real-time monitoring, daily for summaries, weekly for reports
 - Review execution logs regularly, especially after first enabling
-- Start with longer intervals and decrease as you gain confidence
 - Connect the tools your agent needs before creating heartbeats
 
 ## Next Steps

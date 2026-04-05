@@ -37,6 +37,112 @@ You can configure the widget directly via data attributes on the script tag:
 ></script>
 ```
 
+## Framework Setup
+
+<CodeGroup>
+
+```html HTML
+<script src="https://embed.boostgpt.co/widget.js" data-bot-id="YOUR_BOT_UUID"></script>
+```
+
+```jsx Next.js
+// app/layout.tsx (or pages/_app.tsx)
+import Script from 'next/script'
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        {children}
+        <Script
+          src="https://embed.boostgpt.co/widget.js"
+          data-bot-id="YOUR_BOT_UUID"
+          strategy="afterInteractive"
+        />
+      </body>
+    </html>
+  )
+}
+```
+
+```js Nuxt.js
+// plugins/boostgpt.js
+export default () => {
+  (function() {
+    var d = document;
+    var s = d.createElement('script');
+    s.src = 'https://embed.boostgpt.co/widget.js';
+    s.setAttribute('data-bot-id', 'YOUR_BOT_UUID');
+    s.async = 1;
+    d.getElementsByTagName('head')[0].appendChild(s);
+  })();
+};
+
+// nuxt.config.js
+plugins: [
+  { src: '~/plugins/boostgpt.js', mode: 'client' }
+]
+```
+
+```jsx React
+// App.jsx (or any root component)
+import { useEffect } from 'react';
+
+function App() {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://embed.boostgpt.co/widget.js';
+    script.setAttribute('data-bot-id', 'YOUR_BOT_UUID');
+    script.async = true;
+    document.head.appendChild(script);
+    return () => script.remove();
+  }, []);
+
+  return <div>{/* your app */}</div>;
+}
+```
+
+```vue Vue
+<!-- App.vue -->
+<script setup>
+import { onMounted, onUnmounted } from 'vue'
+
+let script = null
+
+onMounted(() => {
+  script = document.createElement('script')
+  script.src = 'https://embed.boostgpt.co/widget.js'
+  script.setAttribute('data-bot-id', 'YOUR_BOT_UUID')
+  script.async = true
+  document.head.appendChild(script)
+})
+
+onUnmounted(() => {
+  if (script) script.remove()
+})
+</script>
+```
+
+```svelte SvelteKit
+<!-- +layout.svelte -->
+<script>
+  import { onMount } from 'svelte';
+
+  onMount(() => {
+    const script = document.createElement('script');
+    script.src = 'https://embed.boostgpt.co/widget.js';
+    script.setAttribute('data-bot-id', 'YOUR_BOT_UUID');
+    script.async = true;
+    document.head.appendChild(script);
+    return () => script.remove();
+  });
+</script>
+
+<slot />
+```
+
+</CodeGroup>
+
 ## Programmatic Initialization
 
 For more control, initialize the widget via JavaScript:

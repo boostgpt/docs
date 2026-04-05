@@ -1,0 +1,69 @@
+---
+title: "Installation"
+description: "Add a floating chat widget to any website"
+---
+
+## Quick Start
+
+Add this script tag to any page where you want the chat widget to appear:
+
+```html
+<script src="https://embed.boostgpt.co/widget.js" data-bot-id="YOUR_BOT_UUID"></script>
+```
+
+That's it. A floating chat bubble will appear in the bottom-right corner of your page, styled with your agent's branding.
+
+## Find Your Bot ID
+
+1. Go to your agent dashboard
+2. Navigate to **Deploy**
+3. Your Bot ID is shown in the embed code snippet
+
+## Data Attributes
+
+You can configure the widget directly via data attributes on the script tag:
+
+| Attribute | Description | Default |
+|-----------|-------------|---------|
+| `data-bot-id` | **(Required)** Your agent's UUID | — |
+| `data-position` | Bubble position: `bottom-right` or `bottom-left` | `bottom-right` |
+| `data-user-token` | Signed JWT for SSO user identification | — |
+
+```html
+<script
+  src="https://embed.boostgpt.co/widget.js"
+  data-bot-id="YOUR_BOT_UUID"
+  data-position="bottom-left"
+></script>
+```
+
+## Programmatic Initialization
+
+For more control, initialize the widget via JavaScript:
+
+```html
+<script src="https://embed.boostgpt.co/widget.js"></script>
+<script>
+  const widget = BoostGPTWidget.init({
+    botId: 'YOUR_BOT_UUID',
+    position: 'bottom-right',
+  });
+</script>
+```
+
+## How It Works
+
+1. The script fetches your agent's branding (accent color, avatar, greeting messages) from the BoostGPT API
+2. It injects a floating bubble button styled with your agent's accent color and avatar
+3. Greeting messages from your branding settings appear as stacked chat bubbles above the button
+4. When clicked, an iframe opens with your agent's full chat experience
+5. The chat supports all features: streaming, tools, file uploads, workspaces, and custom interfaces
+
+## Enable the Widget
+
+Before the embed code appears on your Deploy page, enable the widget in your agent's settings:
+
+1. Go to **Branding** → **Design** tab
+2. Scroll to the **Chat Widget** section
+3. Toggle **Enable Widget** on
+4. Configure position and auto-open behavior

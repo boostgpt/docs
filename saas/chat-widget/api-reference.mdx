@@ -1,0 +1,107 @@
+---
+title: "API Reference"
+description: "Programmatic controls for the chat widget"
+---
+
+## Initialization
+
+```js
+const widget = BoostGPTWidget.init({
+  botId: 'YOUR_BOT_UUID',       // required
+  position: 'bottom-right',      // optional override
+  userToken: 'jwt-token',        // optional SSO token
+  metadata: { page: 'pricing' }, // optional context
+});
+```
+
+Returns a widget instance with the methods below.
+
+## Methods
+
+### `widget.open()`
+
+Opens the chat frame. No-op if already open.
+
+### `widget.close()`
+
+Minimizes the widget back to the bubble. No-op if already closed.
+
+### `widget.toggle()`
+
+Toggles between open and closed states.
+
+### `widget.hide()`
+
+Hides the entire widget (bubble + frame) from the page. Useful for conditionally showing the widget based on user state.
+
+### `widget.show()`
+
+Shows the widget again after `hide()`.
+
+### `widget.destroy()`
+
+Removes the widget from the DOM entirely and cleans up event listeners.
+
+## Events
+
+Listen for widget lifecycle events:
+
+```js
+widget.on('open', () => {
+  console.log('Widget opened');
+});
+
+widget.on('close', () => {
+  console.log('Widget closed');
+});
+
+widget.on('ready', () => {
+  console.log('Chat iframe loaded');
+});
+
+widget.on('messageSent', (message) => {
+  console.log('User sent:', message);
+});
+```
+
+| Event | Description |
+|-------|-------------|
+| `open` | Widget frame opened |
+| `close` | Widget frame closed |
+| `ready` | Chat iframe finished loading |
+| `messageSent` | User sent a message in the chat |
+
+## Global Access
+
+The widget is also available globally for quick access:
+
+```js
+// These work without the init() return value
+BoostGPTWidget.open();
+BoostGPTWidget.close();
+BoostGPTWidget.toggle();
+BoostGPTWidget.hide();
+BoostGPTWidget.show();
+BoostGPTWidget.destroy();
+```
+
+## Custom Trigger Buttons
+
+Use the programmatic API to open the widget from your own buttons instead of (or in addition to) the floating bubble:
+
+```html
+<button onclick="BoostGPTWidget.open()">Chat with us</button>
+```
+
+You can hide the default bubble and use only custom triggers:
+
+```js
+const widget = BoostGPTWidget.init({ botId: 'YOUR_BOT_UUID' });
+widget.hide();  // hide the bubble
+
+// Open from your own UI
+document.getElementById('help-btn').addEventListener('click', () => {
+  widget.show();
+  widget.open();
+});
+```

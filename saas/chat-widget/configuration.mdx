@@ -1,0 +1,69 @@
+---
+title: "Configuration"
+description: "Customize widget appearance and behavior"
+---
+
+## Branding Settings
+
+The widget automatically inherits your agent's branding. Configure these in **Branding** → **Design** and **Content** tabs:
+
+| Setting | Where | Widget Effect |
+|---------|-------|---------------|
+| Accent Color | Design tab | Bubble background color |
+| Background Color | Design tab | Frame border/shadow tinting |
+| Theme | Design tab | Light/dark tooltip styling |
+| Bot Avatar | Agent settings | Bubble icon |
+| Message Greetings | Content tab | Stacked greeting bubbles above the button |
+| Conversation Starters | Content tab | Quick-action buttons in the chat |
+| Input Placeholder | Content tab | Chat input hint text |
+
+## Widget-Specific Settings
+
+These are configured in **Branding** → **Design** tab under the **Chat Widget** section:
+
+### Position
+
+Choose where the bubble appears on the page:
+- **Bottom Right** (default)
+- **Bottom Left**
+
+### Auto Open
+
+Automatically open the widget after a delay when the page loads.
+
+- **Enable/Disable** toggle
+- **Delay** — seconds before the widget opens (1–60, default 5)
+
+## Greeting Bubbles
+
+The widget shows your **Message Greetings** (from Content tab) as stacked chat bubbles above the floating button. Each greeting appears as a separate message card.
+
+Clicking any greeting bubble opens the widget.
+
+To configure greetings:
+1. Go to **Branding** → **Content** tab
+2. Enable **Message Greetings**
+3. Add 1–4 greeting messages
+
+If greetings are disabled, only the floating bubble button is shown.
+
+## Passing Context
+
+You can pass metadata from your website to the agent conversation:
+
+```js
+const widget = BoostGPTWidget.init({
+  botId: 'YOUR_BOT_UUID',
+  metadata: {
+    page: 'pricing',
+    plan: 'pro',
+    userId: '12345',
+  },
+});
+```
+
+Metadata is available to the agent as conversation context, allowing it to personalize responses based on what page the user is on or what product they're viewing.
+
+## Mobile Behavior
+
+On screens narrower than 480px, the widget iframe expands to full-screen when opened, providing a native app-like experience.

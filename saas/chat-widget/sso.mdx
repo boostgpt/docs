@@ -1,0 +1,132 @@
+---
+title: "SSO (Single Sign-On)"
+description: "Auto-identify users in the widget using JWT tokens"
+---
+
+## Overview
+
+SSO lets you pass your website's authenticated user identity to the chat widget. Users are automatically recognized without needing to log in again on the agent page. This enables:
+
+- Chat history persistence across sessions
+- User memory (the agent remembers preferences)
+- Skip login gates
+- Subscriber tracking and analytics
+
+## How It Works
+
+1. You generate an **SSO secret** in your agent dashboard
+2. Your **backend** creates a signed JWT containing the user's identity
+3. The widget passes the JWT to the agent page
+4. BoostGPT verifies the signature and auto-creates or links a subscriber
+
+<Warning>
+Never expose the SSO secret in client-side code. JWT signing must happen on your server.
+</Warning>
+
+## Setup
+
+### 1. Generate an SSO Secret
+
+1. Go to your agent's **Deploy** page
+2. Find the **SSO Secret** section under Chat Widget
+3. Click **Generate**
+4. Copy the secret — it's only shown once
+
+### 2. Sign a JWT on Your Backend
+
+Use the secret to create a signed token containing the user's identity.
+
+<CodeGroup>
+
+```javascript Node.js
+const jwt = require('jsonwebtoken');
+
+const SSO_SECRET = 'your-64-char-hex-secret';
+
+function createWidgetToken(user) {
+  return jwt.sign({
+    email: user.email,         // required
+    name: user.name,           // optional
+    external_id: user.id,      // optional — your user ID for tracking
+  }, SSO_SECRET, { expiresIn: '1h' });
+}
+
+// In your route handler:
+app.get('/widget-token', (req, res) => {
+  const token = createWidgetToken(req.user);
+  res.json({ token });
+});
+```
+
+```python Python
+import jwt
+import time
+
+SSO_SECRET = 'your-64-char-hex-secret'
+
+def create_widget_token(user):
+    payload = {
+        'email': user.email,       # required
+        'name': user.name,         # optional
+        'external_id': str(user.id),  # optional
+        'exp': int(time.time()) + 3600,  # 1 hour
+    }
+    return jwt.encode(payload, SSO_SECRET, algorithm='HS256')
+```
+
+</CodeGroup>
+
+### 3. Pass the Token to the Widget
+
+```html
+<script src="https://embed.boostgpt.co/widget.js"></script>
+<script>
+  // Fetch the token from your backend
+  fetch('/widget-token')
+    .then(res => res.json())
+    .then(data => {
+      BoostGPTWidget.init({
+        botId: 'YOUR_BOT_UUID',
+        userToken: data.token,
+      });
+    });
+</script>
+```
+
+Or via data attribute (if you render the token server-side):
+
+```html
+<script
+  src="https://embed.boostgpt.co/widget.js"
+  data-bot-id="YOUR_BOT_UUID"
+  data-user-token="<%= widgetToken %>"
+></script>
+```
+
+## JWT Payload
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `email` | string | Yes | User's email address |
+| `name` | string | No | Display name |
+| `external_id` | string | No | Your system's user ID (for tracking) |
+
+The JWT must be signed with **HS256** algorithm and should expire within **1 hour**.
+
+## What Happens on Verification
+
+When the widget loads with a valid SSO token:
+
+1. BoostGPT verifies the JWT signature against your SSO secret
+2. If the user doesn't exist in BoostGPT, an account is automatically created (pre-verified)
+3. A subscriber record is created for your agent's project
+4. Free tier credits are granted if applicable
+5. The user is authenticated in the chat — history and memory work immediately
+
+## Security
+
+- **Never expose your SSO secret in browser code** — always sign JWTs on your server
+- Tokens expire after 1 hour — generate fresh tokens on each page load
+- Regenerating the SSO secret invalidates all existing tokens immediately
+- Invalid or expired tokens are silently ignored — the user continues as anonymous
+- BoostGPT only accepts **HS256** algorithm to prevent algorithm-switching attacks

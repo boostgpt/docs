@@ -119,6 +119,15 @@
                       ]
                     },
                     {
+                      "group": "Chat Widget",
+                      "pages": [
+                        "saas/chat-widget/installation",
+                        "saas/chat-widget/configuration",
+                        "saas/chat-widget/api-reference",
+                        "saas/chat-widget/sso"
+                      ]
+                    },
+                    {
                       "group": "Use Case Guides",
                       "pages": [
                         "saas/guides/checkout-abandonment",

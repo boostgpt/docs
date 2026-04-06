@@ -5,6 +5,131 @@ rss: true
 noindex: true
 ---
 
+<Update label="April 2026" tags={["New releases"]} rss={{ title: "Chat Widget Embed", description: "Embed any BoostGPT agent on any website as a floating chat bubble with one script tag" }}>
+
+  ## Chat widget
+
+  Embed any agent on any website as a floating chat bubble — one script tag:
+
+  ```html
+  <script src="https://embed.boostgpt.co/widget.js" data-bot-id="YOUR_BOT_UUID"></script>
+  ```
+
+  - **Full agent experience** — workspace, tools, file uploads, and custom interfaces all work inside the widget
+  - **Branding** — bubble inherits your accent color, avatar, and greeting messages. 16 built-in SVG icons or use your bot avatar
+  - **Greeting bubbles** — stacked message cards from your branding settings appear above the floating button
+  - **New chat button** — accent-colored header with bot name, reload icon, and close button
+  - **Chat persistence** — conversations persist across page refreshes via localStorage
+  - **Mobile responsive** — full-screen overlay on small viewports
+  - **Auto-open** — optionally open the widget after a configurable delay
+  - **Programmatic API** — `open()`, `close()`, `toggle()`, `hide()`, `show()`, `destroy()`, and event listeners
+  - **Framework support** — setup guides for HTML, Next.js, Nuxt.js, React, Vue, and SvelteKit
+
+  Configure the widget in **Branding → Design → Chat Widget**. Preview it live in the dashboard with the Page/Widget toggle.
+
+  See the [Chat Widget documentation](/saas/chat-widget/installation) for setup and the [API reference](/saas/chat-widget/api-reference) for programmatic controls.
+
+</Update>
+
+<Update label="April 2026" tags={["New releases"]} rss={{ title: "Widget SSO — JWT User Identification", description: "Auto-identify users in the chat widget using signed JWT tokens from your backend" }}>
+
+  ## Widget SSO
+
+  Auto-identify users in the chat widget without requiring them to log in again:
+
+  - **JWT-based** — your backend signs a token with the bot's SSO secret. The widget verifies it server-side.
+  - **Auto-provisioning** — if the user doesn't exist, BoostGPT creates their account and subscriber record automatically
+  - **Chat history** — identified users get persistent conversations and user memory across sessions
+  - **Skip login gates** — SSO users bypass `require_login` settings
+  - **Secure** — tokens expire (1h), are signed (HS256), and the secret is never exposed client-side
+
+  Generate your SSO secret in **Deploy → SSO Secret**. See the [SSO guide](/saas/chat-widget/sso) for backend setup with Node.js and Python examples.
+
+</Update>
+
+<Update label="March 2026" tags={["New releases"]} rss={{ title: "Agent Marketplace & Listings", description: "Submit agents to a public marketplace with ratings, reviews, and admin review" }}>
+
+  ## Agent marketplace
+
+  Bot owners can now submit their agents to a public marketplace:
+
+  - **App-store model** — agents go through `draft → pending_review → approved` status flow with staff review
+  - **Ratings & reviews** — users rate agents 1–5 stars with optional written reviews. Cached aggregates for fast display.
+  - **Public browse** — search by name, category, or featured status. Sorted by rating and views.
+  - **Creator dashboard** — view all your listings, update metadata, resubmit rejected listings, or withdraw
+  - **Admin review** — staff can approve, reject (with notes), or suspend listings
+
+  Submit your agent from the **Deploy** page. Browse the marketplace at [boostgpt.co/workforce](/workforce).
+
+</Update>
+
+<Update label="March 2026" tags={["New releases"]} rss={{ title: "Pluggable Agent Interfaces", description: "Agents can build and set custom HTML interfaces that replace the default chat UI" }}>
+
+  ## Pluggable agent interfaces
+
+  Agents can now build custom HTML interfaces and activate them as the chat UI — replacing the default message view with a fully interactive app:
+
+  - **`set_interface` tool** — agents call this built-in tool to activate any workspace HTML file as the chat interface
+  - **Bridge SDK** — auto-injected JavaScript SDK (`window.BoostGPT`) that lets custom interfaces communicate with the chat system via postMessage
+  - **Bidirectional API** — interfaces can send messages (`chat.sendMessage`), read files (`workspace.readFile`), listen for responses (`chat.onResponse`), approve tools, and more
+  - **Per-chat or default** — set an interface for a single conversation or as the bot's default interface for all new chats
+  - **Real-time updates** — `workspace.onFileChange()` auto-refreshes the interface when the agent updates data files
+  - **Dashboard controls** — "Set as Chat Interface" and "Set as Default Interface" context menu actions in the workspace file explorer
+
+  **Bridge SDK namespaces:** `chat`, `workspace`, `tools`, `schedule`, `bot`, `ui` — full programmatic access to the agent's capabilities from within custom HTML.
+
+  This enables agents that deliver full applications — fitness trackers, dashboards, interactive tutorials, data visualizations — not just text responses.
+
+</Update>
+
+<Update label="March 2026" tags={["Improvements"]} rss={{ title: "Workspace Scope Toggle", description: "Choose per-account or per-chat workspace isolation for authenticated users" }}>
+
+  ## Workspace scope
+
+  Bot owners can now choose how workspaces are scoped for authenticated users:
+
+  - **Per Account** (default) — one workspace shared across all conversations. Files persist between chats.
+  - **Per Chat** — each conversation gets its own isolated workspace. Ideal for tutoring, code reviews, and sandbox experiments.
+
+  Anonymous users always get per-chat workspaces regardless of this setting.
+
+  Configure in **Settings → Workspace Scope**.
+
+</Update>
+
+<Update label="February 2026" tags={["New releases"]} rss={{ title: "Code Sandbox — Isolated Code Execution", description: "Agents run code in isolated Microsandbox microVMs with Python and Node.js support" }}>
+
+  ## Code sandbox
+
+  Agents can now run code in isolated [Microsandbox](https://github.com/nicholasgasior/microsandbox) microVMs — not simulated, actually executed:
+
+  - **`command` built-in tool** — agents write and execute shell commands, Python scripts, or Node.js code in a secure sandbox
+  - **Isolated microVMs** — each execution runs in its own container with 512MB–2GB RAM, 1–2 CPUs, and 30–180s timeout (varies by plan)
+  - **File sync** — workspace files are pushed to the sandbox before execution, results synced back
+  - **Runtime auto-detection** — automatically selects Python or Node.js based on file extensions in the workspace
+  - **Output capture** — stdout, stderr, and exit codes returned to the agent. Non-zero exit codes flagged with warnings.
+  - **Large file support** — files over 60KB are chunked to avoid system limits
+
+  Enable in **Settings → Code Sandbox**. Requires the Starter plan or above.
+
+</Update>
+
+<Update label="February 2026" tags={["New releases"]} rss={{ title: "Agent Email Channel", description: "Each agent gets a unique email address for AI-powered email conversations" }}>
+
+  ## Agent email
+
+  Every agent now gets its own email address:
+
+  - **Unique address** — each agent receives an email like `youragent@boostgpt.page`
+  - **AI-powered replies** — users email your agent and receive AI responses based on the agent's instruction and training data
+  - **Dashboard integration** — email conversations appear alongside chat conversations in your dashboard
+  - **Subscriber capture** — email senders are automatically added as subscribers
+  - **Custom email templates** — customize verification, welcome, password reset, subscription, and credit notification emails with your branding
+
+  Configure email templates in **Branding → Emails**.
+
+</Update>
+
 <Update label="February 2026" tags={["New releases"]} rss={{ title: "22 Built-in Agent Tools", description: "Complete toolkit for autonomous agents — knowledge search, user memory, file operations, planning, communication, code execution, and automation" }}>
 
   ## Built-in agent tools

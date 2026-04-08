@@ -128,11 +128,7 @@ class FeatureDiscovery {
       ...this.userActivity,
       feature_id: featureId
     }, {
-      type: 'toast',
-      position: 'bottom-right',
-      title: 'Pro Tip',
-      message: feature.teaser,
-      buttonColor: '#6366F1'
+      text: feature.teaser
     });
 
     this.discoveredFeatures.add(featureId);
@@ -181,10 +177,7 @@ function checkContextualFeatures() {
       current_page: page,
       report_count: getReportCount()
     }, {
-      type: 'inline',
-      container: '#feature-callout',
-      buttonText: 'Learn about scheduled reports',
-      buttonColor: '#8B5CF6'
+      text: 'Did you know you can schedule reports? Click to learn more'
     });
   }
 
@@ -194,10 +187,7 @@ function checkContextualFeatures() {
       current_plan: userPlan,
       usage_percent: getUsagePercent()
     }, {
-      type: 'banner',
-      position: 'top',
-      bannerText: 'You\'re using 80% of your plan. Chat with us about Pro features!',
-      bannerColor: '#7C3AED'
+      text: 'You\'re using 80% of your plan. Chat with us about Pro features!'
     });
   }
 }

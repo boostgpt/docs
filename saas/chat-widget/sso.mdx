@@ -85,7 +85,7 @@ def create_widget_token(user):
   fetch('/widget-token')
     .then(res => res.json())
     .then(data => {
-      BoostGPTWidget.init({
+      boostgpt.init({
         botId: 'YOUR_BOT_UUID',
         userToken: data.token,
       });

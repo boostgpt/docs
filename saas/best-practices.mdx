@@ -1,9 +1,47 @@
 ---
 title: "Best Practices"
-description: "Tips for effective proactive triggers"
+description: "Tips for deploying an effective chat widget and proactive triggers"
 ---
 
-## Timing
+## Widget Setup
+
+<AccordionGroup>
+  <Accordion title="Write compelling greeting messages">
+    Greeting messages appear above the bubble before the user opens the chat. Make them:
+    - **Specific**: "Questions about our pricing plans?" beats "Need help?"
+    - **Action-oriented**: Tell users what you can help with
+    - **Brief**: 1-2 sentences max per greeting card
+    - **Varied**: Use 2-3 different greetings to avoid repetition
+
+    Configure greetings in **Branding → Content → Message Greetings**.
+  </Accordion>
+
+  <Accordion title="Choose the right auto-open timing">
+    Auto-open shows the chat frame automatically after a delay:
+    - **Don't auto-open on landing pages** — let users explore first
+    - **Auto-open on support/help pages** — users are already looking for help
+    - **5-10 seconds** is a good default delay
+    - **Disable for mobile** — screen space is limited, let users choose to open
+  </Accordion>
+
+  <Accordion title="Use SSO for logged-in users">
+    If your site has authentication, use SSO to identify users:
+    - Agent can greet them by name
+    - Conversation history persists across sessions
+    - Support team sees who they're talking to
+    - See [SSO setup guide](/saas/chat-widget/sso) for implementation
+  </Accordion>
+
+  <Accordion title="Match your brand">
+    The widget inherits your agent's branding:
+    - **Accent color**: Set in Branding → Design. Use your primary brand color.
+    - **Avatar**: Upload a recognizable icon or team photo
+    - **Bubble icon**: Choose from 16 icons or use your avatar
+    - **Position**: Bottom-right works for most sites. Use bottom-left if you have a conflicting element.
+  </Accordion>
+</AccordionGroup>
+
+## Trigger Timing
 
 <AccordionGroup>
   <Accordion title="Don't trigger immediately">
@@ -29,7 +67,7 @@ description: "Tips for effective proactive triggers"
   </Accordion>
 </AccordionGroup>
 
-## Frequency
+## Trigger Frequency
 
 <AccordionGroup>
   <Accordion title="Limit triggers per session">
@@ -69,27 +107,6 @@ description: "Tips for effective proactive triggers"
     - Technical: "Encountering an issue? Let's debug together."
   </Accordion>
 
-  <Accordion title="Use edit mode for iterative code changes">
-    When users are refining code, use edit mode for targeted changes:
-
-    - **Toggle switch**: Use the Chat/Edit/Plan toggle next to the send button
-    - **Per-message Edit button**: Click the Edit action on a specific message to target it
-    - **Be specific**: "Add input validation to the email field" works better than "make it better"
-    - The agent analyzes your request and applies precise edits to workspace files
-    - **Workspace required**: Edit mode requires the agent's workspace setting to be enabled
-  </Accordion>
-
-  <Accordion title="Use plan mode for complex multi-step tasks">
-    When a task involves multiple tools or steps, use plan mode to review before executing:
-
-    - **Toggle switch**: Use the Chat/Edit/Plan toggle next to the send button
-    - **Review first**: The AI proposes a step-by-step plan — review it before approving
-    - **Modify plans**: Reply with changes to refine the plan before execution
-    - **Approve to execute**: Confirm the plan and the AI executes each step automatically
-    - Plan mode works best for multi-tool workflows like searching, editing, and deploying
-    - **Workspace required**: Plan mode requires the agent's workspace setting to be enabled
-  </Accordion>
-
   <Accordion title="Create urgency without pressure">
     ✅ "Your cart is saved for 30 minutes"
     ❌ "Buy now or lose your cart!"
@@ -102,7 +119,7 @@ description: "Tips for effective proactive triggers"
 ## Context
 
 <AccordionGroup>
-  <Accordion title="Pass relevant data">
+  <Accordion title="Pass relevant data with triggers">
     The more context your agent has, the better it can help:
 
     ```javascript
@@ -122,15 +139,15 @@ description: "Tips for effective proactive triggers"
 
   <Accordion title="Include user info when available">
     ```javascript
-    {
+    boostgpt.trigger('help_needed', { page: '/settings' }, {
+      text: 'Need help with settings?',
       user: {
         id: 'user_123',
         name: 'Sarah Chen',
         email: 'sarah@example.com',
-        plan: 'pro',
-        account_age: '6 months'
+        plan: 'pro'
       }
-    }
+    });
     ```
 
     This enables personalized responses.
@@ -145,27 +162,21 @@ description: "Tips for effective proactive triggers"
   </Accordion>
 </AccordionGroup>
 
-## Trigger Types
+## Trigger Style
 
 <AccordionGroup>
-  <Accordion title="Match type to context">
-    | Situation | Best Type |
-    |-----------|-----------|
-    | General availability | Button |
-    | Proactive outreach | Toast |
-    | Urgent/important | Banner |
-    | Contextual help | Inline |
+  <Accordion title="Trigger cards stack above the widget bubble">
+    Triggers appear as toast-style message cards stacked above the chat widget bubble.
+    They feel personal and conversational — clicking opens the chat with context.
   </Accordion>
 
-  <Accordion title="Toast for engagement">
-    Toasts feel personal and conversational.
-    Use them when you want higher engagement.
-    Stacked messages create a chat-like experience.
-  </Accordion>
-
-  <Accordion title="Button for persistence">
-    Buttons are less intrusive and always available.
-    Good for "just in case" help without interrupting flow.
+  <Accordion title="Use text to match the situation">
+    | Situation | Example Text |
+    |-----------|-------------|
+    | Checkout help | "Having trouble checking out? I can help!" |
+    | Onboarding stuck | "Stuck on this step? Let me walk you through it." |
+    | Error recovery | "Something went wrong. Click here for help." |
+    | Feature discovery | "Did you know you can automate this?" |
   </Accordion>
 </AccordionGroup>
 
@@ -203,20 +214,19 @@ description: "Tips for effective proactive triggers"
   <Accordion title="Track key metrics">
     | Metric | What It Tells You |
     |--------|-------------------|
-    | Trigger Rate | How often conditions are met |
-    | View Rate | How often users see triggers |
-    | Engagement Rate | How often users click |
-    | Resolution Rate | How often chat helps |
+    | Widget Opens | How often users engage with the chat |
+    | Trigger View Rate | How often users see trigger cards |
+    | Trigger Click Rate | How often users click trigger cards |
+    | Resolution Rate | How often chat resolves the issue |
     | Conversion Lift | Impact on desired outcomes |
   </Accordion>
 
-  <Accordion title="A/B test everything">
+  <Accordion title="A/B test variations">
     Test variations of:
-    - Trigger timing
-    - Message copy
-    - Trigger type (toast vs button)
-    - Position
-    - Colors
+    - Trigger message text
+    - Trigger timing and delay
+    - Greeting messages
+    - Auto-open vs manual open
   </Accordion>
 
   <Accordion title="Iterate based on data">
@@ -243,14 +253,21 @@ description: "Tips for effective proactive triggers"
 
 ## Checklist
 
-Before launching triggers, verify:
+Before launching, verify:
 
+**Widget:**
+- [ ] Accent color matches your brand
+- [ ] Greeting messages are specific and helpful
+- [ ] Auto-open timing is appropriate (or disabled)
+- [ ] SSO configured for authenticated users
+- [ ] Works on mobile devices
+- [ ] Position doesn't conflict with other page elements
+
+**Triggers:**
 - [ ] Timing feels natural, not aggressive
-- [ ] Messages are specific and helpful
+- [ ] Trigger messages are specific and helpful
 - [ ] Agent is trained on relevant content
 - [ ] Dismissals are respected
-- [ ] Works on mobile devices
-- [ ] Analytics tracking is in place
 - [ ] Rate limits won't be exceeded
 - [ ] Legal/privacy requirements are met
 
@@ -258,7 +275,7 @@ Before launching triggers, verify:
 
 <CardGroup cols={2}>
   <Card title="Quickstart" icon="rocket" href="/saas/quickstart">
-    Set up your first trigger
+    Set up your first widget and trigger
   </Card>
 
   <Card title="Use Case Guides" icon="book" href="/saas/guides/checkout-abandonment">

@@ -1,6 +1,6 @@
 ---
 title: "Quickstart"
-description: "Set up your first proactive trigger in 5 minutes"
+description: "Set up the chat widget and your first trigger in 5 minutes"
 ---
 
 ## Prerequisites
@@ -27,15 +27,12 @@ Events define the friction points where you want to engage users.
      ```
 4. Click **Save**
 
-## Step 2: Add the Trigger Script
+## Step 2: Add the Chat Widget
 
-Add this script to your website, preferably in the `<head>` section:
+Add this script to your website:
 
 ```html
-<script src="https://embed.boostgpt.co/trigger.js"></script>
-<script>
-  boostgpt.init({ botId: 'YOUR_AGENT_UUID' });
-</script>
+<script src="https://embed.boostgpt.co/widget.js" data-bot-id="YOUR_AGENT_UUID"></script>
 ```
 
 Replace `YOUR_AGENT_UUID` with your agent's UUID from the dashboard.
@@ -81,33 +78,30 @@ document.addEventListener('keypress', resetTimer);
 1. Open your website in a browser
 2. Navigate to the page where you added the trigger
 3. Trigger the condition (e.g., sit idle for 30 seconds)
-4. You should see the trigger UI appear
-5. Click it to start a conversation with context
+4. You should see the trigger card appear above the widget bubble
+5. Click it — the chat opens in the widget with context
 
 ## Customizing the Trigger UI
 
-By default, triggers show as a floating button. Customize the appearance:
+Customize the trigger appearance:
 
 ```javascript
 boostgpt.trigger('checkout_abandoned', {
   cart_value: '$149.00'
 }, {
-  type: 'toast',                    // 'button', 'toast', 'banner', or 'inline'
-  position: 'bottom-right',         // Placement on screen
-  message: 'Need help checking out?', // For toast type
-  buttonColor: '#EF4444',           // Your brand color
+  text: 'Need help checking out?',  // Message shown in the trigger card
   delay: 1000                       // Delay before showing (ms)
 });
 ```
 
 ## What Happens When User Clicks
 
-When the user clicks the trigger:
+When the user clicks the trigger card:
 
-1. The trigger script calls the BoostGPT API with the event and context
+1. The widget calls the BoostGPT API with the event and context
 2. Your agent receives a message built from the prompt template + context
 3. The agent generates a contextual response
-4. User is redirected to a chat with the agent already responding
+4. The chat opens in the widget with the agent already responding
 
 **Example agent message:**
 > "Hi! I noticed you were about to leave without completing your order. Your cart has $149.00 worth of items. Is there anything I can help with? Maybe you have questions about shipping, returns, or payment options?"
@@ -119,11 +113,11 @@ When the user clicks the trigger:
     Learn more about events and context
   </Card>
 
-  <Card title="Trigger Types" icon="palette" href="/saas/trigger-script/trigger-types">
-    Explore button, toast, banner, and inline styles
+  <Card title="Event Triggers" icon="palette" href="/saas/chat-widget/triggers">
+    Proactive messages via the widget
   </Card>
 
-  <Card title="Configuration" icon="settings" href="/saas/trigger-script/configuration">
+  <Card title="Widget Configuration" icon="settings" href="/saas/chat-widget/configuration">
     All available options
   </Card>
 

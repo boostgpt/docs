@@ -1,0 +1,168 @@
+---
+title: "Event Triggers"
+description: "Show proactive messages based on application events"
+---
+
+Event triggers let you show contextual messages above the chat widget bubble when specific events happen in your application — a user hits an error, completes onboarding, abandons checkout, etc.
+
+When the user clicks the trigger message, it fires the event to your agent and opens the resulting conversation in the widget.
+
+## Basic Usage
+
+```js
+// Initialize the widget first
+boostgpt.init({ botId: 'YOUR_BOT_UUID' });
+
+// Fire a trigger when something happens
+boostgpt.trigger('checkout_abandoned', {
+  cart_value: '$49.99',
+  items: 3
+}, {
+  text: 'Looks like you left some items behind. Need help?'
+});
+```
+
+The trigger message appears as a card stacked above the widget bubble — same style as greeting messages.
+
+## Trigger Options
+
+```js
+boostgpt.trigger(eventName, context, options);
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `eventName` | string | **Required.** The event name (must match an event configured in your agent's Events tab) |
+| `context` | object | Key-value pairs passed to the agent as conversation context |
+| `options` | object | Display and behavior options (see below) |
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `text` | string | Event name | The message shown in the trigger card |
+| `delay` | number | `0` | Milliseconds to wait before showing the trigger |
+| `dismissible` | boolean | `true` | Whether the user can close the trigger card |
+| `screenshot` | boolean | `false` | Capture a screenshot of the page and send it with the trigger |
+| `user` | object | `null` | User metadata: `{ id, email, name, ...custom }` |
+
+## Screenshots
+
+Enable screenshot capture to give your agent visual context about what the user was seeing:
+
+```js
+boostgpt.trigger('ui_error', {
+  error: 'Payment form failed to load',
+  page: '/checkout'
+}, {
+  text: 'Something went wrong. Click here for help.',
+  screenshot: true
+});
+```
+
+<Note>
+Screenshot capture requires [html2canvas](https://html2canvas.hertzen.com/). Add it to your page:
+```html
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+```
+</Note>
+
+## Dismissing Triggers
+
+```js
+// Dismiss a specific trigger
+boostgpt.dismiss('checkout_abandoned');
+
+// Dismiss all active triggers
+boostgpt.dismissAll();
+```
+
+## Custom Messages
+
+Use `addMessage()` to show cards without firing an event — useful for announcements, tips, or custom CTAs:
+
+```js
+var msg = boostgpt.addMessage('New feature: Try our AI assistant!', {
+  onClick: function() { boostgpt.open(); },
+  dismissible: true
+});
+
+// Later, remove it programmatically
+msg.dismiss();
+```
+
+## Trigger Events
+
+Listen for trigger lifecycle events:
+
+```js
+boostgpt.on('trigger:shown', function(data) {
+  console.log('Trigger shown:', data.event);
+});
+
+boostgpt.on('trigger:clicked', function(data) {
+  console.log('Trigger clicked:', data.event);
+});
+
+boostgpt.on('trigger:success', function(data) {
+  console.log('Chat opened:', data.data.chat_url);
+});
+
+boostgpt.on('trigger:error', function(data) {
+  console.error('Trigger failed:', data.error);
+});
+```
+
+| Event | Description |
+|-------|-------------|
+| `trigger:shown` | Trigger card appeared above the bubble |
+| `trigger:clicked` | User clicked a trigger card |
+| `trigger:loading` | Trigger is being processed |
+| `trigger:success` | Trigger completed, chat opened |
+| `trigger:error` | Trigger failed |
+
+## Trigger-Only Mode
+
+If you only want triggers without the persistent chat bubble, set `widget: false`:
+
+```js
+boostgpt.init({
+  botId: 'YOUR_BOT_UUID',
+  widget: false  // no floating bubble — only trigger cards
+});
+
+// Triggers still work
+boostgpt.trigger('error_detected', { code: 500 }, {
+  text: 'Something broke. Click to report.'
+});
+```
+
+## Migration from trigger.js
+
+If you were using the standalone `trigger.js` script, migrate to the unified `widget.js`:
+
+<CodeGroup>
+
+```html Before
+<script src="https://embed.boostgpt.co/trigger.js"></script>
+<script>
+  boostgpt.init({ botId: 'uuid' });
+  boostgpt.trigger('event', context, { type: 'toast', message: 'Need help?' });
+</script>
+```
+
+```html After
+<script src="https://embed.boostgpt.co/widget.js" data-bot-id="uuid"></script>
+<script>
+  boostgpt.trigger('event', context, { text: 'Need help?' });
+</script>
+```
+
+</CodeGroup>
+
+**Key changes:**
+- Replace `trigger.js` with `widget.js`
+- Remove `type: 'toast'` (toast is now the only trigger style)
+- Use `text` instead of `message` for the trigger card text
+- `boostgpt.triggerDirect()` is now just `boostgpt.trigger()`
+- The old `trigger.js` still works with a deprecation warning but will be removed in a future version

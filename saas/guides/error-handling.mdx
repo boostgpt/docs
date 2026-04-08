@@ -143,46 +143,27 @@ class ErrorAssistant {
       endpoint: url,
       is_online: navigator.onLine
     }, {
-      type: 'toast',
-      messages: [
-        'Connection issue detected',
-        navigator.onLine
-          ? 'There seems to be a problem reaching our servers.'
-          : 'You appear to be offline.',
-        'Want help troubleshooting?'
-      ],
-      buttonColor: '#DC2626'
+      text: navigator.onLine
+        ? 'Connection issue detected. Want help troubleshooting?'
+        : 'You appear to be offline. Want help troubleshooting?'
     });
   }
 
   getOptionsForError(errorType) {
     const configs = {
       rate_limited: {
-        type: 'banner',
-        position: 'top',
-        bannerText: 'You\'re making requests too quickly. Need help understanding rate limits?',
-        bannerColor: '#F59E0B'
+        text: 'You\'re making requests too quickly. Need help understanding rate limits?'
       },
       server_error: {
-        type: 'toast',
-        messages: [
-          'Oops! Something went wrong on our end.',
-          'Our team has been notified.',
-          'Can I help you with anything while we fix this?'
-        ],
-        buttonColor: '#DC2626'
+        text: 'Oops! Something went wrong on our end. Can I help while we fix this?'
       },
       validation_error: {
-        type: 'toast',
-        message: 'There was an issue with your request. Want help fixing it?',
-        buttonColor: '#F59E0B'
+        text: 'There was an issue with your request. Want help fixing it?'
       }
     };
 
     return configs[errorType] || {
-      type: 'toast',
-      message: 'Something went wrong. Can I help?',
-      buttonColor: '#DC2626'
+      text: 'Something went wrong. Can I help?'
     };
   }
 
@@ -214,14 +195,7 @@ async function processPayment(paymentData) {
       plan_name: selectedPlan.name,
       retry_count: retryCount
     }, {
-      type: 'toast',
-      position: 'bottom-right',
-      messages: [
-        'Your payment couldn\'t be processed.',
-        getPaymentErrorHint(error.code),
-        'Want me to help troubleshoot?'
-      ],
-      buttonColor: '#DC2626'
+      text: 'Your payment couldn\'t be processed. ' + getPaymentErrorHint(error.code) + ' Want me to help troubleshoot?'
     });
   }
 }
@@ -248,9 +222,7 @@ function handleValidationErrors(errors) {
       fields_with_errors: errors.map(e => e.field).join(', '),
       form_name: currentForm
     }, {
-      type: 'toast',
-      message: 'Having trouble with the form? I can explain what\'s needed.',
-      buttonColor: '#F59E0B'
+      text: 'Having trouble with the form? I can explain what\'s needed.'
     });
   }
 }
@@ -258,14 +230,14 @@ function handleValidationErrors(errors) {
 
 ## Error Types and Responses
 
-| Error Type | Trigger Style | Tone |
-|------------|---------------|------|
-| Payment Failed | Toast (urgent) | Empathetic, solution-focused |
-| Validation Error | Toast | Helpful, clarifying |
-| Rate Limited | Banner | Informative, educational |
-| Server Error | Toast | Apologetic, reassuring |
-| Network Error | Toast | Technical, troubleshooting |
-| Permission Denied | Toast | Explanatory, directive |
+| Error Type | Example Message | Tone |
+|------------|----------------|------|
+| Payment Failed | "Your payment couldn't be processed. Want help?" | Empathetic, solution-focused |
+| Validation Error | "Having trouble with the form? I can explain." | Helpful, clarifying |
+| Rate Limited | "Too many requests. Need help with rate limits?" | Informative, educational |
+| Server Error | "Something went wrong on our end. Can I help?" | Apologetic, reassuring |
+| Network Error | "Connection issue detected. Want to troubleshoot?" | Technical, troubleshooting |
+| Permission Denied | "Access denied. I can help sort this out." | Explanatory, directive |
 
 ## Best Practices
 

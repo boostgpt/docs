@@ -100,11 +100,7 @@ function triggerHelp() {
     checkout_step: getCurrentStep(),
     previous_orders: getUserOrderCount()
   }, {
-    type: 'toast',
-    position: 'bottom-right',
-    title: 'Shopping Assistant',
-    message: 'Having trouble checking out? I can help!',
-    buttonColor: '#10B981'
+    text: 'Having trouble checking out? I can help!'
   });
 }
 
@@ -114,42 +110,29 @@ if (isCheckoutPage()) {
 }
 ```
 
-### Step 3: Customize the Trigger Style
+### Step 3: Customize the Trigger Message
 
-Choose the right approach based on your brand:
+Choose the right message based on your brand:
 
-**Friendly Toast (Recommended)**
+**Friendly (Recommended)**
 ```javascript
 {
-  type: 'toast',
-  title: 'Sarah from Support',
-  avatar: '/images/sarah-avatar.jpg',
-  messages: [
-    'Hey! 👋',
-    'I noticed you might have some questions about your order.',
-    'Happy to help with shipping, returns, or anything else!'
-  ]
+  text: 'Hey! 👋 I noticed you might have some questions about your order. Happy to help!'
 }
 ```
 
-**Subtle Button**
+**Subtle**
 ```javascript
 {
-  type: 'button',
-  buttonText: 'Questions? Chat now',
-  buttonColor: '#059669',
-  position: 'bottom-right'
+  text: 'Questions? Chat now',
+  delay: 2000
 }
 ```
 
-**Urgent Banner (for flash sales)**
+**Urgent (for flash sales)**
 ```javascript
 {
-  type: 'banner',
-  position: 'top',
-  bannerText: 'Sale ends in 2 hours! Need help checking out?',
-  bannerColor: '#DC2626',
-  buttonText: 'Get Help'
+  text: 'Sale ends in 2 hours! Need help checking out?'
 }
 ```
 

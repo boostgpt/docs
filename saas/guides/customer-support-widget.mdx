@@ -1,0 +1,202 @@
+---
+title: "Customer Support Widget"
+description: "Deploy an always-on AI support agent on your website"
+---
+
+## The Problem
+
+Traditional support channels create friction:
+- Live chat requires staffing and has limited hours
+- Ticket systems are slow and impersonal
+- Knowledge bases require users to search for answers
+- Users abandon when they can't get immediate help
+
+## The Solution
+
+Deploy the BoostGPT chat widget as an always-on AI support agent that answers instantly, 24/7, trained on your product knowledge.
+
+## Implementation
+
+### Step 1: Train Your Agent
+
+Before deploying the widget, train your agent on your support content:
+
+1. Go to **Memory** in your agent dashboard
+2. Upload your knowledge base:
+   - Product documentation
+   - FAQ pages
+   - Pricing information
+   - Policies (shipping, returns, refunds)
+   - Common troubleshooting guides
+
+<Tip>
+  Start with your top 20 most-asked support questions. You can always add more content later.
+</Tip>
+
+### Step 2: Configure Agent Instructions
+
+Set up your agent's system instruction to handle support conversations:
+
+```
+You are a friendly customer support agent for [Your Company].
+
+Your job is to:
+- Answer product questions accurately using your knowledge base
+- Help users troubleshoot common issues
+- Guide users through setup and configuration
+- Provide pricing and plan information
+- Escalate complex issues to the human support team
+
+Rules:
+- Be friendly, professional, and concise
+- If you don't know the answer, say so — don't make things up
+- For billing disputes or account issues, direct users to support@yourcompany.com
+- Always confirm you've resolved the user's question before ending
+```
+
+### Step 3: Install the Widget
+
+Add one line to your website:
+
+```html
+<script src="https://embed.boostgpt.co/widget.js" data-bot-id="YOUR_BOT_UUID"></script>
+```
+
+### Step 4: Configure Greeting Messages
+
+Set up welcoming greetings in **Branding → Content → Message Greetings**:
+
+```
+"Hi! I'm your AI support assistant. Ask me anything about [Product]."
+"Need help getting started? I can walk you through setup."
+"Questions about pricing or features? I'm here to help!"
+```
+
+These appear as stacked cards above the bubble, inviting users to start a conversation.
+
+### Step 5: Enable SSO (Recommended)
+
+If your site has user authentication, connect SSO to identify users:
+
+```javascript
+// On your backend: generate a signed JWT
+const token = jwt.sign(
+  { email: user.email, name: user.name },
+  'YOUR_SSO_SECRET',
+  { expiresIn: '24h' }
+);
+
+// Pass to widget
+boostgpt.init({
+  botId: 'YOUR_BOT_UUID',
+  userToken: token
+});
+```
+
+Benefits:
+- Agent greets users by name
+- Conversation history persists across sessions
+- Support team can identify who needs help
+
+### Step 6: Add Proactive Triggers
+
+Combine the widget with triggers to proactively offer help at friction points:
+
+```javascript
+// Help page visitors who seem stuck
+setTimeout(() => {
+  boostgpt.trigger('help_page_stuck', {
+    page: window.location.pathname,
+    time_on_page: 60
+  }, {
+    text: 'Looking for something specific? I can help you find it.'
+  });
+}, 60000);
+
+// Pricing page assistance
+if (window.location.pathname === '/pricing') {
+  setTimeout(() => {
+    boostgpt.trigger('pricing_help', {
+      current_plan: getUserPlan()
+    }, {
+      text: 'Questions about our plans? I can help you choose the right one.',
+      delay: 30000
+    });
+  });
+}
+```
+
+## Widget vs Triggers — When to Use Each
+
+| Approach | Best For | Example |
+|----------|----------|---------|
+| Widget (always visible) | General support availability | "Chat with us" bubble on every page |
+| Triggers (proactive) | Specific friction points | "Stuck on checkout?" when user hesitates |
+| Both (recommended) | Maximum coverage | Always-on support + proactive help |
+
+The widget and triggers work together — the bubble is always available, and triggers add contextual messages when they detect friction.
+
+## Measuring Success
+
+Track these metrics to evaluate your support widget:
+
+| Metric | Target | How to Measure |
+|--------|--------|----------------|
+| Resolution rate | 80%+ | Conversations resolved without human handoff |
+| Response accuracy | 90%+ | Spot-check agent answers weekly |
+| User satisfaction | 4/5+ | Add rating prompt after conversations |
+| Support ticket reduction | 30-50% decrease | Compare ticket volume before/after |
+| First response time | Under 5 seconds | AI responds instantly |
+
+## Optimization Tips
+
+<AccordionGroup>
+  <Accordion title="Review conversation logs weekly">
+    Check the **Conversations** tab to find:
+    - Questions the agent couldn't answer (gaps in knowledge)
+    - Incorrect or confusing responses (needs instruction refinement)
+    - Common topics (may need dedicated documentation)
+  </Accordion>
+
+  <Accordion title="Expand knowledge base incrementally">
+    Start small, then add content based on real conversations:
+    1. Launch with core FAQ content
+    2. Review unanswered questions after 1 week
+    3. Add missing content to memory
+    4. Repeat monthly
+  </Accordion>
+
+  <Accordion title="Use web access for dynamic content">
+    Enable web access so your agent can fetch live data:
+    - Current status page information
+    - Latest pricing from your website
+    - Product changelog and release notes
+  </Accordion>
+
+  <Accordion title="Set up escalation paths">
+    Not everything should be handled by AI. Configure clear escalation:
+    - Billing disputes → "Please email billing@yourcompany.com"
+    - Account security → "Contact us at security@yourcompany.com"
+    - Complex technical issues → "I'll connect you with our engineering team"
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Widget Configuration" icon="settings" href="/saas/chat-widget/configuration">
+    Customize appearance and behavior
+  </Card>
+
+  <Card title="SSO Setup" icon="lock" href="/saas/chat-widget/sso">
+    Identify your users automatically
+  </Card>
+
+  <Card title="Event Triggers" icon="bolt" href="/saas/chat-widget/triggers">
+    Add proactive messages
+  </Card>
+
+  <Card title="Best Practices" icon="check" href="/saas/best-practices">
+    Tips for effective deployment
+  </Card>
+</CardGroup>

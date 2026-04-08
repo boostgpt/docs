@@ -102,34 +102,22 @@
                       ]
                     },
                     {
-                      "group": "Events",
-                      "pages": [
-                        "saas/events/overview",
-                        "saas/events/creating-events",
-                        "saas/events/prompt-templates"
-                      ]
-                    },
-                    {
-                      "group": "Trigger Script",
-                      "pages": [
-                        "saas/trigger-script/installation",
-                        "saas/trigger-script/configuration",
-                        "saas/trigger-script/trigger-types",
-                        "saas/trigger-script/api-reference"
-                      ]
-                    },
-                    {
                       "group": "Chat Widget",
                       "pages": [
                         "saas/chat-widget/installation",
                         "saas/chat-widget/configuration",
                         "saas/chat-widget/api-reference",
+                        "saas/events/overview",
+                        "saas/events/creating-events",
+                        "saas/events/prompt-templates",
+                        "saas/chat-widget/triggers",
                         "saas/chat-widget/sso"
                       ]
                     },
                     {
                       "group": "Use Case Guides",
                       "pages": [
+                        "saas/guides/customer-support-widget",
                         "saas/guides/checkout-abandonment",
                         "saas/guides/onboarding-friction",
                         "saas/guides/feature-discovery",

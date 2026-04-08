@@ -113,10 +113,7 @@ class OnboardingTracker {
       step_name: step,
       error_message: getVisibleError()
     }, {
-      type: 'toast',
-      position: 'bottom-right',
-      title: 'Setup Assistant',
-      message: this.getMessageForStep(step)
+      text: this.getMessageForStep(step)
     });
   }
 
@@ -164,8 +161,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
         errors: Array.from(errors).map(e => e.textContent).join(', '),
         attempt_count: errorCount
       }, {
-        type: 'toast',
-        message: 'Having trouble with the form? I can help clarify what\'s needed.'
+        text: 'Having trouble with the form? I can help clarify what\'s needed.'
       });
     }
   }
@@ -185,27 +181,21 @@ async function testIntegration() {
       error_code: error.code,
       error_message: error.message
     }, {
-      type: 'toast',
-      messages: [
-        'Hmm, the connection test failed.',
-        `Error: ${error.message}`,
-        'Want me to help troubleshoot?'
-      ],
-      buttonColor: '#DC2626'
+      text: `Connection test failed: ${error.message}. Want me to help troubleshoot?`
     });
   }
 }
 ```
 
-## Trigger Styles by Step
+## Trigger Messages by Step
 
-| Step | Recommended Type | Rationale |
-|------|------------------|-----------|
-| Account Setup | Toast | Friendly, conversational |
-| Profile | Button | Less intrusive for simple step |
-| Team Invite | Toast | May need explanation of roles |
-| Integration | Toast + Messages | Complex, needs detailed help |
-| First Project | Toast | Encouraging, feature discovery |
+| Step | Example Message | Rationale |
+|------|----------------|-----------|
+| Account Setup | "Need help setting up your account?" | Friendly, conversational |
+| Profile | "Having trouble with your profile?" | Simple and non-intrusive |
+| Team Invite | "Want help inviting your team?" | May need explanation of roles |
+| Integration | "Stuck on the integration? I can walk you through it!" | Complex, needs detailed help |
+| First Project | "Need help creating your first project?" | Encouraging, feature discovery |
 
 ## Best Practices
 

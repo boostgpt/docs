@@ -1,0 +1,111 @@
+---
+title: "Agent Templates"
+description: "Export and import full agent configurations as portable .boostgpt files"
+---
+
+## What are Agent Templates?
+
+Agent templates let you capture a complete agent configuration — instructions, capabilities, branding, and tool connections — as a portable `.boostgpt` file. Share it with others, reuse it across projects, or keep it as a backup.
+
+<CardGroup cols={2}>
+  <Card title="Export" icon="download">
+    Save your agent's full config as a `.boostgpt` file
+  </Card>
+  <Card title="Import" icon="upload">
+    Create a new agent or update an existing one from a template file
+  </Card>
+</CardGroup>
+
+## What's Included in a Template
+
+A `.boostgpt` file is plain JSON. When you export an agent, the template captures:
+
+| Category | What's included |
+|----------|----------------|
+| **Core** | Name, model, instruction, reasoning type, chat mode |
+| **Features** | Memory, user memory, heartbeat, workspace, web access, sandbox, notifications, workforce tools |
+| **Config** | Max reply tokens, max agent steps, rate limits, no-answer reply |
+| **Branding** | Theme, colors, logo, greeting messages, conversation starters, widget config, prompt templates, navigation, pricing plans |
+| **Tools** | Tool names, connector slugs — credentials are **never** exported |
+| **Artifacts** | Which artifact types are enabled (code, images, tables, etc.) |
+| **Uploads** | File upload settings and accepted types |
+
+<Warning>
+API keys, OAuth tokens, and other credentials are **never** included in exported templates. After importing, reconnect each tool manually in the **Tools** tab.
+</Warning>
+
+## Exporting a Template
+
+1. Open your agent in the dashboard
+2. Go to **Settings → Agent Template**
+3. Click **Export template**
+4. A `.boostgpt` file downloads to your computer
+
+You can optionally add a description before exporting — it appears when the file is imported.
+
+## Importing a Template
+
+### New agent
+
+1. Go to **Create Agent**
+2. Click **Import from template**
+3. Select your `.boostgpt` file
+4. Review the agent name and settings, then create
+
+### Existing agent
+
+Apply a template to update an existing agent's configuration:
+
+1. Open your agent → **Settings → Agent Template**
+2. Click **Import template**
+3. Select your `.boostgpt` file
+
+<Info>
+Importing to an existing agent overwrites its configuration fields but does **not** rename the agent or delete existing tools that aren't in the template.
+</Info>
+
+## Tools and Connectors
+
+When a template includes predefined connectors (e.g. HubSpot, Slack, Twitter), BoostGPT automatically provisions the MCP server infrastructure during import — the tool appears in your **Tools** tab with its full function list ready to use.
+
+You still need to connect your credentials:
+
+1. Go to the **Tools** tab after importing
+2. Click the tool that needs credentials
+3. Enter your API key or complete the OAuth flow
+
+## File Format
+
+`.boostgpt` files are JSON with a fixed header:
+
+```json
+{
+  "version": "1",
+  "type": "agent",
+  "name": "My Agent",
+  "description": "Optional description",
+  "model": "gpt-4o-mini",
+  "instruction": "You are...",
+  ...
+}
+```
+
+The file extension is `.boostgpt` but the content is standard JSON — you can open and edit it in any text editor.
+
+## Use Cases
+
+- **Share agent setups** with your team or the community
+- **Reuse a proven configuration** across multiple projects
+- **Version-control your agent** — commit the `.boostgpt` file to git alongside your code
+- **Migrate between accounts** — export from one workspace, import to another
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Branding" icon="palette" href="/creators/branding">
+    Customize your agent's appearance
+  </Card>
+  <Card title="Integrations" icon="plug" href="/creators/integrations/overview">
+    Connect tools to your agent
+  </Card>
+</CardGroup>

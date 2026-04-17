@@ -69,7 +69,8 @@
                       "creators/built-in-tools",
                       "creators/branding",
                       "creators/analytics",
-                      "creators/deploy"
+                      "creators/deploy",
+                      "creators/agent-templates"
                     ]
                   },
                   {

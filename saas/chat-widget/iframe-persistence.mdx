@@ -1,0 +1,98 @@
+---
+title: "Iframe Persistence"
+description: "Persist embedded BoostGPT chat sessions with postMessage"
+---
+
+When you embed a BoostGPT agent directly in an iframe, the chat is saved by BoostGPT after the first message is sent. To resume that same chat after your page reloads, store the active `chat_id` sent by the iframe.
+
+## Embed URL
+
+Start with your agent URL and add `embed=1`.
+
+```html
+<iframe
+  id="boostgpt-agent"
+  src="https://agent.your-domain.com?embed=1"
+  style="width: 100%; height: 720px; border: 0;"
+  allow="clipboard-read; clipboard-write; microphone; camera; fullscreen"
+></iframe>
+```
+
+After the first message, the embedded agent navigates to:
+
+```txt
+https://agent.your-domain.com/<chat_id>?embed=1
+```
+
+## Listen For Chat IDs
+
+BoostGPT sends a `postMessage` event whenever an embedded chat id becomes active.
+
+```js
+window.addEventListener('message', (event) => {
+  if (event.origin !== 'https://agent.your-domain.com') return;
+  if (event.data?.type !== 'boostgpt:chat_id') return;
+
+  localStorage.setItem('boostgpt_chat_id', event.data.chat_id);
+});
+```
+
+Event payload:
+
+```js
+{
+  type: 'boostgpt:chat_id',
+  chat_id: 'CHAT_UUID',
+  bot_id: 'BOT_UUID',
+  embed: true,
+  widget: false
+}
+```
+
+## Restore The Chat
+
+When your page loads again, read the saved chat id and include it in the iframe URL.
+
+```js
+const iframe = document.getElementById('boostgpt-agent');
+const chatId = localStorage.getItem('boostgpt_chat_id');
+const baseUrl = 'https://agent.your-domain.com';
+
+iframe.src = chatId
+  ? `${baseUrl}/${encodeURIComponent(chatId)}?embed=1`
+  : `${baseUrl}?embed=1`;
+```
+
+## Full Example
+
+```html
+<iframe
+  id="boostgpt-agent"
+  style="width: 100%; height: 720px; border: 0;"
+  allow="clipboard-read; clipboard-write; microphone; camera; fullscreen"
+></iframe>
+
+<script>
+  const baseUrl = 'https://agent.your-domain.com';
+  const storageKey = 'boostgpt_chat_id';
+  const iframe = document.getElementById('boostgpt-agent');
+
+  const chatId = localStorage.getItem(storageKey);
+  iframe.src = chatId
+    ? `${baseUrl}/${encodeURIComponent(chatId)}?embed=1`
+    : `${baseUrl}?embed=1`;
+
+  window.addEventListener('message', (event) => {
+    if (event.origin !== baseUrl) return;
+    if (event.data?.type !== 'boostgpt:chat_id') return;
+
+    localStorage.setItem(storageKey, event.data.chat_id);
+  });
+</script>
+```
+
+Use a scoped storage key if you embed multiple agents:
+
+```js
+const storageKey = `boostgpt_chat_id:${botId}`;
+```

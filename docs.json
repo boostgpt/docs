@@ -108,6 +108,7 @@
                         "saas/chat-widget/installation",
                         "saas/chat-widget/configuration",
                         "saas/chat-widget/api-reference",
+                        "saas/chat-widget/iframe-persistence",
                         "saas/events/overview",
                         "saas/events/creating-events",
                         "saas/events/prompt-templates",

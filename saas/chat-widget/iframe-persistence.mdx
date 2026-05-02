@@ -96,3 +96,34 @@ Use a scoped storage key if you embed multiple agents:
 ```js
 const storageKey = `boostgpt_chat_id:${botId}`;
 ```
+
+## SSO With Iframe Embeds
+
+Pass a short-lived SSO token in the iframe URL so the embedded agent can authenticate the user on its own domain.
+
+```txt
+https://agent.your-domain.com?embed=1&sso_token=SIGNED_JWT
+```
+
+When restoring a saved chat, include the same parameter on the chat URL:
+
+```txt
+https://agent.your-domain.com/<chat_id>?embed=1&sso_token=SIGNED_JWT
+```
+
+Generate `SIGNED_JWT` on your server using the agent's SSO secret. Do not sign SSO tokens in browser code.
+
+```js
+import jwt from 'jsonwebtoken';
+
+const token = jwt.sign({
+  email: user.email,
+  name: user.name,
+  external_id: user.id,
+}, process.env.BOOSTGPT_SSO_SECRET, {
+  algorithm: 'HS256',
+  expiresIn: '10m',
+});
+```
+
+See [SSO setup](/saas/chat-widget/sso) for the full JWT payload and backend examples.

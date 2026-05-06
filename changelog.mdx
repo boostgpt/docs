@@ -5,7 +5,20 @@ rss: true
 noindex: true
 ---
 
-<Update label="May 2026" tags={["New releases", "Improvements"]} rss={{ title: "CRM, Pipeline, Reminders, and Tool Access Controls", description: "Capture leads, manage deals, follow up with reminders, and control public vs staff connector tools" }}>
+<Update label="May 2026" tags={["New releases", "Improvements"]} rss={{ title: "CRM, Automations, Pipeline, Reminders, and Tool Access Controls", description: "Capture leads, manage deals, automate follow-up, and control public vs staff connector tools" }}>
+
+  ## Workflow automations
+
+  Agents now include bot-level workflow automation for turning lead and subscriber events into follow-up:
+
+  - **Business workflow editor** — build trigger -> condition -> action workflows from the Automations tab
+  - **Event triggers** — run workflows from CRM contact/deal/task events, subscriber lifecycle events, billing events, and incoming webhooks
+  - **Scheduled workflows** — run workflows on a recurring minute interval
+  - **Action blocks** — notify owners, send webhooks, create/update CRM contacts, deals, tasks, notes, and run connector tools
+  - **Template mapping** — map event payload data into actions using `{{field}}`, `{{payload.field}}`, and `{{steps.step_id.result}}`
+  - **Run logs** — inspect recent workflow runs, status, failures, and execution output
+
+  Workflow-generated CRM actions suppress recursive workflow triggers so accidental loops do not spiral.
 
   ## CRM workspace
 

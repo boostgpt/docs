@@ -222,8 +222,7 @@
                         "group": "Scheduling & Calendar",
                         "pages": [
                           "integrations/connectors/calendly",
-                          "integrations/connectors/google-calendar",
-                          "integrations/connectors/cal-com"
+                          "integrations/connectors/google-calendar"
                         ]
                       },
                       {
@@ -284,7 +283,8 @@
                       "integrations/custom/overview",
                       "integrations/custom/openapi",
                       "integrations/custom/postman",
-                      "integrations/custom/authentication"
+                      "integrations/custom/authentication",
+                      "integrations/custom/tool-access"
                     ]
                   },
                   {

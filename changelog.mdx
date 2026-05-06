@@ -5,6 +5,35 @@ rss: true
 noindex: true
 ---
 
+<Update label="May 2026" tags={["New releases", "Improvements"]} rss={{ title: "CRM, Pipeline, Reminders, and Tool Access Controls", description: "Capture leads, manage deals, follow up with reminders, and control public vs staff connector tools" }}>
+
+  ## CRM workspace
+
+  BoostGPT agents now include a lightweight CRM for turning conversations into managed leads and sales follow-up:
+
+  - **Lead inbox** — capture contacts from agent conversations with customizable intake fields
+  - **Contact management** — edit, archive, search, and review contact details, notes, custom fields, and activity
+  - **Deals and pipelines** — create deals, move them across Kanban stages, edit stage names/status, reorder stages, and delete deals or stages safely
+  - **Tasks and reminders** — create follow-up tasks with due dates, priorities, reminder status, snoozing, and background reminder delivery
+  - **Reporting** — view basic CRM totals for contacts, deals, pipeline value, and tasks
+  - **Agent tools** — agents can create/update CRM contacts, notes, deals, and follow-up tasks during conversations
+
+  CRM tools are plan-gated and can be enabled from agent settings.
+
+  ## Tool access controls
+
+  Connector and built-in tools now support role-aware access:
+
+  - **Public-safe tools** — lead capture, booking, workspace/sandbox tools, scoped scheduling, and scoped notifications can run in public agent chats
+  - **Staff-only tools** — private CRM search, deal lists, reports, task lists, and any connector tool marked `staff_only` are limited to owners, admins, and moderators
+  - **Scoped CRM writes** — public users can only update CRM records connected to their current chat
+  - **Safer notifications** — public users cannot force arbitrary notification recipients
+  - **Custom connector metadata** — connector builders can mark tools with `access`, `tool_access`, `boostgptAccess`, or `boostgpt_access`
+
+  See [Tool Access](/integrations/custom/tool-access) for custom connector examples.
+
+</Update>
+
 <Update label="April 2026" tags={["New releases"]} rss={{ title: "Agent Templates (.boostgpt)", description: "Export and import full agent configurations as portable .boostgpt files" }}>
 
   ## Agent templates

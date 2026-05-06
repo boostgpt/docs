@@ -5,23 +5,23 @@ description: "Understanding the Model Context Protocol"
 
 ## What is MCP?
 
-**MCP (Model Context Protocol)** is an open protocol that allows AI agents to connect to external tools and services. Think of it as a universal adapter that lets your agent interact with Gmail, Salesforce, Slack, and any other service.
+**MCP (Model Context Protocol)** is an open protocol that allows AI agents to connect to external tools and services. Think of it as a universal adapter that lets your agent interact with Slack, HubSpot, Calendly, and any other service.
 
 ## How MCP Works
 
 ```mermaid
 graph LR
     A[Your Agent] --> B[MCP Protocol]
-    B --> C[Gmail Connector]
+    B --> C[SendGrid Connector]
     B --> D[HubSpot Connector]
     B --> E[Slack Connector]
     B --> F[Custom Connector]
 ```
 
 1. **Agent receives user request** - "Send an email to john@example.com"
-2. **Agent decides to use a tool** - Determines Gmail tool is needed
+2. **Agent decides to use a tool** - Determines SendGrid tool is needed
 3. **MCP protocol bridges the connection** - Standardized communication
-4. **Connector executes the action** - Actually sends the email via Gmail API
+4. **Connector executes the action** - Actually sends the email via SendGrid API
 5. **Result returns to agent** - "Email sent successfully"
 
 ## Key Concepts
@@ -33,7 +33,7 @@ graph LR
 ```javascript
 // A connector provides tools like:
 {
-  "name": "gmail",
+  "name": "sendgrid",
   "tools": [
     "send_email",
     "read_emails",
@@ -48,7 +48,7 @@ graph LR
 **Tools** are individual actions your agent can perform through a connector.
 
 ```javascript
-// Example: Gmail's send_email tool
+// Example: SendGrid's send_email tool
 {
   "name": "send_email",
   "description": "Send an email message",
@@ -65,7 +65,7 @@ graph LR
 When your agent needs to use a tool:
 
 1. **Agent analyzes user request** - Understands what action is needed
-2. **Agent selects appropriate tool** - Chooses "send_email" from Gmail connector
+2. **Agent selects appropriate tool** - Chooses "send_email" from SendGrid connector
 3. **Agent prepares parameters** - Extracts to, subject, body from context
 4. **MCP executes tool** - Connector sends the email
 5. **Agent receives result** - Uses response to continue conversation
@@ -80,11 +80,11 @@ BoostGPT provides 30+ ready-to-use connectors:
 - **OAuth authentication** - Secure connection to your accounts
 - **One-click deployment** - Just authenticate and connect
 
-**Example: Deploying Gmail**
+**Example: Deploying SendGrid**
 
 ```text
-Dashboard -> Integrations -> Connectors -> Gmail -> Deploy
--> Authenticate with Google -> Add to Agent Tools
+Dashboard -> Integrations -> Connectors -> SendGrid -> Deploy
+-> Add API key -> Add to Agent Tools
 ```
 
 ### 2. External MCP Servers
@@ -110,7 +110,7 @@ User: "Send an email to john@example.com about the meeting"
 
 // 2. Agent makes MCP request
 {
-  "connector": "gmail",
+  "connector": "sendgrid",
   "tool": "send_email",
   "parameters": {
     "to": "john@example.com",
@@ -119,8 +119,8 @@ User: "Send an email to john@example.com about the meeting"
   }
 }
 
-// 3. Connector executes via Gmail API
-Gmail API.sendEmail({...})
+// 3. Connector executes via SendGrid API
+SendGrid API.sendEmail({...})
 
 // 4. MCP returns result
 {

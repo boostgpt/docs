@@ -1,0 +1,129 @@
+---
+title: "Tool Access"
+description: "Control which connector tools are available in public chats and staff chats"
+---
+
+## Overview
+
+Custom connectors can expose tools to public visitors, subscribers, or internal staff. Use tool access metadata when a connector has a mix of safe intake actions and private admin actions.
+
+By default, connector tools are treated as `public_safe`.
+
+Predefined connectors are automatically tagged by BoostGPT. OAuth2 connectors are public-safe because each subscriber authorizes their own account. For owner-token connectors, intake actions like creating a lead, booking a call, or adding a subscriber can stay public-safe, while private reads, reports, deletes, account changes, payment operations, databases, devops, and arbitrary outbound messaging are staff-only.
+
+## Access Levels
+
+| Access | Who can use it | Use for |
+| --- | --- | --- |
+| `public_safe` | Anyone chatting with the agent | Create leads, book calls, submit forms, notify the owner |
+| `staff_only` | Agent owner, admins, moderators | List private records, search customers, read reports, update internal pipeline data |
+
+## Tool Definition
+
+Set access on each tool:
+
+```json
+{
+  "name": "create_lead",
+  "description": "Create a lead from the current visitor",
+  "access": "public_safe"
+}
+```
+
+Mark private tools as staff-only:
+
+```json
+{
+  "name": "list_leads",
+  "description": "List all leads in the CRM",
+  "access": "staff_only"
+}
+```
+
+You can also use `tool_access`:
+
+```json
+{
+  "name": "list_deals",
+  "description": "List all sales deals",
+  "tool_access": "staff_only"
+}
+```
+
+Or annotations:
+
+```json
+{
+  "name": "list_deals",
+  "description": "List all sales deals",
+  "annotations": {
+    "boostgptAccess": "staff_only"
+  }
+}
+```
+
+`boostgpt_access` is also supported:
+
+```json
+{
+  "annotations": {
+    "boostgpt_access": "staff_only"
+  }
+}
+```
+
+## Practical Example
+
+For a CRM connector:
+
+```json
+[
+  {
+    "name": "create_contact",
+    "description": "Create a contact from a visitor conversation",
+    "access": "public_safe"
+  },
+  {
+    "name": "book_call",
+    "description": "Book a call for the current visitor",
+    "access": "public_safe"
+  },
+  {
+    "name": "search_contacts",
+    "description": "Search all contacts in the CRM",
+    "access": "staff_only"
+  },
+  {
+    "name": "pipeline_report",
+    "description": "Show pipeline revenue and deal status",
+    "access": "staff_only"
+  }
+]
+```
+
+## Choosing Access
+
+Use `public_safe` when the tool:
+
+- creates or updates data for the current visitor
+- submits an intake form
+- books a meeting
+- sends a notification to the agent owner/team
+- does not reveal private account data
+
+Use `staff_only` when the tool:
+
+- lists, searches, or exports private records
+- reads inboxes, channels, dashboards, reports, customers, or files
+- updates or deletes existing business records
+- sends messages to arbitrary recipients
+- changes account, billing, pipeline, or workspace settings
+
+## Notes
+
+Tool access is enforced in two places:
+
+- hidden from the agent when the current chatter is not allowed to use it
+- blocked at execution if an old or forged tool call tries to run it
+
+Access is based on capability and data scope, not only on whose API token the connector uses.

@@ -15,6 +15,7 @@ noindex: true
   - **Contact management** — edit, archive, search, and review contact details, notes, custom fields, and activity
   - **Deals and pipelines** — create deals, move them across Kanban stages, edit stage names/status, reorder stages, and delete deals or stages safely
   - **Tasks and reminders** — create follow-up tasks with due dates, priorities, reminder status, snoozing, and background reminder delivery
+  - **CRM webhooks** — subscribe to CRM contact, deal, pipeline, custom field, task, note, and reminder events from the Webhooks integration
   - **Reporting** — view basic CRM totals for contacts, deals, pipeline value, and tasks
   - **Agent tools** — agents can create/update CRM contacts, notes, deals, and follow-up tasks during conversations
 
@@ -474,12 +475,11 @@ noindex: true
 
   ## Event subscriptions
 
-  - `bot.created` - New bot creation events
-  - `bot.updated` - Bot configuration changes
-  - `bot.deleted` - Bot deletion events
-  - `chat.message` - New chat message events
-  - `subscriber.added` - New subscriber capture
-  - `training.added` - Training data additions
+  - `connector.created` - Connector creation events
+  - `connector.updated` - Connector configuration changes
+  - `connector.deleted` - Connector deletion events
+  - `subscriber.joined` - New subscriber capture
+  - `memory.created` - Memory source additions
 
   ## Security features
 

@@ -9,12 +9,44 @@ Webhooks allow you to receive real-time notifications when events occur in your 
 
 ## Available Events
 
-- `bot.created` - New bot created
-- `bot.updated` - Bot settings changed
-- `bot.deleted` - Bot deleted
-- `chat.message` - New chat message sent
-- `subscriber.added` - New subscriber captured
-- `training.added` - Training data added
+- `connector.created` - MCP connector/server created
+- `connector.updated` - MCP connector/server updated
+- `connector.cloned` - MCP connector/server cloned
+- `connector.deleted` - MCP connector/server deleted
+- `memory.created` - Memory source created
+- `memory.updated` - Memory source updated
+- `memory.deleted` - Memory source deleted
+- `subscriber.joined` - Subscriber joined an agent
+- `subscriber.verified` - Subscriber verified their account
+- `subscriber.deactivated` - Subscriber deactivated their agent account
+- `subscriber.subscription.checkout_started` - Subscriber started checkout
+- `subscriber.subscription.created` - Subscriber subscription created
+- `subscriber.subscription.renewed` - Subscriber subscription renewed
+- `subscriber.subscription.cancel_requested` - Subscriber requested cancellation
+- `subscriber.subscription.cancelled` - Subscriber subscription cancelled
+- `subscriber.subscription.paused` - Subscriber subscription paused
+- `subscriber.subscription.resumed` - Subscriber subscription resumed
+- `subscriber.subscription.refunded` - Subscriber payment refunded
+- `crm.contact.created` - CRM contact created
+- `crm.contact.updated` - CRM contact updated
+- `crm.contact.deleted` - CRM contact deleted or archived
+- `crm.note.created` - CRM note created
+- `crm.deal.created` - CRM deal created
+- `crm.deal.updated` - CRM deal updated
+- `crm.deal.deleted` - CRM deal deleted
+- `crm.deal.stage_changed` - CRM deal moved between stages
+- `crm.pipeline.created` - CRM pipeline created
+- `crm.pipeline.updated` - CRM pipeline updated
+- `crm.pipeline.stage.created` - CRM pipeline stage created
+- `crm.pipeline.stage.updated` - CRM pipeline stage updated
+- `crm.pipeline.stage.deleted` - CRM pipeline stage deleted
+- `crm.field.created` - CRM custom field created
+- `crm.field.updated` - CRM custom field updated
+- `crm.field.deleted` - CRM custom field deleted
+- `crm.task.created` - CRM task created
+- `crm.task.updated` - CRM task updated
+- `crm.task.deleted` - CRM task deleted
+- `crm.task.reminder.sent` - CRM task reminder sent
 
 ## Setup Webhook
 
@@ -39,13 +71,17 @@ All webhooks send JSON payloads:
 
 ```json
 {
-  "event": "chat.message",
-  "timestamp": "2025-01-01T12:00:00Z",
-  "project_id": "proj_123",
-  "data": {
-    "bot_id": "bot_456",
-    "message": "Hello",
-    "response": "Hi! How can I help?"
+  "event": "crm.contact.created",
+  "resource_id": "contact_uuid",
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "status": "new",
+  "fields": {
+    "budget": "$5k"
+  },
+  "bot": {
+    "id": "agent_uuid",
+    "name": "Sales Agent"
   }
 }
 ```
@@ -66,11 +102,11 @@ app.post('/webhooks/boostgpt', (req, res) => {
   console.log('Received event:', event);
 
   switch (event) {
-    case 'chat.message':
-      console.log('New chat:', data.message);
+    case 'crm.contact.created':
+      console.log('New contact:', req.body.email);
       break;
-    case 'subscriber.added':
-      console.log('New subscriber:', data.email);
+    case 'crm.task.reminder.sent':
+      console.log('Reminder sent:', req.body.title);
       break;
     default:
       console.log('Unknown event:', event);
@@ -93,12 +129,12 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { event, data } = req.body;
+  const { event } = req.body;
 
   // Handle event
-  if (event === 'subscriber.added') {
+  if (event === 'subscriber.joined') {
     // Add to email list
-    await addToMailchimp(data.email);
+    await addToMailchimp(req.body.member?.user?.email);
   }
 
   return res.status(200).json({ received: true });

@@ -1,0 +1,196 @@
+---
+title: "Email Inbox"
+description: "Manage your agent's email inbox via the API"
+---
+
+## Overview
+
+Each agent can have a dedicated email address. When the Email Inbox add-on is enabled, inbound messages are routed to your agent, which can read and reply to them automatically. Use these endpoints to inspect your inbox, manage settings, and reply programmatically.
+
+<Info>
+Email Inbox requires the add-on to be enabled in **Dashboard → Agent → Email**. Once enabled, BoostGPT provisions a unique address for your agent.
+</Info>
+
+## Get Email Address
+
+Retrieve the agent's assigned email address.
+
+```javascript
+const result = await client.fetchEmailAddress({ bot_id: 'bot_abc123' });
+console.log(result.response.email_address);
+// e.g. "bot-abc123@inbox.boostgpt.co"
+```
+
+```
+GET /v1/bot/email/address?project_id={project_id}&bot_id={bot_id}
+```
+
+### Response
+
+```json
+{
+  "email_address": "bot-abc123@inbox.boostgpt.co",
+  "custom_domain": null,
+  "enabled": true
+}
+```
+
+## Update Email Settings
+
+Configure email behaviour: auto-reply, signature, filter rules.
+
+```javascript
+const result = await client.updateEmailSettings({
+  bot_id: 'bot_abc123',
+  auto_reply: true,
+  signature: 'Best, The Support Team',
+  filter_spam: true
+});
+```
+
+```
+PUT /v1/bot/email/settings
+```
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `bot_id` | string | Yes | Bot ID |
+| `auto_reply` | boolean | No | Automatically reply to every inbound email |
+| `signature` | string | No | Text appended to all replies |
+| `filter_spam` | boolean | No | Discard likely-spam messages before routing |
+
+## Get Email Stats
+
+Retrieve aggregate inbox statistics.
+
+```javascript
+const result = await client.fetchEmailStats({ bot_id: 'bot_abc123' });
+console.log(result.response.stats);
+```
+
+```
+GET /v1/bot/email/stats?project_id={project_id}&bot_id={bot_id}
+```
+
+### Response
+
+```json
+{
+  "stats": {
+    "total_received": 240,
+    "total_replied": 185,
+    "total_unread": 12,
+    "last_received_at": "2026-05-01T08:45:00Z"
+  }
+}
+```
+
+## List Emails
+
+Paginate through received emails.
+
+```javascript
+const result = await client.fetchEmails({
+  bot_id: 'bot_abc123',
+  page: 1,
+  per_page: 20
+});
+console.log(result.response.emails);
+```
+
+```
+GET /v1/bot/email/readall?project_id={project_id}&bot_id={bot_id}&page={page}&per_page={per_page}
+```
+
+### Response
+
+```json
+{
+  "total": 240,
+  "emails": [
+    {
+      "uuid": "email_abc123",
+      "from": "customer@example.com",
+      "subject": "Question about billing",
+      "preview": "Hi, I wanted to ask about...",
+      "read": false,
+      "replied": false,
+      "received_at": "2026-05-01T08:45:00Z"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "per_page": 20,
+    "total": 240,
+    "total_pages": 12
+  }
+}
+```
+
+## Get an Email
+
+Fetch the full content of a single email.
+
+```javascript
+const result = await client.fetchEmail({
+  bot_id: 'bot_abc123',
+  email_id: 'email_abc123'
+});
+console.log(result.response.email.body);
+```
+
+```
+GET /v1/bot/email/read?project_id={project_id}&bot_id={bot_id}&email_id={email_id}
+```
+
+## Reply to an Email
+
+Send a reply to an inbound email.
+
+```javascript
+const result = await client.replyToEmail({
+  bot_id: 'bot_abc123',
+  email_id: 'email_abc123',
+  content: 'Thanks for reaching out! Your issue has been resolved.'
+});
+```
+
+```
+POST /v1/bot/email/reply
+```
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `bot_id` | string | Yes | Bot ID |
+| `email_id` | string | Yes | Email UUID to reply to |
+| `content` | string | Yes | Reply body text (plain text or HTML) |
+
+## Delete an Email
+
+Remove an email from the inbox.
+
+```javascript
+await client.deleteEmail({ bot_id: 'bot_abc123', email_id: 'email_abc123' });
+```
+
+```
+DELETE /v1/bot/email/delete?project_id={project_id}&bot_id={bot_id}&email_id={email_id}
+```
+
+## Error Codes
+
+| Code | Description |
+|------|-------------|
+| 403 | Email inbox not enabled for this bot |
+| 404 | Email not found |
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="CRM" icon="address-book" href="/sdk/core/crm">
+    Link contacts to email senders
+  </Card>
+  <Card title="Heartbeat API" icon="heart-pulse" href="/sdk/core/heartbeat">
+    Schedule automated email triage
+  </Card>
+</CardGroup>

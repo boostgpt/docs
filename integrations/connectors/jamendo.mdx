@@ -1,0 +1,85 @@
+---
+title: "Jamendo"
+description: "Search and stream Creative Commons licensed music"
+---
+
+## Overview
+
+Connect Jamendo to let your agent search and recommend music from a library of over 600,000 tracks by independent artists worldwide. All music is released under [Creative Commons](https://creativecommons.org) licenses — free to use with attribution.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy">
+    **Dashboard → Integrations → Connectors** → Find **Jamendo** → **Deploy**
+  </Step>
+  <Step title="Get a Client ID">
+    Register an application at [developer.jamendo.com](https://developer.jamendo.com) to receive a free **Client ID**
+  </Step>
+  <Step title="Add to Agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Jamendo**, then under **Custom Headers** add:
+    - **Key:** `x-client-id`
+    - **Value:** your Jamendo Client ID
+  </Step>
+  <Step title="Test">
+    Playground: "Find some upbeat jazz tracks"
+  </Step>
+</Steps>
+
+## Available Tools
+
+| Tool | Description |
+|------|-------------|
+| `search_tracks` | Search tracks by name, artist, or tags (genre, mood, instruments) |
+| `get_track` | Fetch full metadata for a track by its Jamendo ID |
+| `search_albums` | Search albums by name or artist |
+| `get_album_tracks` | Get all tracks in a specific album |
+| `search_artists` | Search artists by name |
+| `get_artist_tracks` | Get tracks by a specific artist |
+
+## Example Usage
+
+```text
+User: "Find upbeat electronic music I can use for a product demo video"
+
+Agent: Here are some energetic electronic tracks from Jamendo:
+
+1. **Circuit Breaker** by Komiku (3:42)
+   Tags: electronic, upbeat, energetic
+   Stream: https://mp3l.jamendo.com/?trackid=...
+   License: CC BY 3.0
+
+2. **Digital Sunrise** by Lobo Loco (4:15)
+   Tags: electronic, inspiring, instrumental
+   Stream: https://mp3l.jamendo.com/?trackid=...
+   License: CC BY-SA 4.0
+```
+
+## Using Tags
+
+The `search_tracks` tool accepts comma-separated tags covering genres, moods, and instruments:
+
+```text
+User: "Find calm acoustic guitar music for a meditation app"
+→ tags: acoustic,guitar,calm,meditation
+```
+
+Popular tag values: `rock`, `electronic`, `jazz`, `classical`, `hip-hop`, `ambient`, `happy`, `melancholic`, `energetic`, `guitar`, `piano`, `violin`
+
+## Notes
+
+- `audio` URL provides a 30-second streaming preview
+- `audiodownload` URL provides the full track download
+- Always check `license_ccurl` for the specific Creative Commons terms before using a track commercially
+- Add `include=musicinfo` to `search_tracks` to receive detailed genre, mood, and instrument breakdowns in the `music_info` field
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Pexels" icon="image" href="/integrations/connectors/pexels">
+    Add free stock photos alongside music
+  </Card>
+  <Card title="Unsplash" icon="camera" href="/integrations/connectors/unsplash">
+    Free high-resolution photography
+  </Card>
+</CardGroup>

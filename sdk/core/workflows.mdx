@@ -1,0 +1,211 @@
+---
+title: "Workflows"
+description: "Automate multi-step agent sequences via the API"
+---
+
+## Overview
+
+Workflows let you define reusable, multi-step automations for your agents. Use the Workflow API to browse the catalog of templates, create custom workflows, run them on demand, and inspect execution logs.
+
+<Info>
+Workflows must be enabled on your bot. Set `workflows: true` via the [Bot Management API](/sdk/core/bot-management) update endpoint.
+</Info>
+
+## Fetch Catalog
+
+Browse available workflow templates.
+
+```javascript
+const result = await client.fetchWorkflowCatalog({ bot_id: 'bot_abc123' });
+console.log(result.response.catalog);
+```
+
+```
+GET /v1/bot/workflow/catalog?project_id={project_id}&bot_id={bot_id}
+```
+
+## List Workflows
+
+Get all workflows configured for a bot.
+
+```javascript
+const result = await client.fetchWorkflows({ bot_id: 'bot_abc123' });
+console.log(result.response.workflows);
+```
+
+```
+GET /v1/bot/workflow/readall?project_id={project_id}&bot_id={bot_id}
+```
+
+### Response
+
+```json
+{
+  "workflows": [
+    {
+      "uuid": "wf_abc123",
+      "name": "Lead Qualification",
+      "status": "active",
+      "trigger": "webhook",
+      "execution_count": 42,
+      "last_run_at": "2026-05-01T09:00:00Z",
+      "created_at": "2026-04-01T12:00:00Z"
+    }
+  ]
+}
+```
+
+## Get a Workflow
+
+Fetch a single workflow by ID.
+
+```javascript
+const result = await client.fetchWorkflow({
+  bot_id: 'bot_abc123',
+  workflow_id: 'wf_abc123'
+});
+```
+
+```
+GET /v1/bot/workflow/read?project_id={project_id}&bot_id={bot_id}&workflow_id={workflow_id}
+```
+
+## Create a Workflow
+
+```javascript
+const result = await client.createWorkflow({
+  bot_id: 'bot_abc123',
+  name: 'Lead Qualification',
+  description: 'Qualifies inbound leads and routes them',
+  trigger: 'webhook',
+  steps: [
+    { type: 'prompt', content: 'Summarize the lead details' },
+    { type: 'notify', channel: 'email', recipient: 'team@example.com' }
+  ]
+});
+```
+
+```
+POST /v1/bot/workflow/create
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `bot_id` | string | Yes | Bot ID |
+| `name` | string | Yes | Workflow name |
+| `description` | string | No | Human-readable description |
+| `trigger` | string | No | Trigger type: `webhook`, `schedule`, `manual` |
+| `steps` | array | No | Ordered array of workflow step objects |
+| `enabled` | boolean | No | Whether workflow is active (default: `false`) |
+
+## Update a Workflow
+
+```javascript
+const result = await client.updateWorkflow({
+  bot_id: 'bot_abc123',
+  workflow_id: 'wf_abc123',
+  name: 'Updated Name',
+  enabled: true
+});
+```
+
+```
+PUT /v1/bot/workflow/update
+```
+
+## Delete a Workflow
+
+```javascript
+const result = await client.deleteWorkflow({
+  bot_id: 'bot_abc123',
+  workflow_id: 'wf_abc123'
+});
+```
+
+```
+DELETE /v1/bot/workflow/delete?project_id={project_id}&bot_id={bot_id}&workflow_id={workflow_id}
+```
+
+## Run a Workflow
+
+Manually trigger a workflow execution.
+
+```javascript
+const result = await client.runWorkflow({
+  bot_id: 'bot_abc123',
+  workflow_id: 'wf_abc123'
+});
+
+console.log(result.response.execution);
+```
+
+```
+POST /v1/bot/workflow/run
+```
+
+### Response
+
+```json
+{
+  "execution": {
+    "uuid": "exec_xyz789",
+    "workflow_id": "wf_abc123",
+    "status": "completed",
+    "duration_ms": 3240,
+    "steps_completed": 2,
+    "created_at": "2026-05-01T10:00:00Z"
+  }
+}
+```
+
+## Get Execution Logs
+
+Retrieve past execution history for a bot's workflows.
+
+```javascript
+const result = await client.fetchWorkflowLogs({ bot_id: 'bot_abc123' });
+console.log(result.response.logs);
+```
+
+```
+GET /v1/bot/workflow/logs?project_id={project_id}&bot_id={bot_id}
+```
+
+### Response
+
+```json
+{
+  "logs": [
+    {
+      "uuid": "exec_xyz789",
+      "workflow_id": "wf_abc123",
+      "workflow_name": "Lead Qualification",
+      "status": "completed",
+      "duration_ms": 3240,
+      "steps_completed": 2,
+      "created_at": "2026-05-01T10:00:00Z"
+    }
+  ]
+}
+```
+
+## Error Codes
+
+| Code | Description |
+|------|-------------|
+| 400 | Invalid parameters |
+| 403 | Workflows not enabled for this bot |
+| 404 | Workflow not found |
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Heartbeat API" icon="heart-pulse" href="/sdk/core/heartbeat">
+    Schedule recurring agent runs
+  </Card>
+  <Card title="Bot Management" icon="robot" href="/sdk/core/bot-management">
+    Enable workflows on your bot
+  </Card>
+</CardGroup>

@@ -157,6 +157,10 @@
                         "sdk/core/heartbeat",
                         "sdk/core/workspaces",
                         "sdk/core/built-in-tools",
+                        "sdk/core/workflows",
+                        "sdk/core/crm",
+                        "sdk/core/email",
+                        "sdk/core/mcp-connectors",
                         "sdk/core/api-reference"
                       ]
                     },
@@ -264,7 +268,8 @@
                           "integrations/connectors/kling-ai",
                           "integrations/connectors/luma-labs",
                           "integrations/connectors/pexels",
-                          "integrations/connectors/unsplash"
+                          "integrations/connectors/unsplash",
+                          "integrations/connectors/jamendo"
                         ]
                       },
                       {

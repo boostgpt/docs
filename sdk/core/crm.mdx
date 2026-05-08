@@ -1,0 +1,418 @@
+---
+title: "CRM"
+description: "Manage contacts, pipelines, deals, and tasks via the API"
+---
+
+## Overview
+
+The CRM API lets you programmatically manage your agent's built-in CRM — contacts, custom fields, pipelines, deals, and tasks. Use it to sync data from external sources, build automations, or power custom dashboards.
+
+<Info>
+CRM must be enabled on your bot. Configure it in **Dashboard → Agent → CRM** or via the Bot Management API.
+</Info>
+
+---
+
+## Contacts
+
+### List Contacts
+
+```javascript
+const result = await client.fetchContacts({
+  bot_id: 'bot_abc123',
+  page: 1,
+  per_page: 20,
+  status: 'lead'   // optional: filter by status key
+});
+```
+
+```
+GET /v1/bot/crm/contacts
+```
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `bot_id` | string | Yes | Bot ID |
+| `page` | number | No | Page number (default: `1`) |
+| `per_page` | number | No | Results per page (default: `10`) |
+| `status` | string | No | Filter by status key |
+| `status_id` | integer | No | Filter by status ID |
+| `status_key` | string | No | Alias for `status` |
+
+### Search Contacts
+
+```javascript
+const result = await client.searchContacts({
+  bot_id: 'bot_abc123',
+  query: 'john',
+  limit: 20
+});
+```
+
+```
+GET /v1/bot/crm/contacts/search
+```
+
+### Fetch Contact Statuses
+
+Get the list of available contact status labels.
+
+```javascript
+const result = await client.fetchContactStatuses({ bot_id: 'bot_abc123' });
+console.log(result.response.statuses);
+```
+
+### Create Contact
+
+```javascript
+const result = await client.createContact({
+  bot_id: 'bot_abc123',
+  email: 'jane@example.com',
+  status: 'lead',
+  fields: {
+    first_name: 'Jane',
+    company: 'Acme Corp',
+    phone: '+1 555 0100'
+  }
+});
+```
+
+```
+POST /v1/bot/crm/contacts
+```
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `bot_id` | string | Yes | Bot ID |
+| `email` | string | No | Contact email address |
+| `status` | string | No | Status key (e.g. `lead`, `customer`) |
+| `status_id` | integer | No | Status ID |
+| `fields` | object | No | Key→value pairs for custom fields |
+
+### Get a Contact
+
+```javascript
+const result = await client.fetchContact({
+  bot_id: 'bot_abc123',
+  contact_id: 'con_abc123'
+});
+```
+
+### Update a Contact
+
+```javascript
+const result = await client.updateContact({
+  bot_id: 'bot_abc123',
+  contact_id: 'con_abc123',
+  status: 'customer',
+  fields: { company: 'New Corp' }
+});
+```
+
+### Delete a Contact
+
+```javascript
+// Soft delete (default)
+await client.deleteContact({ bot_id: 'bot_abc123', contact_id: 'con_abc123' });
+
+// Permanent delete
+await client.deleteContact({ bot_id: 'bot_abc123', contact_id: 'con_abc123', permanent: true });
+```
+
+### Export Contacts
+
+Download all contacts as CSV data.
+
+```javascript
+const result = await client.exportContacts({ bot_id: 'bot_abc123' });
+```
+
+### Add a Note
+
+```javascript
+const result = await client.addContactNote({
+  bot_id: 'bot_abc123',
+  contact_id: 'con_abc123',
+  content: 'Called — interested in Pro plan.',
+  type: 'note'   // 'note' | 'call' | 'email' | 'meeting'
+});
+```
+
+---
+
+## Custom Fields
+
+Define additional fields to store on contacts.
+
+### List Fields
+
+```javascript
+const result = await client.fetchCRMFields({ bot_id: 'bot_abc123' });
+```
+
+### Create a Field
+
+```javascript
+const result = await client.createCRMField({
+  bot_id: 'bot_abc123',
+  label: 'Company Size',
+  field_type: 'select',
+  options: ['1–10', '11–50', '51–200', '200+'],
+  is_required: false
+});
+```
+
+| `field_type` | Description |
+|-------------|-------------|
+| `text` | Single-line text |
+| `number` | Numeric value |
+| `date` | Date picker |
+| `select` | Single-choice dropdown |
+| `multiselect` | Multi-choice dropdown |
+| `checkbox` | Boolean toggle |
+| `url` | URL string |
+
+### Update a Field
+
+```javascript
+await client.updateCRMField({
+  bot_id: 'bot_abc123',
+  field_id: 'fld_abc123',
+  label: 'Headcount'
+});
+```
+
+### Delete a Field
+
+```javascript
+await client.deleteCRMField({ bot_id: 'bot_abc123', field_id: 'fld_abc123' });
+```
+
+---
+
+## Setup & Templates
+
+### Fetch CRM Setup
+
+Get the current CRM configuration (enabled status, active pipelines, field count).
+
+```javascript
+const result = await client.fetchCRMSetup({ bot_id: 'bot_abc123' });
+```
+
+### Fetch Templates
+
+List available pre-built CRM pipeline templates.
+
+```javascript
+const result = await client.fetchCRMTemplates({ bot_id: 'bot_abc123' });
+```
+
+### Apply a Template
+
+Bootstrap a new pipeline from a template (e.g. `sales`, `support`, `recruiting`).
+
+```javascript
+const result = await client.applyCRMTemplate({
+  bot_id: 'bot_abc123',
+  template_key: 'sales',
+  name: 'Q3 Sales Pipeline'  // optional custom name
+});
+```
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `bot_id` | string | Yes | Bot ID |
+| `template_key` | string | Yes | Template identifier (e.g. `sales`) |
+| `replace` | boolean | No | Replace existing pipeline with template (default: `false`) |
+| `create_new` | boolean | No | Always create a new pipeline (default: `false`) |
+| `name` | string | No | Custom pipeline name |
+
+---
+
+## Pipelines
+
+### List Pipelines
+
+```javascript
+const result = await client.fetchPipelines({ bot_id: 'bot_abc123' });
+```
+
+### Create a Pipeline
+
+```javascript
+const result = await client.createPipeline({
+  bot_id: 'bot_abc123',
+  name: 'Enterprise Sales',
+  default_currency: 'USD'
+});
+```
+
+### Update a Pipeline
+
+```javascript
+await client.updatePipeline({
+  bot_id: 'bot_abc123',
+  pipeline_id: 'pipe_abc123',
+  name: 'SMB Sales',
+  is_default: true
+});
+```
+
+### Delete a Pipeline
+
+```javascript
+await client.deletePipeline({ bot_id: 'bot_abc123', pipeline_id: 'pipe_abc123' });
+```
+
+### Fetch Pipeline Board
+
+Get pipeline stages with deals grouped by stage (Kanban view).
+
+```javascript
+const result = await client.fetchPipelineBoard({
+  bot_id: 'bot_abc123',
+  pipeline_id: 'pipe_abc123'
+});
+```
+
+### Pipeline Stages
+
+```javascript
+// Create a stage
+await client.createPipelineStage({
+  bot_id: 'bot_abc123',
+  name: 'Proposal Sent',
+  pipeline_id: 'pipe_abc123',
+  closed_status: null   // 'won' | 'lost' | null
+});
+
+// Update a stage
+await client.updatePipelineStage({
+  bot_id: 'bot_abc123',
+  stage_id: 'stg_abc123',
+  closed_status: 'won'
+});
+
+// Delete a stage (move existing deals elsewhere first)
+await client.deletePipelineStage({
+  bot_id: 'bot_abc123',
+  stage_id: 'stg_abc123',
+  move_deals_to_stage_id: 'stg_xyz789'  // optional
+});
+```
+
+---
+
+## Deals
+
+### List Deals
+
+```javascript
+const result = await client.fetchDeals({
+  bot_id: 'bot_abc123',
+  page: 1,
+  per_page: 20,
+  status: 'open',          // 'open' | 'won' | 'lost'
+  pipeline_id: 'pipe_abc123'
+});
+```
+
+### Create a Deal
+
+```javascript
+const result = await client.createDeal({
+  bot_id: 'bot_abc123',
+  title: 'Acme Corp — Pro Plan',
+  status: 'open'
+});
+```
+
+### Update a Deal
+
+```javascript
+await client.updateDeal({
+  bot_id: 'bot_abc123',
+  deal_id: 'deal_abc123',
+  status: 'won'
+});
+```
+
+### Delete a Deal
+
+```javascript
+await client.deleteDeal({ bot_id: 'bot_abc123', deal_id: 'deal_abc123' });
+```
+
+---
+
+## Tasks
+
+### List Tasks
+
+```javascript
+const result = await client.fetchTasks({
+  bot_id: 'bot_abc123',
+  page: 1,
+  per_page: 20,
+  status: 'todo',   // 'todo' | 'in_progress' | 'done'
+  view: 'today'     // optional view filter
+});
+```
+
+### Create a Task
+
+```javascript
+const result = await client.createTask({
+  bot_id: 'bot_abc123',
+  title: 'Follow up with Jane',
+  status: 'todo',
+  priority: 'high'   // 'low' | 'medium' | 'high'
+});
+```
+
+### Update a Task
+
+```javascript
+await client.updateTask({
+  bot_id: 'bot_abc123',
+  task_id: 'tsk_abc123',
+  status: 'done'
+});
+```
+
+### Snooze a Task
+
+Defer a task until tomorrow.
+
+```javascript
+await client.snoozeTask({ bot_id: 'bot_abc123', task_id: 'tsk_abc123' });
+```
+
+### Delete a Task
+
+```javascript
+await client.deleteTask({ bot_id: 'bot_abc123', task_id: 'tsk_abc123' });
+```
+
+### CRM Report
+
+Get aggregated CRM statistics (contact counts by status, deal totals, task summary).
+
+```javascript
+const result = await client.fetchCRMReport({ bot_id: 'bot_abc123' });
+console.log(result.response.report);
+```
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Email Inbox" icon="envelope" href="/sdk/core/email">
+    Manage inbound emails from contacts
+  </Card>
+  <Card title="API Reference" icon="code" href="/sdk/core/api-reference">
+    Complete method list
+  </Card>
+</CardGroup>

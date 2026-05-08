@@ -1,0 +1,253 @@
+---
+title: "MCP Connectors"
+description: "Browse the connector catalog and manage your MCP server deployments"
+---
+
+## Overview
+
+MCP Connectors let your agents call external APIs as tools. BoostGPT provides a catalog of pre-built connectors (Slack, GitHub, Jamendo, and more) as well as the ability to deploy custom connectors from an OpenAPI spec or Postman collection.
+
+There are two distinct resource types:
+
+- **Connectors** — the read-only catalog of available integration templates
+- **MCP Servers** — your deployed instances, scoped to a project
+
+---
+
+## Pre-Built Connector Catalog
+
+### List All Connectors
+
+```javascript
+const result = await client.fetchConnectors();
+console.log(result.response.connectors);
+```
+
+```
+GET /v1/mcp/connectors
+```
+
+### Response
+
+```json
+{
+  "connectors": [
+    {
+      "name": "jamendo",
+      "display_name": "Jamendo",
+      "description": "Search Creative Commons music",
+      "category": "media",
+      "icon_url": "https://www.jamendo.com/favicon.ico",
+      "is_active": true
+    }
+  ]
+}
+```
+
+### Get a Single Connector
+
+Fetch details and auth requirements for a specific connector by its slug.
+
+```javascript
+const result = await client.fetchConnector('jamendo');
+console.log(result.response.connector.auth_config);
+```
+
+```
+GET /v1/mcp/connectors/:name
+```
+
+---
+
+## MCP Servers
+
+### List Servers
+
+```javascript
+const result = await client.fetchMcpServers();
+console.log(result.response.servers);
+```
+
+```
+GET /v1/mcp?project_id={project_id}
+```
+
+### Get a Server
+
+```javascript
+const result = await client.fetchMcpServer('server-uuid');
+```
+
+```
+GET /v1/mcp/:id?project_id={project_id}
+```
+
+### Deploy from Pre-Built Connector
+
+Create a new MCP server from an entry in the catalog.
+
+```javascript
+const result = await client.createMcpFromPredefined({
+  name: 'My Jamendo Server',
+  connectorName: 'jamendo',
+  credentials: { client_id: 'your_jamendo_client_id' },
+  authType: 'api_key'
+});
+```
+
+```
+POST /v1/mcp/create/from-predefined
+```
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | Yes | Display name for this server |
+| `connectorName` | string | Yes | Connector slug (e.g. `jamendo`, `github`) |
+| `credentials` | object | No | Key→value credential pairs matching the connector's `auth_config.fields` |
+| `authType` | string | No | Auth method override (e.g. `api_key`, `oauth2`) |
+
+### Deploy from OpenAPI Spec
+
+```javascript
+const result = await client.createMcpFromOpenApi({
+  name: 'My API Server',
+  openApiSpec: { /* OpenAPI 3.0 object */ },
+  credentials: { api_key: 'sk-xxx' },
+  authType: 'api_key'
+});
+```
+
+```
+POST /v1/mcp/create/from-openapi
+```
+
+### Deploy from Postman Collection
+
+```javascript
+const result = await client.createMcpFromPostman({
+  name: 'My Postman Server',
+  postmanCollection: { /* Postman Collection v2.1 object */ },
+  credentials: { bearer_token: 'token_xyz' },
+  authType: 'bearer'
+});
+```
+
+```
+POST /v1/mcp/create/from-postman
+```
+
+### Update a Server
+
+```javascript
+await client.updateMcpServer({
+  id: 'server-uuid',
+  name: 'Renamed Server',
+  status: 'active'
+});
+```
+
+```
+PUT /v1/mcp/:id/update
+```
+
+### Clone a Server
+
+Duplicate a server's configuration under a new name.
+
+```javascript
+const result = await client.cloneMcpServer({
+  id: 'server-uuid',
+  name: 'Cloned Server'
+});
+```
+
+```
+POST /v1/mcp/:id/clone
+```
+
+### Delete a Server
+
+```javascript
+await client.deleteMcpServer('server-uuid');
+```
+
+```
+DELETE /v1/mcp/:id/delete?project_id={project_id}
+```
+
+### Get Server Usage
+
+Retrieve call statistics for a specific server.
+
+```javascript
+const result = await client.fetchMcpUsage('server-uuid');
+console.log(result.response.usage);
+```
+
+```
+GET /v1/mcp/:id/usage?project_id={project_id}
+```
+
+### Response
+
+```json
+{
+  "usage": {
+    "total_calls": 1840,
+    "successful_calls": 1820,
+    "error_calls": 20,
+    "avg_response_time_ms": 320,
+    "last_called_at": "2026-05-01T11:30:00Z"
+  }
+}
+```
+
+---
+
+## Validation
+
+Validate a spec before deploying it as a server.
+
+### Validate OpenAPI Spec
+
+```javascript
+const result = await client.validateOpenApi({ spec: openApiObject });
+if (result.response.valid) {
+  // safe to deploy
+}
+```
+
+```
+POST /v1/mcp/validate-openapi
+```
+
+### Validate Postman Collection
+
+```javascript
+const result = await client.validatePostman({ collection: postmanObject });
+```
+
+```
+POST /v1/mcp/validate-postman
+```
+
+---
+
+## Error Codes
+
+| Code | Description |
+|------|-------------|
+| 400 | Invalid spec or credentials |
+| 403 | MCP not available on current plan |
+| 404 | Server or connector not found |
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Pre-Built Connectors" icon="plug" href="/integrations/connectors/overview">
+    Browse all available connectors
+  </Card>
+  <Card title="Custom Integrations" icon="code" href="/integrations/custom/overview">
+    Build from OpenAPI or Postman
+  </Card>
+</CardGroup>

@@ -1,36 +1,122 @@
 ---
 title: "Calendar Integration"
-description: "Connect scheduling tools"
+description: "Let your sales assistant book discovery calls automatically"
 ---
 
-## Supported Tools
+Once a prospect is qualified, your sales assistant should hand off to a real calendar tool — not ask "what time works?". This guide covers the three calendar options BoostGPT supports and how to wire each one into your agent.
 
-- **Calendly** - Meeting scheduling
-- **Google Calendar** - Calendar management
-- **Cal.com** - Open source scheduling
+## Why this matters
+
+Asking "what time works for a 30-minute call?" creates 4–6 messages of back-and-forth — and most prospects bounce somewhere in the middle. A calendar tool solves this in one step: the agent suggests slots, the prospect picks one, and the booking is locked in.
+
+In the BoostGPT sales flow:
+
+```
+Lead engages → assistant qualifies → assistant calls list_event_types
+   → suggests slots → create_booking → CRM deal moves to "Call Booked"
+```
+
+## Choose a calendar tool
+
+| Tool | Best for | Cost |
+|------|----------|------|
+| **Calendly** | Most polished, widely recognized | Free tier; paid plans for advanced features |
+| **Cal.com** | Open-source, privacy-conscious, self-host option | Free tier; paid plans for teams |
+| **Google Calendar** | Direct read/write to your calendar (not booking pages) | Free with Google account |
+
+Pick **Calendly** or **Cal.com** for booking flows. Use **Google Calendar** alongside one of those if your agent also needs to read your existing schedule (e.g. "what's on my calendar this afternoon?").
 
 ## Setup
 
+### Calendly
+
 <Steps>
-  <Step title="Go to Integrations">
-    From dashboard, click **Integrations** → **Connectors**
+  <Step title="Get your API token">
+    Go to [calendly.com/integrations/api_webhooks](https://calendly.com/integrations/api_webhooks) and generate a Personal Access Token.
   </Step>
-  <Step title="Choose Calendar Tool">
-    Select Calendly, Google Calendar, or Cal.com connector
+  <Step title="Deploy the connector">
+    **Dashboard → Integrations → Connectors** → Find **Calendly** → **Deploy**
   </Step>
-  <Step title="Deploy Connector">
-    Deploy it as an MCP server and authenticate
+  <Step title="Authenticate">
+    Paste your Personal Access Token. The connector becomes available as an MCP server.
   </Step>
-  <Step title="Add to Agent">
-    Go to your agent's **Tools** tab → **Add Tool** → Select the calendar connector
+  <Step title="Add to your agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Calendly**
   </Step>
 </Steps>
 
-Your agent can now schedule meetings, check availability, and manage appointments!
+### Cal.com
+
+<Steps>
+  <Step title="Generate an API key">
+    Sign in to [app.cal.com](https://app.cal.com) → **Settings → Developer → API Keys** → Create a new key (it starts with `cal_live_`).
+  </Step>
+  <Step title="Deploy the connector">
+    **Dashboard → Integrations → Connectors** → Find **Cal.com** → **Deploy**
+  </Step>
+  <Step title="Authenticate">
+    Paste the API key. The connector becomes available as an MCP server.
+  </Step>
+  <Step title="Add to your agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Cal.com**
+  </Step>
+</Steps>
+
+### Google Calendar
+
+<Steps>
+  <Step title="Deploy the connector">
+    **Dashboard → Integrations → Connectors** → Find **Google Calendar** → **Deploy**
+  </Step>
+  <Step title="Authenticate">
+    Click **Authenticate** to start the OAuth flow. Grant access to the calendar(s) you want the agent to use.
+  </Step>
+  <Step title="Add to your agent">
+    Agent → **Tools** tab → **Add Tool** → Select **Google Calendar**
+  </Step>
+</Steps>
+
+## Sample agent prompt for the handoff
+
+```text
+When a prospect is qualified and asks to book a call, use the
+list_event_types tool to find available event types, then use
+get_availability to find slots in the next 7 days, and create_booking
+to lock in their preferred time. Confirm in chat with the booking
+link.
+
+Don't ask "what time works for you?" — instead, suggest 3 specific
+slots and let them pick one.
+```
+
+The agent runs this back-and-forth (event type? timezone? slot?) inside the chat — no separate scheduling page, no missed prospects.
+
+## How it fits the sales flow
+
+1. **Lead engages** with the chat widget on your site
+2. **Assistant qualifies** with budget / timeline / project goal questions ([Sales Assistant Playbook](/creators/guides/increase-conversions))
+3. **Assistant detects buying intent** ("I'd like to talk to someone")
+4. **Assistant calls `list_event_types`** to fetch your bookable events
+5. **Assistant calls `get_availability`** to find open slots
+6. **Assistant calls `create_booking`** with the prospect's chosen slot
+7. **CRM deal moves** to the "Call Booked" stage automatically
+8. **Workflow fires** — owner gets notified, follow-up task created
 
 ## Use Cases
 
-- Book meetings automatically
-- Check calendar availability
-- Send meeting reminders
-- Reschedule appointments
+- **Book discovery calls** for qualified prospects
+- **Reschedule** with one message ("can we move to Friday?")
+- **Cancel + rebook** when prospects need to change plans
+- **Show availability** without sending the prospect to a separate page
+- **Pull existing meetings** (Google Calendar) so the agent knows when not to suggest a slot
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Sales Assistant Playbook" icon="message-square" href="/creators/guides/increase-conversions">
+    Prompts that qualify leads + book calls
+  </Card>
+  <Card title="CRM" icon="address-book" href="/sdk/core/crm">
+    Pipeline stages and custom fields
+  </Card>
+</CardGroup>

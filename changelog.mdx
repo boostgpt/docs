@@ -5,6 +5,48 @@ rss: true
 noindex: true
 ---
 
+<Update label="May 2026" tags={["New releases", "Improvements"]} rss={{ title: "Calendar Booking Cards, Deploy Channel States, and Boost Platform Tools", description: "Agents can book meetings in chat, Deploy shows launch states, and Boost can inspect and configure agents" }}>
+
+  ## Calendar booking cards
+
+  Agents can now complete booking flows inside chat:
+
+  - **Availability checks** - `calendar_check_availability` returns real open slots for a duration, date range, and timezone
+  - **Interactive booking card** - `calendar_request_booking` renders selectable slots and waits for the visitor to choose a time
+  - **Calendar event creation** - `calendar_create_event` creates the event after a slot is selected
+  - **Confirmation email** - attendees receive a booking email with an `.ics` file and calendar links when an email address is available
+  - **Timezone-safe display** - event responses include `display_time` so final answers do not recalculate UTC timestamps incorrectly
+
+  The booking card is treated as user input, not a tool approval step, so public visitors can choose a slot naturally.
+
+  ## Deploy channel states
+
+  The Deploy page now focuses on launch readiness and channel state:
+
+  - **Launch readiness** - hosted page, widget, CRM, calendar, workflow, workspace, and connector checks
+  - **Channel states** - enabled, setup required, plan-gated, and coming soon
+  - **Agent email state** - address, auto-reply, and notification status
+  - **Workspace publishing** - published workspace URLs and custom domain status are surfaced alongside other deployment channels
+  - **Router SDK channels** - Slack, Discord, Telegram, WhatsApp, and Crisp are grouped as advanced deploy channels
+
+  ## Boost platform tools
+
+  The dashboard assistant, Boost, can now use internal platform tools to inspect and configure agents:
+
+  - list manageable agents and projects
+  - check setup readiness
+  - check plan limits
+  - update agent feature switches
+  - apply CRM and workflow templates
+  - configure calendar, widget, email, connectors, and workspace publishing
+  - prepare test conversations and export sanitized `.boostgpt` templates
+
+  Tools that change user-facing behavior require confirmation before they run.
+
+  See [Calendar Integration](/creators/integrations/calendar), [Deploy](/creators/deploy), and [Built-in Tools](/sdk/core/built-in-tools) for details.
+
+</Update>
+
 <Update label="May 2026" tags={["New releases", "Improvements"]} rss={{ title: "CRM, Automations, Pipeline, Reminders, and Tool Access Controls", description: "Capture leads, manage deals, automate follow-up, and control public vs staff connector tools" }}>
 
   ## Workflow automations

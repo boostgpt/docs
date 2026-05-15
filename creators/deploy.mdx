@@ -1,51 +1,134 @@
 ---
 title: "Deploy"
-description: "Share your agent page with the world"
+description: "Launch your agent across hosted pages, widgets, email, workspaces, and messaging channels"
 ---
 
-## Share Your Agent Page
+The **Deploy** tab is where you turn an agent into a live front office. It shows your launch readiness, active channels, setup gaps, and the code or URLs you need to share the agent.
 
-Go to the **Deploy** tab inside your agent to share your agent page at `example.boostgpt.page`
+## Launch readiness
 
-Your agent page includes:
-- Clean, professional interface
-- Your branding and colors
-- Direct link to share with customers
+Before you send traffic to an agent, check the readiness summary at the top of the Deploy page.
 
-## Connect Tools
+| Item | What it means |
+|------|---------------|
+| Hosted agent page | The public agent page is published |
+| Website widget | The floating site widget is enabled |
+| CRM capture | CRM is enabled and has a usable pipeline/status setup |
+| Calendar booking | Calendar is enabled and can book events |
+| Follow-up workflow | At least one workflow is active |
+| Workspace delivery | Workspace is enabled and publishable output exists when needed |
+| Connectors | External tools are connected and enabled |
 
-Add integrations to your agent so it can access external data and perform actions.
+Readiness is not only about whether a feature switch is on. For example, CRM capture needs pipeline/status setup, and workspace delivery needs an actual published workspace URL when you want to share generated files or pages.
 
-### Option 1: Use Predefined Connectors
+## Channel states
 
-<Steps>
-  <Step title="Go to Integrations">
-    From dashboard, click **Integrations** → **Connectors**
-  </Step>
-  <Step title="Deploy Connector">
-    Choose a connector (Gmail, Calendar, HubSpot, etc.) and deploy it as an MCP server
-  </Step>
-  <Step title="Add to Agent">
-    Go to your agent's **Tools** tab → **Add Tool** → Select your deployed connector
-  </Step>
-</Steps>
+Each deploy card shows the current state of that channel.
 
-### Option 2: Add External MCP Server
+| State | Meaning |
+|-------|---------|
+| **Enabled** | The channel is live or ready to use |
+| **Setup required** | The feature exists, but needs configuration before launch |
+| **Plan-gated** | Your current plan does not include the feature |
+| **Coming soon** | The channel is shown for roadmap visibility, but is not launchable yet |
 
-<Steps>
-  <Step title="Go to Tools Tab">
-    Click **Tools** tab inside your agent
-  </Step>
-  <Step title="Add Tool">
-    Click **Add Tool** → **Add New**
-  </Step>
-  <Step title="Enter MCP Server URL">
-    Provide your external MCP server endpoint
-  </Step>
-</Steps>
+## Primary channels
+
+### Hosted agent page
+
+Publish the agent page when you want a standalone public URL that customers can open directly. This is the fastest way to share a sales assistant, intake assistant, support front office, or booking agent.
+
+Use this when:
+
+- you need a public link for prospects or customers
+- you want a branded agent page without installing code
+- you are testing the full conversation flow before embedding
+
+### Website widget
+
+Enable the website widget when you want the agent to handle visitors on your site. The Deploy page gives you the install snippet and widget settings.
+
+Use this when:
+
+- your website should capture, qualify, and book leads
+- the agent should answer support questions without leaving the page
+- you want CRM, calendar, workspace, and custom interfaces inside the widget
+
+### Agent email
+
+Agent email lets people email your agent directly. Use it for support inboxes, lead intake, service requests, or follow-up conversations.
+
+The Deploy page shows:
+
+- the agent email address
+- whether inbound email is enabled
+- whether auto-reply is enabled
+- whether owner notifications are enabled
+
+### Inline embed
+
+Use inline embed when you want the full agent experience inside a page instead of a floating widget.
+
+This is useful for:
+
+- help centers
+- booking pages
+- client portals
+- onboarding pages
+- internal tools
+
+### Workspace publish
+
+Workspace publish turns files or pages created by the agent into a shareable workspace URL. Use this when the agent produces deliverables, plans, pages, prototypes, documents, or reports.
+
+The channel is only launch-ready when a workspace is actually published.
+
+### Custom domain
+
+Custom domains let you serve the hosted agent or workspace under your own domain. A domain can be:
+
+- **Active** - ready to share
+- **Pending** - DNS or verification still needs to finish
+- **Failed** - DNS or ownership verification needs attention
+
+## Advanced channels
+
+The Router SDK supports advanced messaging channels such as:
+
+- [Slack](/sdk/router/adapters/slack)
+- [Discord](/sdk/router/adapters/discord)
+- [Telegram](/sdk/router/adapters/telegram)
+- [WhatsApp](/sdk/router/adapters/whatsapp)
+- [Crisp](/sdk/router/adapters/crisp)
+
+Use Router SDK channels when your front office should live inside a community, support inbox, or messaging platform.
+
+## Widget SSO
+
+Widget SSO lets your site identify signed-in users before they chat with the agent. Use it when you need user-specific memory, workspace access, account context, or authenticated support flows.
+
+See [Chat Widget SSO](/saas/chat-widget/sso) for the token flow.
+
+## Launch package
+
+Before going live, collect the launch package from the Deploy page:
+
+- hosted page URL
+- widget snippet
+- agent email address
+- published workspace URL, if relevant
+- custom domain, if active
+- enabled channels
+- remaining setup-required or plan-gated items
+- one test prompt for a real visitor scenario
 
 ## Next Steps
 
-<Card title="Analytics" icon="chart-line" href="/creators/analytics">
-  Track agent performance
-</Card>
+<CardGroup cols={2}>
+  <Card title="Calendar Integration" icon="calendar" href="/creators/integrations/calendar">
+    Add booking cards and confirmation emails
+  </Card>
+  <Card title="Analytics" icon="chart-line" href="/creators/analytics">
+    Track agent performance after launch
+  </Card>
+</CardGroup>

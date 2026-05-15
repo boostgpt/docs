@@ -5,7 +5,7 @@ description: "Everything your agent can do in Agent mode"
 
 ## What are Built-in Tools?
 
-When your agent runs in **Agent** reasoning mode, it has access to a powerful set of built-in tools. These tools let your agent search knowledge, manage files, remember users, plan complex tasks, and more — all without any setup or configuration.
+When your agent runs in **Agent** reasoning mode, it has access to a powerful set of built-in tools. These tools let your agent search knowledge, manage files, remember users, book meetings, capture CRM records, plan complex tasks, and more.
 
 <Info>
 Built-in tools are only available in **Agent** reasoning mode. Switch your agent's reasoning mode in **Settings → Reasoning**.
@@ -68,8 +68,36 @@ Your agent can interact with users and other agents:
 | Tool | What it does |
 |------|-------------|
 | **Ask User** | Presents structured questions with selectable options — great for gathering preferences or confirming approaches |
+| **Booking Card** | Presents available calendar slots and waits for the visitor to choose a time |
 | **Notify User** | Sends a proactive notification when something needs attention |
 | **Message Agent** | Sends a message to another agent in your project for cross-agent collaboration |
+
+### Calendar
+
+When **Calendar** is enabled, your agent can turn booking intent into a confirmed event:
+
+| Tool | What it does |
+|------|-------------|
+| **Check Availability** | Finds available meeting slots for a date range, timezone, and duration |
+| **Request Booking** | Shows an interactive booking card inside chat and waits for the visitor to pick a slot |
+| **Create Event** | Creates the calendar event and sends a confirmation email with an `.ics` file when an attendee email is available |
+| **Reschedule Event** | Moves an existing event and sends an updated confirmation when possible |
+| **Cancel Event** | Cancels an event and sends a cancellation email when possible |
+
+<Info>
+The booking card waits for visitor input. After a slot is selected, the agent should create the event instead of sending a separate notification as the calendar invite.
+</Info>
+
+### CRM
+
+When **CRM** is enabled, your agent can capture and update lead or customer records:
+
+| Tool | What it does |
+|------|-------------|
+| **Create Contact** | Saves a visitor as a CRM contact with name, email, phone, source, and status |
+| **Update Contact** | Updates captured contact details as the conversation develops |
+| **Create Deal** | Creates a pipeline deal from qualified intent |
+| **Create Task** | Creates follow-up work tied to a contact or deal |
 
 ### Code Execution
 
@@ -87,6 +115,12 @@ Your agent can set up tasks that run on a schedule:
 |------|-------------|
 | **Schedule Task** | Creates a recurring task that runs automatically (e.g., daily reports, weekly checks) |
 
+### Boost platform tools
+
+The official dashboard assistant, **Boost**, can use internal BoostGPT platform tools to inspect and configure your agents when you ask it to. These tools are user-scoped and are designed for platform operations such as listing agents, checking setup readiness, enabling CRM/calendar/workspace features, publishing agents, applying templates, and preparing test conversations.
+
+Boost will summarize changes before using tools that alter user-facing behavior.
+
 ### Reasoning
 
 Your agent has an internal thinking tool:
@@ -97,11 +131,12 @@ Your agent has an internal thinking tool:
 
 ## Tool Approval Levels
 
-Built-in tools have three approval levels that control when your agent needs permission to act:
+Built-in tools have approval levels that control when your agent needs permission or visitor input:
 
 | Level | Behavior | Examples |
 |-------|----------|---------|
 | **Auto** | Executes immediately without asking | Search, Read, Think, Recall |
+| **Input** | Waits for the visitor to respond | Booking Card |
 | **Conditional** | May require approval depending on your settings | Write, Edit, Delete, Command |
 | **Always** | Always asks for your approval first | Accept Plan, Ask User |
 
@@ -110,6 +145,7 @@ Built-in tools have three approval levels that control when your agent needs per
 - Use **Agent** reasoning mode for tasks that require multiple tools (research + writing, reading + editing)
 - Let your agent create plans for complex multi-step tasks — review the plan before approving
 - Enable **User Memory** for agents with repeat users to provide personalized experiences
+- Enable **CRM** and **Calendar** for front office agents that should capture leads and book meetings
 - The **Ask User** tool is great for gathering requirements before the agent starts working
 - Use **Schedule Task** for automated monitoring, reporting, or maintenance workflows
 

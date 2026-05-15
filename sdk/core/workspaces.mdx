@@ -15,6 +15,8 @@ Each workspace is scoped per-agent and per-user:
 - **Authenticated users** — each user gets their own workspace per agent
 - **Anonymous users** — each chat conversation gets an isolated workspace
 
+Workspaces can also be published. A published workspace gives generated files or pages a public URL, and eligible plans can attach a custom domain.
+
 ## Built-in File Tools
 
 When an agent runs in `agent` reasoning mode, these tools are automatically available:
@@ -202,6 +204,96 @@ PUT /v1/bot/workspace/file/rename
 | `old_path` | string | Yes | Current file path |
 | `new_path` | string | Yes | New file path |
 | `is_folder` | boolean | No | Move all files under path prefix (folder rename) |
+
+## Publishing
+
+Publish a workspace when the agent has created a deliverable that should be shared publicly, such as a page, report, prototype, or client-facing document.
+
+### Suggest Subdomain
+
+```
+GET /v1/bot/workspace/suggest-subdomain?project_id={project_id}&bot_id={bot_id}&workspace_uuid={uuid}
+```
+
+Returns an available workspace subdomain and root domain.
+
+### Publish Workspace
+
+```
+PUT /v1/bot/workspace/publish
+```
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID |
+| `bot_id` | string | Yes | Bot ID |
+| `workspace_uuid` | string | Yes | Workspace UUID |
+| `subdomain` | string | Yes | Public workspace subdomain |
+
+**Response:**
+```json
+{
+  "published": true,
+  "published_url": "https://client-report.boostgpt.co"
+}
+```
+
+### Unpublish Workspace
+
+```
+PUT /v1/bot/workspace/unpublish
+```
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID |
+| `bot_id` | string | Yes | Bot ID |
+| `workspace_uuid` | string | Yes | Workspace UUID |
+
+<Warning>
+A workspace with an attached custom domain must have the custom domain removed before it can be unpublished.
+</Warning>
+
+## Custom Domains
+
+Workspace custom domains require a plan that includes custom domains and a published workspace.
+
+### Add Custom Domain
+
+```
+POST /v1/bot/workspace/domain/add
+```
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID |
+| `bot_id` | string | Yes | Bot ID |
+| `workspace_uuid` | string | Yes | Workspace UUID |
+| `custom_domain` | string | Yes | Domain to attach, e.g. `report.example.com` |
+
+The response includes the DNS target. The domain starts as `pending` until verification completes.
+
+### Domain Status
+
+```
+GET /v1/bot/workspace/domain/status?project_id={project_id}&bot_id={bot_id}&workspace_uuid={uuid}
+```
+
+Refreshes and returns the custom domain verification status.
+
+### Domain Info
+
+```
+GET /v1/bot/workspace/domain/info?project_id={project_id}&bot_id={bot_id}&workspace_uuid={uuid}
+```
+
+Returns the workspace subdomain URL, custom domain URL, DNS target, and custom domain status.
+
+### Remove Custom Domain
+
+```
+DELETE /v1/bot/workspace/domain/remove?project_id={project_id}&bot_id={bot_id}&workspace_uuid={uuid}
+```
 
 ## Next Steps
 

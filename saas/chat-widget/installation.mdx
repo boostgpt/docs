@@ -31,6 +31,7 @@ You can configure the widget directly via data attributes on the script tag:
 | `data-panel-width` | Desktop sidepanel width in pixels | `400` |
 | `data-push-page` | Push the page when the sidepanel opens | `true` |
 | `data-presentation-enabled` | Allow media and files to open beside the sidepanel | `true` |
+| `data-page-actions` | JSON map of named safe page targets for guided walkthroughs | — |
 | `data-user-token` | Signed JWT for SSO user identification | — |
 
 ```html
@@ -66,6 +67,17 @@ Fixed or sticky page chrome may sit outside normal layout flow. If a fixed heade
 ```
 
 Use `data-boostgpt-push` only for fixed, sticky, or absolutely positioned elements that should resize with the docked page. Regular content does not need it.
+
+For guided page walkthroughs, you can define named targets that the agent may scroll to, highlight, or focus:
+
+```html
+<script
+  src="https://embed.boostgpt.co/widget.js"
+  data-bot-id="YOUR_BOT_UUID"
+  data-open-style="sidepanel"
+  data-page-actions='{"pricing":{"selector":"#pricing","label":"Pricing"},"demo":{"selector":"[data-boostgpt-action=\"schedule-demo\"]","label":"Schedule demo"}}'
+></script>
+```
 
 ## Framework Setup
 

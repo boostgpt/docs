@@ -76,6 +76,27 @@ Supported click paths include:
 - Tool-generated images, videos, audio, files, and HTML previews
 - Workspace and Artifactuse previews
 
+### Guided Page Actions
+
+Agents can guide visitors through the page when the widget is embedded in sidepanel mode. Safe actions include scrolling to a section, highlighting an element, focusing a field, suggesting a click, and opening media in presentation mode.
+
+For reliable guided flows, define named page actions in your embed setup:
+
+```js
+boostgpt.init({
+  botId: 'YOUR_BOT_UUID',
+  openStyle: 'sidepanel',
+  pageActions: {
+    pricing: { selector: '#pricing', label: 'Pricing' },
+    demo: { selector: '[data-boostgpt-action="schedule-demo"]', label: 'Schedule demo' },
+  },
+});
+```
+
+The agent can use these targets to guide the visitor without submitting forms or performing destructive actions on their behalf.
+
+The widget also exposes `boostgpt.getPageContext()` for debugging. It returns the safe visible page context the agent can request before a walkthrough: title, URL, headings, nav links, sections, CTAs, and configured page action IDs.
+
 ## Greeting Bubbles
 
 The widget shows your **Message Greetings** (from Content tab) as stacked chat bubbles above the floating button. Each greeting appears as a separate message card.

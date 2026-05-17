@@ -100,6 +100,36 @@ description: 'Common issues and solutions'
   </Accordion>
 </AccordionGroup>
 
+## Chat Widget Issues
+
+<AccordionGroup>
+  <Accordion icon="panel-right" title="Fixed header or nav looks out of sync when the sidepanel opens">
+    **Cause:** Fixed, sticky, and absolutely positioned elements can sit outside normal page flow, so they may not follow the root page dock automatically.
+
+    **Solution:** Add `data-boostgpt-push` to the fixed page chrome that should stay aligned with the pushed page.
+
+```html
+    <nav data-boostgpt-push class="fixed w-full z-50 top-0 left-0">
+      ...
+    </nav>
+```
+
+```html
+    <header data-boostgpt-push class="fixed inset-x-0 top-0">
+      ...
+    </header>
+```
+
+    Only add this marker to fixed, sticky, or absolutely positioned layout elements. Normal page content does not need it.
+  </Accordion>
+
+  <Accordion icon="panel-right-open" title="Sidepanel pushes regular content but not custom overlays">
+    **Cause:** Custom overlays, banners, and app shells often use `position: fixed`, `position: sticky`, or inline transforms.
+
+    **Solution:** Mark the specific element with `data-boostgpt-push`, then reload the page. If the element is rendered after page load, the widget will detect the marker when it appears.
+  </Accordion>
+</AccordionGroup>
+
 ## Getting Help
 
 <CardGroup cols={2}>

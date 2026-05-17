@@ -34,6 +34,48 @@ Automatically open the widget after a delay when the page loads.
 - **Enable/Disable** toggle
 - **Delay** — seconds before the widget opens (1–60, default 5)
 
+### Open Style
+
+Choose how the chat opens when a visitor clicks the bubble:
+
+- **Normal** — opens the current floating chat window.
+- **Sidepanel** — opens a full-height docked panel from the left or right side of the page.
+
+Sidepanel mode is useful when the agent should stay visible while the visitor continues reading the page, comparing plans, reviewing media, or working through a guided flow.
+
+### Sidepanel Page Push
+
+When **Push page content** is enabled, BoostGPT docks the root `html` element and reserves space for the sidepanel. The default desktop panel width is `400px`.
+
+The widget exposes these CSS variables while docked:
+
+| Variable | Purpose |
+|----------|---------|
+| `--bgpt-docked-width` | Current sidepanel width |
+| `--bgpt-docked-viewport-offset` | Reserved page space for the sidepanel |
+| `--bgpt-docked-viewport-width` | Remaining viewport width for the page |
+
+Most page content moves automatically. Fixed, sticky, or absolutely positioned page chrome may need an explicit marker because those elements often sit outside normal document flow:
+
+```html
+<header data-boostgpt-push class="fixed inset-x-0 top-0">
+  ...
+</header>
+```
+
+BoostGPT does not automatically push every `header`, `nav`, `.fixed`, or `.sticky` element because broad auto-detection can move unrelated UI. Add `data-boostgpt-push` only to the fixed elements that should stay aligned with the pushed page.
+
+### Presentation Mode
+
+Presentation mode lets clicked media and files open in the page area beside the sidepanel. This is useful when an agent needs to show a proposal image, product video, generated page, workspace file preview, or document without sending the visitor away from the conversation.
+
+Supported click paths include:
+
+- Markdown images and media links
+- Uploaded attachment cards
+- Tool-generated images, videos, audio, files, and HTML previews
+- Workspace and Artifactuse previews
+
 ## Greeting Bubbles
 
 The widget shows your **Message Greetings** (from Content tab) as stacked chat bubbles above the floating button. Each greeting appears as a separate message card.

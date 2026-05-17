@@ -27,6 +27,10 @@ You can configure the widget directly via data attributes on the script tag:
 |-----------|-------------|---------|
 | `data-bot-id` | **(Required)** Your agent's UUID | — |
 | `data-position` | Bubble position: `bottom-right` or `bottom-left` | `bottom-right` |
+| `data-open-style` | Chat open behavior: `normal` or `sidepanel` | `normal` |
+| `data-panel-width` | Desktop sidepanel width in pixels | `400` |
+| `data-push-page` | Push the page when the sidepanel opens | `true` |
+| `data-presentation-enabled` | Allow media and files to open beside the sidepanel | `true` |
 | `data-user-token` | Signed JWT for SSO user identification | — |
 
 ```html
@@ -36,6 +40,32 @@ You can configure the widget directly via data attributes on the script tag:
   data-position="bottom-left"
 ></script>
 ```
+
+## Sidepanel Layout
+
+Use sidepanel mode when you want the agent to feel like a docked assistant instead of a floating modal:
+
+```html
+<script
+  src="https://embed.boostgpt.co/widget.js"
+  data-bot-id="YOUR_BOT_UUID"
+  data-open-style="sidepanel"
+  data-panel-width="400"
+  data-push-page="true"
+></script>
+```
+
+When the sidepanel opens, BoostGPT reserves space on the side of the page. Normal page content responds automatically because the widget docks the root `html` element.
+
+Fixed or sticky page chrome may sit outside normal layout flow. If a fixed header or nav does not move with the page, mark it explicitly:
+
+```html
+<nav data-boostgpt-push class="fixed w-full z-50 top-0 left-0">
+  ...
+</nav>
+```
+
+Use `data-boostgpt-push` only for fixed, sticky, or absolutely positioned elements that should resize with the docked page. Regular content does not need it.
 
 ## Framework Setup
 

@@ -93,6 +93,8 @@ boostgpt.init({
 });
 ```
 
+You can also configure these targets from the agent's Branding → Chat Widget settings. Stored targets are returned by the widget config endpoint, so your embed snippet can stay simple.
+
 The agent can use these targets to guide the visitor without submitting forms or performing destructive actions on their behalf.
 
 The widget also exposes `boostgpt.getPageContext()` for debugging. It returns the safe visible page context the agent can request before a walkthrough: title, URL, headings, nav links, sections, CTAs, and configured page action IDs.

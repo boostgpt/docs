@@ -27,8 +27,9 @@ You can configure the widget directly via data attributes on the script tag:
 |-----------|-------------|---------|
 | `data-bot-id` | **(Required)** Your agent's UUID | — |
 | `data-position` | Bubble position: `bottom-right` or `bottom-left` | `bottom-right` |
-| `data-open-style` | Chat open behavior: `normal` or `sidepanel` | `normal` |
+| `data-open-style` | Chat open behavior: `normal`, `sidepanel`, or `dock` | `normal` |
 | `data-panel-width` | Desktop sidepanel width in pixels | `400` |
+| `data-dock-width` | Desktop agent dock width in pixels | `720` |
 | `data-push-page` | Push the page when the sidepanel opens | `true` |
 | `data-presentation-enabled` | Allow media and files to open beside the sidepanel | `true` |
 | `data-page-actions` | JSON map of named safe page targets for guided walkthroughs | — |
@@ -67,6 +68,21 @@ Fixed or sticky page chrome may sit outside normal layout flow. If a fixed heade
 ```
 
 Use `data-boostgpt-push` only for fixed, sticky, or absolutely positioned elements that should resize with the docked page. Regular content does not need it.
+
+## Agent Dock Layout
+
+Use dock mode when you want the widget to feel like the hosted agent input: a centered prompt bar at the bottom of the page that expands into a wider chat panel.
+
+```html
+<script
+  src="https://embed.boostgpt.co/widget.js"
+  data-bot-id="YOUR_BOT_UUID"
+  data-open-style="dock"
+  data-dock-width="720"
+></script>
+```
+
+Dock mode uses your agent placeholder and conversation starters when available. It does not push the page; choose sidepanel mode when you need the page to resize beside the chat.
 
 For guided page walkthroughs, you can define named targets that the agent may scroll to, highlight, or focus:
 

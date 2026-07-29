@@ -347,43 +347,6 @@ Use CRM tools before booking when you need a persistent lead record, and update 
 
 ---
 
-## Boost Platform Tools
-
-Boost platform tools are internal tools used by the official dashboard assistant, **Boost**. They are user-scoped and intended for configuring the authenticated user's BoostGPT projects and agents.
-
-Read-only tools:
-
-| Tool | Description |
-|------|-------------|
-| `boost_list_agents` | List manageable projects and agents |
-| `boost_get_agent_setup_status` | Inspect launch readiness across hosted page, widget, CRM, calendar, workflows, workspace, and connectors |
-| `boost_check_plan_limits` | Check plan gates and usage limits |
-| `boost_list_connectors` | List predefined connectors and enabled connector state |
-| `boost_run_test_conversation` | Prepare a hosted test URL and prompt |
-| `boost_export_agent_template` | Export a sanitized `.boostgpt` template |
-
-Change-making tools require confirmation because they can alter user-facing behavior:
-
-| Tool | Description |
-|------|-------------|
-| `boost_create_agent_from_use_case` | Create an agent from a business outcome |
-| `boost_update_agent_settings` | Patch agent switches such as CRM, calendar, workspace, publishing, reasoning, or chat mode |
-| `boost_apply_crm_template` | Apply a CRM template and enable CRM |
-| `boost_apply_workflow_template` | Create a workflow from a template |
-| `boost_publish_agent` | Publish or unpublish the hosted agent page |
-| `boost_configure_widget` | Enable or disable the website widget |
-| `boost_configure_calendar` | Enable calendar booking and save booking defaults |
-| `boost_configure_agent_email` | Configure the agent email channel |
-| `boost_add_predefined_connector` | Add a predefined connector to an agent |
-| `boost_create_workspace_file` | Create or overwrite a workspace file |
-| `boost_publish_workspace` | Publish or unpublish a workspace URL |
-
-<Info>
-If a Boost platform tool is unavailable in a given environment, Boost should give exact UI steps instead of pretending it acted.
-</Info>
-
----
-
 ## Automation
 
 ### schedule_task

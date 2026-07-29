@@ -5,6 +5,23 @@ rss: true
 noindex: true
 ---
 
+<Update label="July 2026" tags={["Removals"]} rss={{ title: "Agent Interfaces, Bridge SDK, and Widget Page Guidance Removed", description: "Retiring the legacy Agent Interface, Bridge SDK, Boost platform tools, and the widget sidepanel surfaces" }}>
+
+  ## Removed features
+
+  Several legacy surfaces have been retired now that the Sites builder covers their use cases:
+
+  - **Agent Interface** — the `set_interface` tool, chat-level and bot-level interface files, and the "Set as Chat Interface" / "Set as Default Interface" workspace actions. Build a Site instead.
+  - **Bridge SDK** — the auto-injected `window.BoostGPT` JavaScript SDK and its `chat`/`workspace`/`tools`/`schedule`/`bot`/`ui` namespaces.
+  - **Interface templates** — publishing workspace HTML files as shareable interface templates, and the subscriber template picker.
+  - **Boost platform tools** — the 17 `boost_*` tools and the Ask Boost dashboard assistant they powered.
+  - **`search_workforce`** — the marketplace search tool and its `workforce_tools` gate.
+  - **Widget sidepanel open style** — along with the page-push/docking behavior, presentation mode, and agent page guidance (`page_control` / `page_context`) that only ran in sidepanel embeds.
+
+  The widget `open_style` options are now `normal` and `dock`. Widgets configured as `sidepanel` fall back to `normal`.
+
+</Update>
+
 <Update label="May 2026" tags={["New releases", "Improvements"]} rss={{ title: "Calendar Booking Cards, Deploy Channel States, and Boost Platform Tools", description: "Agents can book meetings in chat, Deploy shows launch states, and Boost can inspect and configure agents" }}>
 
   ## Calendar booking cards
@@ -30,6 +47,8 @@ noindex: true
   - **Router SDK channels** - Slack, Discord, Telegram, WhatsApp, and Crisp are grouped as advanced deploy channels
 
   ## Boost platform tools
+
+  <Note>Removed in July 2026. The Boost platform tools and the Ask Boost assistant are no longer available.</Note>
 
   The dashboard assistant, Boost, can now use internal platform tools to inspect and configure agents:
 
@@ -167,6 +186,8 @@ noindex: true
 <Update label="March 2026" tags={["New releases"]} rss={{ title: "Pluggable Agent Interfaces", description: "Agents can build and set custom HTML interfaces that replace the default chat UI" }}>
 
   ## Pluggable agent interfaces
+
+  <Note>Removed in July 2026. Agent interfaces and the Bridge SDK have been retired — use the Sites builder instead.</Note>
 
   Agents can now build custom HTML interfaces and activate them as the chat UI — replacing the default message view with a fully interactive app:
 

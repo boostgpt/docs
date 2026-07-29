@@ -39,70 +39,11 @@ Automatically open the widget after a delay when the page loads.
 Choose how the chat opens when a visitor clicks the bubble:
 
 - **Normal** — opens the current floating chat window.
-- **Sidepanel** — opens a full-height docked panel from the left or right side of the page.
 - **Agent dock** — shows a centered input-style launcher at the bottom of the page and expands into a wider chat panel.
-
-Sidepanel mode is useful when the agent should stay visible while the visitor continues reading the page, comparing plans, reviewing media, or working through a guided flow.
 
 Agent dock mode is useful when the widget should feel closer to the hosted agent experience: always visible as a prompt bar, less interruptive than a bubble, and strong for marketing pages that invite visitors to ask a question directly.
 
 The default desktop dock width is `720px`. You can change it in Branding → Chat Widget or by passing `data-dock-width` / `dockWidth` in the embed setup.
-
-### Sidepanel Page Push
-
-When **Push page content** is enabled, BoostGPT docks the root `html` element and reserves space for the sidepanel. The default desktop panel width is `400px`.
-
-The widget exposes these CSS variables while docked:
-
-| Variable | Purpose |
-|----------|---------|
-| `--bgpt-docked-width` | Current sidepanel width |
-| `--bgpt-docked-viewport-offset` | Reserved page space for the sidepanel |
-| `--bgpt-docked-viewport-width` | Remaining viewport width for the page |
-
-Most page content moves automatically. Fixed, sticky, or absolutely positioned page chrome may need an explicit marker because those elements often sit outside normal document flow:
-
-```html
-<header data-boostgpt-push class="fixed inset-x-0 top-0">
-  ...
-</header>
-```
-
-BoostGPT does not automatically push every `header`, `nav`, `.fixed`, or `.sticky` element because broad auto-detection can move unrelated UI. Add `data-boostgpt-push` only to the fixed elements that should stay aligned with the pushed page.
-
-### Presentation Mode
-
-Presentation mode lets clicked media and files open in the page area beside the sidepanel. This is useful when an agent needs to show a proposal image, product video, generated page, workspace file preview, or document without sending the visitor away from the conversation.
-
-Supported click paths include:
-
-- Markdown images and media links
-- Uploaded attachment cards
-- Tool-generated images, videos, audio, files, and HTML previews
-- Workspace and Artifactuse previews
-
-### Guided Page Actions
-
-Agents can guide visitors through the page when the widget is embedded in sidepanel mode. Safe actions include scrolling to a section, highlighting an element, focusing a field, suggesting a click, and opening media in presentation mode.
-
-For reliable guided flows, define named page actions in your embed setup:
-
-```js
-boostgpt.init({
-  botId: 'YOUR_BOT_UUID',
-  openStyle: 'sidepanel',
-  pageActions: {
-    pricing: { selector: '#pricing', label: 'Pricing' },
-    demo: { selector: '[data-boostgpt-action="schedule-demo"]', label: 'Schedule demo' },
-  },
-});
-```
-
-You can also configure these targets from the agent's Branding → Chat Widget settings. Stored targets are returned by the widget config endpoint, so your embed snippet can stay simple.
-
-The agent can use these targets to guide the visitor without submitting forms or performing destructive actions on their behalf.
-
-The widget also exposes `boostgpt.getPageContext()` for debugging. It returns the safe visible page context the agent can request before a walkthrough: title, URL, headings, nav links, sections, CTAs, and configured page action IDs.
 
 ## Greeting Bubbles
 

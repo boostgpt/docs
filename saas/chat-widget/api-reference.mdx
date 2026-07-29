@@ -9,7 +9,6 @@ description: "Programmatic controls for the chat widget"
 boostgpt.init({
   botId: 'YOUR_BOT_UUID',       // required
   position: 'bottom-right',      // optional override
-  widget: true,                  // set false for trigger-only mode (no bubble)
   userToken: 'jwt-token',        // optional SSO token
   metadata: { page: 'pricing' }, // optional context
 });
@@ -43,21 +42,9 @@ Shows the widget again after `hide()`.
 
 Removes the widget from the DOM entirely and cleans up event listeners.
 
-### `boostgpt.trigger(eventName, context, options)`
-
-Shows a proactive message card above the bubble. See [Event Triggers](/saas/chat-widget/triggers) for full documentation.
-
 ### `boostgpt.addMessage(text, options)`
 
 Adds a custom message card above the bubble without firing an event.
-
-### `boostgpt.dismiss(eventName)`
-
-Removes a specific trigger card.
-
-### `boostgpt.dismissAll()`
-
-Removes all active trigger cards.
 
 ## Events
 
@@ -96,10 +83,9 @@ The widget is available globally as `boostgpt` (and `BoostGPTWidget` for backwar
 boostgpt.open();
 boostgpt.close();
 boostgpt.toggle();
-boostgpt.trigger('event-name', context, { text: 'Need help?' });
 ```
 
-## Custom Trigger Buttons
+## Custom Chat Buttons
 
 Use the programmatic API to open the widget from your own buttons:
 
@@ -107,7 +93,7 @@ Use the programmatic API to open the widget from your own buttons:
 <button onclick="boostgpt.open()">Chat with us</button>
 ```
 
-You can hide the default bubble and use only custom triggers:
+You can hide the default bubble and use only your own buttons:
 
 ```js
 boostgpt.init({ botId: 'YOUR_BOT_UUID' });

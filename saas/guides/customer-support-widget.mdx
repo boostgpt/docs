@@ -98,44 +98,6 @@ Benefits:
 - Conversation history persists across sessions
 - Support team can identify who needs help
 
-### Step 6: Add Proactive Triggers
-
-Combine the widget with triggers to proactively offer help at friction points:
-
-```javascript
-// Help page visitors who seem stuck
-setTimeout(() => {
-  boostgpt.trigger('help_page_stuck', {
-    page: window.location.pathname,
-    time_on_page: 60
-  }, {
-    text: 'Looking for something specific? I can help you find it.'
-  });
-}, 60000);
-
-// Pricing page assistance
-if (window.location.pathname === '/pricing') {
-  setTimeout(() => {
-    boostgpt.trigger('pricing_help', {
-      current_plan: getUserPlan()
-    }, {
-      text: 'Questions about our plans? I can help you choose the right one.',
-      delay: 30000
-    });
-  });
-}
-```
-
-## Widget vs Triggers — When to Use Each
-
-| Approach | Best For | Example |
-|----------|----------|---------|
-| Widget (always visible) | General support availability | "Chat with us" bubble on every page |
-| Triggers (proactive) | Specific friction points | "Stuck on checkout?" when user hesitates |
-| Both (recommended) | Maximum coverage | Always-on support + proactive help |
-
-The widget and triggers work together — the bubble is always available, and triggers add contextual messages when they detect friction.
-
 ## Measuring Success
 
 Track these metrics to evaluate your support widget:
@@ -190,10 +152,6 @@ Track these metrics to evaluate your support widget:
 
   <Card title="SSO Setup" icon="lock" href="/saas/chat-widget/sso">
     Identify your users automatically
-  </Card>
-
-  <Card title="Event Triggers" icon="bolt" href="/saas/chat-widget/triggers">
-    Add proactive messages
   </Card>
 
   <Card title="Best Practices" icon="check" href="/saas/best-practices">

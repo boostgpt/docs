@@ -1,6 +1,6 @@
 ---
 title: "Best Practices"
-description: "Tips for deploying an effective chat widget and proactive triggers"
+description: "Tips for deploying an effective chat widget"
 ---
 
 ## Widget Setup
@@ -41,54 +41,6 @@ description: "Tips for deploying an effective chat widget and proactive triggers
   </Accordion>
 </AccordionGroup>
 
-## Trigger Timing
-
-<AccordionGroup>
-  <Accordion title="Don't trigger immediately">
-    Give users time to orient themselves before offering help.
-
-    **Recommended delays:**
-    - Simple pages: 30-45 seconds
-    - Complex forms: 45-90 seconds
-    - Technical setup: 90-180 seconds
-  </Accordion>
-
-  <Accordion title="Detect genuine friction, not exploration">
-    Distinguish between:
-    - User reading carefully (good)
-    - User stuck and frustrated (needs help)
-
-    Use multiple signals: time + inactivity + scroll position.
-  </Accordion>
-
-  <Accordion title="Use exit intent carefully">
-    Exit intent (mouse leaving window) is powerful but can feel aggressive.
-    Reserve for high-value pages like checkout.
-  </Accordion>
-</AccordionGroup>
-
-## Trigger Frequency
-
-<AccordionGroup>
-  <Accordion title="Limit triggers per session">
-    - Max 2-3 triggers per session
-    - Never more than 1 at a time
-    - Wait 5+ minutes between triggers
-  </Accordion>
-
-  <Accordion title="Respect dismissals">
-    If a user dismisses a trigger:
-    - Don't show the same trigger again that session
-    - Consider a 24-hour cooldown for that event
-    - Track dismissal patterns to improve targeting
-  </Accordion>
-
-  <Accordion title="Avoid trigger fatigue">
-    Users who see too many triggers become blind to them.
-    Quality over quantity - fewer, better-timed triggers perform better.
-  </Accordion>
-</AccordionGroup>
-
 ## Messaging
 
 <AccordionGroup>
@@ -107,76 +59,12 @@ description: "Tips for deploying an effective chat widget and proactive triggers
     - Technical: "Encountering an issue? Let's debug together."
   </Accordion>
 
-  <Accordion title="Create urgency without pressure">
-    ✅ "Your cart is saved for 30 minutes"
-    ❌ "Buy now or lose your cart!"
-
-    ✅ "Questions before you go?"
+  <Accordion title="Invite, don't pressure">
+    ✅ "Questions about pricing? I'm here."
     ❌ "Don't leave! We need you!"
-  </Accordion>
-</AccordionGroup>
 
-## Context
-
-<AccordionGroup>
-  <Accordion title="Pass relevant data with triggers">
-    The more context your agent has, the better it can help:
-
-    ```javascript
-    // Good
-    boostgpt.trigger('checkout_help', {
-      cart_value: '$149',
-      items: 3,
-      user_name: 'Sarah',
-      time_on_page: 45,
-      current_step: 'payment'
-    });
-
-    // Not as helpful
-    boostgpt.trigger('help', {});
-    ```
-  </Accordion>
-
-  <Accordion title="Include user info when available">
-    ```javascript
-    boostgpt.trigger('help_needed', { page: '/settings' }, {
-      text: 'Need help with settings?',
-      user: {
-        id: 'user_123',
-        name: 'Sarah Chen',
-        email: 'sarah@example.com',
-        plan: 'pro'
-      }
-    });
-    ```
-
-    This enables personalized responses.
-  </Accordion>
-
-  <Accordion title="Capture the user's journey">
-    Include:
-    - Current page/step
-    - Previous pages visited
-    - Actions already taken
-    - Time spent
-  </Accordion>
-</AccordionGroup>
-
-## Trigger Style
-
-<AccordionGroup>
-  <Accordion title="Trigger cards stack above the widget bubble">
-    Triggers appear as toast-style message cards stacked above the chat widget bubble.
-    They feel personal and conversational — clicking opens the chat with context.
-  </Accordion>
-
-  <Accordion title="Use text to match the situation">
-    | Situation | Example Text |
-    |-----------|-------------|
-    | Checkout help | "Having trouble checking out? I can help!" |
-    | Onboarding stuck | "Stuck on this step? Let me walk you through it." |
-    | Error recovery | "Something went wrong. Click here for help." |
-    | Feature discovery | "Did you know you can automate this?" |
+    ✅ "Happy to walk you through setup."
+    ❌ "Sign up now or miss out!"
   </Accordion>
 </AccordionGroup>
 
@@ -191,12 +79,11 @@ description: "Tips for deploying an effective chat widget and proactive triggers
     - Technical documentation
   </Accordion>
 
-  <Accordion title="Write good prompt templates">
-    Templates should:
-    - Describe the situation clearly
-    - Include all relevant context
-    - Provide instructions on how to help
-    - Set the right tone
+  <Accordion title="Write clear agent instructions">
+    Instructions should:
+    - Define the agent's role and tone
+    - State what it should and shouldn't answer
+    - Explain when to hand off to a human
   </Accordion>
 
   <Accordion title="Test with real scenarios">
@@ -215,24 +102,23 @@ description: "Tips for deploying an effective chat widget and proactive triggers
     | Metric | What It Tells You |
     |--------|-------------------|
     | Widget Opens | How often users engage with the chat |
-    | Trigger View Rate | How often users see trigger cards |
-    | Trigger Click Rate | How often users click trigger cards |
+    | Messages per Conversation | How much back-and-forth each session needs |
     | Resolution Rate | How often chat resolves the issue |
     | Conversion Lift | Impact on desired outcomes |
   </Accordion>
 
   <Accordion title="A/B test variations">
     Test variations of:
-    - Trigger message text
-    - Trigger timing and delay
     - Greeting messages
+    - Conversation starters
     - Auto-open vs manual open
+    - Open style (normal vs dock)
   </Accordion>
 
   <Accordion title="Iterate based on data">
-    - High view, low click: Message isn't compelling
-    - High click, low resolution: Agent needs better training
-    - Low view: Trigger timing/conditions need adjustment
+    - Low opens: Greetings aren't compelling, or the bubble is easy to miss
+    - High opens, low resolution: Agent needs better training
+    - Long conversations: Add the missing answers to your knowledge base
   </Accordion>
 </AccordionGroup>
 
@@ -242,14 +128,12 @@ description: "Tips for deploying an effective chat widget and proactive triggers
   **Don't do these:**
 </Warning>
 
-1. **Triggering on page load** - Let users settle first
-2. **Too many triggers** - Causes fatigue and annoyance
-3. **Generic messages** - "Need help?" is forgettable
-4. **Blocking the page** - Never prevent users from continuing
-5. **No dismiss option** - Always let users close triggers
-6. **Same trigger repeatedly** - Respect when users say no
-7. **Ignoring mobile** - Test on all devices
-8. **No analytics** - You can't improve what you don't measure
+1. **Auto-opening on landing pages** - Let users explore first
+2. **Generic greetings** - "Need help?" is forgettable
+3. **Blocking the page** - Never prevent users from continuing
+4. **Untrained agent** - Answer quality depends on your knowledge base
+5. **Ignoring mobile** - Test on all devices
+6. **No analytics** - You can't improve what you don't measure
 
 ## Checklist
 
@@ -263,22 +147,20 @@ Before launching, verify:
 - [ ] Works on mobile devices
 - [ ] Position doesn't conflict with other page elements
 
-**Triggers:**
-- [ ] Timing feels natural, not aggressive
-- [ ] Trigger messages are specific and helpful
-- [ ] Agent is trained on relevant content
-- [ ] Dismissals are respected
-- [ ] Rate limits won't be exceeded
+**Agent:**
+- [ ] Trained on relevant product and support content
+- [ ] Instructions define tone and escalation rules
+- [ ] Tested against common questions and edge cases
 - [ ] Legal/privacy requirements are met
 
 ## Next Steps
 
 <CardGroup cols={2}>
   <Card title="Quickstart" icon="rocket" href="/saas/quickstart">
-    Set up your first widget and trigger
+    Set up your first widget
   </Card>
 
-  <Card title="Use Case Guides" icon="book" href="/saas/guides/checkout-abandonment">
+  <Card title="Use Case Guides" icon="book" href="/saas/guides/customer-support-widget">
     Real-world implementations
   </Card>
 </CardGroup>

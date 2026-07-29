@@ -17,6 +17,7 @@ noindex: true
   - **Boost platform tools** — the 17 `boost_*` tools and the Ask Boost dashboard assistant they powered.
   - **`search_workforce`** — the marketplace search tool and its `workforce_tools` gate.
   - **Widget sidepanel open style** — along with the page-push/docking behavior, presentation mode, and agent page guidance (`page_control` / `page_context`) that only ran in sidepanel embeds.
+  - **Event Triggers** — the `boostgpt.trigger()` API, the standalone `trigger.js` script, the `POST /v1/bot/trigger` endpoint, the Events screen, trigger analytics, and the per-plan trigger quota. Use the always-on widget and greeting messages instead.
 
   The widget `open_style` options are now `normal` and `dock`. Widgets configured as `sidepanel` fall back to `normal`.
 
@@ -397,6 +398,8 @@ noindex: true
 
   ## Proactive trigger system
 
+  <Note>Removed in July 2026. Event Triggers and the trigger script have been retired.</Note>
+
   Transform your agents from passive chatbots into proactive assistants that reach out at the right moment:
 
   - **Smart triggers**: Fire events based on user behavior (errors, cart abandonment, page visits)
@@ -429,8 +432,6 @@ noindex: true
   - **Custom context**: Pass any data (cart value, error codes, user info)
   - **User identification**: Associate triggers with logged-in users
   - **Prompt templates**: Use `{{context.field}}` in agent instructions
-
-  Get started with the [Trigger Script documentation](/saas/trigger-script/installation).
 
 </Update>
 

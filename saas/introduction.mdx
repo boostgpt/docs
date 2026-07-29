@@ -1,11 +1,11 @@
 ---
 title: "SaaS"
-description: "AI chat widget with proactive triggers for your website"
+description: "AI chat widget for your website"
 ---
 
 ## AI Chat Widget for SaaS
 
-Add an always-on AI support agent to your website with one script tag. The BoostGPT chat widget gives your users instant help 24/7, trained on your product knowledge — plus proactive triggers that engage users at friction points.
+Add an always-on AI support agent to your website with one script tag. The BoostGPT chat widget gives your users instant help 24/7, trained on your product knowledge.
 
 ## What You Can Do
 
@@ -14,16 +14,16 @@ Add an always-on AI support agent to your website with one script tag. The Boost
     Add a floating chat bubble to any website — always available for users
   </Card>
 
-  <Card title="Create Events" icon="bolt">
-    Define friction points and customize agent responses with context
+  <Card title="Customize Branding" icon="palette">
+    Match the widget to your product — colors, icon, greetings, and open style
   </Card>
 
-  <Card title="Proactive Triggers" icon="bell">
-    Show contextual messages when users need help — triggers appear as cards above the widget bubble
+  <Card title="Identify Users" icon="lock">
+    Sign a JWT to auto-identify logged-in users via SSO
   </Card>
 
   <Card title="Track Analytics" icon="chart-line">
-    Monitor widget engagement, trigger performance, and conversions
+    Monitor widget engagement and conversations
   </Card>
 </CardGroup>
 
@@ -34,36 +34,14 @@ Add an always-on AI support agent to your website with one script tag. The Boost
 User visits your site → Widget bubble appears → User clicks → Instant AI chat
 ```
 
-**Proactive triggers:**
-```
-User hits friction point → Your code calls boostgpt.trigger()
-    → Message card appears above bubble → User clicks → Chat opens with context
-```
-
-**Example Flow:**
-1. User abandons checkout with items in cart
-2. Your code detects this and calls `boostgpt.trigger('checkout_abandoned', { cart_value: '$149' })`
-3. A message card appears above the widget bubble: "Having trouble checking out?"
-4. User clicks, chat opens — agent already knows their situation and offers help
-5. User completes purchase
+The agent answers from your product knowledge, can call tools, and keeps conversation history across sessions when SSO is configured.
 
 ## Use Cases
 
 - **Customer Support** - Always-on AI agent answering product questions 24/7
-- **Checkout Abandonment** - Re-engage users who start but don't complete purchases
-- **Onboarding Friction** - Help users who get stuck during signup or setup
-- **Feature Discovery** - Proactively introduce features users might find useful
-- **Error Recovery** - Offer assistance when users encounter errors
-
-{/* ## Pricing
-
-| Plan | Triggers/Month | Price |
-|------|----------------|-------|
-| **Free** | 100 | $0 |
-| **Starter** | 1,000 | $49/mo |
-| **Pro** | 5,000 | $199/mo |
-| **Prime** | 20,000 | $499/mo |
-| **Scale** | Unlimited | Custom | */}
+- **Product Questions** - Answer plan, feature, and pricing questions instantly
+- **Onboarding Help** - Guide users through signup and setup
+- **Lead Capture** - Collect contact details from interested visitors
 
 ## Get Started
 
@@ -76,12 +54,12 @@ User hits friction point → Your code calls boostgpt.trigger()
     Add the chat widget script to your website — one line of code
   </Step>
 
-  <Step title="Define Events">
-    Create events for each friction point you want to address
+  <Step title="Customize Branding">
+    Set colors, icon, greetings, and open style in the Branding tab
   </Step>
 
-  <Step title="Add Triggers">
-    Call `boostgpt.trigger()` when users hit friction points
+  <Step title="Enable SSO">
+    Sign a JWT so logged-in users are identified automatically
   </Step>
 </Steps>
 
@@ -89,15 +67,11 @@ User hits friction point → Your code calls boostgpt.trigger()
 
 <CardGroup cols={2}>
   <Card title="Quickstart" icon="rocket" href="/saas/quickstart">
-    Set up your first widget and trigger in 5 minutes
+    Set up your first widget in 5 minutes
   </Card>
 
-  <Card title="Events Overview" icon="bolt" href="/saas/events/overview">
-    Learn how events and context work
-  </Card>
-
-  <Card title="Event Triggers" icon="palette" href="/saas/chat-widget/triggers">
-    Proactive messages via the widget
+  <Card title="Widget Configuration" icon="settings" href="/saas/chat-widget/configuration">
+    All available widget options
   </Card>
 
   <Card title="Best Practices" icon="lightbulb" href="/saas/best-practices">

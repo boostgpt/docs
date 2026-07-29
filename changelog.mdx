@@ -18,6 +18,7 @@ noindex: true
   - **`search_workforce`** — the marketplace search tool and its `workforce_tools` gate.
   - **Widget sidepanel open style** — along with the page-push/docking behavior, presentation mode, and agent page guidance (`page_control` / `page_context`) that only ran in sidepanel embeds.
   - **Event Triggers** — the `boostgpt.trigger()` API, the standalone `trigger.js` script, the `POST /v1/bot/trigger` endpoint, the Events screen, trigger analytics, and the per-plan trigger quota. Use the always-on widget and greeting messages instead.
+  - **Agent marketplace** — the `/listings` and `/admin/listings` APIs, listing ratings, the public marketplace browse page, and the global `users.is_staff` flag. Project member roles are unaffected.
 
   The widget `open_style` options are now `normal` and `dock`. Widgets configured as `sidepanel` fall back to `normal`.
 
@@ -172,6 +173,8 @@ noindex: true
 
   ## Agent marketplace
 
+  <Note>Removed in July 2026. The agent marketplace and its listing APIs have been retired.</Note>
+
   Bot owners can now submit their agents to a public marketplace:
 
   - **App-store model** — agents go through `draft → pending_review → approved` status flow with staff review
@@ -179,8 +182,6 @@ noindex: true
   - **Public browse** — search by name, category, or featured status. Sorted by rating and views.
   - **Creator dashboard** — view all your listings, update metadata, resubmit rejected listings, or withdraw
   - **Admin review** — staff can approve, reject (with notes), or suspend listings
-
-  Submit your agent from the **Deploy** page. Browse the marketplace at [boostgpt.co/workforce](/workforce).
 
 </Update>
 

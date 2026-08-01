@@ -13,13 +13,11 @@ Before you send traffic to an agent, check the readiness summary at the top of t
 |------|---------------|
 | Hosted agent page | The public agent page is published |
 | Website widget | The floating site widget is enabled |
-| CRM capture | CRM is enabled and has a usable pipeline/status setup |
-| Calendar booking | Calendar is enabled and can book events |
 | Follow-up workflow | At least one workflow is active |
 | Workspace delivery | Workspace is enabled and publishable output exists when needed |
 | Connectors | External tools are connected and enabled |
 
-Readiness is not only about whether a feature switch is on. For example, CRM capture needs pipeline/status setup, and workspace delivery needs an actual published workspace URL when you want to share generated files or pages.
+Readiness is not only about whether a feature switch is on. Workspace delivery, for example, needs an actual published workspace URL when you want to share generated files or pages.
 
 ## Channel states
 
@@ -50,9 +48,9 @@ Enable the website widget when you want the agent to handle visitors on your sit
 
 Use this when:
 
-- your website should capture, qualify, and book leads
+- your website should capture and qualify leads
 - the agent should answer support questions without leaving the page
-- you want CRM, calendar, workspace, and custom interfaces inside the widget
+- you want workspace and custom interfaces inside the widget
 
 ### Agent email
 
@@ -82,6 +80,12 @@ This is useful for:
 Workspace publish turns files or pages created by the agent into a shareable workspace URL. Use this when the agent produces deliverables, plans, pages, prototypes, documents, or reports.
 
 The channel is only launch-ready when a workspace is actually published.
+
+<Info>
+For Sites, publishing pins a specific version rather than serving whatever is
+currently in the builder — see [Site Builder](/creators/site-builder) for how
+versions and publishing work.
+</Info>
 
 ### Custom domain
 
@@ -125,8 +129,8 @@ Before going live, collect the launch package from the Deploy page:
 ## Next Steps
 
 <CardGroup cols={2}>
-  <Card title="Calendar Integration" icon="calendar" href="/creators/integrations/calendar">
-    Add booking cards and confirmation emails
+  <Card title="Connectors" icon="plug" href="/creators/integrations/overview">
+    Connect the external tools your agent should use
   </Card>
   <Card title="Analytics" icon="chart-line" href="/creators/analytics">
     Track agent performance after launch

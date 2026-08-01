@@ -27,26 +27,6 @@ Webhooks allow you to receive real-time notifications when events occur in your 
 - `subscriber.subscription.paused` - Subscriber subscription paused
 - `subscriber.subscription.resumed` - Subscriber subscription resumed
 - `subscriber.subscription.refunded` - Subscriber payment refunded
-- `crm.contact.created` - CRM contact created
-- `crm.contact.updated` - CRM contact updated
-- `crm.contact.deleted` - CRM contact deleted or archived
-- `crm.note.created` - CRM note created
-- `crm.deal.created` - CRM deal created
-- `crm.deal.updated` - CRM deal updated
-- `crm.deal.deleted` - CRM deal deleted
-- `crm.deal.stage_changed` - CRM deal moved between stages
-- `crm.pipeline.created` - CRM pipeline created
-- `crm.pipeline.updated` - CRM pipeline updated
-- `crm.pipeline.stage.created` - CRM pipeline stage created
-- `crm.pipeline.stage.updated` - CRM pipeline stage updated
-- `crm.pipeline.stage.deleted` - CRM pipeline stage deleted
-- `crm.field.created` - CRM custom field created
-- `crm.field.updated` - CRM custom field updated
-- `crm.field.deleted` - CRM custom field deleted
-- `crm.task.created` - CRM task created
-- `crm.task.updated` - CRM task updated
-- `crm.task.deleted` - CRM task deleted
-- `crm.task.reminder.sent` - CRM task reminder sent
 
 ## Setup Webhook
 
@@ -71,17 +51,13 @@ All webhooks send JSON payloads:
 
 ```json
 {
-  "event": "crm.contact.created",
-  "resource_id": "contact_uuid",
+  "event": "subscriber.joined",
+  "resource_id": "subscriber_uuid",
   "name": "Jane Doe",
   "email": "jane@example.com",
-  "status": "new",
-  "fields": {
-    "budget": "$5k"
-  },
   "bot": {
     "id": "agent_uuid",
-    "name": "Sales Agent"
+    "name": "Support Agent"
   }
 }
 ```
@@ -102,11 +78,11 @@ app.post('/webhooks/boostgpt', (req, res) => {
   console.log('Received event:', event);
 
   switch (event) {
-    case 'crm.contact.created':
-      console.log('New contact:', req.body.email);
+    case 'subscriber.joined':
+      console.log('New subscriber:', req.body.email);
       break;
-    case 'crm.task.reminder.sent':
-      console.log('Reminder sent:', req.body.title);
+    case 'subscriber.subscription.created':
+      console.log('New customer:', req.body.email);
       break;
     default:
       console.log('Unknown event:', event);

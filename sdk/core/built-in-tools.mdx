@@ -5,7 +5,7 @@ description: "Complete reference for all agent built-in tools"
 
 ## Overview
 
-When an agent uses `agent` reasoning mode, it has access to BoostGPT built-in tools for knowledge, memory, files, planning, communication, CRM, calendar, automation, workspace delivery, and platform operations.
+When an agent uses `agent` reasoning mode, it has access to BoostGPT built-in tools for knowledge, memory, files, planning, communication, automation, workspace delivery, and platform operations.
 
 <Info>
 File tools (`write`, `read`, `edit`, `grep`, `delete`, `ls`) and the `command` tool require the agent's **Workspace** setting to be enabled. Planning tools (`create_plan`, `update_plan`, `read_plan`, `accept_plan`) require plan mode (`chat_mode: 'plan'`), which also requires workspace.
@@ -41,14 +41,8 @@ File tools (`write`, `read`, `edit`, `grep`, `delete`, `ls`) and the `command` t
 | `read_plan` | Planning | Auto | Read current plan state |
 | `accept_plan` | Planning | Always | Submit plan for user approval |
 | `ask_user` | Communication | Always | Ask structured questions |
-| `calendar_request_booking` | Calendar | Auto/Input | Render an interactive booking card and wait for slot selection |
 | `notify_user` | Communication | Auto | Send proactive notification |
 | `message_agent` | Communication | Auto | Message another agent |
-| `calendar_check_availability` | Calendar | Auto | Find available meeting slots |
-| `calendar_create_event` | Calendar | Auto | Create an event and send confirmation email |
-| `calendar_reschedule_event` | Calendar | Auto | Move an existing event |
-| `calendar_cancel_event` | Calendar | Auto | Cancel an existing event |
-| `create_crm_contact` | CRM | Auto | Capture a contact record |
 | `schedule_task` | Automation | Auto | Create recurring task |
 | `command` | Execution | Conditional | Run code/commands in sandbox |
 | `think` | Utility | Auto | Internal reasoning |
@@ -238,112 +232,6 @@ Send a message to another agent in the same project. Delivered asynchronously.
 | `target_agent` | string | Yes | Name or UUID of the target agent |
 | `message` | string | Yes | The message to send |
 | `context` | string | No | Additional context to include |
-
----
-
-## Calendar
-
-Calendar tools require the agent's **Calendar** feature to be enabled. They are designed for booking flows inside chat, including the interactive booking card.
-
-### calendar_check_availability
-
-Find available meeting slots for a duration and date range.
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `date_from` | string | No | Start date or datetime to search from |
-| `date_to` | string | No | End date or datetime to search until |
-| `timezone` | string | No | IANA timezone for the visitor, e.g. `Africa/Lagos` |
-| `duration_minutes` | integer | No | Meeting duration |
-| `limit` | integer | No | Maximum slots to return (default: 12) |
-
-<Info>
-If this tool returns slots, the agent should show them with `calendar_request_booking`. It should not say no slots are available.
-</Info>
-
-### calendar_request_booking
-
-Render an interactive booking card so the visitor can choose a slot. This waits for user input; it is not an approval step.
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `title` | string | No | Booking card title |
-| `slots` | array | No | Available slots from `calendar_check_availability` |
-| `timezone` | string | No | IANA timezone |
-| `duration_minutes` | integer | No | Meeting duration |
-| `attendee_name` | string | No | Attendee name |
-| `attendee_email` | string | No | Attendee email |
-| `attendee_phone` | string | No | Attendee phone |
-| `selected_slot` | object | No | Slot selected by the visitor through the booking card |
-| `skipped` | boolean | No | True when the visitor skips booking |
-
-After this tool returns a selected slot, call `calendar_create_event` when attendee details are available.
-
-### calendar_create_event
-
-Create a confirmed calendar event. When `attendee_email` is provided, BoostGPT sends a booking confirmation email with an `.ics` file and calendar links.
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `title` | string | No | Event title |
-| `description` | string | No | Event description |
-| `start_at` | string | No | Event start datetime; optional when `selected_slot` is supplied |
-| `end_at` | string | No | Event end datetime |
-| `selected_slot` | object | No | Slot returned by `calendar_request_booking` |
-| `timezone` | string | No | IANA timezone |
-| `duration_minutes` | integer | No | Meeting duration |
-| `location` | string | No | Meeting location or link |
-| `contact_id` | string | No | CRM contact id |
-| `attendee_name` | string | No | Attendee name |
-| `attendee_email` | string | No | Attendee email |
-| `attendee_phone` | string | No | Attendee phone |
-| `notes` | string | No | Internal notes |
-| `metadata` | object | No | Additional metadata |
-| `send_confirmation` | boolean | No | Set false only when you intentionally do not want to email the attendee |
-
-<Warning>
-Do not use `notify_user` as a calendar invite after `calendar_create_event` unless the visitor asks for a separate follow-up notification. In final answers, use the returned `display_time` when available because stored `start_at` values are UTC.
-</Warning>
-
-### calendar_reschedule_event
-
-Move an existing calendar event. Sends an updated confirmation email with an `.ics` attachment when attendee email exists on the event.
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `event_id` | string | Yes | Calendar event id |
-| `start_at` | string | No | New start datetime |
-| `end_at` | string | No | New end datetime |
-| `selected_slot` | object | No | Selected replacement slot |
-| `timezone` | string | No | IANA timezone |
-| `send_confirmation` | boolean | No | Set false only when you intentionally do not want to email the attendee |
-
-### calendar_cancel_event
-
-Cancel an existing calendar event. Sends a cancellation email with a cancellation `.ics` attachment when attendee email exists on the event.
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `event_id` | string | Yes | Calendar event id |
-| `reason` | string | No | Cancellation reason |
-| `send_confirmation` | boolean | No | Set false only when you intentionally do not want to email the attendee |
-
----
-
-## CRM
-
-CRM tools require the agent's **CRM** feature to be enabled. The exact CRM tool set may include contact, deal, status, pipeline, note, and follow-up task actions depending on the agent configuration.
-
-Common CRM tools include:
-
-| Tool | Approval | Description |
-|------|----------|-------------|
-| `create_crm_contact` | Auto | Capture a contact from chat details such as name, email, phone, source, and status |
-| `update_crm_contact` | Auto | Update contact details as the conversation develops |
-| `create_crm_deal` | Auto | Create a deal in a pipeline after qualified intent |
-| `create_crm_task` | Auto | Create a follow-up task tied to a contact or deal |
-
-Use CRM tools before booking when you need a persistent lead record, and update the record after booking if the meeting changes the lead status.
 
 ---
 

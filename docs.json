@@ -66,6 +66,7 @@
                       "creators/user-memory",
                       "creators/heartbeat",
                       "creators/workspaces",
+                      "creators/site-builder",
                       "creators/built-in-tools",
                       "creators/branding",
                       "creators/analytics",
@@ -78,14 +79,12 @@
                     "pages": [
                       "creators/integrations/overview",
                       "creators/integrations/email-tools",
-                      "creators/integrations/crm",
-                      "creators/integrations/calendar"
+                      "creators/integrations/crm"
                     ]
                   },
                   {
                     "group": "Guides",
                     "pages": [
-                      "creators/guides/increase-conversions",
                       "creators/guides/custom-domain",
                       "creators/guides/export-subscribers"
                     ]
@@ -150,7 +149,6 @@
                         "sdk/core/workspaces",
                         "sdk/core/built-in-tools",
                         "sdk/core/workflows",
-                        "sdk/core/crm",
                         "sdk/core/email",
                         "sdk/core/mcp-connectors",
                         "sdk/core/api-reference"

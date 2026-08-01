@@ -1,0 +1,186 @@
+---
+title: "Site Builder"
+description: "Edit your Site visually, and control exactly what goes live"
+---
+
+## The one thing to understand first
+
+Your Site has **two copies**: the one you are working on, and the one your visitors see.
+
+| | What it is | Who sees it |
+|---|---|---|
+| **Working copy** | What the agent writes and what you edit visually | You, in the builder preview |
+| **Published version** | A frozen snapshot you chose to publish | Everyone on your public URL |
+
+Editing never changes your live Site. Neither does asking the agent to rebuild a section. Your public URL keeps serving the exact bytes of the version you published until you publish again.
+
+<Info>
+This means you can rebuild a page in the middle of the day with real visitors on the site, and they will keep seeing the last version you published.
+</Info>
+
+## Builder views
+
+The toolbar above the preview holds a view switch and two toggles.
+
+| Control | What it does |
+|---|---|
+| **Preview** | Your Site as visitors would see it, using the working copy |
+| **Files** | The underlying files, for working with them directly |
+| Settings (gear) | The Site's settings |
+| **Edit** | Turns on visual editing — click any element to select it |
+| Canvas (frame icon) | Zooms out so the whole page fits in one frame |
+
+**Edit** and **Canvas** are independent toggles, so you can use them together — restyle elements while looking at the whole page at once.
+
+## Editing visually
+
+Turn on **Edit**, then hover to outline an element and click to select it. A toolbar appears below your selection.
+
+| Control | What it changes |
+|---|---|
+| **Edit Element** | Sends the element to the chat so you can describe a change in words |
+| **Regenerate** | Asks the agent to redesign that element, keeping its content |
+| **Edit text** | Edits the text in place — appears for text elements only |
+| **Font** | Family, weight, and your own uploaded fonts — see below |
+| **Size** | A preset scale, or type your own value |
+| **Alignment** | Left, centre, right, justify |
+| **Colour** | A swatch grid, or a hex value |
+| **Classes** | The element's raw CSS classes |
+| **Source** | Read-only view of the element's opening tag |
+| **Undo** | Reverses your last edit |
+| **Delete** | Removes the element |
+
+Edits save as you make them. Font, size, alignment and colour are written as inline styles on that one element, so they work whether your Site uses utility classes or its own stylesheet. Picking a font also adds its webfont to the page, so the choice actually renders instead of quietly falling back.
+
+<Info>
+Every visual edit is recorded in version history, so nothing you change here is unrecoverable.
+</Info>
+
+### Choosing a font
+
+Search by name, or narrow the list with the category filter — **Sans serif**, **Serif**, **Monospace** or **Display**. Each name is shown in its own typeface, and the arrow beside it opens the weights: Light, Regular, Medium, SemiBold and Bold.
+
+Picking a Google font adds its webfont to the page automatically, so the choice renders rather than falling back to a default.
+
+To use your own typeface, choose **Upload font** and pick a `.woff2`, `.woff`, `.ttf` or `.otf` file up to 2MB. The file is stored with your Site's other files, so it is versioned and published along with everything else — no external hosting to keep alive. Uploaded fonts appear under **Site fonts** at the top of the list.
+
+<Info>
+Fonts already on the page — uploaded, or wired up by the agent — are listed under **Site fonts**. Removing one is a job for the agent; the picker only adds.
+</Info>
+
+### Undoing an edit
+
+**Undo** in the toolbar reverses your last change, and keeps going back through the edits you made in this session. It covers styling, classes and text.
+
+Two things it does not cover, both of which version history handles instead:
+
+- **Deleting an element** — restoring it needs the original markup, so roll back to an earlier version
+- **Edits from before the agent last changed the page** — when the agent rewrites a page, earlier undo steps no longer point at the right elements and are discarded
+
+### Editing text
+
+Double-click a text element to edit it in place, or use **Edit text** in the toolbar.
+
+| Key | Result |
+|---|---|
+| **Enter** | Keeps the change |
+| **Shift + Enter** | Adds a line break and keeps editing |
+| **Escape** | Discards the change |
+| Clicking away | Keeps the change |
+
+Formatting inside the text — line breaks, bold or italic runs, accent spans — is preserved.
+
+### When the agent edits at the same time
+
+If the agent rewrites the page while you have it open, the builder reloads to show you the agent's version rather than overwriting it. You will see a short notice when this happens. Reapply your change on the fresh copy.
+
+## Canvas
+
+**Canvas** lays the entire page out in a single frame so you can judge the whole design at once.
+
+| Action | How |
+|---|---|
+| Zoom | The − / + controls, or `Ctrl`/`⌘` + scroll |
+| Pan | Scroll, or drag the background |
+| Fit the whole page | `⌘1` |
+| Back to actual size | `⌘0` |
+
+## Version history
+
+Open version history from the clock icon in the preview toolbar. It takes over the chat panel, so your preview stays where it is.
+
+### What creates a version
+
+- **Each agent turn** — one version per completed build turn, titled from what the agent did
+- **Your own edits** — grouped into a single **Manual Edits** version rather than one per click. The group stays open while you keep working and closes when any of these happen:
+  - about five minutes pass without an edit
+  - the agent makes a change of its own
+  - you publish
+  - you roll back to another version
+
+### Reading the list
+
+| Badge | Meaning |
+|---|---|
+| **Live** | The version your public URL is currently serving |
+| **In progress** | An open group of manual edits that may still grow |
+| **Current** | The newest version — what the preview shows |
+
+### What you can do with a version
+
+<Steps>
+<Step title="Preview">
+Opens that version read-only in the builder so you can see it before committing. Choose **Stop previewing** to return to your working copy. Preview links are private to you and are never indexed by search engines.
+</Step>
+<Step title="Publish this version">
+Points your public URL at that exact version. Use it to go live with an older version without disturbing what you are currently working on.
+</Step>
+<Step title="Rollback to this version">
+Copies that version's files back into your working copy, as a **new** version on top of the history.
+</Step>
+</Steps>
+
+<Info>
+Rollback moves forward, never backward. Restoring an older version adds a new entry rather than deleting anything, so the versions you rolled back past are still there and can be restored again.
+</Info>
+
+## Publishing
+
+Publishing takes your **current working copy**, freezes it as a version, and points your public URL at it.
+
+<Steps>
+<Step title="Preview your work">
+Check the working copy in the builder. This is what will go live.
+</Step>
+<Step title="Publish">
+Your Site's public URL now serves that snapshot.
+</Step>
+<Step title="Keep building">
+Further edits go to the working copy. The live Site does not change again until you publish.
+</Step>
+</Steps>
+
+Your Site's thumbnail refreshes after a version goes live, so the card in your dashboard reflects what visitors actually see rather than a half-finished build.
+
+## Limits
+
+<AccordionGroup>
+<Accordion title="Some Sites cannot be edited visually">
+Sites built as an app shell generate their markup in the browser at runtime, so there is nothing in the stored file to point at. The builder tells you when this is the case. Ask the agent to make changes instead — everything else, including version history and publishing, works normally.
+</Accordion>
+
+<Accordion title="Parts of a page built by scripts are not selectable">
+If your page uses JavaScript to build content after it loads, those elements do not exist in the source file and cannot be selected. Clicking one selects the nearest real element that contains it. Ask the agent to change the code that generates them.
+</Accordion>
+
+<Accordion title="Publishing is per Site, not per page">
+Publishing pins the whole Site at that moment. You cannot publish one page while holding another back.
+</Accordion>
+</AccordionGroup>
+
+## Good habits
+
+- Publish at a point you are happy with, then keep experimenting — the live Site is safe while you do
+- Use the agent for structure and layout, and the visual editor for wording, colour and type
+- Before a big change, note which version is **Live** so you know where to roll back to
+- Preview a version before publishing it, especially when going back to an older one

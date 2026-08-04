@@ -5,6 +5,28 @@ rss: true
 noindex: true
 ---
 
+<Update label="August 2026" tags={["Removals", "Breaking changes"]} rss={{ title: "Workspace Scope, Public Agent Workspaces, and Public Chat Modes Removed", description: "Workspaces are per-conversation only, and the public agent is always Chat" }}>
+
+  ## Removed features
+
+  The Sites builder now owns everything that needs a workspace, so the workspace
+  surfaces that predate it have been retired from the public agent:
+
+  - **Workspace scope** — the per-account / per-chat setting is gone, along with the `workspace_scope` field on agent create and update. **Every conversation now gets its own isolated workspace**, authenticated or not. Agents previously set to per-account keep their existing workspace records, but new conversations no longer resolve to them. This supersedes the March 2026 Workspace Scope Toggle.
+  - **Workspaces on the public agent page** — the file panel, the workspace switcher and the composer workspace toggle are now visible to project members only. Visitors chatting with a shared agent, a widget or an embed never see workspace UI, and their conversations no longer resolve or create one.
+  - **Chat modes on the public agent** — public conversations are always **Chat**. The Chat/Edit/Plan toggle is limited to project members, the widget no longer receives `chat_mode` in its config and no longer renders a mode toggle, and `PUT /v1/bot/chat/mode` rejects `edit` and `plan` on conversations that are not the Site builder's. `chat_mode` on an agent is now a default for your team only, not for visitors.
+  - **Publishing and custom domains in the workspace file panel** — removed. Custom domains now live in the Site builder under **Settings → Publishing**, where they are plan-gated with an upgrade prompt instead of a raw error.
+
+  Two notes on settings you will still see. **Show workspace files** no longer
+  affects the public agent page — it is retained for compatibility and no longer
+  changes what visitors see. **Default chat mode** now applies to your team's
+  conversations only.
+
+  Agents that are not Sites are unaffected apart from workspace scope: their
+  members keep full agent, edit and plan modes, including in the inbox.
+
+</Update>
+
 <Update label="July 2026" tags={["Removals"]} rss={{ title: "Agent Interfaces, Bridge SDK, and Widget Page Guidance Removed", description: "Retiring the legacy Agent Interface, Bridge SDK, Boost platform tools, and the widget sidepanel surfaces" }}>
 
   ## Removed features
@@ -210,6 +232,8 @@ noindex: true
 
   ## Workspace scope
 
+  <Note>Removed in August 2026. The setting is gone and every conversation now gets its own isolated workspace.</Note>
+
   Bot owners can now choose how workspaces are scoped for authenticated users:
 
   - **Per Account** (default) — one workspace shared across all conversations. Files persist between chats.
@@ -278,6 +302,8 @@ noindex: true
 <Update label="February 2026" tags={["New releases"]} rss={{ title: "Workspaces — Sandbox File System", description: "Agents can create, edit, and manage files in isolated sandbox workspaces" }}>
 
   ## Workspaces
+
+  <Note>Updated in August 2026. Isolation is per-conversation for everyone — the per-user scoping described below no longer applies — and workspaces are visible to project members only.</Note>
 
   Agents now have a sandbox file system — isolated workspaces where they can create, read, edit, search, and delete files:
 

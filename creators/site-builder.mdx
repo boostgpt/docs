@@ -26,11 +26,13 @@ The toolbar above the preview holds a view switch and two toggles.
 |---|---|
 | **Preview** | Your Site as visitors would see it, using the working copy |
 | **Files** | The underlying files, for working with them directly |
-| Settings (gear) | The Site's settings |
+| Settings (gear) | Publishing, custom domain, the support agent, and everything your Site's forms collected |
 | **Edit** | Turns on visual editing — click any element to select it |
-| Canvas (frame icon) | Zooms out so the whole page fits in one frame |
+| Canvas (frame icon) | Lays every page out side by side on a board |
 
-**Edit** and **Canvas** are independent toggles, so you can use them together — restyle elements while looking at the whole page at once.
+**Edit** and **Canvas** are independent toggles, so you can use them together — restyle elements while looking at your pages at once.
+
+When a Site has more than one page, a page switcher sits in the toolbar. Choosing a page previews it, and following a link inside the preview moves the switcher with you, so you always know which page you are looking at.
 
 ## Editing visually
 
@@ -96,14 +98,41 @@ If the agent rewrites the page while you have it open, the builder reloads to sh
 
 ## Canvas
 
-**Canvas** lays the entire page out in a single frame so you can judge the whole design at once.
+**Canvas** lays your pages out side by side on a board, so you can judge the whole Site at once
+rather than one page at a time. Each page is a live frame — what you see is the working copy, not
+a screenshot.
 
 | Action | How |
 |---|---|
 | Zoom | The − / + controls, or `Ctrl`/`⌘` + scroll |
-| Pan | Scroll, or drag the background |
-| Fit the whole page | `⌘1` |
+| Pan | Scroll, or drag the background with the hand tool |
+| Fit everything | `⌘1` |
 | Back to actual size | `⌘0` |
+
+### Moving around the board
+
+The toolbar has a **select** tool and a **pan** tool. With select, click a frame to pick it up and
+drag it anywhere on the board, or drag its edges to resize. Each page frame also has a device
+selector, so you can sit a phone-width frame next to a desktop one and compare.
+
+Clicking empty space deselects everything.
+
+### Annotating
+
+Canvas is also somewhere to think. Alongside the pages you can add:
+
+- **Notes** — double-click to edit; useful for "this headline is too long"
+- **Drawings** — freehand marks with the draw tool
+- **Images** — drop a reference or a screenshot onto the board
+- **Connectors** — drag from the dot on any element's side to another element to link them
+
+Annotations live on the board, not in your Site. They are never published and never appear to
+visitors. **Undo** and **redo** cover everything you do here, including deletions.
+
+<Info>
+Annotations belong to the Site, not to you, so anyone who can open the builder sees the same
+board.
+</Info>
 
 ## Version history
 
@@ -148,11 +177,13 @@ Rollback moves forward, never backward. Restoring an older version adds a new en
 
 Publishing takes your **current working copy**, freezes it as a version, and points your public URL at it.
 
+Open **Settings** in the builder toolbar, then **Publishing**.
+
 <Steps>
 <Step title="Preview your work">
 Check the working copy in the builder. This is what will go live.
 </Step>
-<Step title="Publish">
+<Step title="Choose a subdomain and publish">
 Your Site's public URL now serves that snapshot.
 </Step>
 <Step title="Keep building">
@@ -161,6 +192,40 @@ Further edits go to the working copy. The live Site does not change again until 
 </Steps>
 
 Your Site's thumbnail refreshes after a version goes live, so the card in your dashboard reflects what visitors actually see rather than a half-finished build.
+
+### Using your own domain
+
+Once a Site is published, **Publishing** also holds its custom domain. Add a domain you own, then
+create the CNAME record shown against it at your DNS provider. The status stays **Pending** until
+the record resolves, then becomes **Active** with SSL provisioned.
+
+DNS changes take time to propagate — use **Refresh** to re-check rather than expecting it to
+flip immediately.
+
+## Forms
+
+If your Site has a form, its results show up in **Settings** with an export: people who joined a
+list appear under **Leads**, and every other form’s answers under **Collections**. See
+[Forms](/creators/forms) for how to ask the agent for a form and what you can collect.
+
+## Putting your agent on the Site
+
+**Settings → Agent** adds your agent to every page as a chat bubble, so visitors can ask questions
+about what you are building. It answers from the same training as your public agent.
+
+It is **off** until you turn it on, and takes effect immediately — no republishing. It appears on
+the published Site and on your preview so you can try it first, and never while you are editing
+visually or viewing an older version.
+
+<Info>
+Do not ask the agent to build a chat widget into the page. Turn this on instead — it is injected
+when the page is served, so it stays out of your files and out of version history.
+</Info>
+
+<Info>
+Forms work on the preview as well as the published Site, so you can test one before publishing.
+Preview submissions are stored like real ones, so use an address you can recognise later.
+</Info>
 
 ## Limits
 
@@ -174,7 +239,7 @@ If your page uses JavaScript to build content after it loads, those elements do 
 </Accordion>
 
 <Accordion title="Publishing is per Site, not per page">
-Publishing pins the whole Site at that moment. You cannot publish one page while holding another back.
+Publishing pins every page at that moment. You cannot publish one page while holding another back, so finish the set before going live.
 </Accordion>
 </AccordionGroup>
 

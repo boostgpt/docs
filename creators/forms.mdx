@@ -1,0 +1,217 @@
+---
+title: "Forms"
+description: "Collect emails, survey answers and anything else from a form on your Site"
+---
+
+A published Site can collect whatever you ask for — a waitlist, a newsletter, a survey, a
+feedback box, a contact form, an application. You describe the form you want, the agent builds
+it, and the results appear in the builder alongside where they came from.
+
+A Site can have as many forms as it needs.
+
+## Asking for a form
+
+There is no form builder to configure. Tell the agent what you want to collect:
+
+```
+Add a waitlist form to the home page. Ask for their email and company,
+and include a checkbox for launch updates.
+```
+
+```
+Add a short survey on /feedback asking what they are building
+and how they heard about us. Don't ask for an email.
+```
+
+The agent writes the form and declares its fields, so the server knows what to accept. Ask for
+changes the same way — "also ask for team size, as a dropdown" — and it updates both.
+
+## The one choice that matters: joining, or answering
+
+Every form is one of two things, and the agent decides from what you asked for.
+
+| | **Joining** a list | **Answering** something |
+|---|---|---|
+| Examples | Waitlist, newsletter, early access | Survey, feedback, contact, application |
+| Email | Always required | Optional, and can be left out entirely |
+| You can email them later | Yes | Only if they gave an address |
+| Same person submits twice | Updates their entry | Two separate answers |
+| Results appear under | **Settings → Leads** | **Settings → Collections** |
+
+This is why a survey does not quietly turn respondents into subscribers, and why answering a
+survey twice does not overwrite the first answer.
+
+<Info>
+If the agent gets it wrong, just say so — "the feedback form shouldn't create subscribers" —
+and it will change the form's declaration.
+</Info>
+
+## What you can ask for
+
+| Field type | Good for |
+|---|---|
+| **Email** | Their address — required on a signup form, optional anywhere else |
+| **Text**, **Textarea** | Company, role, what they are hoping to solve |
+| **Select** | A fixed set of options — team size, budget band, timeline |
+| **Number**, **URL**, **Phone** | Headcount, their website, a contact number |
+| **Checkbox** | Any yes/no |
+| **Consent** | Permission to email them — see below |
+
+A form can carry up to **12 fields**. Anything a visitor submits that the form did not declare
+is ignored rather than stored.
+
+### Asking for consent
+
+Ask for a **consent** checkbox when you plan to email people later:
+
+```
+Add a required checkbox saying "Email me about the launch and early access".
+```
+
+The exact wording shown is stored with each submission, along with the moment they agreed. That
+is the part that cannot be reconstructed afterwards, so it is worth asking for at the start
+rather than adding it once you have a list.
+
+## Reading what you collected
+
+Open your Site in the builder and choose **Settings**.
+
+- **Leads** — everyone who joined a list from this Site
+- **Collections** — every other form's answers, one collection per form
+
+| What you see | Why it matters |
+|---|---|
+| **Total and source breakdown** | Where people came from — "betalist · 12", "producthunt · 3", "Direct · 8" |
+| **The list** | Who, source, page, their answers, and when |
+| **Export CSV** | Every submission with each field as its own column |
+
+<Info>
+Everything a form collects lives with the **Site**, not with your agent's account list. Someone
+who joins your waitlist does not become a BoostGPT account, does not appear under your agent's
+**Subscribers**, and does not use up your subscriber allowance — they are a contact on your list,
+and yours to export and email as you like. People who actually talk to your agent, by chat or by
+email, still become subscribers as they always have.
+</Info>
+
+<Info>
+Forms work on the **preview** as well as the published Site, so you can test one before you
+publish. Preview submissions are stored exactly like real ones — so if you are testing on a Site
+that already has real signups, use an address you can recognise later.
+</Info>
+
+## Where "source" comes from
+
+Add UTM parameters to the links you share, and the source is recorded automatically:
+
+```
+https://yoursite.com/?utm_source=betalist
+https://yoursite.com/?utm_source=producthunt&utm_medium=launch
+```
+
+Anyone arriving without one is counted as **Direct**, so the breakdown always adds up to your
+total rather than quietly leaving people out.
+
+<Info>
+Attribution is **first touch**. If someone arrives from BetaList and later signs up again from
+a plain link, they stay attributed to BetaList — the second visit does not overwrite where they
+originally came from.
+</Info>
+
+## Things worth knowing
+
+<AccordionGroup>
+<Accordion title="A form appears in the builder as soon as you publish it">
+You do not have to wait for a first submission. Publishing the Site registers every form it
+declares, so you can confirm it is live and see "No submissions yet" rather than wondering
+whether it worked.
+</Accordion>
+
+<Accordion title="Deleting a Site does not delete what it collected">
+The emails and answers survive, and stay in your export. Only the link back to the Site is lost,
+and those rows show as **Deleted Site**.
+</Accordion>
+
+<Accordion title="Removing someone who asks">
+Every row in **Leads** and **Collections** has a delete button. Deleting removes the address, the
+answers and the consent record together, and raises `lead.deleted` so an Automation can pass the
+removal on to anywhere else you keep it.
+</Accordion>
+
+<Accordion title="How much a Site can store">
+Each Site has its own record limit, set by your plan — the same ladder the subscriber limit
+uses, from 100 on the free tier up to unlimited on Scale. Signups, survey answers and everything
+else a form collects count toward it. Resubmitting a signup form with the same address updates
+that entry rather than using another slot.
+</Accordion>
+
+<Accordion title="Spam is filtered before it reaches your data">
+Forms carry a hidden field that real visitors never fill in, submissions are rate limited per
+visitor and per Site, and throwaway email domains are refused. A form the Site never declared
+is rejected outright.
+</Accordion>
+
+<Accordion title="Forms work without JavaScript">
+The form posts normally, so it still works if scripts fail to load. After submitting, the
+visitor returns to the same page with a success or error state the agent has built in.
+</Accordion>
+
+<Accordion title="Never ask the agent to store submissions in a file">
+Workspace files are part of your Site's version history, so restoring an earlier version would
+take collected data with it. Forms write to a collection instead, which is kept separately and
+is never rolled back by a restore.
+</Accordion>
+</AccordionGroup>
+
+## Getting told when something happens
+
+Each of these raises an event you can use as an **Automations** trigger, or receive as a
+[webhook](/developers/webhooks):
+
+| Event | When |
+|---|---|
+| `lead.created` | someone joins a list |
+| `lead.updated` | an existing lead submits the same form again |
+| `lead.converted` | a lead is marked as having paid — see below |
+| `lead.deleted` | you remove a lead |
+| `collection.record.created` | someone answers a survey, feedback or contact form |
+| `collection.record.deleted` | you remove a record |
+
+Exactly one event fires per submission, so an Automation on `lead.created` never runs for a survey
+answer. Each carries the collection name, the email if one was given, and the answers themselves —
+so one Automation can cover several forms and branch on which fired.
+
+## Recording who paid
+
+BoostGPT is never part of your payment flow: your checkout link goes to your own provider, so a
+payment is something you tell us about rather than something we can see.
+
+Point your provider's webhook at an Automation and add the **Mark lead converted** step:
+
+<Steps>
+<Step title="Create an Automation">
+Choose **Incoming webhook** as the trigger. Save it, and copy the URL it gives you.
+</Step>
+<Step title="Paste that URL into your payment provider">
+Stripe, Paddle, Gumroad, LemonSqueezy — anywhere that can call a webhook when someone pays.
+</Step>
+<Step title="Add the Mark lead converted step">
+Set **email** to wherever your provider puts the customer's address — `{{data.object.customer_email}}`
+for Stripe, `{{data.customer.email}}` for Paddle, `{{email}}` for Gumroad. Optionally map the
+amount and currency too.
+</Step>
+</Steps>
+
+The matching lead is marked as paid and raises `lead.converted`, so you can chain a thank-you email
+or anything else onto it. A provider that retries its webhook will not convert the same lead twice,
+and a payment from someone who never joined your list is simply ignored.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Site Builder" icon="browser" href="/creators/site-builder">
+    Build and publish the Site the form lives on
+  </Card>
+  <Card title="Webhooks" icon="bolt" href="/developers/webhooks">
+    Handle `lead.created` and the rest in your own code
+  </Card>
+</CardGroup>

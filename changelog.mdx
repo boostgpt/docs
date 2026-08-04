@@ -5,9 +5,23 @@ rss: true
 noindex: true
 ---
 
-<Update label="August 2026" tags={["Removals", "Breaking changes"]} rss={{ title: "Workspace Scope, Public Agent Workspaces, and Public Chat Modes Removed", description: "Workspaces are per-conversation only, and the public agent is always Chat" }}>
+<Update label="August 2026" tags={["Removals", "Breaking changes"]} rss={{ title: "CRM, Calendar Booking, Follow-ups, and the Public Agent Workspace Surfaces Removed", description: "Retiring the CRM suite and calendar booking, and narrowing workspaces to per-conversation and members-only" }}>
 
-  ## Removed features
+  ## CRM, calendar booking, and follow-ups
+
+  The CRM suite has been retired:
+
+  - **CRM workspace** — contact management, deals, Kanban pipelines, stage editing, notes, activity history and custom intake fields, along with their screens and APIs.
+  - **Tasks, reminders and follow-ups** — follow-up tasks with due dates, priorities, reminder status, snoozing and backlog views.
+  - **Calendar booking cards** — the `calendar_check_availability`, `calendar_request_booking` and `calendar_create_event` tools and the in-chat booking card they rendered.
+
+  Three things people confuse with these, which all still work: the **Google
+  Calendar connector** is untouched, so agents can still read and write a calendar
+  through it. **Workflow automations** remain — minus their CRM triggers and CRM
+  action blocks. And **lead capture** is unaffected: Site form submissions still
+  collect signups, visible under **Leads** in the Site builder.
+
+  ## Workspaces and the public agent
 
   The Sites builder now owns everything that needs a workspace, so the workspace
   surfaces that predate it have been retired from the public agent:
@@ -49,6 +63,8 @@ noindex: true
 <Update label="May 2026" tags={["New releases", "Improvements"]} rss={{ title: "Calendar Booking Cards, Deploy Channel States, and Boost Platform Tools", description: "Agents can book meetings in chat, Deploy shows launch states, and Boost can inspect and configure agents" }}>
 
   ## Calendar booking cards
+
+  <Note>Removed in August 2026. The `calendar_*` tools and the in-chat booking card have been retired. The Google Calendar connector is unaffected.</Note>
 
   Agents can now complete booking flows inside chat:
 
@@ -94,6 +110,8 @@ noindex: true
 
   ## Workflow automations
 
+  <Note>Updated in August 2026. Workflow automations still run, but the CRM triggers and the CRM action blocks described below were removed with the CRM.</Note>
+
   Agents now include bot-level workflow automation for turning lead and subscriber events into follow-up:
 
   - **Business workflow editor** — build trigger -> condition -> action workflows from the Automations tab
@@ -106,6 +124,8 @@ noindex: true
   Workflow-generated CRM actions suppress recursive workflow triggers so accidental loops do not spiral.
 
   ## CRM workspace
+
+  <Note>Removed in August 2026. Contacts, deals, pipelines, tasks and reminders have been retired. Lead capture continues through Site forms.</Note>
 
   BoostGPT agents now include a lightweight CRM for turning conversations into managed leads and sales follow-up:
 

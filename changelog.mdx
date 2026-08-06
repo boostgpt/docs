@@ -39,6 +39,20 @@ noindex: true
   Agents that are not Sites are unaffected apart from workspace scope: their
   members keep full agent, edit and plan modes, including in the inbox.
 
+  ## Agent collaboration
+
+  Agent-to-agent messaging has been retired:
+
+  - **`message_agent` tool** — the built-in tool that let one agent queue an asynchronous message to another agent in the same project.
+  - **Agent collaboration setting** — the toggle under agent settings, and the `inter_agent_communication` field on the agent API.
+
+  Nothing else changes. **Scheduled tasks** and **notifications** are untouched, and
+  agents still run on a schedule and notify people as before — only the agent-to-agent
+  delivery path is gone.
+
+  If you set `inter_agent_communication` when creating or updating an agent, the field is
+  now ignored rather than rejected, so existing calls keep working.
+
 </Update>
 
 <Update label="July 2026" tags={["Removals"]} rss={{ title: "Agent Interfaces, Bridge SDK, and Widget Page Guidance Removed", description: "Retiring the legacy Agent Interface, Bridge SDK, Boost platform tools, and the widget sidepanel surfaces" }}>
@@ -302,6 +316,8 @@ noindex: true
 
   ## Built-in agent tools
 
+  <Note>Updated in August 2026. `message_agent` has been removed; the other tools listed here still exist.</Note>
+
   Agents in `agent` reasoning mode now have access to **22 built-in tools** across 8 categories — no configuration required:
 
   - **Knowledge** — `search_memory` for vector search through training data, `screenshot` for capturing web pages, `web_fetch` for extracting page content as markdown
@@ -387,6 +403,8 @@ noindex: true
 <Update label="February 2026" tags={["New releases"]} rss={{ title: "Heartbeat — Autonomous Agent Scheduling", description: "Agents run autonomously on a timer with built-in safety controls and full API access" }}>
 
   ## Heartbeat scheduling
+
+  <Note>Updated in August 2026. `message_agent` has been removed. Heartbeats, scheduled tasks and notifications are unaffected.</Note>
 
   Transform agents from passive chatbots into proactive autonomous assistants:
 

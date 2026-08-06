@@ -42,7 +42,6 @@ File tools (`write`, `read`, `edit`, `grep`, `delete`, `ls`) and the `command` t
 | `accept_plan` | Planning | Always | Submit plan for user approval |
 | `ask_user` | Communication | Always | Ask structured questions |
 | `notify_user` | Communication | Auto | Send proactive notification |
-| `message_agent` | Communication | Auto | Message another agent |
 | `schedule_task` | Automation | Auto | Create recurring task |
 | `command` | Execution | Conditional | Run code/commands in sandbox |
 | `think` | Utility | Auto | Internal reasoning |
@@ -222,18 +221,6 @@ Send a proactive notification to the user when something needs their attention.
 | `message` | string | Yes | Detailed notification message |
 | `priority` | string | No | Priority: `low`, `normal`, or `urgent` (default: normal) |
 | `action_url` | string | No | URL the user can click to take action |
-
-### message_agent
-
-Send a message to another agent in the same project. Delivered asynchronously.
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `target_agent` | string | Yes | Name or UUID of the target agent |
-| `message` | string | Yes | The message to send |
-| `context` | string | No | Additional context to include |
-
----
 
 ## Automation
 

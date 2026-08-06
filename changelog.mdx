@@ -39,6 +39,21 @@ noindex: true
   Agents that are not Sites are unaffected apart from workspace scope: their
   members keep full agent, edit and plan modes, including in the inbox.
 
+  ## Workspace search tools
+
+  `grep` gained the flags a shell user expects: `files_without_match` (which files LACK a
+  pattern), `invert_match`, `multiline` for patterns spanning lines, `case_sensitive`,
+  `context` for surrounding lines, and glob `include`/`exclude` in place of the old
+  extension-only filter. A per-file match cap that used to truncate silently now reports
+  `truncated: true`.
+
+  **`glob` is new** — find files by path pattern, e.g. `*.html` for every page. `ls` gained
+  `recursive`.
+
+  **`command` is now `bash`.** Same sandbox, same behaviour, same approval rules; the name
+  simply says what it is. Existing conversations that recorded `command` still render, and
+  the `command` parameter it takes is unchanged.
+
   ## Agent collaboration
 
   Agent-to-agent messaging has been retired:

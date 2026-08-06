@@ -8,7 +8,7 @@ description: "Complete reference for all agent built-in tools"
 When an agent uses `agent` reasoning mode, it has access to BoostGPT built-in tools for knowledge, memory, files, planning, communication, automation, workspace delivery, and platform operations.
 
 <Info>
-File tools (`write`, `read`, `edit`, `grep`, `delete`, `ls`) and the `command` tool require the agent's **Workspace** setting to be enabled. Planning tools (`create_plan`, `update_plan`, `read_plan`, `accept_plan`) require plan mode (`chat_mode: 'plan'`), which also requires workspace.
+File tools (`write`, `read`, `edit`, `grep`, `glob`, `delete`, `ls`) and the `bash` tool require the agent's **Workspace** setting to be enabled. Planning tools (`create_plan`, `update_plan`, `read_plan`, `accept_plan`) require plan mode (`chat_mode: 'plan'`), which also requires workspace.
 </Info>
 
 ### Approval Levels
@@ -34,7 +34,8 @@ File tools (`write`, `read`, `edit`, `grep`, `delete`, `ls`) and the `command` t
 | `write` | Files | Conditional | Create or overwrite a file |
 | `read` | Files | Auto | Read file content |
 | `edit` | Files | Conditional | Exact string replacement |
-| `grep` | Files | Auto | Regex search across files |
+| `grep` | Files | Auto | Search file contents — regex, inverted match, multiline, context |
+| `glob` | Files | Auto | Find files by path pattern |
 | `delete` | Files | Conditional | Soft-delete a file |
 | `create_plan` | Planning | Auto | Register a plan |
 | `update_plan` | Planning | Auto | Modify plan or advance todos |
@@ -43,7 +44,7 @@ File tools (`write`, `read`, `edit`, `grep`, `delete`, `ls`) and the `command` t
 | `ask_user` | Communication | Always | Ask structured questions |
 | `notify_user` | Communication | Auto | Send proactive notification |
 | `schedule_task` | Automation | Auto | Create recurring task |
-| `command` | Execution | Conditional | Run code/commands in sandbox |
+| `bash` | Execution | Conditional | Run shell commands in the sandbox |
 | `think` | Utility | Auto | Internal reasoning |
 
 ---
@@ -145,7 +146,8 @@ File tools operate on the agent's sandbox [Workspace](/sdk/core/workspaces). See
 | `write` | Conditional | Create or overwrite a file — params: `file_path`, `content`, `language` |
 | `read` | Auto | Read file content — params: `file_path`, `start_line`, `end_line` |
 | `edit` | Conditional | Exact string replacement — params: `file_path`, `old_string`, `new_string` |
-| `grep` | Auto | Regex search across files — params: `pattern`, `file_path`, `include` |
+| `grep` | Auto | Search file contents — params: `pattern`, `file_path`, `include`, `exclude`, `files_without_match`, `invert_match`, `multiline`, `case_sensitive`, `context` |
+| `glob` | Auto | Find files by path pattern — params: `pattern` |
 | `delete` | Conditional | Soft-delete a file — params: `file_path` |
 
 ---
@@ -242,7 +244,7 @@ Create a recurring scheduled task that runs automatically.
 
 ## Code Execution
 
-### command
+### bash
 
 Run code or shell commands in an isolated sandbox environment. The sandbox has access to all workspace files under `/workspace` and has network access. Requires both **Workspace** and **Code Sandbox** to be enabled on the agent.
 

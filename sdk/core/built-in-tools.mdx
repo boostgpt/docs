@@ -27,10 +27,6 @@ File tools (`write`, `read`, `edit`, `grep`, `glob`, `delete`, `ls`) and the `ba
 | `search_memory` | Knowledge | Auto | Vector search through knowledge base |
 | `screenshot` | Knowledge | Auto | Capture web page screenshot |
 | `web_fetch` | Knowledge | Auto | Extract page content as markdown |
-| `remember` | Memory | Auto | Save to user long-term memory |
-| `recall` | Memory | Auto | Search user memories |
-| `list_memories` | Memory | Auto | List all user memories |
-| `forget` | Memory | Auto | Remove a user memory |
 | `write` | Files | Conditional | Create or overwrite a file |
 | `read` | Files | Auto | Read file content |
 | `edit` | Files | Conditional | Exact string replacement |
@@ -92,50 +88,6 @@ Extract the content of a web page as structured markdown with metadata (title, d
 
 ---
 
-## User Memory
-
-<Info>
-User Memory must be enabled on the agent. Enable it in **Settings → Features & Options → Access to Memory**, or set `memory: true` via the [Bot Management API](/sdk/core/bot-management).
-</Info>
-
-### remember
-
-Save or update information in long-term memory for the current user. Automatically detects whether to create a new memory or update an existing one.
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `content` | string | Yes | The information to remember |
-| `type` | string | No | Memory type: `semantic`, `episodic`, or `procedural` (default: semantic) |
-| `tags` | array | No | Tags for categorization |
-
-### recall
-
-Search through saved memories for the current user.
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `query` | string | Yes | What to search for in memories |
-| `type` | string | No | Filter by type: `semantic`, `episodic`, `procedural`, or `all` (default: all) |
-| `top` | integer | No | Number of results to return (default: 5) |
-
-### list_memories
-
-List all saved memories for the current user, ordered by most recent.
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `type` | string | No | Filter by type: `semantic`, `episodic`, `procedural`, or `all` (default: all) |
-| `limit` | integer | No | Max memories to return (default: 10) |
-
-### forget
-
-Remove a specific memory about the current user.
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `query` | string | Yes | Description of the memory to forget |
-
----
 
 ## File Operations
 
@@ -275,9 +227,6 @@ Reason aloud and plan next steps without producing any user-visible output. Usef
 <CardGroup cols={2}>
   <Card title="Workspaces" icon="folder" href="/sdk/core/workspaces">
     File tools details and REST API
-  </Card>
-  <Card title="User Memory" icon="brain" href="/sdk/core/user-memory">
-    Memory management REST API
   </Card>
   <Card title="Chat API" icon="message-bot" href="/sdk/core/chat-api">
     Send messages and receive AI responses

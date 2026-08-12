@@ -5,7 +5,7 @@ description: "Everything your agent can do in Agent mode"
 
 ## What are Built-in Tools?
 
-When your agent runs in **Agent** reasoning mode, it has access to a powerful set of built-in tools. These tools let your agent search knowledge, manage files, remember users, browse the web, plan complex tasks, and more.
+When your agent runs in **Agent** reasoning mode, it has access to a powerful set of built-in tools. These tools let your agent search knowledge, manage files, browse the web, plan complex tasks, and more.
 
 <Info>
 Built-in tools are only available in **Agent** reasoning mode. Switch your agent's reasoning mode in **Settings → Reasoning**.
@@ -22,17 +22,6 @@ Your agent can search its training data and capture web pages:
 | **Search Knowledge** | Searches through your agent's uploaded documents and training data using AI-powered similarity search |
 | **Screenshot** | Captures a visual screenshot of any web page — useful for analyzing designs, checking content, or monitoring pages |
 | **Web Fetch** | Extracts a web page's text content as structured markdown — useful for reading articles, documentation, or any page content |
-
-### User Memory
-
-When [User Memory](/creators/user-memory) is enabled, your agent can manage what it remembers about each user:
-
-| Tool | What it does |
-|------|-------------|
-| **Remember** | Saves important details about the user (name, preferences, decisions) to long-term memory |
-| **Recall** | Searches through saved memories to find relevant information |
-| **List Memories** | Shows all saved memories for the current user |
-| **Forget** | Removes a specific memory about the user |
 
 ### File Operations
 
@@ -101,7 +90,7 @@ Built-in tools have approval levels that control when your agent needs permissio
 
 | Level | Behavior | Examples |
 |-------|----------|---------|
-| **Auto** | Executes immediately without asking | Search, Read, Think, Recall |
+| **Auto** | Executes immediately without asking | Search, Read, Think |
 | **Input** | Waits for the visitor to respond | Ask User |
 | **Conditional** | May require approval depending on your settings | Write, Edit, Delete, Command |
 | **Always** | Always asks for your approval first | Accept Plan, Ask User |
@@ -110,7 +99,6 @@ Built-in tools have approval levels that control when your agent needs permissio
 
 - Use **Agent** reasoning mode for tasks that require multiple tools (research + writing, reading + editing)
 - Let your agent create plans for complex multi-step tasks — review the plan before approving
-- Enable **User Memory** for agents with repeat users to provide personalized experiences
 - The **Ask User** tool is great for gathering requirements before the agent starts working
 - Use **Schedule Task** for automated monitoring, reporting, or maintenance workflows
 
@@ -119,9 +107,6 @@ Built-in tools have approval levels that control when your agent needs permissio
 <CardGroup cols={2}>
   <Card title="Workspaces" icon="folder" href="/creators/workspaces">
     Learn about your agent's sandbox file system
-  </Card>
-  <Card title="User Memory" icon="brain" href="/creators/user-memory">
-    How your agent remembers users across conversations
   </Card>
   <Card title="Training Your Agent" icon="graduation-cap" href="/creators/training-your-agent">
     Teach your agent what it needs to know

@@ -63,7 +63,7 @@
                     "group": "Features",
                     "pages": [
                       "creators/forms",
-                      "creators/heartbeat",
+                      "creators/tasks",
                       "creators/workspaces",
                       "creators/site-builder",
                       "creators/built-in-tools",
@@ -143,7 +143,7 @@
                         "sdk/core/bot-management",
                         "sdk/core/chat-api",
                         "sdk/core/training-data",
-                        "sdk/core/heartbeat",
+                        "sdk/core/tasks",
                         "sdk/core/workspaces",
                         "sdk/core/built-in-tools",
                         "sdk/core/workflows",

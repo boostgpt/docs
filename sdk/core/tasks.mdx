@@ -1,0 +1,166 @@
+---
+title: "Tasks API"
+description: "Create and manage autonomous agent schedules via the API"
+---
+
+## Overview
+
+The Tasks API lets you programmatically create, manage and monitor autonomous agent runs. A task
+executes a prompt on a schedule, uses the agent's connected tools, and can notify users — all
+without anyone present.
+
+<Info>
+The bot must have tasks enabled. Set `heartbeat: true` via the
+[Bot Management API](/sdk/core/bot-management) update endpoint — the flag kept its original name.
+</Info>
+
+<Warning>
+**Replaces the Heartbeat API.** Heartbeats and scheduled tasks were one engine written twice and
+have merged. `/v1/bot/heartbeat/*` is gone; the endpoints below take its place, and
+`heartbeat_id` is now `task_id`. SDK users: see the [6.0.0 changelog](/changelog) for the method
+mapping.
+</Warning>
+
+## Create a task
+
+```bash
+POST /v1/bot/tasks/create
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `project_id` | string | Yes | Project UUID |
+| `bot_id` | string | Yes | Bot UUID |
+| `name` | string | Yes | Short name, as it appears on the board |
+| `prompt` | string | Yes | The instruction the agent executes each run |
+| `schedule_type` | string | No | `interval`, `daily`, `weekly`, `cron` or `once` (default: `interval`) |
+| `schedule_config` | object | No | Shape depends on `schedule_type` — see below |
+| `description` | string | No | Why this task exists; shown on the card |
+| `enabled` | boolean | No | Whether it is live (default: `true`) |
+| `timezone` | string | No | Timezone for scheduling (default: `UTC`) |
+| `max_executions` | number | No | Disable the task after this many runs |
+| `max_consecutive_errors` | number | No | Auto-pause after this many failures (default: 5) |
+| `member_id` | string | No | Which project member owns the task |
+| `chat_mode` | string | No | `ask`, `edit` or `plan` |
+
+### Schedule shapes
+
+| `schedule_type` | `schedule_config` |
+|---|---|
+| `interval` | `{ "interval_minutes": 60 }` |
+| `daily` | `{ "time": "09:00" }` |
+| `weekly` | `{ "day": 1, "time": "09:00" }` — day 1 = Monday |
+| `cron` | `{ "cron": "0 9 * * 1-5" }` |
+| `once` | `{ "scheduled_at": "2026-09-01T09:00:00Z" }` |
+
+### Example
+
+```javascript
+const client = new BoostGPT({ api_key: 'YOUR_API_KEY', project_id: 'PROJECT_UUID' });
+
+await client.createTask({
+  bot_id: 'bot-uuid',
+  name: 'Triage support tickets',
+  prompt: 'Check for new support tickets and summarize the urgent ones',
+  cron_pattern: '0 9 * * 1-5',        // weekdays at 9am
+  timezone: 'America/New_York'
+});
+```
+
+`cron_pattern` is a shorthand the SDK translates to `schedule_type: 'cron'`. Pass `schedule_type`
+and `schedule_config` directly for anything else.
+
+## Get a task
+
+```bash
+GET /v1/bot/tasks/read?project_id=…&bot_id=…&task_id=…
+```
+
+```javascript
+await client.fetchTask({ bot_id: 'bot-uuid', task_id: 'task-uuid' });
+```
+
+## List tasks
+
+```bash
+GET /v1/bot/tasks/readall?project_id=…&bot_id=…
+```
+
+```javascript
+await client.fetchTasks({ bot_id: 'bot-uuid' });
+```
+
+Recurring tasks come back with `state: null` — they are schedules, not board cards. One-shot tasks
+carry a `state` of `backlog`, `todo`, `in_progress`, `review` or `done`.
+
+## Update a task
+
+```bash
+PUT /v1/bot/tasks/update
+```
+
+## Enable / disable
+
+```bash
+POST /v1/bot/tasks/enable
+POST /v1/bot/tasks/disable
+```
+
+```javascript
+await client.enableTask({ bot_id: 'bot-uuid', task_id: 'task-uuid' });
+await client.disableTask({ bot_id: 'bot-uuid', task_id: 'task-uuid' });
+```
+
+## Trigger manually
+
+```bash
+POST /v1/bot/tasks/trigger
+```
+
+```javascript
+await client.triggerTask({ bot_id: 'bot-uuid', task_id: 'task-uuid' });
+```
+
+A card only runs while it is `in_progress`; triggering one parked in `backlog` records a skip with
+the reason rather than running it.
+
+## Delete a task
+
+```bash
+DELETE /v1/bot/tasks/delete?project_id=…&bot_id=…&task_id=…
+```
+
+```javascript
+await client.deleteTask({ bot_id: 'bot-uuid', task_id: 'task-uuid' });
+```
+
+Deleting removes the task's queued schedule as well as the row.
+
+## Logs and stats
+
+```bash
+GET /v1/bot/tasks/logs?project_id=…&bot_id=…
+GET /v1/bot/tasks/stats?project_id=…&bot_id=…
+```
+
+```javascript
+await client.fetchTaskLogs({ bot_id: 'bot-uuid' });
+await client.fetchTaskStats({ bot_id: 'bot-uuid' });
+```
+
+Run records carry `status` (`success`, `error` or `skipped`), a `reason` when skipped,
+`duration_ms` and `tokens_used`. A successful run's full exchange lives in the conversation it ran
+in — the run record is what tells you about the runs that did *not* happen.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Tasks for creators" icon="list-check" href="/creators/tasks">
+    The board, autonomy rungs, and the weekly site review
+  </Card>
+  <Card title="Bot Management" icon="robot" href="/sdk/core/bot-management">
+    Enabling tasks on an agent
+  </Card>
+</CardGroup>

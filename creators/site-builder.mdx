@@ -222,6 +222,48 @@ Do not ask the agent to build a chat widget into the page. Turn this on instead 
 when the page is served, so it stays out of your files and out of version history.
 </Info>
 
+## Attachments
+
+Files you attach in the builder and files visitors attach in public conversations are separate
+permissions.
+
+### Creator attachments
+
+Creator attachments are available from **Free**. They always use your plan's file-count and size
+limits, plus BoostGPT's platform-safe file validation. They do not depend on the public Agent's
+visitor attachment toggle or accepted-type preset.
+
+### Visitor attachments
+
+Open **Agent settings → Visitor attachments** to decide whether people using your public Site chat
+may attach files. Visitor attachments require both a plan that includes them and the Agent toggle.
+The Agent's maximum size, files per message, and accepted file types are then enforced again when
+the visitor submits the message.
+
+New and existing Hobby/Pioneer Agents start with visitor attachments off. Turn them on explicitly
+for each Agent. Starter and higher Agents keep the existing enabled-by-default behaviour. Free
+Agents cannot accept visitor attachments, even if an older stored setting says otherwise.
+
+| Plan | Creator attachments | Visitor attachments | Per message |
+|---|---|---|---|
+| Free | Yes | No | 1 file, 2 MB |
+| Pioneer / Hobby | Yes | When the Agent toggle is on | 3 files, 5 MB each |
+| Starter | Yes | When the Agent toggle is on | 5 files, 5 MB each |
+| Pro / Prime | Yes | When the Agent toggle is on | 10 files, 10 MB each |
+| Scale | Yes | When the Agent toggle is on | 20 files, 25 MB each |
+
+Each accepted attachment costs two ordinary message credits.
+
+## Reviews & autonomy
+
+Every Site has one review schedule. Open **Settings → Reviews & autonomy** to choose how often the
+Agent checks the Site and how far it may take work without you. Free includes monthly reviews;
+Hobby/Pioneer add weekly, Starter adds daily, and Pro/Prime/Scale add a rolling hourly review.
+Cadences your plan does not include remain visible and show the tier that unlocks them.
+
+The review files recommendations to Backlog and changes nothing by itself. The autonomy rung
+controls what can happen after that; publishing remains a separate decision.
+
 <Info>
 Forms work on the preview as well as the published Site, so you can test one before publishing.
 Preview submissions are stored like real ones, so use an address you can recognise later.

@@ -17,18 +17,12 @@ tab. Two kinds share one board:
 run until you move one. That boundary is the whole design — see [Autonomy](#autonomy) below.
 </Info>
 
-## How to enable
+## Availability
 
-1. Go to your agent's **Settings** page
-2. Scroll to **Features & Options**
-3. Toggle **Heartbeat** on
+Tasks are available from **Free** and there is no task-count ceiling. Message credits and rate
+limits govern the work tasks run, rather than the number of cards or schedules you can keep.
 
-<Warning>
-Tasks are available on **Starter** plans and above. Free and Hobby plans see an "Upgrade" badge on
-the toggle.
-</Warning>
-
-A **Tasks** tab then appears on your agent's page.
+Accounts with no plan cannot create or run Tasks.
 
 ## The board
 
@@ -53,6 +47,7 @@ How much your agent may do without you, set per Site and overridable per task:
 |---|---|
 | **Suggest** | Files cards to Backlog. Never runs anything itself. |
 | **Prepare** | Runs when you move it, edits the working copy, stops for review. |
+| **Execute** | Runs cards you move to Todo. It never picks its own. |
 | **Autopilot** | Picks up cards from **Todo** by itself and runs them. |
 
 <Warning>
@@ -62,16 +57,30 @@ never means "let it run things I have not read".
 
 Publishing is always yours. No autonomy rung lets an agent put changes live.
 
-## The weekly site review
+## Site reviews
 
-Every Site gets one schedule by default. Each week it reads your pages, screenshots them, checks
-what visitors have been asking, and files what is worth improving — with its reasons.
+Every Site gets one review schedule. It reads your pages, screenshots them, checks what visitors
+have been asking, and files what is worth improving — with its reasons.
 
 It changes nothing on its own.
 
 The visitor half is the part only your agent can do. Anyone can tell you a page needs a clearer
 call to action; only your agent knows that six people asked what something costs and there is no
 pricing page.
+
+Choose the cadence in **Site builder → Settings → Reviews & autonomy**. Unavailable cadences stay
+visible with the plan that unlocks them.
+
+| Plan | Available review cadences | New Site default |
+|---|---|---|
+| Free | Off, Monthly | Monthly |
+| Pioneer / Hobby | Off, Monthly, Weekly | Weekly |
+| Starter | Off, Monthly, Weekly, Daily | Weekly |
+| Pro / Prime / Scale | Off, Monthly, Weekly, Daily, Hourly | Weekly |
+
+Hourly is a rolling 60-minute interval. Calendar cadences run at their configured calendar time.
+After a downgrade, a cadence the new plan does not include is changed to the fastest cadence that
+plan permits.
 
 ## Creating your own
 
@@ -90,11 +99,9 @@ in the composer. Recurring tasks appear in the Schedules strip; one-off ones lan
 
 ### Plan limits
 
-| Plan | Max tasks per agent |
-|---|---|
-| Starter | 3 |
-| Pro | 10 |
-| Prime | 20 |
+Free and every paid plan include unlimited Tasks. Each accepted attachment used by a Task or chat
+costs two ordinary message credits, and task executions consume the same credits and rate limits
+as other Agent work.
 
 ## Runs and history
 
@@ -114,13 +121,13 @@ Successful runs happen in your builder conversation, so the full exchange is the
 
 - **Circuit breaker** — five consecutive failures (configurable) pauses a task rather than letting
   it fail forever
-- **Plan caps** — maximum tasks per agent, enforced per plan
+- **Plan and credit gate** — Tasks stop when the plan is inactive or the account cannot fund a run
 - **State guard** — a card only runs while it is In Progress, so a Backlog card cannot fire
 - **Publishing** — never automatic, at any autonomy rung
 
 ## Best practices
 
-- Let the weekly review fill your Backlog before creating tasks by hand
+- Let Site reviews fill your Backlog before creating tasks by hand
 - Read the agent's reason on a card before promoting it; that is what it is for
 - Start at Suggest, move a Site to Autopilot once you trust what it files
 - Check Review first — it is the only column that needs you
@@ -132,6 +139,6 @@ Successful runs happen in your builder conversation, so the full exchange is the
     Connect tools for your agent to use
   </Card>
   <Card title="Site Builder" icon="browser" href="/creators/site-builder">
-    Where the weekly review does its work
+    Where Site reviews do their work
   </Card>
 </CardGroup>

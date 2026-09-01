@@ -1,0 +1,100 @@
+---
+title: "Moonshot AI"
+description: "Use Moonshot AI models in your BoostGPT agents"
+---
+
+## Overview
+
+Moonshot's Kimi models are built for long context and code. The K2 line is tuned for software work; K3 extends the context window to a million tokens.
+
+## Available Models
+
+<CardGroup cols={2}>
+  <Card title="Kimi K3" icon="bolt">
+    **4 credits** • Moonshot AI's flagship multimodal reasoning model with a one-million-token context window.
+
+    - 1M context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `kimi-k3`
+  </Card>
+
+  <Card title="Kimi K2.7 Code" icon="sparkles">
+    **3 credits** • A reasoning-first Kimi model optimized for agentic software engineering and complex coding work.
+
+    - 256K context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: Medium
+    - Model id: `kimi-k2.7-code`
+  </Card>
+
+  <Card title="Kimi K2.7 Code Highspeed" icon="zap">
+    **4 credits** • The high-throughput Kimi K2.7 Code variant for latency-sensitive coding and agent workflows.
+
+    - 256K context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Fast • Cost: High
+    - Model id: `kimi-k2.7-code-highspeed`
+  </Card>
+
+  <Card title="Kimi K2.6" icon="circle">
+    **3 credits** • A multimodal Kimi model for general reasoning, tool use, and long-context tasks.
+
+    - 256K context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: Medium
+    - Vision: images supported
+    - Model id: `kimi-k2.6`
+  </Card>
+
+  <Card title="Kimi K2.5" icon="gauge">
+    **2 credits** • A capable multimodal Kimi model for reasoning over text, images, and video inputs.
+
+    - 256K context window
+    - Excellent reasoning (reasoning model)
+    - Speed: Medium • Cost: Medium
+    - Vision: images supported
+    - Model id: `kimi-k2.5`
+  </Card>
+</CardGroup>
+
+## Setup
+
+### Using BoostGPT-Hosted API Keys
+
+<Steps>
+  <Step title="Select a model">
+    In your BoostGPT dashboard, choose any Moonshot AI model when creating or configuring an agent.
+  </Step>
+
+  <Step title="Start chatting">
+    Credits are deducted per step at the rate shown on each model above. Nothing else to configure.
+  </Step>
+</Steps>
+
+### Using Your Own API Key
+
+Bring your own key to bill Moonshot AI directly instead of spending BoostGPT credits. See
+[Bring Your Own Keys](/providers/bring-your-own-keys).
+
+```javascript
+await client.chat({
+  bot_id: 'bot-id',
+  message: 'Hello',
+  model: 'kimi-k3',
+  provider_key: process.env.MOONSHOT_API_KEY
+});
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Model Comparison" icon="chart-bar" href="/providers/model-comparison">
+    Compare every model across all providers
+  </Card>
+
+  <Card title="Provider Overview" icon="layer-group" href="/providers/overview">
+    See all supported providers
+  </Card>
+</CardGroup>

@@ -9,63 +9,207 @@ OpenAI provides the GPT family of models, including the latest GPT-5 series and 
 
 ## Available Models
 
-### GPT-5 Series (Latest)
-
 <CardGroup cols={2}>
-  <Card title="GPT-5" icon="sparkles">
-    **5 credits** " Flagship model with exceptional reasoning and creativity
+  <Card title="GPT-5.6 Sol" icon="bolt">
+    **6 credits** • The frontier GPT-5.6 model, built for complex professional work requiring the highest reasoning capability.
 
-    - 200K context window
-    - Best for: Complex tasks, creative writing, advanced reasoning
-    - Speed: Medium " Cost: High
+    - 1.05M context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5.6-sol`
   </Card>
 
-  <Card title="GPT-5 Mini" icon="bolt">
-    **3 credits** " Balanced performance and speed
+  <Card title="GPT-5.6 Terra" icon="sparkles">
+    **3 credits** • Balanced GPT-5.6 tier offering strong reasoning and multimodal input at moderate cost.
 
-    - 200K context window
-    - Best for: Everyday tasks with strong reasoning
-    - Speed: Fast " Cost: Medium
+    - 1.05M context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: Medium
+    - Vision: images supported
+    - Model id: `gpt-5.6-terra`
   </Card>
 
-  <Card title="GPT-5 Nano" icon="zap">
-    **2 credits** " Ultra-lightweight and fast
+  <Card title="GPT-5.6 Luna" icon="zap">
+    **1 credit** • The most cost-efficient GPT-5.6 tier, designed for high-volume, cost-sensitive workloads.
+
+    - 1.05M context window
+    - Excellent reasoning (reasoning model)
+    - Speed: Fast • Cost: Low
+    - Vision: images supported
+    - Model id: `gpt-5.6-luna`
+  </Card>
+
+  <Card title="GPT-5.5" icon="circle">
+    **6 credits** • Previous-generation frontier GPT model with strong reasoning and a 1M+ context window.
+
+    - 1.05M context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5.5`
+  </Card>
+
+  <Card title="GPT-5.4" icon="gauge">
+    **6 credits** • Previous-generation flagship GPT model with strong reasoning, creativity, and contextual understanding.
+
+    - 1M context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5.4`
+  </Card>
+
+  <Card title="GPT-5.3 Codex" icon="rocket">
+    **5 credits** • The model for most capable agentic coding tasks.
+
+    - 400K context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5.3-codex`
+  </Card>
+
+  <Card title="GPT-5.2" icon="star">
+    **5 credits** • The model for coding and agentic tasks across industries.
+
+    - 400K context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5.2`
+  </Card>
+
+  <Card title="GPT-5.2 Pro" icon="brain">
+    **5 credits** • The model for tough problems that may take longer to solve but require harder thinking
+
+    - 400K context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5.2-pro`
+  </Card>
+
+  <Card title="GPT-5.2 Codex" icon="wand-magic-sparkles">
+    **5 credits** • The model for interactive coding products; full spectrum of coding tasks.
+
+    - 400K context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5.2-codex`
+  </Card>
+
+  <Card title="GPT-5.1" icon="microchip">
+    **4 credits** • An enhanced version of GPT-5 with improved reasoning, creativity, and contextual understanding for the most demanding applications.
+
+    - 200K context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5.1`
+  </Card>
+
+  <Card title="GPT-5" icon="layer-group">
+    **5 credits** • The flagship GPT-5 model offering state-of-the-art performance in reasoning, creativity, and contextual understanding for the most demanding applications.
+
+    - 200K context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5`
+  </Card>
+
+  <Card title="GPT-5 Mini" icon="cube">
+    **3 credits** • A faster and more affordable GPT-5 variant optimized for everyday use while maintaining strong reasoning and contextual understanding.
+
+    - 200K context window
+    - Excellent reasoning (reasoning model)
+    - Speed: Fast • Cost: Medium
+    - Vision: images supported
+    - Model id: `gpt-5-mini`
+  </Card>
+
+  <Card title="GPT-5 Nano" icon="bolt">
+    **2 credits** • Ultra-lightweight GPT-5 optimized for speed and scale. Perfect for simple tasks, prototyping, and high-volume applications.
 
     - 128K context window
-    - Best for: Simple tasks, high-volume applications
-    - Speed: Very Fast " Cost: Low
+    - Good reasoning (reasoning model)
+    - Speed: Very_fast • Cost: Low
+    - Vision: images supported
+    - Model id: `gpt-5-nano`
   </Card>
 
-  <Card title="GPT-5.1" icon="brain">
-    **4 credits** " Enhanced reasoning model
+  <Card title="GPT-4o" icon="sparkles">
+    **5 credits** • Specialized version optimized for specific tasks. Offers targeted performance improvements.
+
+    - 128K context window
+    - Excellent reasoning
+    - Speed: Medium • Cost: Medium
+    - Vision: images supported
+    - Model id: `gpt-4o`
+  </Card>
+
+  <Card title="GPT-4o Mini" icon="zap">
+    **1 credit** • Lightweight GPT-4 variant. Balanced for everyday tasks with efficient resource usage.
+
+    - 128K context window
+    - Good reasoning
+    - Speed: Fast • Cost: Low
+    - Vision: images supported
+    - Model id: `gpt-4o-mini`
+  </Card>
+
+  <Card title="GPT-4.1 Nano" icon="circle">
+    **0.5 credits** • A lightweight variant of GPT-4.1 optimized for speed and low-cost inference. Best suited for simple tasks and high-volume use cases.
+
+    - 64K context window
+    - Basic reasoning
+    - Speed: Very_fast • Cost: Very_low
+    - Vision: images supported
+    - Model id: `gpt-4.1-nano`
+  </Card>
+
+  <Card title="GPT-4.1 Mini" icon="gauge">
+    **1 credit** • A smaller, efficient version of GPT-4.1 designed for faster responses and reduced cost, with solid performance on everyday tasks.
+
+    - 128K context window
+    - Good reasoning
+    - Speed: Fast • Cost: Low
+    - Vision: images supported
+    - Model id: `gpt-4.1-mini`
+  </Card>
+
+  <Card title="O1" icon="rocket">
+    **6 credits** • Advanced reasoning model with deep thinking capabilities for complex problem-solving.
 
     - 200K context window
-    - **Reasoning model** with extended thinking
-    - Speed: Medium " Cost: High
+    - Exceptional reasoning (reasoning model)
+    - Speed: Slow • Cost: High
+    - Vision: images supported
+    - Model id: `o1`
+  </Card>
+
+  <Card title="O1 Mini" icon="star">
+    **3 credits** • Efficient reasoning model optimized for faster responses while maintaining strong analytical capabilities.
+
+    - 128K context window
+    - Excellent reasoning (reasoning model)
+    - Speed: Medium • Cost: Medium
+    - Vision: images supported
+    - Model id: `o1-mini`
+  </Card>
+
+  <Card title="O3 Mini" icon="brain">
+    **3 credits** • Next-generation compact reasoning model with enhanced problem-solving capabilities.
+
+    - 128K context window
+    - Excellent reasoning (reasoning model)
+    - Speed: Medium • Cost: Medium
+    - Vision: images supported
+    - Model id: `o3-mini`
   </Card>
 </CardGroup>
-
-### O-Series Reasoning Models
-
-<Info>
-  Reasoning models use explicit step-by-step thinking for complex problem-solving. They require higher minimum completion tokens (2000-3000) and are best for analytical tasks.
-</Info>
-
-| Model | Credits | Context | Min Tokens | Best For |
-|-------|---------|---------|------------|----------|
-| **O1** | 6 | 200K | 3000 | Deep reasoning, complex problems |
-| **O1 Mini** | 3 | 128K | 2000 | Faster reasoning with strong analytics |
-| **O3 Mini** | 3 | 128K | 2000 | Next-gen compact reasoning |
-
-### GPT-4 Series
-
-| Model | Credits | Context | Description |
-|-------|---------|---------|-------------|
-| **GPT-4o** | 5 | 128K | Specialized for specific tasks, excellent performance |
-| **GPT-4o Mini** | 1 | 128K | Balanced for everyday tasks, efficient |
-| **GPT-4.1 Nano** | 0.5 | 64K | Lightweight for speed and low-cost |
-| **GPT-4.1 Mini** | 1 | 128K | Efficient with solid everyday performance |
-
 ## Setup
 
 ### Using BoostGPT-Hosted API Keys

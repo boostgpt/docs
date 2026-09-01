@@ -70,6 +70,21 @@ const result = await client.fetchWorkflow({
 GET /v1/bot/workflow/read?project_id={project_id}&bot_id={bot_id}&workflow_id={workflow_id}
 ```
 
+## Workflow Templates
+
+Prebuilt workflows you can create from, rather than assembling steps by hand.
+
+```javascript
+// What is available for this agent
+await client.fetchWorkflowTemplates({ bot_id: 'bot-id' });
+
+// Create a workflow from one
+await client.applyWorkflowTemplate({
+  bot_id: 'bot-id',
+  template_key: 'weekly-digest'
+});
+```
+
 ## Create a Workflow
 
 ```javascript

@@ -10,52 +10,56 @@ xAI's Grok models bring real-time knowledge and unique capabilities to your agen
 ## Available Models
 
 <CardGroup cols={2}>
-  <Card title="Grok 4.1 Fast Non-Reasoning" icon="bolt">
-    **2 credits** • Optimized for speed
+  <Card title="Grok 4.5" icon="bolt">
+    **1 credit** • The flagship Grok model, with native video input and strong multimodal reasoning.
 
-    - 128K context window
-    - Good reasoning with fast responses
-    - Speed: Fast • Cost: Low
-    - Best for: Real-time applications
-  </Card>
-
-  <Card title="Grok 4 Fast Non-Reasoning" icon="zap">
-    **2 credits** • Fast and efficient
-
-    - 128K context window
-    - Good reasoning for quick tasks
-    - Speed: Fast • Cost: Low
-    - Best for: Quick responses
-  </Card>
-
-  <Card title="Grok 3" icon="sparkles">
-    **2 credits** • Versatile model
-
-    - 128K context window
-    - Excellent reasoning capabilities
+    - 500K context window
+    - Exceptional reasoning (reasoning model)
     - Speed: Medium • Cost: Medium
-    - Best for: Diverse applications
+    - Vision: images supported
+    - Model id: `grok-4.5`
   </Card>
 
-  <Card title="Grok 3 Mini" icon="circle">
-    **1 credit** • Compact and efficient
+  <Card title="Grok 4.3" icon="sparkles">
+    **1 credit** • A versatile 1M-context model offering strong language and reasoning capabilities at low cost.
 
-    - 64K context window
-    - Good reasoning at low cost
+    - 1M context window
+    - Excellent reasoning (reasoning model)
+    - Speed: Medium • Cost: Low
+    - Vision: images supported
+    - Model id: `grok-4.3`
+  </Card>
+
+  <Card title="Grok 4.20 Reasoning" icon="zap">
+    **1 credit** • Grok 4.20 in reasoning mode, with enhanced analytical and problem-solving capabilities.
+
+    - 1M context window
+    - Excellent reasoning (reasoning model)
+    - Speed: Medium • Cost: Low
+    - Vision: images supported
+    - Model id: `grok-4.20-0309-reasoning`
+  </Card>
+
+  <Card title="Grok 4.20 Non-Reasoning" icon="circle">
+    **1 credit** • Grok 4.20 in non-reasoning mode, optimized for speed on tasks that do not need deep analysis.
+
+    - 1M context window
+    - Good reasoning
     - Speed: Fast • Cost: Low
-    - Best for: Simple tasks, high volume
+    - Vision: images supported
+    - Model id: `grok-4.20-0309-non-reasoning`
   </Card>
 
-  <Card title="Grok 3 Reasoning" icon="brain">
-    **4 credits** • Enhanced reasoning
+  <Card title="Grok Build 0.1" icon="gauge">
+    **1 credit** • Development-focused Grok model with a smaller 256k context window.
 
-    - 128K context window
-    - Excellent analytical capabilities
-    - Speed: Medium • Cost: Medium
-    - **Reasoning model** for complex tasks
+    - 256K context window
+    - Good reasoning
+    - Speed: Fast • Cost: Low
+    - Vision: images supported
+    - Model id: `grok-build-0.1`
   </Card>
 </CardGroup>
-
 ## Setup
 
 ### Using BoostGPT-Hosted API Keys
@@ -106,10 +110,10 @@ xAI's Grok models bring real-time knowledge and unique capabilities to your agen
     });
 
     // Create bot with Grok model
-    const bot = await client.bots.create({
+    const bot = await client.createBot({
       name: 'My Grok Bot',
-      model: 'grok-3',
-      system_prompt: 'You are a helpful and direct assistant.'
+      model: 'grok-4.5',
+      instruction: 'You are a helpful and direct assistant.'
     });
     ```
   </Tab>

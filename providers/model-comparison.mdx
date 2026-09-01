@@ -5,7 +5,7 @@ description: "Compare AI models across all providers"
 
 ## Overview
 
-Compare 50+ AI models across 9 providers to find the perfect model for your use case. Filter by speed, cost, reasoning capability, and context window.
+Compare 88 AI models across 14 providers to find the right one for your use case — by speed, cost, reasoning capability and context window.
 
 ## Quick Comparison by Use Case
 
@@ -51,93 +51,161 @@ Compare 50+ AI models across 9 providers to find the perfect model for your use 
 
 ### OpenAI Models
 
-| Model | Credits | Context | Speed | Reasoning | Type | Best For |
-|-------|---------|---------|-------|-----------|------|----------|
-| **GPT-5** | 5 | 200K | Medium | Exceptional | General | Complex tasks, creative |
-| **GPT-5 Mini** | 3 | 200K | Fast | Excellent | General | Everyday workhorse |
-| **GPT-5 Nano** | 2 | 128K | Very Fast | Good | General | High-volume |
-| **GPT-5.1** | 4 | 200K | Medium | Exceptional | Reasoning | Enhanced reasoning |
-| **O1** | 6 | 200K | Slow | Exceptional | Reasoning | Deep analysis |
-| **O1 Mini** | 3 | 128K | Medium | Excellent | Reasoning | Faster reasoning |
-| **O3 Mini** | 3 | 128K | Medium | Excellent | Reasoning | Next-gen reasoning |
-| **GPT-4o** | 5 | 128K | Medium | Excellent | General | Specialized tasks |
-| **GPT-4o Mini** | 1 | 128K | Fast | Good | General | Budget option |
-| **GPT-4.1 Nano** | 0.5 | 64K | Very Fast | Basic | General | Cheapest option |
-| **GPT-4.1 Mini** | 1 | 128K | Fast | Good | General | Cost-effective |
+| Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
+|-------|----------|---------|---------|-------|------|-----------|--------|
+| **GPT-5.6 Sol** | `gpt-5.6-sol` | 6 | 1.05M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **GPT-5.6 Terra** | `gpt-5.6-terra` | 3 | 1.05M | Medium | Medium | Exceptional *(reasoning)* | Yes |
+| **GPT-5.6 Luna** | `gpt-5.6-luna` | 1 | 1.05M | Fast | Low | Excellent *(reasoning)* | Yes |
+| **GPT-5.5** | `gpt-5.5` | 6 | 1.05M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **GPT-5.4** | `gpt-5.4` | 6 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **GPT-5.3 Codex** | `gpt-5.3-codex` | 5 | 400K | Medium | High | Exceptional *(reasoning)* | Yes |
+| **GPT-5.2** | `gpt-5.2` | 5 | 400K | Medium | High | Exceptional *(reasoning)* | Yes |
+| **GPT-5.2 Pro** | `gpt-5.2-pro` | 5 | 400K | Medium | High | Exceptional *(reasoning)* | Yes |
+| **GPT-5.2 Codex** | `gpt-5.2-codex` | 5 | 400K | Medium | High | Exceptional *(reasoning)* | Yes |
+| **GPT-5.1** | `gpt-5.1` | 4 | 200K | Medium | High | Exceptional *(reasoning)* | Yes |
+| **GPT-5** | `gpt-5` | 5 | 200K | Medium | High | Exceptional *(reasoning)* | Yes |
+| **GPT-5 Mini** | `gpt-5-mini` | 3 | 200K | Fast | Medium | Excellent *(reasoning)* | Yes |
+| **GPT-5 Nano** | `gpt-5-nano` | 2 | 128K | Very_fast | Low | Good *(reasoning)* | Yes |
+| **GPT-4o** | `gpt-4o` | 5 | 128K | Medium | Medium | Excellent | Yes |
+| **GPT-4o Mini** | `gpt-4o-mini` | 1 | 128K | Fast | Low | Good | Yes |
+| **GPT-4.1 Nano** | `gpt-4.1-nano` | 0.5 | 64K | Very_fast | Very_low | Basic | Yes |
+| **GPT-4.1 Mini** | `gpt-4.1-mini` | 1 | 128K | Fast | Low | Good | Yes |
+| **O1** | `o1` | 6 | 200K | Slow | High | Exceptional *(reasoning)* | Yes |
+| **O1 Mini** | `o1-mini` | 3 | 128K | Medium | Medium | Excellent *(reasoning)* | Yes |
+| **O3 Mini** | `o3-mini` | 3 | 128K | Medium | Medium | Excellent *(reasoning)* | Yes |
 
 ### Google (Gemini) Models
 
-| Model | Credits | Context | Speed | Reasoning | Type | Best For |
-|-------|---------|---------|-------|-----------|------|----------|
-| **Gemini 3 Pro Preview** | 5 | 2M | Medium | Exceptional | Preview | Cutting edge |
-| **Gemini 2.5 Pro** | 3 | 2M | Slow | Exceptional | General | Long documents |
-| **Gemini 2.5 Flash** | 2 | 1M | Fast | Excellent | General | Production |
-| **Gemini 2.5 Flash Lite** | 1 | 1M | Very Fast | Good | General | High-volume |
-| **Gemini 2.0 Flash Thinking** | 3 | 1M | Medium | Excellent | Reasoning | Analysis |
+| Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
+|-------|----------|---------|---------|-------|------|-----------|--------|
+| **Gemini 3.6 Flash** | `gemini-3.6-flash` | 2 | 1M | Fast | Medium | Excellent *(reasoning)* | Yes |
+| **Gemini 3.5 Flash** | `gemini-3.5-flash` | 3 | 1M | Fast | Medium | Exceptional *(reasoning)* | Yes |
+| **Gemini 3.5 Flash Lite** | `gemini-3.5-flash-lite` | 1 | 1M | Very_fast | Very_low | Good *(reasoning)* | Yes |
+| **Gemini 3.1 Flash Lite** | `gemini-3.1-flash-lite` | 1 | 1M | Very_fast | Very_low | Good *(reasoning)* | Yes |
+| **Gemini 3.1 Pro** | `gemini-3.1-pro-preview` | 3 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **Gemini 3 Flash** | `gemini-3-flash-preview` | 1 | 1M | Fast | Medium | Excellent *(reasoning)* | Yes |
+| **Gemini 2.5 Pro** | `gemini-2.5-pro` | 3 | 1M | Slow | High | Exceptional *(reasoning)* | Yes |
+| **Gemini 2.5 Flash** | `gemini-2.5-flash` | 1 | 1M | Fast | Medium | Excellent *(reasoning)* | Yes |
+| **Gemini 2.5 Flash Lite** | `gemini-2.5-flash-lite` | 1 | 1M | Very_fast | Very_low | Good *(reasoning)* | Yes |
 
 ### Anthropic (Claude) Models
 
-| Model | Credits | Context | Speed | Reasoning | Type | Best For |
-|-------|---------|---------|-------|-----------|------|----------|
-| **Claude Opus 4.1** | 5 | 200K | Medium | Exceptional | General | Complex analysis |
-| **Claude Sonnet 4.5** | 3 | 200K | Medium | Excellent | General | Production |
-| **Claude Haiku 4.5** | 4 | 200K | Fast | Good | General | Fast responses |
-| **Claude 3 Opus Extended** | 6 | 200K | Slow | Exceptional | Reasoning | Deep thinking |
+| Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
+|-------|----------|---------|---------|-------|------|-----------|--------|
+| **Claude Fable 5** | `claude-fable-5` | 10 | 1M | Slow | High | Exceptional *(reasoning)* | Yes |
+| **Claude Opus 4.8** | `claude-opus-4-8` | 5 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **Claude Sonnet 5** | `claude-sonnet-5` | 3 | 1M | Fast | Medium | Exceptional *(reasoning)* | Yes |
+| **Claude Opus 4.7** | `claude-opus-4-7` | 5 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **Claude Opus 4.6** | `claude-opus-4-6` | 5 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **Claude Sonnet 4.6** | `claude-sonnet-4-6` | 3 | 1M | Fast | Medium | Excellent *(reasoning)* | Yes |
+| **Claude Haiku 4.5** | `claude-haiku-4-5` | 1 | 200K | Fast | Low | Good | Yes |
+| **Claude Opus 4.5** | `claude-opus-4-5` | 5 | 200K | Medium | High | Exceptional | Yes |
+| **Claude Sonnet 4.5** | `claude-sonnet-4-5` | 3 | 200K | Medium | Medium | Excellent | Yes |
 
 ### xAI (Grok) Models
 
-| Model | Credits | Context | Speed | Reasoning | Type | Best For |
-|-------|---------|---------|-------|-----------|------|----------|
-| **Grok 4.1 Fast** | 2 | 128K | Fast | Good | General | Real-time apps |
-| **Grok 4 Fast** | 2 | 128K | Fast | Good | General | Quick responses |
-| **Grok 3** | 2 | 128K | Medium | Excellent | General | Versatile |
-| **Grok 3 Mini** | 1 | 64K | Fast | Good | General | Simple tasks |
-| **Grok 3 Reasoning** | 4 | 128K | Medium | Excellent | Reasoning | Analytical |
+| Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
+|-------|----------|---------|---------|-------|------|-----------|--------|
+| **Grok 4.5** | `grok-4.5` | 1 | 500K | Medium | Medium | Exceptional *(reasoning)* | Yes |
+| **Grok 4.3** | `grok-4.3` | 1 | 1M | Medium | Low | Excellent *(reasoning)* | Yes |
+| **Grok 4.20 Reasoning** | `grok-4.20-0309-reasoning` | 1 | 1M | Medium | Low | Excellent *(reasoning)* | Yes |
+| **Grok 4.20 Non-Reasoning** | `grok-4.20-0309-non-reasoning` | 1 | 1M | Fast | Low | Good | Yes |
+| **Grok Build 0.1** | `grok-build-0.1` | 1 | 256K | Fast | Low | Good | Yes |
+
+### Zhipu AI (GLM) Models
+
+| Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
+|-------|----------|---------|---------|-------|------|-----------|--------|
+| **GLM-4.6** | `glm-4.6` | 1 | 200K | Medium | Low | Excellent | — |
+| **GLM-4.7** | `glm-4.7` | 1 | 200K | Medium | Low | Excellent *(reasoning)* | — |
+| **GLM-4.7 Flash** | `glm-4.7-flash` | 1 | 200K | Very_fast | Very_low | Good | — |
+| **GLM-5.1** | `glm-5.1` | 1 | 200K | Medium | Low | Exceptional *(reasoning)* | — |
+| **GLM-4.6V** | `glm-4.6v` | 1 | 128K | Medium | Low | Excellent | Yes |
+
+### MiniMax Models
+
+| Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
+|-------|----------|---------|---------|-------|------|-----------|--------|
+| **MiniMax M3** | `MiniMax-M3` | 1 | 1M | Medium | Low | Exceptional *(reasoning)* | Yes |
+| **MiniMax M2.7** | `MiniMax-M2.7` | 1 | 205K | Medium | Low | Excellent *(reasoning)* | — |
+| **MiniMax M2.5** | `MiniMax-M2.5` | 1 | 205K | Fast | Very_low | Excellent *(reasoning)* | — |
 
 ### DeepSeek Models
 
-| Model | Credits | Context | Speed | Reasoning | Type | Best For |
-|-------|---------|---------|-------|-----------|------|----------|
-| **DeepSeek V3** | 1 | 64K | Fast | Good | General | Chat |
-| **DeepSeek R1** | 2 | 64K | Medium | Excellent | Reasoning | Complex reasoning |
+| Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
+|-------|----------|---------|---------|-------|------|-----------|--------|
+| **DeepSeek V4 Flash** | `deepseek-v4-flash` | 1 | 1M | Fast | Low | Good *(reasoning)* | — |
+| **DeepSeek V4 Pro** | `deepseek-v4-pro` | 1 | 1M | Medium | Low | Excellent *(reasoning)* | — |
+
+### Moonshot AI (Kimi) Models
+
+| Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
+|-------|----------|---------|---------|-------|------|-----------|--------|
+| **Kimi K3** | `kimi-k3` | 4 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **Kimi K2.7 Code** | `kimi-k2.7-code` | 3 | 256K | Medium | Medium | Exceptional *(reasoning)* | — |
+| **Kimi K2.7 Code Highspeed** | `kimi-k2.7-code-highspeed` | 4 | 256K | Fast | High | Exceptional *(reasoning)* | — |
+| **Kimi K2.6** | `kimi-k2.6` | 3 | 256K | Medium | Medium | Exceptional *(reasoning)* | Yes |
+| **Kimi K2.5** | `kimi-k2.5` | 2 | 256K | Medium | Medium | Excellent *(reasoning)* | Yes |
 
 ### Mistral AI Models
 
-| Model | Credits | Context | Speed | Reasoning | Type | Best For |
-|-------|---------|---------|-------|-----------|------|----------|
-| **Mistral Large** | 4 | 128K | Medium | Excellent | General | Complex apps |
-| **Mistral Medium** | 3 | 32K | Medium | Excellent | General | Balanced use |
-| **Mistral Small** | 1 | 32K | Fast | Good | General | Cost-effective |
+| Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
+|-------|----------|---------|---------|-------|------|-----------|--------|
+| **Mistral Small** | `mistral-small-latest` | 1 | 32K | Fast | Low | Good | Yes |
+| **Mistral Medium** | `mistral-medium-latest` | 2 | 32K | Medium | Medium | Excellent | — |
+| **Mistral Large** | `mistral-large-latest` | 3 | 128K | Medium | Medium | Excellent | — |
 
 ### Cohere Models
 
-| Model | Credits | Context | Speed | Reasoning | Type | Best For |
-|-------|---------|---------|-------|-----------|------|----------|
-| **Command R+** | 5 | 128K | Medium | Exceptional | General | Enterprise |
-| **Command A** | 5 | 128K | Medium | Exceptional | General | High-performance |
-| **Command R7B** | 5 | 128K | Very Fast | Excellent | General | Fast at scale |
+| Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
+|-------|----------|---------|---------|-------|------|-----------|--------|
+| **Command A** | `command-a-03-2025` | 1 | 256K | Medium | High | Exceptional | — |
+| **Command R+** | `command-r-plus-08-2024` | 1 | 128K | Medium | High | Exceptional | — |
+| **Command R** | `command-r-08-2024` | 1 | 128K | Fast | Low | Excellent | — |
+| **Command R7B** | `command-r7b-12-2024` | 1 | 128K | Very_fast | Low | Excellent | — |
+| **Command A Translate** | `command-a-translate-08-2025` | 1 | 8K | Fast | Low | Good | — |
 
 ### Groq Models
 
-| Model | Credits | Context | Speed | Reasoning | Type | Best For |
-|-------|---------|---------|-------|-----------|------|----------|
-| **DeepSeek Llama 70B** | 2 | 64K | Fast | Excellent | Reasoning | Efficient reasoning |
-| **Llama 3.3 Versatile 70B** | 3 | 128K | Fast | Excellent | General | Versatile apps |
-| **Llama 3.1 Instant 8B** | 1 | 128K | Ultra Fast | Good | General | Real-time |
-| **Qwen QWQ 32B** | 2 | 32K | Fast | Excellent | Reasoning | Multilingual |
-| **Qwen 3 32B** | 2 | 32K | Fast | Excellent | General | Instructions |
-| **Mistral Saba 24B** | 2 | 32K | Fast | Excellent | General | Balanced |
-| **LLaMA 4 Maverick 17B** | 3 | 128K | Medium | Excellent | General | Advanced tasks |
-| **LLaMA 4 Scout 17B** | 1 | 128K | Fast | Good | General | Light workloads |
+| Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
+|-------|----------|---------|---------|-------|------|-----------|--------|
+| **DeepSeek Llama (70B)** | `deepseek-r1-distill-llama-70b` | 2 | 64K | Fast | Low | Excellent *(reasoning)* | — |
+| **GPT-OSS (20B)** | `openai/gpt-oss-20b` | 1 | 131K | Extremely_fast | Very_low | Good | — |
+| **GPT-OSS (120B)** | `openai/gpt-oss-120b` | 1 | 131K | Fast | Low | Excellent | — |
+| **LLaMA 4 Maverick (17B 128E)** | `meta-llama/llama-4-maverick-17b-128e-instruct` | 1 | 128K | Medium | Medium | Excellent | — |
+
+### Fireworks AI Models
+
+| Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
+|-------|----------|---------|---------|-------|------|-----------|--------|
+| **DeepSeek V3** | `deepseek-v3` | 1 | 64K | Fast | Low | Good | — |
+| **DeepSeek R1** | `deepseek-r1` | 1 | 64K | Medium | Low | Excellent *(reasoning)* | — |
+| **Llama V3 (8B)** | `llama-v3-8b-instruct` | 1 | 8K | Very_fast | Very_low | Good | — |
+| **Llama V3 (70B)** | `llama-v3-70b-instruct` | 2 | 8K | Medium | Medium | Excellent | — |
+| **Llama V3.1 (8B)** | `llama-v3p1-8b-instruct` | 1 | 128K | Very_fast | Very_low | Good | — |
+| **Llama V3.1 (70B)** | `llama-v3p1-70b-instruct` | 1 | 128K | Fast | Low | Excellent | — |
+| **Llama V3.1 (405B)** | `llama-v3p1-405b-instruct` | 2 | 128K | Slow | High | Exceptional | — |
+| **Llama V3.3 (70B)** | `llama-v3p3-70b-instruct` | 2 | 128K | Fast | Medium | Excellent | — |
+| **Yi Large** | `yi-large` | 2 | 32K | Medium | Medium | Excellent | — |
+| **Mixtral (8x7B)** | `mixtral-8x7b-instruct` | 1 | 32K | Fast | Low | Good | — |
+| **Mixtral (8x22B)** | `mixtral-8x22b-instruct` | 2 | 64K | Medium | Medium | Excellent | — |
+| **Qwen 2.5 (72B)** | `qwen2p5-72b-instruct` | 1 | 128K | Medium | Medium | Excellent | — |
+
+### Together AI Models
+
+| Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
+|-------|----------|---------|---------|-------|------|-----------|--------|
+| **Qwen 2.5 Coder (32B)** | `Qwen/Qwen2.5-Coder-32B-Instruct` | 1 | 32K | Fast | Low | Excellent | — |
+| **Qwen 2.5 Turbo (72B)** | `Qwen/Qwen2.5-72B-Instruct-Turbo` | 2 | 128K | Fast | Medium | Excellent | — |
 
 ### Ollama Models (Local)
 
-| Model | Credits | Context | Speed | Reasoning | Type | Best For |
-|-------|---------|---------|-------|-----------|------|----------|
-| **Llama 3.3 70B** | 2 | 128K | Medium | Excellent | Local | Local power |
-| **Llama 3.1 405B** | 4 | 128K | Slow | Exceptional | Local | Maximum local |
-| **Llama 3.1 70B** | 2 | 128K | Medium | Excellent | Local | Balanced local |
-| **Llama 3.1 8B** | 1 | 128K | Fast | Good | Local | Efficient local |
+| Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
+|-------|----------|---------|---------|-------|------|-----------|--------|
+| **Llama 3.3 (70B) Local** | `llama3.3:70b` | 1 | 128K | Medium | Very_low | Excellent | — |
+| **Llama 3.1 (8B) Local** | `llama3.1:8b` | 1 | 128K | Fast | Very_low | Good | — |
+| **Llama 3.1 (70B) Local** | `llama3.1:70b` | 1 | 128K | Medium | Very_low | Excellent | — |
+| **Llama 3.1 (405B) Local** | `llama3.1:405b` | 2 | 128K | Slow | Very_low | Exceptional | — |
 
 ## Comparison by Category
 

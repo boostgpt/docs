@@ -10,17 +10,18 @@ Create a basic AI agent using the BoostGPT Core SDK in under 5 minutes.
 ## Prerequisites
 
 ```bash
-npm install @boostgpt/core-sdk
+npm install boostgpt
 ```
 
 ## Complete Example
 
 ```javascript
-import { BoostGPT } from '@boostgpt/core-sdk';
+import { BoostGPT } from 'boostgpt';
 
 // Initialize client
 const client = new BoostGPT({
-  apiKey: process.env.BOOSTGPT_API_KEY
+  key: process.env.BOOSTGPT_API_KEY,
+  project_id: process.env.BOOSTGPT_PROJECT_ID
 });
 
 async function main() {
@@ -28,7 +29,7 @@ async function main() {
   console.log('Creating bot...');
   const botResult = await client.createBot({
     name: 'Customer Support Assistant',
-    model: 'gpt-4o',
+    model: 'gpt-5.6-luna',
     instruction: 'You are a helpful customer support agent. Be friendly and concise.'
   });
 
@@ -92,10 +93,11 @@ main();
 ### 1. Initialize Client
 
 ```javascript
-import { BoostGPT } from '@boostgpt/core-sdk';
+import { BoostGPT } from 'boostgpt';
 
 const client = new BoostGPT({
-  apiKey: process.env.BOOSTGPT_API_KEY
+  key: process.env.BOOSTGPT_API_KEY,
+  project_id: process.env.BOOSTGPT_PROJECT_ID
 });
 ```
 
@@ -106,7 +108,7 @@ Get your API key from: **Dashboard -> Settings -> API Keys**
 ```javascript
 const botResult = await client.createBot({
   name: 'Customer Support Assistant',
-  model: 'gpt-4o',
+  model: 'gpt-5.6-luna',
   instruction: 'You are a helpful customer support agent.'
 });
 
@@ -206,7 +208,7 @@ await client.startTraining({
 const chatResult = await client.chat({
   bot_id: botId,
   message: 'Question',
-  model: 'gpt-4o-mini',  // Override model
+  model: 'gpt-5.6-luna',  // Override model
   max_reply_tokens: 500,   // Limit response length
   reasoning_mode: 'agent'  // Autonomous multi-step reasoning
 });
@@ -219,7 +221,7 @@ Always handle errors:
 ```javascript
 const result = await client.createBot({
   name: 'My Bot',
-  model: 'gpt-4o'
+  model: 'gpt-5.6-luna'
 });
 
 if (result.err) {

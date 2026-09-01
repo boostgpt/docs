@@ -23,109 +23,518 @@ Reasoning models employ a different approach:
 
 ## Available Reasoning Models
 
-### OpenAI O-Series
+A reasoning model spends tokens thinking before it answers, so it needs a higher `max_reply_tokens`
+than a standard model — each one below declares its own minimum. Credits are charged per step.
+
+### OpenAI
 
 <CardGroup cols={2}>
-  <Card title="O1" icon="brain">
-    **6 credits** • Deepest reasoning
+  <Card title="GPT-5.6 Sol" icon="brain">
+    **6 credits** • The frontier GPT-5.6 model, built for complex professional work requiring the highest reasoning capability.
+
+    - 1.05M context window
+    - Needs at least 3000 completion tokens
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5.6-sol`
+  </Card>
+
+  <Card title="GPT-5.6 Terra" icon="bolt">
+    **3 credits** • Balanced GPT-5.6 tier offering strong reasoning and multimodal input at moderate cost.
+
+    - 1.05M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: Medium
+    - Vision: images supported
+    - Model id: `gpt-5.6-terra`
+  </Card>
+
+  <Card title="GPT-5.6 Luna" icon="sparkles">
+    **1 credit** • The most cost-efficient GPT-5.6 tier, designed for high-volume, cost-sensitive workloads.
+
+    - 1.05M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Fast • Cost: Low
+    - Vision: images supported
+    - Model id: `gpt-5.6-luna`
+  </Card>
+
+  <Card title="GPT-5.5" icon="gauge">
+    **6 credits** • Previous-generation frontier GPT model with strong reasoning and a 1M+ context window.
+
+    - 1.05M context window
+    - Needs at least 3000 completion tokens
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5.5`
+  </Card>
+
+  <Card title="GPT-5.4" icon="star">
+    **6 credits** • Previous-generation flagship GPT model with strong reasoning, creativity, and contextual understanding.
+
+    - 1M context window
+    - Needs at least 3000 completion tokens
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5.4`
+  </Card>
+
+  <Card title="GPT-5.3 Codex" icon="rocket">
+    **5 credits** • The model for most capable agentic coding tasks.
+
+    - 400K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5.3-codex`
+  </Card>
+
+  <Card title="GPT-5.2" icon="zap">
+    **5 credits** • The model for coding and agentic tasks across industries.
+
+    - 400K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5.2`
+  </Card>
+
+  <Card title="GPT-5.2 Pro" icon="circle">
+    **5 credits** • The model for tough problems that may take longer to solve but require harder thinking
+
+    - 400K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5.2-pro`
+  </Card>
+
+  <Card title="GPT-5.2 Codex" icon="microchip">
+    **5 credits** • The model for interactive coding products; full spectrum of coding tasks.
+
+    - 400K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5.2-codex`
+  </Card>
+
+  <Card title="GPT-5.1" icon="cube">
+    **4 credits** • An enhanced version of GPT-5 with improved reasoning, creativity, and contextual understanding for the most demanding applications.
 
     - 200K context window
-    - 3000 min completion tokens
-    - Speed: Slow (10-20s)
-    - Best for: Complex problems, deep analysis
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5.1`
   </Card>
 
-  <Card title="O1 Mini" icon="bolt">
-    **3 credits** • Faster reasoning
-
-    - 128K context window
-    - 2000 min completion tokens
-    - Speed: Medium (5-10s)
-    - Best for: Balanced reasoning tasks
-  </Card>
-
-  <Card title="O3 Mini" icon="sparkles">
-    **3 credits** • Next-gen compact
-
-    - 128K context window
-    - 2000 min completion tokens
-    - Speed: Medium (5-10s)
-    - Best for: Advanced reasoning
-  </Card>
-
-  <Card title="GPT-5.1" icon="lightbulb">
-    **4 credits** • Enhanced reasoning
+  <Card title="GPT-5" icon="brain">
+    **5 credits** • The flagship GPT-5 model offering state-of-the-art performance in reasoning, creativity, and contextual understanding for the most demanding applications.
 
     - 200K context window
-    - 2000 min completion tokens
-    - Speed: Medium
-    - Best for: General reasoning tasks
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gpt-5`
+  </Card>
+
+  <Card title="GPT-5 Mini" icon="bolt">
+    **3 credits** • A faster and more affordable GPT-5 variant optimized for everyday use while maintaining strong reasoning and contextual understanding.
+
+    - 200K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Fast • Cost: Medium
+    - Vision: images supported
+    - Model id: `gpt-5-mini`
+  </Card>
+
+  <Card title="GPT-5 Nano" icon="sparkles">
+    **2 credits** • Ultra-lightweight GPT-5 optimized for speed and scale. Perfect for simple tasks, prototyping, and high-volume applications.
+
+    - 128K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Very_fast • Cost: Low
+    - Vision: images supported
+    - Model id: `gpt-5-nano`
+  </Card>
+
+  <Card title="O1" icon="gauge">
+    **6 credits** • Advanced reasoning model with deep thinking capabilities for complex problem-solving.
+
+    - 200K context window
+    - Needs at least 3000 completion tokens
+    - Speed: Slow • Cost: High
+    - Vision: images supported
+    - Model id: `o1`
+  </Card>
+
+  <Card title="O1 Mini" icon="star">
+    **3 credits** • Efficient reasoning model optimized for faster responses while maintaining strong analytical capabilities.
+
+    - 128K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: Medium
+    - Vision: images supported
+    - Model id: `o1-mini`
+  </Card>
+
+  <Card title="O3 Mini" icon="rocket">
+    **3 credits** • Next-generation compact reasoning model with enhanced problem-solving capabilities.
+
+    - 128K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: Medium
+    - Vision: images supported
+    - Model id: `o3-mini`
   </Card>
 </CardGroup>
 
-### Anthropic Extended Thinking
+### Google
 
-<Card title="Claude 3 Opus Extended Thinking" icon="brain">
-  **6 credits** • Deep analytical reasoning
+<CardGroup cols={2}>
+  <Card title="Gemini 3.6 Flash" icon="brain">
+    **2 credits** • Balances speed with intelligence for strong performance on agentic and multimodal tasks.
 
-  - 200K context window
-  - 2500 min completion tokens
-  - Speed: Slow
-  - Best for: Strategic planning, research
-</Card>
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Fast • Cost: Medium
+    - Vision: images supported
+    - Model id: `gemini-3.6-flash`
+  </Card>
 
-### Google Flash Thinking
+  <Card title="Gemini 3.5 Flash" icon="bolt">
+    **3 credits** • Most intelligent Gemini model for sustained frontier performance on agentic and coding tasks.
 
-<Card title="Gemini 2.0 Flash Thinking" icon="brain">
-  **3 credits** • Fast reasoning
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Fast • Cost: Medium
+    - Vision: images supported
+    - Model id: `gemini-3.5-flash`
+  </Card>
 
-  - 1,000,000 token context window
-  - 2000 min completion tokens
-  - Speed: Medium (4-6s)
-  - Best for: Analytical tasks with large context
-</Card>
+  <Card title="Gemini 3.5 Flash Lite" icon="sparkles">
+    **1 credit** • The fastest, most cost-effective Gemini 3.5 model for high-throughput execution.
 
-### xAI Grok Reasoning
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Very_fast • Cost: Very_low
+    - Vision: images supported
+    - Model id: `gemini-3.5-flash-lite`
+  </Card>
 
-<Card title="Grok 3 Reasoning" icon="brain">
-  **4 credits** • Enhanced analytical
+  <Card title="Gemini 3.1 Flash Lite" icon="gauge">
+    **1 credit** • Frontier-class performance at a fraction of the cost, optimized for low latency and high-volume tasks.
 
-  - 128K context window
-  - 2000 min completion tokens
-  - Speed: Medium
-  - Best for: Problem-solving, analysis
-</Card>
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Very_fast • Cost: Very_low
+    - Vision: images supported
+    - Model id: `gemini-3.1-flash-lite`
+  </Card>
 
-### DeepSeek R1
+  <Card title="Gemini 3.1 Pro" icon="star">
+    **3 credits** • Reasoning-first Gemini model for complex agentic workflows and coding, with adaptive thinking.
 
-<Card title="DeepSeek R1" icon="brain">
-  **2 credits** • Most affordable reasoning
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `gemini-3.1-pro-preview`
+  </Card>
 
-  - 64K context window
-  - 2000 min completion tokens
-  - Speed: Medium
-  - Best for: Cost-effective reasoning
-</Card>
+  <Card title="Gemini 3 Flash" icon="rocket">
+    **1 credit** • The latest Gemini 3 Flash model in preview, optimized for speed and efficiency while delivering strong reasoning and language capabilities.
 
-### Groq Reasoning Models
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Fast • Cost: Medium
+    - Vision: images supported
+    - Model id: `gemini-3-flash-preview`
+  </Card>
 
-<Card title="DeepSeek Llama 70B (Groq)" icon="bolt">
-  **2 credits** • Fast reasoning on LPU
+  <Card title="Gemini 2.5 Pro" icon="zap">
+    **3 credits** • The most advanced model in the Gemini 2.5 series, designed for complex reasoning, high accuracy, and faster performance.
 
-  - 64K context window
-  - 2000 min completion tokens
-  - Speed: Fast (ultra-fast inference)
-  - Best for: Efficient reasoning at speed
-</Card>
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Slow • Cost: High
+    - Vision: images supported
+    - Model id: `gemini-2.5-pro`
+  </Card>
 
-<Card title="Qwen QWQ 32B (Groq)" icon="globe">
-  **2 credits** • Multilingual reasoning
+  <Card title="Gemini 2.5 Flash" icon="circle">
+    **1 credit** • A fast and capable model in the Gemini 2.5 series, balancing speed and reasoning performance for production use.
 
-  - 32K context window
-  - 2000 min completion tokens
-  - Speed: Fast
-  - Best for: Multilingual analytical tasks
-</Card>
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Fast • Cost: Medium
+    - Vision: images supported
+    - Model id: `gemini-2.5-flash`
+  </Card>
+
+  <Card title="Gemini 2.5 Flash Lite" icon="microchip">
+    **1 credit** • A lightweight, cost-efficient variant of Gemini 2.5 Flash, optimized for low latency and basic tasks.
+
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Very_fast • Cost: Very_low
+    - Vision: images supported
+    - Model id: `gemini-2.5-flash-lite`
+  </Card>
+</CardGroup>
+
+### Anthropic
+
+<CardGroup cols={2}>
+  <Card title="Claude Fable 5" icon="brain">
+    **10 credits** • Anthropic's most capable model, for the most demanding reasoning and long-running agentic work.
+
+    - 1M context window
+    - Needs at least 3000 completion tokens
+    - Speed: Slow • Cost: High
+    - Vision: images supported
+    - Model id: `claude-fable-5`
+  </Card>
+
+  <Card title="Claude Opus 4.8" icon="bolt">
+    **5 credits** • The most capable Claude model, built for complex agentic coding and enterprise work.
+
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `claude-opus-4-8`
+  </Card>
+
+  <Card title="Claude Sonnet 5" icon="sparkles">
+    **3 credits** • The best combination of speed and intelligence, with near-Opus quality on coding and agentic work.
+
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Fast • Cost: Medium
+    - Vision: images supported
+    - Model id: `claude-sonnet-5`
+  </Card>
+
+  <Card title="Claude Opus 4.7" icon="gauge">
+    **5 credits** • Highly autonomous Claude Opus model, strong on long-horizon agentic work, vision, and memory.
+
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `claude-opus-4-7`
+  </Card>
+
+  <Card title="Claude Opus 4.6" icon="star">
+    **5 credits** • Claude Opus model with superior reasoning, creativity, tool use, and contextual understanding.
+
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `claude-opus-4-6`
+  </Card>
+
+  <Card title="Claude Sonnet 4.6" icon="rocket">
+    **3 credits** • Fast Claude Sonnet model with strong reasoning, creativity, tool use, and contextual understanding.
+
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Fast • Cost: Medium
+    - Vision: images supported
+    - Model id: `claude-sonnet-4-6`
+  </Card>
+</CardGroup>
+
+### xAI
+
+<CardGroup cols={2}>
+  <Card title="Grok 4.5" icon="brain">
+    **1 credit** • The flagship Grok model, with native video input and strong multimodal reasoning.
+
+    - 500K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: Medium
+    - Vision: images supported
+    - Model id: `grok-4.5`
+  </Card>
+
+  <Card title="Grok 4.3" icon="bolt">
+    **1 credit** • A versatile 1M-context model offering strong language and reasoning capabilities at low cost.
+
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: Low
+    - Vision: images supported
+    - Model id: `grok-4.3`
+  </Card>
+
+  <Card title="Grok 4.20 Reasoning" icon="sparkles">
+    **1 credit** • Grok 4.20 in reasoning mode, with enhanced analytical and problem-solving capabilities.
+
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: Low
+    - Vision: images supported
+    - Model id: `grok-4.20-0309-reasoning`
+  </Card>
+</CardGroup>
+
+### Zhipu AI
+
+<CardGroup cols={2}>
+  <Card title="GLM-4.7" icon="brain">
+    **1 credit** • Newer GLM-4 generation model with adaptive reasoning for complex agentic and coding tasks.
+
+    - 200K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: Low
+    - Model id: `glm-4.7`
+  </Card>
+
+  <Card title="GLM-5.1" icon="bolt">
+    **1 credit** • Zhipu's frontier GLM-5 model, a large MoE for the most demanding reasoning and agentic work.
+
+    - 200K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: Low
+    - Model id: `glm-5.1`
+  </Card>
+</CardGroup>
+
+### MiniMax
+
+<CardGroup cols={2}>
+  <Card title="MiniMax M3" icon="brain">
+    **1 credit** • MiniMax's flagship model with a 1M-token context window and native multimodal (image) input.
+
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: Low
+    - Vision: images supported
+    - Model id: `MiniMax-M3`
+  </Card>
+
+  <Card title="MiniMax M2.7" icon="bolt">
+    **1 credit** • Agentic MiniMax M2 model tuned for coding and reasoning, with a 205K context window.
+
+    - 205K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: Low
+    - Model id: `MiniMax-M2.7`
+  </Card>
+
+  <Card title="MiniMax M2.5" icon="sparkles">
+    **1 credit** • Cost-efficient MiniMax M2 tier for general-purpose tasks, with a 205K context window.
+
+    - 205K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Fast • Cost: Very_low
+    - Model id: `MiniMax-M2.5`
+  </Card>
+</CardGroup>
+
+### DeepSeek
+
+<CardGroup cols={2}>
+  <Card title="DeepSeek V4 Flash" icon="brain">
+    **1 credit** • Fast, low-cost general-purpose model with a 1M context window. Good for everyday conversations and high-volume tasks.
+
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Fast • Cost: Low
+    - Model id: `deepseek-v4-flash`
+  </Card>
+
+  <Card title="DeepSeek V4 Pro" icon="bolt">
+    **1 credit** • Higher-performance tier for complex reasoning, with enhanced logical and analytical capabilities.
+
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: Low
+    - Model id: `deepseek-v4-pro`
+  </Card>
+</CardGroup>
+
+### Moonshot AI
+
+<CardGroup cols={2}>
+  <Card title="Kimi K3" icon="brain">
+    **4 credits** • Moonshot AI's flagship multimodal reasoning model with a one-million-token context window.
+
+    - 1M context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: High
+    - Vision: images supported
+    - Model id: `kimi-k3`
+  </Card>
+
+  <Card title="Kimi K2.7 Code" icon="bolt">
+    **3 credits** • A reasoning-first Kimi model optimized for agentic software engineering and complex coding work.
+
+    - 256K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: Medium
+    - Model id: `kimi-k2.7-code`
+  </Card>
+
+  <Card title="Kimi K2.7 Code Highspeed" icon="sparkles">
+    **4 credits** • The high-throughput Kimi K2.7 Code variant for latency-sensitive coding and agent workflows.
+
+    - 256K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Fast • Cost: High
+    - Model id: `kimi-k2.7-code-highspeed`
+  </Card>
+
+  <Card title="Kimi K2.6" icon="gauge">
+    **3 credits** • A multimodal Kimi model for general reasoning, tool use, and long-context tasks.
+
+    - 256K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: Medium
+    - Vision: images supported
+    - Model id: `kimi-k2.6`
+  </Card>
+
+  <Card title="Kimi K2.5" icon="star">
+    **2 credits** • A capable multimodal Kimi model for reasoning over text, images, and video inputs.
+
+    - 256K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: Medium
+    - Vision: images supported
+    - Model id: `kimi-k2.5`
+  </Card>
+</CardGroup>
+
+### Groq
+
+<CardGroup cols={2}>
+  <Card title="DeepSeek Llama (70B)" icon="brain">
+    **2 credits** • Distilled 70B model. Optimized for efficiency while maintaining capabilities.
+
+    - 64K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Fast • Cost: Low
+    - Model id: `deepseek-r1-distill-llama-70b`
+  </Card>
+</CardGroup>
+
+### Fireworks AI
+
+<CardGroup cols={2}>
+  <Card title="DeepSeek R1" icon="brain">
+    **1 credit** • Specialized reasoning model. Enhanced analytical capabilities.
+
+    - 64K context window
+    - Needs at least 2000 completion tokens
+    - Speed: Medium • Cost: Low
+    - Model id: `deepseek-r1`
+  </Card>
+</CardGroup>
 
 ## Reasoning Model Comparison
 
@@ -245,7 +654,7 @@ if (analysisResponse.err) {
 // Most affordable reasoning model
 const budgetBot = await client.createBot({
   name: 'Budget Reasoner',
-  model: 'deepseek-reasoner',
+  model: 'deepseek-v4-pro',
   instruction: 'You solve problems step-by-step.',
   max_reply_tokens: 2000,
   status: 'active'
@@ -264,7 +673,7 @@ const response = await client.chat({
 // Use Gemini for reasoning with large context
 const geminiBot = await client.createBot({
   name: 'Context Reasoner',
-  model: 'gemini-2.0-flash-thinking',
+  model: 'gemini-3.5-flash-lite',
   instruction: 'Analyze documents thoroughly.',
   max_reply_tokens: 2000,
   status: 'active'
@@ -294,7 +703,6 @@ const reasoningBot = await client.createBot({
   name: 'Deep Thinker',
   model: 'o1',
   instruction: 'You solve complex problems.',
-  reasoning_mode: 'auto', // Let it choose
   max_reply_tokens: 3000,
   status: 'active'
 });
@@ -321,9 +729,9 @@ const agentMode = await client.chat({
 // Reasoning models need higher limits
 const config = {
   'o1': { min: 3000, recommended: 4000 },
-  'o1-mini': { min: 2000, recommended: 3000 },
-  'deepseek-reasoner': { min: 2000, recommended: 2500 },
-  'gemini-2.0-flash-thinking': { min: 2000, recommended: 3000 },
+  'gpt-5.6-luna': { min: 2000, recommended: 3000 },
+  'deepseek-v4-pro': { min: 2000, recommended: 2500 },
+  'gemini-3.5-flash-lite': { min: 2000, recommended: 3000 },
   'claude-3-opus-extended-thinking': { min: 2500, recommended: 3000 }
 };
 ```

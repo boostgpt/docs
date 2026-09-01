@@ -1,0 +1,70 @@
+---
+title: "Together AI"
+description: "Use Together AI models in your BoostGPT agents"
+---
+
+## Overview
+
+Together AI hosts open-weight Qwen models, including a coder variant, on managed infrastructure.
+
+## Available Models
+
+<CardGroup cols={2}>
+  <Card title="Qwen 2.5 Coder (32B)" icon="bolt">
+    **1 credit** • Specialized coding model. Enhanced capabilities for programming tasks.
+
+    - 32K context window
+    - Excellent reasoning
+    - Speed: Fast • Cost: Low
+    - Model id: `Qwen/Qwen2.5-Coder-32B-Instruct`
+  </Card>
+
+  <Card title="Qwen 2.5 Turbo (72B)" icon="sparkles">
+    **2 credits** • Large, fast Qwen model. Powerful performance with optimized speed.
+
+    - 128K context window
+    - Excellent reasoning
+    - Speed: Fast • Cost: Medium
+    - Model id: `Qwen/Qwen2.5-72B-Instruct-Turbo`
+  </Card>
+</CardGroup>
+
+## Setup
+
+### Using BoostGPT-Hosted API Keys
+
+<Steps>
+  <Step title="Select a model">
+    In your BoostGPT dashboard, choose any Together AI model when creating or configuring an agent.
+  </Step>
+
+  <Step title="Start chatting">
+    Credits are deducted per step at the rate shown on each model above. Nothing else to configure.
+  </Step>
+</Steps>
+
+### Using Your Own API Key
+
+Bring your own key to bill Together AI directly instead of spending BoostGPT credits. See
+[Bring Your Own Keys](/providers/bring-your-own-keys).
+
+```javascript
+await client.chat({
+  bot_id: 'bot-id',
+  message: 'Hello',
+  model: 'Qwen/Qwen2.5-Coder-32B-Instruct',
+  provider_key: process.env.TOGETHERAI_API_KEY
+});
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Model Comparison" icon="chart-bar" href="/providers/model-comparison">
+    Compare every model across all providers
+  </Card>
+
+  <Card title="Provider Overview" icon="layer-group" href="/providers/overview">
+    See all supported providers
+  </Card>
+</CardGroup>

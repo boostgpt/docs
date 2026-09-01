@@ -1,0 +1,80 @@
+---
+title: "MiniMax"
+description: "Use MiniMax models in your BoostGPT agents"
+---
+
+## Overview
+
+MiniMax models pair very large context windows with low cost, which makes them a good fit for long-running conversations and bulk document work.
+
+## Available Models
+
+<CardGroup cols={2}>
+  <Card title="MiniMax M3" icon="bolt">
+    **1 credit** • MiniMax's flagship model with a 1M-token context window and native multimodal (image) input.
+
+    - 1M context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: Low
+    - Vision: images supported
+    - Model id: `MiniMax-M3`
+  </Card>
+
+  <Card title="MiniMax M2.7" icon="sparkles">
+    **1 credit** • Agentic MiniMax M2 model tuned for coding and reasoning, with a 205K context window.
+
+    - 205K context window
+    - Excellent reasoning (reasoning model)
+    - Speed: Medium • Cost: Low
+    - Model id: `MiniMax-M2.7`
+  </Card>
+
+  <Card title="MiniMax M2.5" icon="zap">
+    **1 credit** • Cost-efficient MiniMax M2 tier for general-purpose tasks, with a 205K context window.
+
+    - 205K context window
+    - Excellent reasoning (reasoning model)
+    - Speed: Fast • Cost: Very_low
+    - Model id: `MiniMax-M2.5`
+  </Card>
+</CardGroup>
+
+## Setup
+
+### Using BoostGPT-Hosted API Keys
+
+<Steps>
+  <Step title="Select a model">
+    In your BoostGPT dashboard, choose any MiniMax model when creating or configuring an agent.
+  </Step>
+
+  <Step title="Start chatting">
+    Credits are deducted per step at the rate shown on each model above. Nothing else to configure.
+  </Step>
+</Steps>
+
+### Using Your Own API Key
+
+Bring your own key to bill MiniMax directly instead of spending BoostGPT credits. See
+[Bring Your Own Keys](/providers/bring-your-own-keys).
+
+```javascript
+await client.chat({
+  bot_id: 'bot-id',
+  message: 'Hello',
+  model: 'MiniMax-M3',
+  provider_key: process.env.MINIMAX_API_KEY
+});
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Model Comparison" icon="chart-bar" href="/providers/model-comparison">
+    Compare every model across all providers
+  </Card>
+
+  <Card title="Provider Overview" icon="layer-group" href="/providers/overview">
+    See all supported providers
+  </Card>
+</CardGroup>

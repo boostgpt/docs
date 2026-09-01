@@ -10,80 +10,42 @@ Groq provides blazing-fast inference for popular open-source models through thei
 ## Available Models
 
 <CardGroup cols={2}>
-  <Card title="DeepSeek Llama (70B)" icon="brain">
-    **2 credits** • Distilled reasoning model
+  <Card title="DeepSeek Llama (70B)" icon="bolt">
+    **2 credits** • Distilled 70B model. Optimized for efficiency while maintaining capabilities.
 
     - 64K context window
-    - Excellent logical capabilities
+    - Excellent reasoning (reasoning model)
     - Speed: Fast • Cost: Low
-    - **Reasoning model** optimized for efficiency
+    - Model id: `deepseek-r1-distill-llama-70b`
   </Card>
 
-  <Card title="Llama 3.3 Versatile (70B)" icon="sparkles">
-    **3 credits** • Versatile large model
+  <Card title="GPT-OSS (20B)" icon="sparkles">
+    **1 credit** • Speed-optimized open-weight 20B model. Ideal for real-time, high-volume applications.
 
-    - 128K context window
-    - Excellent reasoning across diverse tasks
-    - Speed: Fast • Cost: Medium
-    - Best for: General-purpose applications
+    - 131K context window
+    - Good reasoning
+    - Speed: Extremely_fast • Cost: Very_low
+    - Model id: `openai/gpt-oss-20b`
   </Card>
 
-  <Card title="Llama 3.1 Instant (8B)" icon="zap">
-    **1 credit** • Ultra-fast small model
+  <Card title="GPT-OSS (120B)" icon="zap">
+    **1 credit** • Larger open-weight 120B model with strong performance across diverse tasks.
 
-    - 128K context window
-    - Good reasoning with minimal latency
-    - Speed: Extremely Fast • Cost: Very Low
-    - Best for: Real-time applications
-  </Card>
-
-  <Card title="Qwen QWQ (32B)" icon="brain">
-    **2 credits** • Multilingual reasoning
-
-    - 32K context window
-    - Excellent reasoning and multilingual
-    - Speed: Fast • Cost: Low
-    - **Reasoning model** for diverse tasks
-  </Card>
-
-  <Card title="Qwen 3 (32B)" icon="bolt">
-    **2 credits** • Next-gen instruction model
-
-    - 32K context window
-    - Excellent instruction-following
-    - Speed: Fast • Cost: Low
-    - Best for: Strong language tasks
-  </Card>
-
-  <Card title="Mistral Saba (24B)" icon="circle-check">
-    **2 credits** • Reasoning and chat
-
-    - 32K context window
+    - 131K context window
     - Excellent reasoning
     - Speed: Fast • Cost: Low
-    - Best for: Balanced performance
+    - Model id: `openai/gpt-oss-120b`
   </Card>
 
-  <Card title="LLaMA 4 Maverick (17B 128E)" icon="crown">
-    **3 credits** • 128 experts model
+  <Card title="LLaMA 4 Maverick (17B 128E)" icon="circle">
+    **1 credit** • LLaMA 4 with 128 experts for advanced instruction tasks.
 
     - 128K context window
-    - Excellent for advanced instructions
+    - Excellent reasoning
     - Speed: Medium • Cost: Medium
-    - Best for: Complex instruction tasks
-  </Card>
-
-  <Card title="LLaMA 4 Scout (17B 16E)" icon="search">
-    **1 credit** • 16 experts model
-
-    - 128K context window
-    - Good for efficient inference
-    - Speed: Fast • Cost: Low
-    - Best for: Lighter workloads
+    - Model id: `meta-llama/llama-4-maverick-17b-128e-instruct`
   </Card>
 </CardGroup>
-
-
 ## Setup
 
 ### Using BoostGPT-Hosted API Keys
@@ -136,7 +98,7 @@ Groq provides blazing-fast inference for popular open-source models through thei
     // Create bot with Groq model
     const botResponse = await client.createBot({
       name: 'My Groq Bot',
-      model: 'llama-3.1-8b-instant', // Ultra-fast!
+      model: 'openai/gpt-oss-20b', // Ultra-fast!
       instruction: 'You are a quick and helpful assistant.',
       max_reply_tokens: 1000,
       status: 'active'

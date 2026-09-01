@@ -23,10 +23,10 @@ Create a new AI bot.
 ```javascript
 await client.createBot({
   name: 'Bot Name',
-  model: 'gpt-5.1',
+  model: 'gpt-5.6-luna',
   instruction: 'System instruction',
   max_reply_tokens: 1000,
-  reasoning_mode: 'auto',
+  top: 5,
   status: 'active'
 });
 ```
@@ -36,7 +36,7 @@ await client.createBot({
 </ParamField>
 
 <ParamField path="model" type="string" required>
-  AI model to use: `gpt-5.1`, `gpt-5-mini`, `claude-3.7-sonnet`, `gemini-2.0-flash`, etc.
+  AI model to use: `gpt-5.6-luna`, `gpt-5.1`, `claude-haiku-4-5`, `gemini-3.5-flash`, etc. See [Model Comparison](/providers/model-comparison) for the full catalogue.
 </ParamField>
 
 <ParamField path="instruction" type="string" required>
@@ -100,10 +100,9 @@ Update a bot's configuration.
 await client.updateBot({
   bot_id: 'bot-123',
   name: 'Updated Name',
-  model: 'gpt-5.1',
+  model: 'gpt-5.6-luna',
   instruction: 'New instruction',
   max_reply_tokens: 1500,
-  reasoning_mode: 'agent',
   status: 'active'
 });
 ```
@@ -157,7 +156,7 @@ await client.chat({
   chat_id: 'user-456',
   stream: false,
   memory: true,
-  model: 'gpt-5.1',
+  model: 'gpt-5.6-luna',
   provider_key: 'optional-key',
   provider_host: 'http://localhost:11434', // For Ollama
   instruction: 'Optional override',
@@ -524,7 +523,6 @@ Update a training source.
 await client.updateTraining({
   source_id: 'source-123',
   bot_id: 'bot-123',
-  type: 'text',
   source: 'Updated content'
 });
 ```
@@ -743,28 +741,61 @@ await client.fetchReasoningSummary({
 
 ---
 
+## Widget
+
+Both endpoints serve the embeddable chat widget. They are here so a backend can mint a signed
+session or read the same configuration the widget reads.
+
+### fetchWidgetConfig()
+
+```javascript
+await client.fetchWidgetConfig({ bot_id: 'bot-id' });
+```
+
+### createWidgetSso()
+
+```javascript
+await client.createWidgetSso({ bot_id: 'bot-id', token: 'signed-jwt' });
+```
+
+---
+
 ## Error Handling
 
-All methods return a consistent response format:
+Methods never throw. Every one returns `{ err, response }`, and `err` is set whenever the request
+came back with a non-2xx status:
 
 ```javascript
 const result = await client.createBot({ name: 'My Bot' });
 
 if (result.err) {
-  // Handle error
-  console.error('Error:', result.err.message);
+  console.error(result.err.message);   // what the server said
+  console.error(result.err.status);    // 400, 403, 429, 500 …
+  console.error(result.err.code);      // e.g. 'schedule_too_frequent', when the API sends one
 } else {
-  // Use response
-  console.log('Success:', result.response);
+  console.log(result.response);
 }
 ```
 
-Common error codes:
+On failure `response` is `null`, so there is no half-populated object to guard against.
+
+Common statuses:
+- **400** - Invalid request. `err.message` says what was wrong.
 - **401** - Invalid API key
-- **403** - Insufficient permissions
+- **403** - Insufficient permissions, or a plan that does not include the feature
 - **404** - Resource not found
 - **429** - Rate limit exceeded
 - **500** - Server error
+
+<Warning>
+**Changed in 8.0.0.** Earlier versions decided whether a request had failed by reading a field the
+API only populates in development, so against production `err` was always `null` and a failed call
+returned the error body as though it were data. If you have code inspecting `response.message` to
+detect failures, it can now check `err` instead.
+</Warning>
+
+For a streaming call — `chat({ stream: true })`, `subscribeChat`, `subscribeNotifications` —
+`response` is the raw event stream rather than a parsed object; iterate it with `for await`.
 
 ---
 
@@ -782,7 +813,7 @@ const client = new BoostGPT({
 // Create bot
 const botResult = await client.createBot({
   name: 'Support Bot',
-  model: 'gpt-5-mini',
+  model: 'gpt-5.6-luna',
   instruction: 'You are a helpful support agent'
 });
 

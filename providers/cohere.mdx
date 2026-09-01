@@ -10,34 +10,51 @@ Cohere provides enterprise-grade language models optimized for business use case
 ## Available Models
 
 <CardGroup cols={2}>
-  <Card title="Command R+" icon="crown">
-    **5 credits** • Most advanced Command model
+  <Card title="Command A" icon="bolt">
+    **1 credit** • High-performance Command model with a 256k context window.
 
-    - 128K context window
-    - Exceptional reasoning and performance
+    - 256K context window
+    - Exceptional reasoning
     - Speed: Medium • Cost: High
-    - Best for: Complex tasks, high-stakes applications
+    - Model id: `command-a-03-2025`
   </Card>
 
-  <Card title="Command A" icon="sparkles">
-    **5 credits** • Most performant model
+  <Card title="Command R+" icon="sparkles">
+    **1 credit** • Advanced Command model with strong performance on challenging tasks.
 
     - 128K context window
-    - Exceptional performance on challenging tasks
+    - Exceptional reasoning
     - Speed: Medium • Cost: High
-    - Best for: Demanding enterprise applications
+    - Model id: `command-r-plus-08-2024`
   </Card>
 
-  <Card title="Command R7B" icon="bolt">
-    **5 credits** • Smallest and fastest
+  <Card title="Command R" icon="zap">
+    **1 credit** • Balanced Command model for general-purpose generation and retrieval tasks.
 
     - 128K context window
-    - Excellent reasoning with quick responses
-    - Speed: Very Fast • Cost: Low
-    - Best for: Fast responses at scale
+    - Excellent reasoning
+    - Speed: Fast • Cost: Low
+    - Model id: `command-r-08-2024`
+  </Card>
+
+  <Card title="Command R7B" icon="circle">
+    **1 credit** • The smallest and fastest Command model, tuned for quick responses.
+
+    - 128K context window
+    - Excellent reasoning
+    - Speed: Very_fast • Cost: Low
+    - Model id: `command-r7b-12-2024`
+  </Card>
+
+  <Card title="Command A Translate" icon="gauge">
+    **1 credit** • Specialized Command model for high-quality machine translation. Short 8k context.
+
+    - 8K context window
+    - Good reasoning
+    - Speed: Fast • Cost: Low
+    - Model id: `command-a-translate-08-2025`
   </Card>
 </CardGroup>
-
 ## Setup
 
 ### Using BoostGPT-Hosted API Keys
@@ -89,7 +106,7 @@ Cohere provides enterprise-grade language models optimized for business use case
     // Create bot with Cohere model
     const botResponse = await client.createBot({
       name: 'My Cohere Bot',
-      model: 'command-r-plus',
+      model: 'command-r-plus-08-2024',
       instruction: 'You are an enterprise assistant.',
       max_reply_tokens: 1000,
       status: 'active'

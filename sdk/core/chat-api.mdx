@@ -121,7 +121,7 @@ Bring your own API key for any provider:
 const result = await client.chat({
   bot_id: 'bot_abc123',
   message: 'Hello',
-  model: 'gpt-5',
+  model: 'gpt-5.6-luna',
   provider_key: 'sk-your-openai-key' // Use your OpenAI key
 });
 ```
@@ -262,6 +262,84 @@ Plan mode classifies each message as one of three intents: **approve** (execute 
 <Warning>
 Plan mode requires the agent's **Workspace** setting to be enabled. If workspace is disabled, `plan` requests are treated as normal `ask` mode.
 </Warning>
+
+## Managing a Conversation
+
+### Rename a chat
+
+```javascript
+await client.renameChat({
+  bot_id: 'bot_abc123',
+  chat_id: 'chat-id',
+  name: 'Onboarding questions'
+});
+```
+
+### Set the stored chat mode
+
+`chat()` takes `chat_mode` per message. `setChatMode` changes the conversation's stored default.
+
+```javascript
+await client.setChatMode({ bot_id: 'bot_abc123', chat_id: 'chat-id', mode: 'plan' });
+```
+
+<Warning>
+`edit` and `plan` are not available everywhere. They fall back to `ask` when the agent has no
+workspace, and a visitor conversation is always `ask` unless the caller is an owner, admin or
+moderator. `setChatMode` refuses outright with **403 "Only the builder conversation can use edit or
+plan mode."** for a non-staff caller on any conversation that is not the Site builder's. An API key
+inherits the role of the member who owns it, so a key owned by a plain member cannot set these.
+</Warning>
+
+### Cancel a reply in progress
+
+```javascript
+await client.cancelChat({ bot_id: 'bot_abc123', chat_id: 'chat-id' });
+```
+
+### Stream state
+
+```javascript
+// Is this conversation generating right now?
+await client.fetchStreamStatus({ bot_id: 'bot_abc123', chat_id: 'chat-id' });
+
+// Every conversation on this agent with a reply in flight
+await client.fetchActiveStreams({ bot_id: 'bot_abc123' });
+```
+
+### Reconnect to a live reply
+
+Both subscribe methods answer `text/event-stream`, so `response` is the raw stream rather than a
+parsed object. This is how a client that dropped its connection mid-reply picks up the rest.
+
+```javascript
+const { err, response } = await client.subscribeChat({
+  bot_id: 'bot_abc123',
+  chat_id: 'chat-id'
+});
+
+if (!err) {
+  for await (const chunk of response) {
+    process.stdout.write(chunk.toString());
+  }
+}
+
+// Notifications for the whole agent; chat_id is optional
+await client.subscribeNotifications({ bot_id: 'bot_abc123' });
+```
+
+### Schedules attached to this conversation
+
+```javascript
+await client.fetchChatScheduledTasks({ bot_id: 'bot_abc123', chat_id: 'chat-id' });
+
+await client.toggleChatScheduledTask({
+  bot_id: 'bot_abc123',
+  chat_id: 'chat-id',
+  task_id: 'task-id',
+  enabled: false
+});
+```
 
 ## Error Handling
 

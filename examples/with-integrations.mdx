@@ -10,23 +10,24 @@ Create a bot that uses MCP tools to access external services like Gmail, HubSpot
 ## Prerequisites
 
 ```bash
-npm install @boostgpt/core-sdk
+npm install boostgpt
 ```
 
 ## Complete Example
 
 ```javascript
-import { BoostGPT } from '@boostgpt/core-sdk';
+import { BoostGPT } from 'boostgpt';
 
 const client = new BoostGPT({
-  apiKey: process.env.BOOSTGPT_API_KEY
+  key: process.env.BOOSTGPT_API_KEY,
+  project_id: process.env.BOOSTGPT_PROJECT_ID
 });
 
 async function main() {
   // 1. Create bot
   const botResult = await client.createBot({
     name: 'Sales Assistant',
-    model: 'gpt-4o',
+    model: 'gpt-5.6-luna',
     instruction: `You are a sales assistant with access to:
     - CRM (search customers, create deals)
     - Email (send messages)
@@ -69,7 +70,7 @@ main();
 // Bot with support tools
 const supportBot = await client.createBot({
   name: 'Support Agent',
-  model: 'gpt-4o',
+  model: 'gpt-5.6-luna',
   instruction: `You are a customer support agent with access to:
   - Ticketing system
   - Knowledge base
@@ -102,7 +103,7 @@ const response = await client.chat({
 ```javascript
 const salesBot = await client.createBot({
   name: 'Sales Automation',
-  model: 'gpt-4o',
+  model: 'gpt-5.6-luna',
   instruction: 'Automate sales workflows using CRM, email, and calendar tools.'
 });
 

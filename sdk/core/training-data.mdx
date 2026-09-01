@@ -178,7 +178,8 @@ const result = await client.updateTraining({
   bot_id: 'bot_abc123',
   source_id: 'source_xyz789',
   source: 'Updated content here',
-  type: 'text'
+  title: 'Refreshed pricing page',
+  description: 'Updated after the September price change'
 });
 
 if (result.err) {
@@ -305,7 +306,7 @@ async function setupBot() {
   // Create bot
   const bot = await client.createBot({
     name: 'Support Bot',
-    model: 'gpt-5-mini',
+    model: 'gpt-5.6-luna',
     instruction: 'You are a helpful support assistant.'
   });
 

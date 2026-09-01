@@ -10,17 +10,18 @@ Use the BoostGPT Router SDK to deploy your bot across multiple platforms simulta
 ## Prerequisites
 
 ```bash
-npm install @boostgpt/core-sdk @boostgpt/router-sdk
+npm install boostgpt @boostgpt/router-sdk
 ```
 
 ## Complete Example
 
 ```javascript
-import { BoostGPT } from '@boostgpt/core-sdk';
+import { BoostGPT } from 'boostgpt';
 import { Router } from '@boostgpt/router-sdk';
 
 const client = new BoostGPT({
-  apiKey: process.env.BOOSTGPT_API_KEY
+  key: process.env.BOOSTGPT_API_KEY,
+  project_id: process.env.BOOSTGPT_PROJECT_ID
 });
 
 // Create router
@@ -74,7 +75,7 @@ console.log('Multi-channel bot running on port 3000');
 ```javascript
 const botResult = await client.createBot({
   name: 'Multi-Platform Assistant',
-  model: 'gpt-4o',
+  model: 'gpt-5.6-luna',
   instruction: 'You are a helpful assistant available on multiple platforms.'
 });
 

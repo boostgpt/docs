@@ -1,0 +1,128 @@
+---
+title: "Tool Management"
+description: "Attach, configure and test the tools an agent can call"
+---
+
+## Overview
+
+Tools are what an agent can *do* beyond answering: call an API, look something up, take an action.
+This page covers the tools attached to **one agent**.
+
+<Info>
+Not to be confused with two neighbouring pages. [MCP Connectors](/sdk/core/mcp-connectors) covers
+the project-level MCP server definitions a tool can be created from, and
+[Built-in Tools](/sdk/core/built-in-tools) covers the tools every agent has without configuration.
+</Info>
+
+## List Tools
+
+```javascript
+await client.fetchTools({
+  bot_id: 'bot-id',
+  page: 1,            // Optional
+  per_page: 10,       // Optional
+  filter: { type: 'mcp' }   // Optional: serialised as a JSON query parameter
+});
+```
+
+## Create a Tool
+
+```javascript
+await client.createTool({
+  bot_id: 'bot-id',
+  name: 'Order lookup',
+  description: 'Look up an order by its reference',
+  type: 'mcp',
+  config: {
+    server_id: 'mcp-server-id'
+  }
+});
+```
+
+## Get a Tool
+
+```javascript
+await client.fetchTool({ bot_id: 'bot-id', tool_id: 'tool-id' });
+```
+
+## Update a Tool
+
+```javascript
+await client.updateTool({
+  bot_id: 'bot-id',
+  tool_id: 'tool-id',
+  name: 'Order lookup (v2)',
+  description: 'Look up an order by reference or email',
+  config: { server_id: 'mcp-server-id' }
+});
+```
+
+## Delete a Tool
+
+```javascript
+await client.deleteTool({ bot_id: 'bot-id', tool_id: 'tool-id' });
+```
+
+## Configure a Tool
+
+Settings are per-tool and depend on its type — approval requirements, timeouts, credentials.
+
+```javascript
+await client.configureTools({
+  bot_id: 'bot-id',
+  tool_id: 'tool-id',
+  settings: {
+    require_approval: 'never'
+  }
+});
+```
+
+## Enable or Disable One Function
+
+A tool can expose many functions. `toggleTool` turns a single one on or off without removing the
+tool, which is how you narrow a large MCP server down to the handful of calls an agent should make.
+
+```javascript
+await client.toggleTool({
+  bot_id: 'bot-id',
+  tool_id: 'tool-id',
+  tool_name: 'create_refund',
+  active: false
+});
+```
+
+## Refresh a Tool
+
+Re-reads the tool's definition from its source, picking up functions that were added or removed
+upstream.
+
+```javascript
+await client.refreshTools({ bot_id: 'bot-id', tool_id: 'tool-id' });
+```
+
+## Test the Connection
+
+Checks that the tool's credentials and endpoint still work, without involving the agent.
+
+```javascript
+const { err, response } = await client.testToolConnection({
+  bot_id: 'bot-id',
+  tool_id: 'tool-id'
+});
+
+if (err) {
+  console.error('Tool is unreachable:', err.message);
+}
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="MCP Connectors" icon="plug" href="/sdk/core/mcp-connectors">
+    Deploy an MCP server to create tools from
+  </Card>
+
+  <Card title="Built-in Tools" icon="toolbox" href="/sdk/core/built-in-tools">
+    What every agent can do without configuration
+  </Card>
+</CardGroup>

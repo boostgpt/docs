@@ -58,7 +58,7 @@ POST /v1/bot/tasks/create
 ### Example
 
 ```javascript
-const client = new BoostGPT({ api_key: 'YOUR_API_KEY', project_id: 'PROJECT_UUID' });
+const client = new BoostGPT({ key: 'YOUR_API_KEY', project_id: 'PROJECT_UUID' });
 
 await client.createTask({
   bot_id: 'bot-uuid',
@@ -101,6 +101,41 @@ carry a `state` of `backlog`, `todo`, `in_progress`, `review` or `done`.
 PUT /v1/bot/tasks/update
 ```
 
+```javascript
+await client.updateTask({
+  bot_id: 'bot-uuid',
+  task_id: 'task-uuid',
+  prompt: 'Check for new tickets and summarize the urgent ones',
+  schedule_config: { interval_minutes: 60 },
+  enabled: true
+});
+```
+
+Subject to the same frequency floor as creation — see below.
+
+## Schedule frequency
+
+Every plan enforces a **minimum interval of 15 minutes**. It is an infrastructure limit rather than
+a tier: credits are what meter automation, and the floor exists so a schedule cannot fire faster
+than a run can finish. A schedule below it is refused:
+
+```javascript
+const { err } = await client.createTask({
+  bot_id: 'bot-uuid',
+  name: 'Too eager',
+  prompt: 'Check the inbox',
+  schedule_type: 'interval',
+  schedule_config: { interval_minutes: 1 }
+});
+
+err.status;   // 400
+err.code;     // 'schedule_too_frequent'
+err.message;  // "The shortest interval on this plan is 15 minutes; 1 was requested."
+```
+
+Cron is measured the same way — the shortest gap between two fires has to clear the floor, so
+`* * * * *` is refused and `0 9 * * 1-5` is not.
+
 ## Enable / disable
 
 ```bash
@@ -137,6 +172,31 @@ await client.deleteTask({ bot_id: 'bot-uuid', task_id: 'task-uuid' });
 ```
 
 Deleting removes the task's queued schedule as well as the row.
+
+## Run statuses
+
+Each run in the log carries a `status`:
+
+| status | meaning |
+|---|---|
+| `success` | The run finished. |
+| `error` | The run started and failed. Consecutive errors eventually pause the schedule. |
+| `skipped` | The run was declined before starting; `reason` says why. |
+| `interrupted` | The run was killed mid-flight, normally by a deploy or restart. Deliberately not counted as an error, so a restart cannot walk a schedule into its error threshold. |
+
+Common `reason` values on a skip: `already_running` (the previous fire has not finished),
+`schedule_clamped` (the schedule was below the plan floor and was slowed to it), `no_credits`,
+`outside_active_hours`, `max_executions_reached`, `assigned_to_member`, `bot_offline`.
+
+## Delete a run
+
+```bash
+DELETE /v1/bot/tasks/logs/delete?project_id=…&bot_id=…&run_id=…
+```
+
+```javascript
+await client.deleteTaskLog({ bot_id: 'bot-uuid', run_id: 'run-uuid' });
+```
 
 ## Logs and stats
 

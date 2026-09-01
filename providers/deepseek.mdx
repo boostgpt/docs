@@ -10,25 +10,24 @@ DeepSeek offers powerful AI models with specialized reasoning capabilities. Deep
 ## Available Models
 
 <CardGroup cols={2}>
-  <Card title="DeepSeek V3" icon="brain-circuit">
-    **1 credit** " General-purpose chat model
+  <Card title="DeepSeek V4 Flash" icon="bolt">
+    **1 credit** • Fast, low-cost general-purpose model with a 1M context window. Good for everyday conversations and high-volume tasks.
 
-    - 64K context window
-    - Good reasoning for everyday tasks
-    - Speed: Fast " Cost: Low
-    - Best for: Conversations, general tasks
+    - 1M context window
+    - Good reasoning (reasoning model)
+    - Speed: Fast • Cost: Low
+    - Model id: `deepseek-v4-flash`
   </Card>
 
-  <Card title="DeepSeek R1" icon="brain">
-    **2 credits** " Specialized reasoning model
+  <Card title="DeepSeek V4 Pro" icon="sparkles">
+    **1 credit** • Higher-performance tier for complex reasoning, with enhanced logical and analytical capabilities.
 
-    - 64K context window
-    - Excellent logical and analytical capabilities
-    - Speed: Medium " Cost: Medium
-    - **Reasoning model** for complex problems
+    - 1M context window
+    - Excellent reasoning (reasoning model)
+    - Speed: Medium • Cost: Low
+    - Model id: `deepseek-v4-pro`
   </Card>
 </CardGroup>
-
 ## Setup
 
 ### Using BoostGPT-Hosted API Keys
@@ -79,7 +78,7 @@ DeepSeek offers powerful AI models with specialized reasoning capabilities. Deep
     // Create bot with DeepSeek model
     const botResponse = await client.createBot({
       name: 'My DeepSeek Bot',
-      model: 'deepseek-reasoner', // R1 model
+      model: 'deepseek-v4-pro',
       instruction: 'You are a logical and analytical assistant.',
       max_reply_tokens: 1000,
       status: 'active'

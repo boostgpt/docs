@@ -32,16 +32,17 @@ All bot endpoints are documented in the Core SDK reference:
 We recommend using the Core SDK instead of direct API calls:
 
 ```javascript
-import { BoostGPT } from '@boostgpt/core-sdk';
+import { BoostGPT } from 'boostgpt';
 
 const client = new BoostGPT({
-  apiKey: process.env.BOOSTGPT_API_KEY
+  key: process.env.BOOSTGPT_API_KEY,
+  project_id: process.env.BOOSTGPT_PROJECT_ID
 });
 
 // Create bot
 const result = await client.createBot({
   name: 'My Bot',
-  model: 'gpt-4o'
+  model: 'gpt-5.6-luna'
 });
 ```
 

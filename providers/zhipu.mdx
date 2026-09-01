@@ -1,0 +1,98 @@
+---
+title: "Zhipu AI"
+description: "Use Zhipu AI models in your BoostGPT agents"
+---
+
+## Overview
+
+Zhipu's GLM models are strong multilingual generalists with a 200K context window, well suited to long documents and agentic tool use.
+
+## Available Models
+
+<CardGroup cols={2}>
+  <Card title="GLM-4.6" icon="bolt">
+    **1 credit** • Zhipu's capable general-purpose GLM model with a 200K context window and strong agentic performance.
+
+    - 200K context window
+    - Excellent reasoning
+    - Speed: Medium • Cost: Low
+    - Model id: `glm-4.6`
+  </Card>
+
+  <Card title="GLM-4.7" icon="sparkles">
+    **1 credit** • Newer GLM-4 generation model with adaptive reasoning for complex agentic and coding tasks.
+
+    - 200K context window
+    - Excellent reasoning (reasoning model)
+    - Speed: Medium • Cost: Low
+    - Model id: `glm-4.7`
+  </Card>
+
+  <Card title="GLM-4.7 Flash" icon="zap">
+    **1 credit** • The fast, free GLM-4.7 tier, optimized for low latency and high-volume tasks.
+
+    - 200K context window
+    - Good reasoning
+    - Speed: Very_fast • Cost: Very_low
+    - Model id: `glm-4.7-flash`
+  </Card>
+
+  <Card title="GLM-5.1" icon="circle">
+    **1 credit** • Zhipu's frontier GLM-5 model, a large MoE for the most demanding reasoning and agentic work.
+
+    - 200K context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: Low
+    - Model id: `glm-5.1`
+  </Card>
+
+  <Card title="GLM-4.6V" icon="gauge">
+    **1 credit** • Multimodal GLM model that reasons over both images and text.
+
+    - 128K context window
+    - Excellent reasoning
+    - Speed: Medium • Cost: Low
+    - Vision: images supported
+    - Model id: `glm-4.6v`
+  </Card>
+</CardGroup>
+
+## Setup
+
+### Using BoostGPT-Hosted API Keys
+
+<Steps>
+  <Step title="Select a model">
+    In your BoostGPT dashboard, choose any Zhipu AI model when creating or configuring an agent.
+  </Step>
+
+  <Step title="Start chatting">
+    Credits are deducted per step at the rate shown on each model above. Nothing else to configure.
+  </Step>
+</Steps>
+
+### Using Your Own API Key
+
+Bring your own key to bill Zhipu AI directly instead of spending BoostGPT credits. See
+[Bring Your Own Keys](/providers/bring-your-own-keys).
+
+```javascript
+await client.chat({
+  bot_id: 'bot-id',
+  message: 'Hello',
+  model: 'glm-4.6',
+  provider_key: process.env.ZHIPU_API_KEY
+});
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Model Comparison" icon="chart-bar" href="/providers/model-comparison">
+    Compare every model across all providers
+  </Card>
+
+  <Card title="Provider Overview" icon="layer-group" href="/providers/overview">
+    See all supported providers
+  </Card>
+</CardGroup>

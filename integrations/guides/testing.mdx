@@ -33,11 +33,11 @@ Test each tool in isolation:
   </Step>
 
   <Step title="Connect MCP Server">
-    **Test Agent ’ Tools ’ Add Tool** ’ Add your MCP server
+    **Test Agent â€™ Tools â€™ Add Tool** â€™ Add your MCP server
   </Step>
 
   <Step title="Open Playground">
-    **Test Agent ’ Playground**
+    **Test Agent â€™ Playground**
   </Step>
 
   <Step title="Test Each Tool">
@@ -64,19 +64,19 @@ Test different parameter combinations:
 ```text
 # Required parameters
 "Create customer with name John and email john@test.com"
-’ Should succeed
+â€™ Should succeed
 
 # Missing required parameter
 "Create customer with name John"
-’ Should return error: "email is required"
+â€™ Should return error: "email is required"
 
 # Invalid parameter type
 "Create customer with email 12345"
-’ Should return error: "invalid email format"
+â€™ Should return error: "invalid email format"
 
 # Optional parameters
 "Create customer John, email john@test.com, phone 555-1234"
-’ Should succeed with optional phone
+â€™ Should succeed with optional phone
 ```
 
 ### Test Error Cases
@@ -86,15 +86,15 @@ Test failure scenarios:
 ```text
 # Not found
 "Get customer nonexistent@test.com"
-’ Should return: "Customer not found"
+â€™ Should return: "Customer not found"
 
 # Duplicate
 "Create customer john@test.com" (already exists)
-’ Should return: "Customer already exists"
+â€™ Should return: "Customer already exists"
 
 # Invalid data
 "Create customer with email 'invalid-email'"
-’ Should return: "Invalid email format"
+â€™ Should return: "Invalid email format"
 ```
 
 ## Integration Testing
@@ -153,19 +153,19 @@ Scenario: Lead to customer conversion
 
 1. Create lead:
    "Add lead: Jane Doe from TechStart"
-   ’ Uses create_lead tool
+   â€™ Uses create_lead tool
 
 2. Qualify lead:
    "Check if TechStart exists in database"
-   ’ Uses search_company tool
+   â€™ Uses search_company tool
 
 3. Convert to customer:
    "Convert Jane to customer with $50K deal"
-   ’ Uses convert_lead and create_deal tools
+   â€™ Uses convert_lead and create_deal tools
 
 4. Send welcome email:
    "Email Jane the onboarding guide"
-   ’ Uses send_email tool
+   â€™ Uses send_email tool
 ```
 
 ## Automated Testing
@@ -326,7 +326,7 @@ Deploy gradually to production:
 
 Track key metrics in production:
 
-**Dashboard ’ MCP Servers ’ Your Server ’ Analytics**
+**Dashboard â€™ MCP Servers â€™ Your Server â€™ Analytics**
 
 | Metric | Target | Alert If |
 |--------|--------|----------|

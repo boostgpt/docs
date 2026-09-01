@@ -90,7 +90,7 @@ router.onMessage(async (message, context) => {
   const weatherMatch = content.match(/^\/weather\s+(.+)/i);
   if (weatherMatch) {
     const city = weatherMatch[1];
-    return `Weather in ${city}: Sunny, 72°F`;
+    return `Weather in ${city}: Sunny, 72Â°F`;
   }
 
   // Match /search <query>
@@ -182,8 +182,7 @@ router.onMessage(async (message, context) => {
   const response = await context.boostgpt.chat({
     bot_id: context.config.defaultBotId,
     message: message.content,
-    session_id: sessionId,
-    user_id: message.userId
+    chat_id: sessionId
   });
 
   if (response.err) {

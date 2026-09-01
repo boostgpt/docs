@@ -1,0 +1,160 @@
+---
+title: "Fireworks AI"
+description: "Use Fireworks AI models in your BoostGPT agents"
+---
+
+## Overview
+
+Fireworks serves open-weight models — Llama, Mixtral, Qwen, DeepSeek and Yi — behind one fast inference endpoint, so you can pick an open model without hosting it yourself.
+
+## Available Models
+
+<CardGroup cols={2}>
+  <Card title="DeepSeek V3" icon="bolt">
+    **1 credit** • Latest DeepSeek model. Improved performance and capabilities.
+
+    - 64K context window
+    - Good reasoning
+    - Speed: Fast • Cost: Low
+    - Model id: `deepseek-v3`
+  </Card>
+
+  <Card title="DeepSeek R1" icon="sparkles">
+    **1 credit** • Specialized reasoning model. Enhanced analytical capabilities.
+
+    - 64K context window
+    - Excellent reasoning (reasoning model)
+    - Speed: Medium • Cost: Low
+    - Model id: `deepseek-r1`
+  </Card>
+
+  <Card title="Llama V3 (8B)" icon="zap">
+    **1 credit** • Instruction-tuned 8B model. Efficient for general tasks.
+
+    - 8K context window
+    - Good reasoning
+    - Speed: Very_fast • Cost: Very_low
+    - Model id: `llama-v3-8b-instruct`
+  </Card>
+
+  <Card title="Llama V3 (70B)" icon="circle">
+    **2 credits** • Large instruction-tuned model. Powerful for complex tasks.
+
+    - 8K context window
+    - Excellent reasoning
+    - Speed: Medium • Cost: Medium
+    - Model id: `llama-v3-70b-instruct`
+  </Card>
+
+  <Card title="Llama V3.1 (8B)" icon="gauge">
+    **1 credit** • Updated 8B instruction model. Improved performance and efficiency.
+
+    - 128K context window
+    - Good reasoning
+    - Speed: Very_fast • Cost: Very_low
+    - Model id: `llama-v3p1-8b-instruct`
+  </Card>
+
+  <Card title="Llama V3.1 (70B)" icon="rocket">
+    **1 credit** • Updated 70B instruction model. Enhanced capabilities and performance.
+
+    - 128K context window
+    - Excellent reasoning
+    - Speed: Fast • Cost: Low
+    - Model id: `llama-v3p1-70b-instruct`
+  </Card>
+
+  <Card title="Llama V3.1 (405B)" icon="star">
+    **2 credits** • Massive 405B parameter model. Exceptional performance on complex tasks.
+
+    - 128K context window
+    - Exceptional reasoning
+    - Speed: Slow • Cost: High
+    - Model id: `llama-v3p1-405b-instruct`
+  </Card>
+
+  <Card title="Llama V3.3 (70B)" icon="brain">
+    **2 credits** • Latest 70B model version. Improved instruction following and reasoning.
+
+    - 128K context window
+    - Excellent reasoning
+    - Speed: Fast • Cost: Medium
+    - Model id: `llama-v3p3-70b-instruct`
+  </Card>
+
+  <Card title="Yi Large" icon="wand-magic-sparkles">
+    **2 credits** • Large Yi model. Strong performance across diverse applications.
+
+    - 32K context window
+    - Excellent reasoning
+    - Speed: Medium • Cost: Medium
+    - Model id: `yi-large`
+  </Card>
+
+  <Card title="Mixtral (8x7B)" icon="microchip">
+    **1 credit** • Instruction-tuned Mixtral model. Efficient mixture of experts architecture.
+
+    - 32K context window
+    - Good reasoning
+    - Speed: Fast • Cost: Low
+    - Model id: `mixtral-8x7b-instruct`
+  </Card>
+
+  <Card title="Mixtral (8x22B)" icon="layer-group">
+    **2 credits** • Larger instruction-tuned Mixtral. Enhanced capabilities with larger capacity.
+
+    - 64K context window
+    - Excellent reasoning
+    - Speed: Medium • Cost: Medium
+    - Model id: `mixtral-8x22b-instruct`
+  </Card>
+
+  <Card title="Qwen 2.5 (72B)" icon="cube">
+    **1 credit** • Large Qwen model. Advanced capabilities for complex tasks.
+
+    - 128K context window
+    - Excellent reasoning
+    - Speed: Medium • Cost: Medium
+    - Model id: `qwen2p5-72b-instruct`
+  </Card>
+</CardGroup>
+
+## Setup
+
+### Using BoostGPT-Hosted API Keys
+
+<Steps>
+  <Step title="Select a model">
+    In your BoostGPT dashboard, choose any Fireworks AI model when creating or configuring an agent.
+  </Step>
+
+  <Step title="Start chatting">
+    Credits are deducted per step at the rate shown on each model above. Nothing else to configure.
+  </Step>
+</Steps>
+
+### Using Your Own API Key
+
+Bring your own key to bill Fireworks AI directly instead of spending BoostGPT credits. See
+[Bring Your Own Keys](/providers/bring-your-own-keys).
+
+```javascript
+await client.chat({
+  bot_id: 'bot-id',
+  message: 'Hello',
+  model: 'deepseek-v3',
+  provider_key: process.env.FIREWORKS_API_KEY
+});
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Model Comparison" icon="chart-bar" href="/providers/model-comparison">
+    Compare every model across all providers
+  </Card>
+
+  <Card title="Provider Overview" icon="layer-group" href="/providers/overview">
+    See all supported providers
+  </Card>
+</CardGroup>

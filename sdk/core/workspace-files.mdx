@@ -1,0 +1,182 @@
+---
+title: "Workspace Files API"
+description: "Read, write, publish and attach a domain to an agent's workspace from the SDK"
+---
+
+## Overview
+
+Every agent conversation gets an isolated sandbox file system. This page covers reading and writing
+those files **from your own code**.
+
+<Info>
+[Workspaces](/sdk/core/workspaces) covers the other side of the same feature: the `write`, `read`,
+`edit`, `grep` and `delete` tools the *agent* uses on those files while it works. This page is the
+SDK methods **you** call.
+</Info>
+
+## Workspaces
+
+### List workspaces
+
+```javascript
+await client.fetchWorkspaces({ bot_id: 'bot-id' });
+```
+
+### Create a workspace
+
+```javascript
+await client.createWorkspace({ bot_id: 'bot-id', name: 'Landing page' });
+```
+
+### Delete a workspace
+
+```javascript
+await client.deleteWorkspace({ bot_id: 'bot-id', workspace_uuid: 'ws-uuid' });
+```
+
+## Files
+
+### List files
+
+```javascript
+await client.fetchFiles({ bot_id: 'bot-id', workspace_uuid: 'ws-uuid' });
+```
+
+### Read a file
+
+```javascript
+await client.readFile({
+  bot_id: 'bot-id',
+  workspace_uuid: 'ws-uuid',
+  file_uuid: 'file-uuid'
+});
+```
+
+### Create a file
+
+`file_path` is the path inside the workspace, so nested directories are created by writing to them.
+
+```javascript
+await client.createFile({
+  bot_id: 'bot-id',
+  workspace_uuid: 'ws-uuid',
+  file_path: 'src/pages/index.astro',
+  content: '<h1>Hello</h1>',
+  language: 'astro'
+});
+```
+
+### Update a file
+
+Note this takes `file_uuid`, not the path — the path can change under you, the uuid cannot.
+
+```javascript
+await client.updateFile({
+  bot_id: 'bot-id',
+  workspace_uuid: 'ws-uuid',
+  file_uuid: 'file-uuid',
+  content: '<h1>Hello again</h1>',
+  language: 'astro'
+});
+```
+
+### Rename or move a file
+
+```javascript
+await client.renameFile({
+  bot_id: 'bot-id',
+  workspace_uuid: 'ws-uuid',
+  old_path: 'src/pages/index.astro',
+  new_path: 'src/pages/home.astro'
+});
+```
+
+### Delete a file
+
+```javascript
+await client.deleteFile({
+  bot_id: 'bot-id',
+  workspace_uuid: 'ws-uuid',
+  file_uuid: 'file-uuid'
+});
+```
+
+### Download the whole workspace
+
+Returns the workspace as a ZIP.
+
+```javascript
+await client.downloadWorkspace({ bot_id: 'bot-id', workspace_uuid: 'ws-uuid' });
+```
+
+## Publishing
+
+### Suggest a subdomain
+
+```javascript
+await client.suggestSubdomain({ bot_id: 'bot-id', workspace_uuid: 'ws-uuid' });
+```
+
+### Publish
+
+```javascript
+await client.publishWorkspace({
+  bot_id: 'bot-id',
+  workspace_uuid: 'ws-uuid',
+  subdomain: 'acme-docs'
+});
+```
+
+### Unpublish
+
+```javascript
+await client.unpublishWorkspace({ bot_id: 'bot-id', workspace_uuid: 'ws-uuid' });
+```
+
+## Custom Domains
+
+### Attach a domain
+
+The parameter is `custom_domain`. A key named `domain` is not one this method accepts, and because
+requests are built from named parameters it would be dropped — producing a request with no domain
+in it at all.
+
+```javascript
+await client.addCustomDomain({
+  bot_id: 'bot-id',
+  workspace_uuid: 'ws-uuid',
+  custom_domain: 'docs.example.com'
+});
+```
+
+### Check verification status
+
+Attaching a domain returns the DNS records to create. Poll this until it verifies.
+
+```javascript
+await client.refreshDomainStatus({ bot_id: 'bot-id', workspace_uuid: 'ws-uuid' });
+```
+
+### Read the current domain
+
+```javascript
+await client.getDomainInfo({ bot_id: 'bot-id', workspace_uuid: 'ws-uuid' });
+```
+
+### Remove the domain
+
+```javascript
+await client.removeCustomDomain({ bot_id: 'bot-id', workspace_uuid: 'ws-uuid' });
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Workspaces" icon="folder" href="/sdk/core/workspaces">
+    The file tools the agent itself uses
+  </Card>
+
+  <Card title="API Reference" icon="code" href="/sdk/core/api-reference">
+    Every method in one place
+  </Card>
+</CardGroup>

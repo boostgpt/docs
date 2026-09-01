@@ -1,39 +1,54 @@
 ---
 title: Providers & Models
-description: 'Choose from 50+ AI models across 9 providers—or bring your own'
+description: 'Choose from 88 AI models across 14 providers—or bring your own'
 ---
 
 ## Supported Providers
 
-BoostGPT supports **9 AI providers** with **50+ models** spanning from ultra-fast nano models to advanced reasoning models.
+BoostGPT supports **14 AI providers** with **88 models** spanning from ultra-fast nano models to advanced reasoning models. Thirteen are hosted for you; Ollama runs on your own machine.
 
 <CardGroup cols={3}>
   <Card title="OpenAI" icon="openai" href="/providers/openai">
-    GPT-4o, GPT-5, O1, O3 Mini + reasoning models
+    20 models — GPT-5.6 Sol, GPT-5.6 Terra, GPT-5.6 Luna and more
   </Card>
   <Card title="Google" icon="google" href="/providers/google">
-    Gemini 2.5 Pro, Gemini 3, Flash Thinking
+    9 models — Gemini 3.6 Flash, Gemini 3.5 Flash, Gemini 3.5 Flash Lite and more
   </Card>
   <Card title="Anthropic" icon="anthropic" href="/providers/anthropic">
-    Claude Opus 4.1, Sonnet 4.5, Extended Thinking
+    9 models — Claude Fable 5, Claude Opus 4.8, Claude Sonnet 5 and more
   </Card>
   <Card title="xAI" icon="x" href="/providers/xai">
-    Grok 3, Grok 4.1, Reasoning models
+    5 models — Grok 4.5, Grok 4.3, Grok 4.20 Reasoning and more
+  </Card>
+  <Card title="Zhipu AI" icon="brain" href="/providers/zhipu">
+    5 models — GLM-4.6, GLM-4.7, GLM-4.7 Flash and more
+  </Card>
+  <Card title="MiniMax" icon="sparkles" href="/providers/minimax">
+    3 models — MiniMax M3, MiniMax M2.7, MiniMax M2.5
   </Card>
   <Card title="DeepSeek" icon="brain" href="/providers/deepseek">
-    DeepSeek V3, DeepSeek R1 (reasoning)
+    2 models — DeepSeek V4 Flash, DeepSeek V4 Pro
   </Card>
-  <Card title="Mistral" icon="wind" href="/providers/mistral">
-    Small, Medium, Large variants
+  <Card title="Moonshot AI" icon="moon" href="/providers/moonshot">
+    5 models — Kimi K3, Kimi K2.7 Code, Kimi K2.7 Code Highspeed and more
   </Card>
-  <Card title="Cohere" icon="c" href="/providers/cohere">
-    Command R+, Command A, Command R7B
+  <Card title="Mistral AI" icon="wind" href="/providers/mistral">
+    3 models — Mistral Small, Mistral Medium, Mistral Large
   </Card>
-  <Card title="Groq" icon="zap" href="/providers/groq">
-    Ultra-fast inference: Llama, Qwen, Mistral
+  <Card title="Cohere" icon="layer-group" href="/providers/cohere">
+    5 models — Command A, Command R+, Command R and more
+  </Card>
+  <Card title="Groq" icon="bolt" href="/providers/groq">
+    4 models — DeepSeek Llama (70B), GPT-OSS (20B), GPT-OSS (120B) and more
+  </Card>
+  <Card title="Fireworks AI" icon="fire" href="/providers/fireworks">
+    12 models — DeepSeek V3, DeepSeek R1, Llama V3 (8B) and more
+  </Card>
+  <Card title="Together AI" icon="users" href="/providers/togetherai">
+    2 models — Qwen 2.5 Coder (32B), Qwen 2.5 Turbo (72B)
   </Card>
   <Card title="Ollama" icon="server" href="/providers/ollama">
-    Self-hosted local models (bring your own)
+    4 models — Llama 3.3 (70B) Local, Llama 3.1 (8B) Local, Llama 3.1 (70B) Local and more
   </Card>
 </CardGroup>
 
@@ -194,7 +209,7 @@ const bot = await client.createBot({
 
 <CardGroup cols={3}>
   <Card title="Model Comparison" icon="chart-bar" href="/providers/model-comparison">
-    Compare all 50+ models
+    Compare all 88 models
   </Card>
   <Card title="Reasoning Models" icon="brain" href="/providers/reasoning-models">
     Learn about O1, R1, etc.

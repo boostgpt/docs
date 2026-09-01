@@ -7,14 +7,15 @@ description: 'Choose from 88 AI models across 14 providers—or bring your own'
 
 BoostGPT supports **14 AI providers** with **88 models** spanning from ultra-fast nano models to advanced reasoning models. Thirteen are hosted for you; Ollama runs on your own machine.
 
-<CardGroup cols={3}>
+{/* NOTE: use svg icons for all the providers icons and makes sure their svg files exist in /images/providers/. fix the missing anthropic.svg also.  The svg icons should support both mintlify's light and dark mode.  */}
+<CardGroup cols={2}>
   <Card title="OpenAI" icon="openai" href="/providers/openai">
     20 models — GPT-5.6 Sol, GPT-5.6 Terra, GPT-5.6 Luna and more
   </Card>
   <Card title="Google" icon="google" href="/providers/google">
     9 models — Gemini 3.6 Flash, Gemini 3.5 Flash, Gemini 3.5 Flash Lite and more
   </Card>
-  <Card title="Anthropic" icon="anthropic" href="/providers/anthropic">
+  <Card title="Anthropic" icon="/images/providers/anthropic.svg" href="/providers/anthropic">
     9 models — Claude Fable 5, Claude Opus 4.8, Claude Sonnet 5 and more
   </Card>
   <Card title="xAI" icon="x" href="/providers/xai">

@@ -157,10 +157,10 @@ to another agent's. Both apply to an agent turn's `search_memory` tool as well a
 reply — the agent chooses how many results to pull back, but it cannot widen the scope you set.
 
 <Note>
-A tool continuation is a separate HTTP request and inherits nothing from the call that produced it.
-If you set `memory`, `source_ids` or `tags` on `chat()`, send the same values to
-[`executeTool()`](/sdk/core/api-reference#executetool) — otherwise the continuation falls back to the
-agent's own memory setting and searches unscoped.
+A tool continuation inherits the scope of the turn it resumes, so scoping a `chat()` call scopes
+every [`executeTool()`](/sdk/core/api-reference#executetool) step that follows it — you do not need
+to re-send anything. Passing `source_ids` or `tags` to `executeTool()` overrides the turn's scope for
+that step; passing `[]` clears it.
 </Note>
 
 ## Disable Training Data
@@ -177,7 +177,8 @@ const result = await client.chat({
 
 Omitting `memory` uses the agent's own setting; sending `true` or `false` overrides it for that
 request. On an agent turn the resolved value also decides whether the `search_memory` tool is offered
-at all, so `memory: false` means the agent cannot reach back into its knowledge mid-turn either.
+at all, so `memory: false` means the agent cannot reach back into its knowledge mid-turn either — and
+it stays off for the tool continuations that follow, which inherit it.
 
 ## Stream Responses
 

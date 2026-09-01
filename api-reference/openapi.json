@@ -7027,7 +7027,7 @@
               "edit",
               "plan"
             ],
-            "description": "Chat mode. 'ask' for normal chat, 'edit' for agent-powered code editing, 'plan' for conversational plan-then-execute workflow",
+            "description": "Override the chat mode for this step. Omitted, the chat saved mode is used.",
             "default": "ask"
           },
           "execution_data": {
@@ -7121,21 +7121,21 @@
           },
           "memory": {
             "type": "boolean",
-            "description": "Search the agent's knowledge during the continuation. Omit to use the agent's own setting; an explicit value overrides it."
+            "description": "Override whether the continuation may search the agent knowledge. Omitted, it inherits the setting of the turn being resumed."
           },
           "source_ids": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "Narrow the continuation's knowledge search to these sources — re-send what the original request used."
+            "description": "Override the knowledge search scope for this step. Omitted, it inherits the turn scope; send [] to clear it."
           },
           "tags": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "Narrow the continuation's knowledge search to these tags."
+            "description": "Override the tag scope for this step. Omitted, it inherits the turn tags; send [] to clear it."
           }
         }
       },

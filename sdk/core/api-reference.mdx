@@ -331,6 +331,10 @@ await client.executeTool({
 Every field of `execution_data` comes back on the `tool_approval_required` response — pass it
 through rather than assembling it yourself.
 
+A continuation resumes the turn that requested the tool, and inherits that turn's `memory`,
+`source_ids`, `tags` and the chat's saved `chat_mode`. The parameters below are overrides — send one
+only to change it.
+
 <Warning>
 Before 8.0.1 this method sent `tool_calls`, which the endpoint does not read, so every call
 returned 400. Upgrade if you are calling it.
@@ -358,21 +362,20 @@ returned 400. Upgrade if you are calling it.
 </ParamField>
 
 <ParamField path="chat_mode" type="string">
-  `ask`, `edit` or `plan` — as on `chat()`.
+  `ask`, `edit` or `plan`. Omit to keep the chat's saved mode.
 </ParamField>
 
 <ParamField path="memory" type="boolean">
-  Whether the continuation may search the agent's knowledge. Omit to use the agent's own setting;
-  an explicit value overrides it. Send what the original `chat()` call sent — a continuation is a
-  separate HTTP request and does not inherit it.
+  Override whether the continuation may search the agent's knowledge. Omit to keep whatever the
+  turn was running with.
 </ParamField>
 
 <ParamField path="source_ids" type="string[]">
-  Narrow the continuation's knowledge search to these sources. Re-send the original call's value.
+  Override the knowledge search scope. Omit to keep the turn's scope; send `[]` to clear it.
 </ParamField>
 
 <ParamField path="tags" type="string[]">
-  Narrow the continuation's knowledge search to these tags. Re-send the original call's value.
+  Override the tag scope. Omit to keep the turn's; send `[]` to clear it.
 </ParamField>
 
 <ParamField path="stream" type="boolean" default="false">

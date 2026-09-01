@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Together AI">
+  <style>
+    svg:root { color: #1f2328; }
+    @media (prefers-color-scheme: dark) { svg:root { color: #e6edf3; } }
+  </style>
+  <path d="M8.6 4.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 6.8-4.4 7.5 7.5 0 1 1 0-6.2A7.5 7.5 0 0 0 8.6 4.5Zm6.8 0a7.5 7.5 0 1 1 0 15 8.9 8.9 0 0 0 0-15Z"/>
+</svg>

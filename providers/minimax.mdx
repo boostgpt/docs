@@ -10,7 +10,25 @@ MiniMax models pair very large context windows with low cost, which makes them a
 ## Available Models
 
 <CardGroup cols={2}>
-  <Card title="MiniMax M3" icon="bolt">
+  <Card title="MiniMax M2.7 Highspeed" icon="bolt">
+    **1 credit** • The accelerated M2.7 tier — roughly 100 tokens/sec against the standard 60.
+
+    - 205K context window
+    - Excellent reasoning (reasoning model)
+    - Speed: Very fast • Cost: Low
+    - Model id: `MiniMax-M2.7-highspeed`
+  </Card>
+
+  <Card title="MiniMax M2.5 Highspeed" icon="sparkles">
+    **1 credit** • The accelerated M2.5 tier — roughly 100 tokens/sec against the standard 60.
+
+    - 205K context window
+    - Excellent reasoning (reasoning model)
+    - Speed: Very fast • Cost: Low
+    - Model id: `MiniMax-M2.5-highspeed`
+  </Card>
+
+  <Card title="MiniMax M3" icon="zap">
     **1 credit** • MiniMax's flagship model with a 1M-token context window and native multimodal (image) input.
 
     - 1M context window
@@ -20,7 +38,7 @@ MiniMax models pair very large context windows with low cost, which makes them a
     - Model id: `MiniMax-M3`
   </Card>
 
-  <Card title="MiniMax M2.7" icon="sparkles">
+  <Card title="MiniMax M2.7" icon="circle">
     **1 credit** • Agentic MiniMax M2 model tuned for coding and reasoning, with a 205K context window.
 
     - 205K context window
@@ -29,7 +47,7 @@ MiniMax models pair very large context windows with low cost, which makes them a
     - Model id: `MiniMax-M2.7`
   </Card>
 
-  <Card title="MiniMax M2.5" icon="zap">
+  <Card title="MiniMax M2.5" icon="gauge">
     **1 credit** • Cost-efficient MiniMax M2 tier for general-purpose tasks, with a 205K context window.
 
     - 205K context window
@@ -62,7 +80,7 @@ Bring your own key to bill MiniMax directly instead of spending BoostGPT credits
 await client.chat({
   bot_id: 'bot-id',
   message: 'Hello',
-  model: 'MiniMax-M3',
+  model: 'MiniMax-M2.7-highspeed',
   provider_key: process.env.MINIMAX_API_KEY
 });
 ```

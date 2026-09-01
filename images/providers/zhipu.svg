@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Zhipu AI">
+  <style>
+    svg:root { color: #1f2328; }
+    @media (prefers-color-scheme: dark) { svg:root { color: #e6edf3; } }
+  </style>
+  <path d="M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm3.4 4.2v2.1h6L7.2 15.5v1.3h9.4v-2.1h-6.2l6.2-6.2V7.2H7.4Z"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Cohere">
+  <style>
+    svg:root { color: #1f2328; }
+    @media (prefers-color-scheme: dark) { svg:root { color: #e6edf3; } }
+  </style>
+  <path d="M12 3a9 9 0 1 0 9 9h-2.6A6.4 6.4 0 1 1 12 5.6V3Z"/><circle cx="12" cy="12" r="3.1"/>
+</svg>

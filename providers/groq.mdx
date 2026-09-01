@@ -10,16 +10,7 @@ Groq provides blazing-fast inference for popular open-source models through thei
 ## Available Models
 
 <CardGroup cols={2}>
-  <Card title="DeepSeek Llama (70B)" icon="bolt">
-    **2 credits** • Distilled 70B model. Optimized for efficiency while maintaining capabilities.
-
-    - 64K context window
-    - Excellent reasoning (reasoning model)
-    - Speed: Fast • Cost: Low
-    - Model id: `deepseek-r1-distill-llama-70b`
-  </Card>
-
-  <Card title="GPT-OSS (20B)" icon="sparkles">
+  <Card title="GPT-OSS (20B)" icon="bolt">
     **1 credit** • Speed-optimized open-weight 20B model. Ideal for real-time, high-volume applications.
 
     - 131K context window
@@ -28,22 +19,31 @@ Groq provides blazing-fast inference for popular open-source models through thei
     - Model id: `openai/gpt-oss-20b`
   </Card>
 
-  <Card title="GPT-OSS (120B)" icon="zap">
+  <Card title="Qwen 3.8 (27B)" icon="sparkles">
+    **1 credit** • Alibaba's Qwen 3.8 served on Groq's inference stack, with a 128K context window.
+
+    - 131K context window
+    - Excellent reasoning
+    - Speed: Very fast • Cost: Low
+    - Model id: `qwen/qwen3.8-27b`
+  </Card>
+
+  <Card title="Groq Compound" icon="zap">
+    **1 credit** • Groq's own compound system, combining models and tools behind one model id.
+
+    - 131K context window
+    - Excellent reasoning
+    - Speed: Very fast • Cost: Low
+    - Model id: `groq/compound`
+  </Card>
+
+  <Card title="GPT-OSS (120B)" icon="circle">
     **1 credit** • Larger open-weight 120B model with strong performance across diverse tasks.
 
     - 131K context window
     - Excellent reasoning
     - Speed: Fast • Cost: Low
     - Model id: `openai/gpt-oss-120b`
-  </Card>
-
-  <Card title="LLaMA 4 Maverick (17B 128E)" icon="circle">
-    **1 credit** • LLaMA 4 with 128 experts for advanced instruction tasks.
-
-    - 128K context window
-    - Excellent reasoning
-    - Speed: Medium • Cost: Medium
-    - Model id: `meta-llama/llama-4-maverick-17b-128e-instruct`
   </Card>
 </CardGroup>
 ## Setup

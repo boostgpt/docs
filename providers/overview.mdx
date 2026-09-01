@@ -1,54 +1,53 @@
 ---
 title: Providers & Models
-description: 'Choose from 88 AI models across 14 providers—or bring your own'
+description: 'Choose from 105 AI models across 14 providers—or bring your own'
 ---
 
 ## Supported Providers
 
-BoostGPT supports **14 AI providers** with **88 models** spanning from ultra-fast nano models to advanced reasoning models. Thirteen are hosted for you; Ollama runs on your own machine.
+BoostGPT supports **14 AI providers** with **105 models** spanning from ultra-fast nano models to advanced reasoning models. Thirteen are hosted for you; Ollama runs on your own machine.
 
-{/* NOTE: use svg icons for all the providers icons and makes sure their svg files exist in /images/providers/. fix the missing anthropic.svg also.  The svg icons should support both mintlify's light and dark mode.  */}
 <CardGroup cols={2}>
-  <Card title="OpenAI" icon="openai" href="/providers/openai">
+  <Card title="OpenAI" icon="/images/providers/openai.svg" href="/providers/openai">
     20 models — GPT-5.6 Sol, GPT-5.6 Terra, GPT-5.6 Luna and more
   </Card>
-  <Card title="Google" icon="google" href="/providers/google">
+  <Card title="Google" icon="/images/providers/google.svg" href="/providers/google">
     9 models — Gemini 3.6 Flash, Gemini 3.5 Flash, Gemini 3.5 Flash Lite and more
   </Card>
   <Card title="Anthropic" icon="/images/providers/anthropic.svg" href="/providers/anthropic">
     9 models — Claude Fable 5, Claude Opus 4.8, Claude Sonnet 5 and more
   </Card>
-  <Card title="xAI" icon="x" href="/providers/xai">
+  <Card title="xAI" icon="/images/providers/xai.svg" href="/providers/xai">
     5 models — Grok 4.5, Grok 4.3, Grok 4.20 Reasoning and more
   </Card>
-  <Card title="Zhipu AI" icon="brain" href="/providers/zhipu">
+  <Card title="Zhipu AI" icon="/images/providers/zhipu.svg" href="/providers/zhipu">
     5 models — GLM-4.6, GLM-4.7, GLM-4.7 Flash and more
   </Card>
-  <Card title="MiniMax" icon="sparkles" href="/providers/minimax">
+  <Card title="MiniMax" icon="/images/providers/minimax.svg" href="/providers/minimax">
     3 models — MiniMax M3, MiniMax M2.7, MiniMax M2.5
   </Card>
-  <Card title="DeepSeek" icon="brain" href="/providers/deepseek">
+  <Card title="DeepSeek" icon="/images/providers/deepseek.svg" href="/providers/deepseek">
     2 models — DeepSeek V4 Flash, DeepSeek V4 Pro
   </Card>
-  <Card title="Moonshot AI" icon="moon" href="/providers/moonshot">
+  <Card title="Moonshot AI" icon="/images/providers/moonshot.svg" href="/providers/moonshot">
     5 models — Kimi K3, Kimi K2.7 Code, Kimi K2.7 Code Highspeed and more
   </Card>
-  <Card title="Mistral AI" icon="wind" href="/providers/mistral">
+  <Card title="Mistral AI" icon="/images/providers/mistral.svg" href="/providers/mistral">
     3 models — Mistral Small, Mistral Medium, Mistral Large
   </Card>
-  <Card title="Cohere" icon="layer-group" href="/providers/cohere">
+  <Card title="Cohere" icon="/images/providers/cohere.svg" href="/providers/cohere">
     5 models — Command A, Command R+, Command R and more
   </Card>
-  <Card title="Groq" icon="bolt" href="/providers/groq">
+  <Card title="Groq" icon="/images/providers/groq.svg" href="/providers/groq">
     4 models — DeepSeek Llama (70B), GPT-OSS (20B), GPT-OSS (120B) and more
   </Card>
-  <Card title="Fireworks AI" icon="fire" href="/providers/fireworks">
+  <Card title="Fireworks AI" icon="/images/providers/fireworks.svg" href="/providers/fireworks">
     12 models — DeepSeek V3, DeepSeek R1, Llama V3 (8B) and more
   </Card>
-  <Card title="Together AI" icon="users" href="/providers/togetherai">
+  <Card title="Together AI" icon="/images/providers/togetherai.svg" href="/providers/togetherai">
     2 models — Qwen 2.5 Coder (32B), Qwen 2.5 Turbo (72B)
   </Card>
-  <Card title="Ollama" icon="server" href="/providers/ollama">
+  <Card title="Ollama" icon="/images/providers/ollama.svg" href="/providers/ollama">
     4 models — Llama 3.3 (70B) Local, Llama 3.1 (8B) Local, Llama 3.1 (70B) Local and more
   </Card>
 </CardGroup>
@@ -209,13 +208,46 @@ const bot = await client.createBot({
 ## Next Steps
 
 <CardGroup cols={3}>
-  <Card title="Model Comparison" icon="chart-bar" href="/providers/model-comparison">
-    Compare all 88 models
+  <Card title="OpenAI" icon="/images/providers/openai.svg" href="/providers/openai">
+    23 models — GPT-5.6 Sol, GPT-5.6 Terra, GPT-5.6 Luna and more
   </Card>
-  <Card title="Reasoning Models" icon="brain" href="/providers/reasoning-models">
-    Learn about O1, R1, etc.
+  <Card title="Google" icon="/images/providers/google.svg" href="/providers/google">
+    10 models — Gemini 3.7 Flash, Gemini 3.6 Flash, Gemini 3.5 Flash and more
   </Card>
-  <Card title="Quickstart" icon="rocket" href="/quickstart">
-    Start building now
+  <Card title="Anthropic" icon="/images/providers/anthropic.svg" href="/providers/anthropic">
+    10 models — Claude Fable 5, Claude Opus 5, Claude Opus 4.8 and more
+  </Card>
+  <Card title="xAI" icon="/images/providers/xai.svg" href="/providers/xai">
+    6 models — Grok 4.6, Grok 4.5, Grok 4.3 and more
+  </Card>
+  <Card title="Zhipu AI" icon="/images/providers/zhipu.svg" href="/providers/zhipu">
+    8 models — GLM-5.3, GLM-5.3 Flash, GLM-5.2 and more
+  </Card>
+  <Card title="MiniMax" icon="/images/providers/minimax.svg" href="/providers/minimax">
+    5 models — MiniMax M2.7 Highspeed, MiniMax M2.5 Highspeed, MiniMax M3 and more
+  </Card>
+  <Card title="DeepSeek" icon="/images/providers/deepseek.svg" href="/providers/deepseek">
+    3 models — DeepSeek V4 Flash, DeepSeek V4 Flash Vision, DeepSeek V4 Pro
+  </Card>
+  <Card title="Moonshot AI" icon="/images/providers/moonshot.svg" href="/providers/moonshot">
+    5 models — Kimi K3, Kimi K2.7 Code, Kimi K2.7 Code Highspeed and more
+  </Card>
+  <Card title="Mistral AI" icon="/images/providers/mistral.svg" href="/providers/mistral">
+    3 models — Mistral Small, Mistral Medium, Mistral Large
+  </Card>
+  <Card title="Cohere" icon="/images/providers/cohere.svg" href="/providers/cohere">
+    5 models — Command A, Command R+, Command R and more
+  </Card>
+  <Card title="Groq" icon="/images/providers/groq.svg" href="/providers/groq">
+    4 models — GPT-OSS (20B), Qwen 3.8 (27B), Groq Compound and more
+  </Card>
+  <Card title="Fireworks AI" icon="/images/providers/fireworks.svg" href="/providers/fireworks">
+    12 models — DeepSeek V3, DeepSeek R1, Llama V3 (8B) and more
+  </Card>
+  <Card title="Together AI" icon="/images/providers/togetherai.svg" href="/providers/togetherai">
+    7 models — GLM-5.3, GLM-5.2, Kimi K3 and more
+  </Card>
+  <Card title="Ollama" icon="/images/providers/ollama.svg" href="/providers/ollama">
+    4 models — Llama 3.3 (70B) Local, Llama 3.1 (8B) Local, Llama 3.1 (70B) Local and more
   </Card>
 </CardGroup>

@@ -10,7 +10,34 @@ Zhipu's GLM models are strong multilingual generalists with a 200K context windo
 ## Available Models
 
 <CardGroup cols={2}>
-  <Card title="GLM-4.6" icon="bolt">
+  <Card title="GLM-5.3" icon="bolt">
+    **1 credit** • Zhipu's flagship for complex software engineering and long-horizon agent work, with a 1M-token context window.
+
+    - 1M context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: Low
+    - Model id: `glm-5.3`
+  </Card>
+
+  <Card title="GLM-5.3 Flash" icon="sparkles">
+    **1 credit** • The fast, low-cost GLM-5.3 tier, keeping the 1M-token context window.
+
+    - 1M context window
+    - Excellent reasoning (reasoning model)
+    - Speed: Fast • Cost: Low
+    - Model id: `glm-5.3-flash`
+  </Card>
+
+  <Card title="GLM-5.2" icon="zap">
+    **1 credit** • The previous GLM flagship, with a 1M-token context window and strong long-horizon performance.
+
+    - 1M context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: Low
+    - Model id: `glm-5.2`
+  </Card>
+
+  <Card title="GLM-4.6" icon="circle">
     **1 credit** • Zhipu's capable general-purpose GLM model with a 200K context window and strong agentic performance.
 
     - 200K context window
@@ -19,7 +46,7 @@ Zhipu's GLM models are strong multilingual generalists with a 200K context windo
     - Model id: `glm-4.6`
   </Card>
 
-  <Card title="GLM-4.7" icon="sparkles">
+  <Card title="GLM-4.7" icon="gauge">
     **1 credit** • Newer GLM-4 generation model with adaptive reasoning for complex agentic and coding tasks.
 
     - 200K context window
@@ -28,7 +55,7 @@ Zhipu's GLM models are strong multilingual generalists with a 200K context windo
     - Model id: `glm-4.7`
   </Card>
 
-  <Card title="GLM-4.7 Flash" icon="zap">
+  <Card title="GLM-4.7 Flash" icon="rocket">
     **1 credit** • The fast, free GLM-4.7 tier, optimized for low latency and high-volume tasks.
 
     - 200K context window
@@ -37,7 +64,7 @@ Zhipu's GLM models are strong multilingual generalists with a 200K context windo
     - Model id: `glm-4.7-flash`
   </Card>
 
-  <Card title="GLM-5.1" icon="circle">
+  <Card title="GLM-5.1" icon="star">
     **1 credit** • Zhipu's frontier GLM-5 model, a large MoE for the most demanding reasoning and agentic work.
 
     - 200K context window
@@ -46,7 +73,7 @@ Zhipu's GLM models are strong multilingual generalists with a 200K context windo
     - Model id: `glm-5.1`
   </Card>
 
-  <Card title="GLM-4.6V" icon="gauge">
+  <Card title="GLM-4.6V" icon="brain">
     **1 credit** • Multimodal GLM model that reasons over both images and text.
 
     - 128K context window
@@ -80,7 +107,7 @@ Bring your own key to bill Zhipu AI directly instead of spending BoostGPT credit
 await client.chat({
   bot_id: 'bot-id',
   message: 'Hello',
-  model: 'glm-4.6',
+  model: 'glm-5.3',
   provider_key: process.env.ZHIPU_API_KEY
 });
 ```

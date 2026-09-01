@@ -10,7 +10,52 @@ Together AI hosts open-weight Qwen models, including a coder variant, on managed
 ## Available Models
 
 <CardGroup cols={2}>
-  <Card title="Qwen 2.5 Coder (32B)" icon="bolt">
+  <Card title="GLM-5.3" icon="bolt">
+    **1 credit** • Zhipu's flagship for complex software engineering and long-horizon agent work, with a 1M context window.
+
+    - 1M context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: Low
+    - Model id: `zai-org/GLM-5.3`
+  </Card>
+
+  <Card title="GLM-5.2" icon="sparkles">
+    **1 credit** • Zhipu's previous flagship, with a 1M context window and strong long-horizon performance.
+
+    - 1M context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: Low
+    - Model id: `zai-org/GLM-5.2`
+  </Card>
+
+  <Card title="Kimi K3" icon="zap">
+    **4 credits** • Moonshot's flagship, with a 1M-token context window.
+
+    - 1M context window
+    - Exceptional reasoning (reasoning model)
+    - Speed: Medium • Cost: Medium
+    - Model id: `moonshotai/Kimi-K3`
+  </Card>
+
+  <Card title="MiniMax M3" icon="circle">
+    **1 credit** • MiniMax's flagship, served on TogetherAI with a 512K context window.
+
+    - 524K context window
+    - Excellent reasoning (reasoning model)
+    - Speed: Medium • Cost: Low
+    - Model id: `MiniMaxAI/MiniMax-M3`
+  </Card>
+
+  <Card title="GPT-OSS (120B)" icon="gauge">
+    **1 credit** • OpenAI's open-weight 120B model, served on TogetherAI.
+
+    - 131K context window
+    - Excellent reasoning
+    - Speed: Fast • Cost: Low
+    - Model id: `openai/gpt-oss-120b`
+  </Card>
+
+  <Card title="Qwen 2.5 Coder (32B)" icon="rocket">
     **1 credit** • Specialized coding model. Enhanced capabilities for programming tasks.
 
     - 32K context window
@@ -19,7 +64,7 @@ Together AI hosts open-weight Qwen models, including a coder variant, on managed
     - Model id: `Qwen/Qwen2.5-Coder-32B-Instruct`
   </Card>
 
-  <Card title="Qwen 2.5 Turbo (72B)" icon="sparkles">
+  <Card title="Qwen 2.5 Turbo (72B)" icon="star">
     **2 credits** • Large, fast Qwen model. Powerful performance with optimized speed.
 
     - 128K context window
@@ -52,7 +97,7 @@ Bring your own key to bill Together AI directly instead of spending BoostGPT cre
 await client.chat({
   bot_id: 'bot-id',
   message: 'Hello',
-  model: 'Qwen/Qwen2.5-Coder-32B-Instruct',
+  model: 'zai-org/GLM-5.3',
   provider_key: process.env.TOGETHERAI_API_KEY
 });
 ```

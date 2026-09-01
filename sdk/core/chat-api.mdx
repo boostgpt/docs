@@ -333,11 +333,12 @@ await client.subscribeNotifications({ bot_id: 'bot_abc123' });
 ```javascript
 await client.fetchChatScheduledTasks({ bot_id: 'bot_abc123', chat_id: 'chat-id' });
 
+// A toggle, not a setter: the endpoint flips the schedule's current state, so there is no
+// target value to pass.
 await client.toggleChatScheduledTask({
   bot_id: 'bot_abc123',
   chat_id: 'chat-id',
-  task_id: 'task-id',
-  enabled: false
+  task_id: 'task-id'
 });
 ```
 

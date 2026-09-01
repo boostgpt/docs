@@ -1179,6 +1179,43 @@
               "default": 10
             },
             "description": "Items per page"
+          },
+          {
+            "name": "voter_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Return each message's vote state for this voter"
+          },
+          {
+            "name": "voter_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "member",
+                "subscriber",
+                "anonymous"
+              ]
+            },
+            "description": "Which kind of voter `voter_id` refers to"
+          },
+          {
+            "name": "purpose",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "builder",
+                "visitor",
+                "internal"
+              ]
+            },
+            "description": "Narrow to a conversation purpose"
           }
         ],
         "responses": {
@@ -1453,6 +1490,15 @@
               "type": "string"
             },
             "description": "Message ID"
+          },
+          {
+            "name": "truncate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Also delete every message after this one — the shape a \"retry from here\" uses"
           }
         ],
         "responses": {
@@ -4763,6 +4809,408 @@
           }
         }
       }
+    },
+    "/v1/bot/chat/cancel": {
+      "post": {
+        "summary": "Cancel a Reply",
+        "tags": [
+          "Chat"
+        ],
+        "description": "Stop a reply that is still being generated.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelChatRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cancelled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/chat/rename": {
+      "put": {
+        "summary": "Rename a Chat",
+        "tags": [
+          "Chat"
+        ],
+        "description": "Set a conversation's title.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RenameChatRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Renamed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/chat/mode": {
+      "put": {
+        "summary": "Set the Chat Mode",
+        "tags": [
+          "Chat"
+        ],
+        "description": "Change a conversation's stored mode.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetChatModeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Mode saved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/chat/stream-status": {
+      "get": {
+        "summary": "Stream Status",
+        "tags": [
+          "Chat"
+        ],
+        "description": "Whether a reply is currently being generated in this conversation.",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "chat_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Chat ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Stream status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/chat/active-streams": {
+      "get": {
+        "summary": "Active Streams",
+        "tags": [
+          "Chat"
+        ],
+        "description": "Every conversation on this agent with a reply in flight.",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "chat_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Narrow to one conversation"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Active streams",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/chat/scheduled-tasks": {
+      "get": {
+        "summary": "Chat Schedules",
+        "tags": [
+          "Chat"
+        ],
+        "description": "The scheduled tasks bound to one conversation.",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "chat_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Chat ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Scheduled tasks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/chat/scheduled-tasks/toggle": {
+      "put": {
+        "summary": "Toggle a Chat Schedule",
+        "tags": [
+          "Chat"
+        ],
+        "description": "Flip one schedule on or off. Reads its parameters from the query string, and inverts the current state rather than taking a target value.",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "chat_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Chat ID"
+          },
+          {
+            "name": "task_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Task ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Toggled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/chat/subscribe": {
+      "get": {
+        "summary": "Subscribe to a Chat",
+        "tags": [
+          "Chat"
+        ],
+        "description": "Server-sent events for one conversation — how a client that dropped mid-reply picks up the rest.",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "chat_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Chat ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An event stream of chat events",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/chat/subscribe-notifications": {
+      "get": {
+        "summary": "Subscribe to Notifications",
+        "tags": [
+          "Chat"
+        ],
+        "description": "Server-sent events for the agent. `chat_id` is optional.",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "chat_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Narrow to one conversation"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An event stream of chat events",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -5785,6 +6233,29 @@
             ],
             "description": "Chat mode. 'ask' for normal chat, 'edit' for agent-powered code editing, 'plan' for conversational plan-then-execute workflow",
             "default": "ask"
+          },
+          "memory": {
+            "type": "boolean",
+            "default": true,
+            "description": "Search the agent's knowledge before answering. Set false to answer from the message alone."
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "Files to attach to this message"
+          },
+          "pasted": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Long pasted text, kept out of the message body"
+          },
+          "workspace_uuid": {
+            "type": "string",
+            "description": "Target a specific workspace for this turn"
           }
         }
       },
@@ -6550,10 +7021,6 @@
             "maxLength": 1000,
             "description": "Custom instruction"
           },
-          "bypass_rate_limit": {
-            "type": "boolean",
-            "description": "Bypass rate limiting"
-          },
           "chat_mode": {
             "type": "string",
             "enum": [
@@ -6647,6 +7114,11 @@
                 }
               }
             }
+          },
+          "stream": {
+            "type": "boolean",
+            "default": false,
+            "description": "Return the continuation as a text/event-stream instead of one JSON response"
           }
         }
       },
@@ -6703,6 +7175,18 @@
               "member"
             ],
             "description": "Type of voter"
+          },
+          "chat_id": {
+            "type": "string",
+            "description": "Chat the message belongs to"
+          },
+          "message_id": {
+            "type": "string",
+            "description": "The message being voted on"
+          },
+          "anonymous_id": {
+            "type": "string",
+            "description": "Identifier for an unauthenticated voter"
           }
         }
       },
@@ -7872,6 +8356,93 @@
       "WorkflowCatalog": {
         "type": "object",
         "additionalProperties": true
+      },
+      "CancelChatRequest": {
+        "type": "object",
+        "required": [
+          "project_id",
+          "bot_id",
+          "chat_id"
+        ],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "Project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "Agent ID"
+          },
+          "chat_id": {
+            "type": "string",
+            "description": "Conversation whose reply should stop"
+          },
+          "type": {
+            "type": "string",
+            "description": "Which stream to cancel, when a conversation has more than one"
+          }
+        }
+      },
+      "RenameChatRequest": {
+        "type": "object",
+        "required": [
+          "project_id",
+          "bot_id",
+          "chat_id",
+          "title"
+        ],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "Project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "Agent ID"
+          },
+          "chat_id": {
+            "type": "string",
+            "description": "Conversation to rename"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "New title, 1-200 characters"
+          }
+        }
+      },
+      "SetChatModeRequest": {
+        "type": "object",
+        "required": [
+          "project_id",
+          "bot_id",
+          "chat_id",
+          "chat_mode"
+        ],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "Project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "Agent ID"
+          },
+          "chat_id": {
+            "type": "string",
+            "description": "Conversation to change"
+          },
+          "chat_mode": {
+            "type": "string",
+            "enum": [
+              "ask",
+              "edit",
+              "plan"
+            ],
+            "description": "edit and plan require a workspace, and are refused with 403 for a non-staff caller outside the Site builder conversation"
+          }
+        }
       }
     }
   },

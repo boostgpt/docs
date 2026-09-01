@@ -314,20 +314,27 @@ await client.deleteChat({
 
 ### executeTool()
 
-Execute tool calls for a chat.
+Run a tool the agent asked for, continuing the turn.
 
 ```javascript
 await client.executeTool({
   bot_id: 'bot-123',
   chat_id: 'chat-456',
-  tool_calls: [
-    {
-      tool_name: 'calculator',
-      parameters: { operation: 'add', a: 5, b: 3 }
-    }
-  ]
+  execution_data: {
+    executionId: 'exec_...',
+    toolName: 'calculator',
+    parameters: { operation: 'add', a: 5, b: 3 }
+  }
 });
 ```
+
+Every field of `execution_data` comes back on the `tool_approval_required` response — pass it
+through rather than assembling it yourself.
+
+<Warning>
+Before 8.0.1 this method sent `tool_calls`, which the endpoint does not read, so every call
+returned 400. Upgrade if you are calling it.
+</Warning>
 
 <ParamField path="bot_id" type="string" required>
   Bot ID
@@ -337,8 +344,9 @@ await client.executeTool({
   Chat ID
 </ParamField>
 
-<ParamField path="tool_calls" type="array" required>
-  Array of tool call objects with `tool_name` and `parameters`
+<ParamField path="execution_data" type="object" required>
+  Must contain `executionId`, `toolName` and `parameters`; may also carry `serverLabel`,
+  `originalQuery` and `authenticatedTools`
 </ParamField>
 
 ---

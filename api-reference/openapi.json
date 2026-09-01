@@ -6236,8 +6236,7 @@
           },
           "memory": {
             "type": "boolean",
-            "default": true,
-            "description": "Search the agent's knowledge before answering. Set false to answer from the message alone."
+            "description": "Search the agent's knowledge before answering. Omit to use the agent's own setting; an explicit value overrides it, and it gates the search_memory tool for agent turns."
           },
           "attachments": {
             "type": "array",
@@ -7119,6 +7118,24 @@
             "type": "boolean",
             "default": false,
             "description": "Return the continuation as a text/event-stream instead of one JSON response"
+          },
+          "memory": {
+            "type": "boolean",
+            "description": "Search the agent's knowledge during the continuation. Omit to use the agent's own setting; an explicit value overrides it."
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Narrow the continuation's knowledge search to these sources — re-send what the original request used."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Narrow the continuation's knowledge search to these tags."
           }
         }
       },

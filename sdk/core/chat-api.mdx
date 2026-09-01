@@ -28,11 +28,12 @@ if (result.err) {
 | `provider_key` | string | No | Use your own API key (BYOK) |
 | `provider_host` | string | No | Required for Ollama (e.g., `http://localhost:11434`) |
 | `instruction` | string | No | Override bot's instruction |
-| `source_ids` | array | No | Specific training sources to use |
+| `source_ids` | array | No | Narrow the knowledge search to these sources |
+| `tags` | array | No | Narrow the knowledge search to these tags |
 | `max_reply_tokens` | number | No | Override max tokens |
 | `chat_id` | string | No | Chat ID to maintain conversation context |
 | `stream` | boolean | No | Stream response (default: `false`) |
-| `memory` | boolean | No | Use agent's training data (default: `true`) |
+| `memory` | boolean | No | Search the agent's training data. Omit to use the agent's own setting |
 | `reasoning_mode` | string | No | `auto`, `standard`, `agent` |
 
 ### Response
@@ -146,9 +147,21 @@ Target specific training sources by ID:
 const result = await client.chat({
   bot_id: 'bot_abc123',
   message: 'What is our refund policy?',
-  source_ids: ['source_123', 'source_456'] // Only use these sources
+  source_ids: ['source_123', 'source_456'], // Only search these sources
+  tags: ['policies']                        // ...and only these tags
 });
 ```
+
+`source_ids` and `tags` narrow the search within the agent's own knowledge; they do not grant access
+to another agent's. Both apply to an agent turn's `search_memory` tool as well as to a standard
+reply — the agent chooses how many results to pull back, but it cannot widen the scope you set.
+
+<Note>
+A tool continuation is a separate HTTP request and inherits nothing from the call that produced it.
+If you set `memory`, `source_ids` or `tags` on `chat()`, send the same values to
+[`executeTool()`](/sdk/core/api-reference#executetool) — otherwise the continuation falls back to the
+agent's own memory setting and searches unscoped.
+</Note>
 
 ## Disable Training Data
 
@@ -158,9 +171,13 @@ Skip the agent's training data for a specific request:
 const result = await client.chat({
   bot_id: 'bot_abc123',
   message: 'Hello',
-  memory: false // Don't use agent's training data
+  memory: false // Don't search the agent's training data
 });
 ```
+
+Omitting `memory` uses the agent's own setting; sending `true` or `false` overrides it for that
+request. On an agent turn the resolved value also decides whether the `search_memory` tool is offered
+at all, so `memory: false` means the agent cannot reach back into its knowledge mid-turn either.
 
 ## Stream Responses
 

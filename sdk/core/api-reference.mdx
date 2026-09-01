@@ -349,6 +349,36 @@ returned 400. Upgrade if you are calling it.
   `originalQuery` and `authenticatedTools`
 </ParamField>
 
+<ParamField path="model" type="string">
+  Model for the continuation. Defaults to the agent's own.
+</ParamField>
+
+<ParamField path="instruction" type="string">
+  System instruction for the continuation.
+</ParamField>
+
+<ParamField path="chat_mode" type="string">
+  `ask`, `edit` or `plan` — as on `chat()`.
+</ParamField>
+
+<ParamField path="memory" type="boolean">
+  Whether the continuation may search the agent's knowledge. Omit to use the agent's own setting;
+  an explicit value overrides it. Send what the original `chat()` call sent — a continuation is a
+  separate HTTP request and does not inherit it.
+</ParamField>
+
+<ParamField path="source_ids" type="string[]">
+  Narrow the continuation's knowledge search to these sources. Re-send the original call's value.
+</ParamField>
+
+<ParamField path="tags" type="string[]">
+  Narrow the continuation's knowledge search to these tags. Re-send the original call's value.
+</ParamField>
+
+<ParamField path="stream" type="boolean" default="false">
+  Return an event stream instead of a single response.
+</ParamField>
+
 ---
 
 ### voteMessage()

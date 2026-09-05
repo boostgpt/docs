@@ -70,6 +70,44 @@ noindex: true
 
 </Update>
 
+<Update label="August 2026" tags={["Breaking changes"]} rss={{ title: "Heartbeats Are Now Scheduled Tasks", description: "Heartbeats and scheduled tasks were one engine written twice and have merged — nine SDK methods are renamed" }}>
+
+  ## Heartbeats are now scheduled tasks
+
+  Heartbeats and scheduled tasks were the same engine written twice — same helpers, same queue, same
+  log table — and one bug fix landed in only one of them. They have merged.
+
+  <Warning>`bot/heartbeat/*` no longer exists. The endpoints below take its place, and `heartbeat_id`
+  is now `task_id`.</Warning>
+
+  A heartbeat WAS a task with a cron, so the capability survives; only the name changed. Nine SDK
+  methods are renamed, and each keeps its shape — porting is a find-and-replace:
+
+  | 5.x | 6.0 |
+  |---|---|
+  | `createHeartbeat` | `createTask` |
+  | `fetchHeartbeat` | `fetchTask` |
+  | `fetchHeartbeats` | `fetchTasks` |
+  | `enableHeartbeat` | `enableTask` |
+  | `disableHeartbeat` | `disableTask` |
+  | `triggerHeartbeat` | `triggerTask` |
+  | `deleteHeartbeat` | `deleteTask` |
+  | `fetchHeartbeatLogs` | `fetchTaskLogs` |
+  | `fetchHeartbeatStats` | `fetchTaskStats` |
+
+  - **`cron_pattern` still works** on `createTask` and still means a recurring schedule — it is
+    translated to `schedule_type: 'cron'` for you. `schedule_type` and `schedule_config` are
+    available directly if you want an interval, a daily or weekly time, or a one-shot.
+  - **`createTask` takes a `name`.** Omit it and the first 60 characters of the prompt are used, so a
+    ported `createHeartbeat` call still works.
+  - **`credit_budget` is gone.** It capped a subscriber's spend on a heartbeat, and subscriber-owned
+    tasks were retired — an owner-created task was never charged by it in the first place.
+
+  Tasks appear on the agent's task board alongside everything else it runs, so a schedule that used
+  to be invisible outside the API is now something you can see and change.
+
+</Update>
+
 <Update label="July 2026" tags={["Removals"]} rss={{ title: "Agent Interfaces, Bridge SDK, and Widget Page Guidance Removed", description: "Retiring the legacy Agent Interface, Bridge SDK, Boost platform tools, and the widget sidepanel surfaces" }}>
 
   ## Removed features
@@ -419,7 +457,10 @@ noindex: true
 
   ## Heartbeat scheduling
 
-  <Note>Updated in August 2026. `message_agent` has been removed. Heartbeats, scheduled tasks and notifications are unaffected.</Note>
+  <Note>Superseded in August 2026. Heartbeats and scheduled tasks have **merged** — `bot/heartbeat/*`
+  no longer exists and `heartbeat_id` is now `task_id`. Everything described below still works; it is
+  a [scheduled task](/sdk/core/tasks) now. (An earlier note here said heartbeats were unaffected by
+  the `message_agent` removal, which was true of that change and is no longer true of this one.)</Note>
 
   Transform agents from passive chatbots into proactive autonomous assistants:
 

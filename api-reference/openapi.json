@@ -1936,594 +1936,6 @@
         }
       }
     },
-    "/v1/bot/heartbeat/configure": {
-      "post": {
-        "summary": "Configure Heartbeat",
-        "tags": [
-          "Heartbeat"
-        ],
-        "description": "Create or update a heartbeat configuration for an agent",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ConfigureHeartbeatRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Heartbeat configured successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "heartbeat": {
-                      "$ref": "#/components/schemas/HeartbeatObject"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid parameters",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Heartbeat not enabled or plan limit reached",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/bot/heartbeat/read": {
-      "get": {
-        "summary": "Get Heartbeat",
-        "tags": [
-          "Heartbeat"
-        ],
-        "description": "Get a single heartbeat configuration by UUID",
-        "parameters": [
-          {
-            "name": "project_id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Project ID"
-          },
-          {
-            "name": "bot_id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Agent ID"
-          },
-          {
-            "name": "heartbeat_id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Heartbeat UUID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Heartbeat details",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "heartbeat": {
-                      "$ref": "#/components/schemas/HeartbeatObject"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Heartbeat not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/bot/heartbeat/readall": {
-      "get": {
-        "summary": "List Heartbeats",
-        "tags": [
-          "Heartbeat"
-        ],
-        "description": "List all heartbeat configurations for an agent",
-        "parameters": [
-          {
-            "name": "project_id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Project ID"
-          },
-          {
-            "name": "bot_id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Agent ID"
-          },
-          {
-            "name": "member_id",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Filter by subscriber member ID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of heartbeats",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "heartbeats": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/HeartbeatObject"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/bot/heartbeat/enable": {
-      "post": {
-        "summary": "Enable Heartbeat",
-        "tags": [
-          "Heartbeat"
-        ],
-        "description": "Activate a heartbeat so it runs on its schedule",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/HeartbeatActionRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Heartbeat enabled",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "heartbeat": {
-                      "$ref": "#/components/schemas/HeartbeatObject"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Heartbeat feature not enabled for this agent",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Heartbeat not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/bot/heartbeat/disable": {
-      "post": {
-        "summary": "Disable Heartbeat",
-        "tags": [
-          "Heartbeat"
-        ],
-        "description": "Pause a heartbeat without deleting its configuration",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/HeartbeatActionRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Heartbeat disabled",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "heartbeat": {
-                      "$ref": "#/components/schemas/HeartbeatObject"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Heartbeat not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/bot/heartbeat/trigger": {
-      "post": {
-        "summary": "Trigger Heartbeat",
-        "tags": [
-          "Heartbeat"
-        ],
-        "description": "Manually trigger a single heartbeat execution for testing",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/HeartbeatActionRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Heartbeat execution result",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "result": {
-                      "type": "object",
-                      "properties": {
-                        "status": {
-                          "type": "string",
-                          "enum": [
-                            "success",
-                            "error",
-                            "skipped"
-                          ]
-                        },
-                        "response": {
-                          "type": "string",
-                          "description": "Agent response text"
-                        },
-                        "duration_ms": {
-                          "type": "integer"
-                        },
-                        "tokens_used": {
-                          "type": "integer"
-                        },
-                        "credits_charged": {
-                          "type": "integer"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Heartbeat feature not enabled for this agent",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Heartbeat not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/bot/heartbeat/delete": {
-      "delete": {
-        "summary": "Delete Heartbeat",
-        "tags": [
-          "Heartbeat"
-        ],
-        "description": "Permanently delete a heartbeat configuration",
-        "parameters": [
-          {
-            "name": "project_id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Project ID"
-          },
-          {
-            "name": "bot_id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Agent ID"
-          },
-          {
-            "name": "heartbeat_id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Heartbeat UUID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Heartbeat deleted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Heartbeat not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/bot/heartbeat/logs": {
-      "get": {
-        "summary": "Get Heartbeat Logs",
-        "tags": [
-          "Heartbeat"
-        ],
-        "description": "Retrieve execution history for a bot's heartbeats",
-        "parameters": [
-          {
-            "name": "project_id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Project ID"
-          },
-          {
-            "name": "bot_id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Agent ID"
-          },
-          {
-            "name": "heartbeat_id",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Filter by heartbeat UUID"
-          },
-          {
-            "name": "member_id",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Filter by subscriber"
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "success",
-                "error",
-                "skipped"
-              ]
-            },
-            "description": "Filter by status"
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 1
-            },
-            "description": "Page number"
-          },
-          {
-            "name": "per_page",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 20
-            },
-            "description": "Results per page"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Execution logs",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "logs": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/HeartbeatLogObject"
-                      }
-                    },
-                    "pagination": {
-                      "$ref": "#/components/schemas/Pagination"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/bot/heartbeat/stats": {
-      "get": {
-        "summary": "Get Heartbeat Stats",
-        "tags": [
-          "Heartbeat"
-        ],
-        "description": "Get aggregated execution statistics for a bot's heartbeats",
-        "parameters": [
-          {
-            "name": "project_id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Project ID"
-          },
-          {
-            "name": "bot_id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Agent ID"
-          },
-          {
-            "name": "days",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 30
-            },
-            "description": "Number of days to aggregate"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Execution statistics",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "stats": {
-                      "$ref": "#/components/schemas/HeartbeatStatsObject"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/v1/bot/workspace/readall": {
       "get": {
         "summary": "List Workspaces",
@@ -5211,6 +4623,504 @@
           }
         }
       }
+    },
+    "/v1/bot/tasks/create": {
+      "post": {
+        "summary": "Create Task",
+        "tags": [
+          "Tasks"
+        ],
+        "description": "Create a scheduled task for an agent. Replaces `bot/heartbeat/configure` — a heartbeat was a task with a cron.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTaskRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The created task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "task": {
+                      "$ref": "#/components/schemas/TaskObject"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/tasks/read": {
+      "get": {
+        "summary": "Get Task",
+        "tags": [
+          "Tasks"
+        ],
+        "description": "Get a single task by UUID.",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "task_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Task UUID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "task": {
+                      "$ref": "#/components/schemas/TaskObject"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/tasks/readall": {
+      "get": {
+        "summary": "List Tasks",
+        "tags": [
+          "Tasks"
+        ],
+        "description": "List an agent's tasks.",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tasks, plus the Sites, agents and members they reference",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tasks": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TaskObject"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/tasks/update": {
+      "put": {
+        "summary": "Update Task",
+        "tags": [
+          "Tasks"
+        ],
+        "description": "Update a task. Only the fields supplied are changed.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTaskRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "task": {
+                      "$ref": "#/components/schemas/TaskObject"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/tasks/enable": {
+      "post": {
+        "summary": "Enable Task",
+        "tags": [
+          "Tasks"
+        ],
+        "description": "Resume a disabled task on its existing schedule.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskActionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "task": {
+                      "$ref": "#/components/schemas/TaskObject"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/tasks/disable": {
+      "post": {
+        "summary": "Disable Task",
+        "tags": [
+          "Tasks"
+        ],
+        "description": "Stop a task running without deleting it.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskActionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "task": {
+                      "$ref": "#/components/schemas/TaskObject"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/tasks/trigger": {
+      "post": {
+        "summary": "Trigger Task",
+        "tags": [
+          "Tasks"
+        ],
+        "description": "Run a task immediately, outside its schedule.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskActionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The run result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/tasks/delete": {
+      "delete": {
+        "summary": "Delete Task",
+        "tags": [
+          "Tasks"
+        ],
+        "description": "Delete a task and remove its scheduled jobs.",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "task_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Task UUID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deletion confirmation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/tasks/logs": {
+      "get": {
+        "summary": "Task Logs",
+        "tags": [
+          "Tasks"
+        ],
+        "description": "Execution history for an agent's tasks.",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "task_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Task UUID — omit for all tasks"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Page number"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Results per page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paged execution logs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskLogsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/tasks/logs/delete": {
+      "delete": {
+        "summary": "Delete Task Log",
+        "tags": [
+          "Tasks"
+        ],
+        "description": "Delete a single execution log entry.",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "run_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Log entry ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deletion confirmation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/tasks/stats": {
+      "get": {
+        "summary": "Task Stats",
+        "tags": [
+          "Tasks"
+        ],
+        "description": "Aggregate execution counts and error rates.",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskStatsObject"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -7734,251 +7644,6 @@
           }
         }
       },
-      "ConfigureHeartbeatRequest": {
-        "type": "object",
-        "required": [
-          "project_id",
-          "bot_id",
-          "prompt"
-        ],
-        "properties": {
-          "project_id": {
-            "type": "string",
-            "description": "Project ID"
-          },
-          "bot_id": {
-            "type": "string",
-            "description": "Agent ID"
-          },
-          "prompt": {
-            "type": "string",
-            "description": "Instruction the agent executes each run"
-          },
-          "cron_pattern": {
-            "type": "string",
-            "description": "Cron expression for scheduling (e.g., '0 9 * * 1' for every Monday at 9am)"
-          },
-          "enabled": {
-            "type": "boolean",
-            "description": "Whether the heartbeat is active (default: false)",
-            "default": false
-          },
-          "timezone": {
-            "type": "string",
-            "description": "Timezone for scheduling (default: UTC)",
-            "default": "UTC"
-          },
-          "credit_budget": {
-            "type": "integer",
-            "nullable": true,
-            "description": "Max credits per billing period (null = unlimited)"
-          },
-          "max_consecutive_errors": {
-            "type": "integer",
-            "description": "Auto-pause after this many consecutive failures (default: 5)",
-            "default": 5
-          },
-          "member_id": {
-            "type": "string",
-            "nullable": true,
-            "description": "Subscriber member ID for subscriber-specific heartbeats"
-          }
-        }
-      },
-      "HeartbeatActionRequest": {
-        "type": "object",
-        "required": [
-          "project_id",
-          "bot_id",
-          "heartbeat_id"
-        ],
-        "properties": {
-          "project_id": {
-            "type": "string",
-            "description": "Project ID"
-          },
-          "bot_id": {
-            "type": "string",
-            "description": "Agent ID"
-          },
-          "heartbeat_id": {
-            "type": "string",
-            "description": "Heartbeat UUID"
-          }
-        }
-      },
-      "HeartbeatObject": {
-        "type": "object",
-        "properties": {
-          "uuid": {
-            "type": "string",
-            "description": "Heartbeat UUID"
-          },
-          "bot_id": {
-            "type": "integer"
-          },
-          "member_id": {
-            "type": "integer",
-            "nullable": true
-          },
-          "prompt": {
-            "type": "string"
-          },
-          "cron_pattern": {
-            "type": "string",
-            "nullable": true,
-            "description": "Cron expression for scheduling"
-          },
-          "enabled": {
-            "type": "integer",
-            "enum": [
-              0,
-              1
-            ]
-          },
-          "timezone": {
-            "type": "string"
-          },
-          "credit_budget": {
-            "type": "integer",
-            "nullable": true
-          },
-          "credits_used": {
-            "type": "integer"
-          },
-          "last_executed_at": {
-            "type": "string",
-            "nullable": true
-          },
-          "last_status": {
-            "type": "string",
-            "nullable": true,
-            "enum": [
-              "success",
-              "error",
-              "skipped"
-            ]
-          },
-          "execution_count": {
-            "type": "integer"
-          },
-          "error_count": {
-            "type": "integer"
-          },
-          "max_consecutive_errors": {
-            "type": "integer"
-          },
-          "created_at": {
-            "type": "string"
-          },
-          "updated_at": {
-            "type": "string"
-          }
-        }
-      },
-      "HeartbeatLogObject": {
-        "type": "object",
-        "properties": {
-          "uuid": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "heartbeat",
-              "scheduled_task",
-              "agent_message"
-            ]
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "success",
-              "error",
-              "skipped",
-              "cancelled"
-            ]
-          },
-          "prompt": {
-            "type": "string"
-          },
-          "response": {
-            "type": "string"
-          },
-          "duration_ms": {
-            "type": "integer"
-          },
-          "tokens_used": {
-            "type": "integer"
-          },
-          "credits_charged": {
-            "type": "integer"
-          },
-          "error_message": {
-            "type": "string",
-            "nullable": true
-          },
-          "created_at": {
-            "type": "string"
-          }
-        }
-      },
-      "HeartbeatStatsObject": {
-        "type": "object",
-        "properties": {
-          "total_executions": {
-            "type": "integer"
-          },
-          "success_count": {
-            "type": "integer"
-          },
-          "error_count": {
-            "type": "integer"
-          },
-          "skipped_count": {
-            "type": "integer"
-          },
-          "success_rate": {
-            "type": "number"
-          },
-          "total_tokens": {
-            "type": "integer"
-          },
-          "total_credits": {
-            "type": "integer"
-          },
-          "avg_duration_ms": {
-            "type": "number"
-          },
-          "active_heartbeats": {
-            "type": "integer"
-          },
-          "by_type": {
-            "type": "object",
-            "description": "Per-type breakdown"
-          },
-          "time_series": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "date": {
-                  "type": "string"
-                },
-                "total": {
-                  "type": "integer"
-                },
-                "success": {
-                  "type": "integer"
-                },
-                "error": {
-                  "type": "integer"
-                }
-              }
-            }
-          }
-        }
-      },
       "WorkspaceObject": {
         "type": "object",
         "properties": {
@@ -8460,6 +8125,336 @@
             "description": "edit and plan require a workspace, and are refused with 403 for a non-staff caller outside the Site builder conversation"
           }
         }
+      },
+      "CreateTaskRequest": {
+        "type": "object",
+        "required": [
+          "project_id",
+          "bot_id",
+          "name",
+          "prompt"
+        ],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "Project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "Agent ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "Task name, shown on the board"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "What the agent should do each run"
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional longer description"
+          },
+          "schedule_type": {
+            "type": "string",
+            "description": "How the task repeats. `interval` uses `schedule_config.interval_minutes`; `cron` uses `schedule_config.cron`.",
+            "enum": [
+              "once",
+              "daily",
+              "weekly",
+              "monthly",
+              "interval",
+              "cron"
+            ]
+          },
+          "schedule_config": {
+            "type": "object",
+            "description": "Shape depends on `schedule_type`: `{ interval_minutes }`, `{ time }`, `{ day, time }`, `{ day_of_month, time }` or `{ cron }`."
+          },
+          "timezone": {
+            "type": "string",
+            "description": "IANA timezone, e.g. Europe/London"
+          },
+          "active_hours_start": {
+            "type": "string",
+            "description": "Only run at or after this time, HH:MM"
+          },
+          "active_hours_end": {
+            "type": "string",
+            "description": "Only run before this time, HH:MM"
+          },
+          "max_executions": {
+            "type": "integer",
+            "description": "Stop after this many runs. Omit for unlimited."
+          },
+          "chat_mode": {
+            "type": "string",
+            "description": "Conversation mode the run uses"
+          },
+          "chat_id": {
+            "type": "string",
+            "description": "Bind the task to a Site's builder conversation"
+          },
+          "assignee_type": {
+            "type": "string",
+            "description": "`agent` or `member`"
+          },
+          "assignee_id": {
+            "type": "string",
+            "description": "UUID of the assignee"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "UpdateTaskRequest": {
+        "type": "object",
+        "description": "Only the fields supplied are changed.",
+        "required": [
+          "project_id",
+          "bot_id",
+          "task_id"
+        ],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "Project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "Agent ID"
+          },
+          "task_id": {
+            "type": "string",
+            "description": "Task UUID"
+          },
+          "name": {
+            "type": "string"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "schedule_type": {
+            "type": "string",
+            "description": "How the task repeats. `interval` uses `schedule_config.interval_minutes`; `cron` uses `schedule_config.cron`.",
+            "enum": [
+              "once",
+              "daily",
+              "weekly",
+              "monthly",
+              "interval",
+              "cron"
+            ]
+          },
+          "schedule_config": {
+            "type": "object",
+            "description": "Shape depends on `schedule_type`: `{ interval_minutes }`, `{ time }`, `{ day, time }`, `{ day_of_month, time }` or `{ cron }`."
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "max_executions": {
+            "type": "integer"
+          }
+        }
+      },
+      "TaskActionRequest": {
+        "type": "object",
+        "required": [
+          "project_id",
+          "bot_id",
+          "task_id"
+        ],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "Project ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "Agent ID"
+          },
+          "task_id": {
+            "type": "string",
+            "description": "Task UUID"
+          }
+        }
+      },
+      "TaskObject": {
+        "type": "object",
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "description": "Task UUID — this is `task_id` elsewhere"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "Agent this task belongs to"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string",
+            "description": "`site_review` for a Site's own review task, otherwise null"
+          },
+          "schedule_type": {
+            "type": "string",
+            "description": "How the task repeats. `interval` uses `schedule_config.interval_minutes`; `cron` uses `schedule_config.cron`.",
+            "enum": [
+              "once",
+              "daily",
+              "weekly",
+              "monthly",
+              "interval",
+              "cron"
+            ]
+          },
+          "schedule_config": {
+            "type": "object",
+            "description": "Shape depends on `schedule_type`: `{ interval_minutes }`, `{ time }`, `{ day, time }`, `{ day_of_month, time }` or `{ cron }`."
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "state": {
+            "type": "string",
+            "description": "Board column"
+          },
+          "autonomy": {
+            "type": "string",
+            "description": "How far the agent may act unattended"
+          },
+          "chat_mode": {
+            "type": "string"
+          },
+          "active_hours_start": {
+            "type": "string"
+          },
+          "active_hours_end": {
+            "type": "string"
+          },
+          "execution_count": {
+            "type": "integer"
+          },
+          "max_executions": {
+            "type": "integer"
+          },
+          "error_count": {
+            "type": "integer"
+          },
+          "max_consecutive_errors": {
+            "type": "integer",
+            "description": "Disabled after this many failures in a row"
+          },
+          "last_executed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "last_status": {
+            "type": "string"
+          },
+          "last_reason": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "TaskLogObject": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "task_uuid": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "credits_used": {
+            "type": "integer"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "TaskLogsResponse": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer"
+          },
+          "logs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskLogObject"
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "integer"
+              },
+              "per_page": {
+                "type": "integer"
+              },
+              "total": {
+                "type": "integer"
+              },
+              "total_pages": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "TaskStatsObject": {
+        "type": "object",
+        "properties": {
+          "stats": {
+            "type": "object",
+            "description": "Aggregate execution counts and error rates for the agent's tasks"
+          }
+        }
       }
     }
   },
@@ -8494,8 +8489,8 @@
       "description": "Operations for retrieving agent statistics and analytics"
     },
     {
-      "name": "Heartbeat",
-      "description": "Operations for managing autonomous agent scheduling and execution"
+      "name": "Tasks",
+      "description": "Scheduled tasks — recurring work an agent performs on its own. Replaces the Heartbeat API."
     },
     {
       "name": "Email",

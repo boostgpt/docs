@@ -121,7 +121,7 @@ console.log(msg2.response); // "Your name is John"
 const result = await client.chat({
   bot_id: 'bot_abc123',
   message: 'Complex question requiring deep thinking',
-  model: 'o1', // Use reasoning model for this request
+  model: 'gpt-5.4', // Use reasoning model for this request
   reasoning_mode: 'agent' // Autonomous multi-step with tools (up to 10x credit)
 });
 ```

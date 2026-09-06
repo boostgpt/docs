@@ -79,15 +79,6 @@ than a standard model — each one below declares its own minimum. Credits are c
     - Model id: `gpt-5.4`
   </Card>
 
-  <Card title="GPT-5.3 Codex" icon="rocket">
-    **5 credits** • The model for most capable agentic coding tasks.
-
-    - 400K context window
-    - Needs at least 2000 completion tokens
-    - Speed: Medium • Cost: High
-    - Vision: images supported
-    - Model id: `gpt-5.3-codex`
-  </Card>
 
   <Card title="GPT-5.2" icon="zap">
     **5 credits** • The model for coding and agentic tasks across industries.
@@ -99,25 +90,7 @@ than a standard model — each one below declares its own minimum. Credits are c
     - Model id: `gpt-5.2`
   </Card>
 
-  <Card title="GPT-5.2 Pro" icon="circle">
-    **5 credits** • The model for tough problems that may take longer to solve but require harder thinking
 
-    - 400K context window
-    - Needs at least 2000 completion tokens
-    - Speed: Medium • Cost: High
-    - Vision: images supported
-    - Model id: `gpt-5.2-pro`
-  </Card>
-
-  <Card title="GPT-5.2 Codex" icon="microchip">
-    **5 credits** • The model for interactive coding products; full spectrum of coding tasks.
-
-    - 400K context window
-    - Needs at least 2000 completion tokens
-    - Speed: Medium • Cost: High
-    - Vision: images supported
-    - Model id: `gpt-5.2-codex`
-  </Card>
 
   <Card title="GPT-5.1" icon="cube">
     **4 credits** • An enhanced version of GPT-5 with improved reasoning, creativity, and contextual understanding for the most demanding applications.
@@ -179,45 +152,9 @@ than a standard model — each one below declares its own minimum. Credits are c
     - Model id: `gpt-5-nano`
   </Card>
 
-  <Card title="O3" icon="rocket">
-    **6 credits** • Reasoning model for hard maths, science, coding and visual reasoning tasks.
 
-    - 200K context window
-    - Needs at least 3000 completion tokens
-    - Speed: Slow • Cost: High
-    - Vision: images supported
-    - Model id: `o3`
-  </Card>
 
-  <Card title="O4 Mini" icon="zap">
-    **3 credits** • Small o-series model optimised for fast, effective reasoning.
 
-    - 200K context window
-    - Needs at least 2000 completion tokens
-    - Speed: Medium • Cost: Medium
-    - Vision: images supported
-    - Model id: `o4-mini`
-  </Card>
-
-  <Card title="O1" icon="circle">
-    **6 credits** • Advanced reasoning model with deep thinking capabilities for complex problem-solving.
-
-    - 200K context window
-    - Needs at least 3000 completion tokens
-    - Speed: Slow • Cost: High
-    - Vision: images supported
-    - Model id: `o1`
-  </Card>
-
-  <Card title="O3 Mini" icon="microchip">
-    **3 credits** • Next-generation compact reasoning model with enhanced problem-solving capabilities.
-
-    - 128K context window
-    - Needs at least 2000 completion tokens
-    - Speed: Medium • Cost: Medium
-    - Vision: images supported
-    - Model id: `o3-mini`
-  </Card>
 </CardGroup>
 
 ### Google
@@ -293,15 +230,6 @@ than a standard model — each one below declares its own minimum. Credits are c
     - Model id: `gemini-3-flash-preview`
   </Card>
 
-  <Card title="Gemini 2.5 Pro" icon="circle">
-    **3 credits** • The most advanced model in the Gemini 2.5 series, designed for complex reasoning, high accuracy, and faster performance.
-
-    - 1M context window
-    - Needs at least 2000 completion tokens
-    - Speed: Slow • Cost: High
-    - Vision: images supported
-    - Model id: `gemini-2.5-pro`
-  </Card>
 
   <Card title="Gemini 2.5 Flash" icon="microchip">
     **1 credit** • A fast and capable model in the Gemini 2.5 series, balancing speed and reasoning performance for production use.
@@ -642,12 +570,10 @@ than a standard model — each one below declares its own minimum. Credits are c
 
 | Model | Credits | Context | Speed | Reasoning Depth | Best For |
 |-------|---------|---------|-------|-----------------|----------|
-| **O1** | 6 | 200K | Slow | ⭐⭐⭐⭐⭐ | Most thorough |
 | **Claude 3 Opus Extended** | 6 | 200K | Slow | ⭐⭐⭐⭐⭐ | Strategic thinking |
 | **Grok 3 Reasoning** | 4 | 128K | Medium | ⭐⭐⭐⭐ | Problem-solving |
 | **GPT-5.1** | 4 | 200K | Medium | ⭐⭐⭐⭐ | General reasoning |
 | **O1 Mini** | 3 | 128K | Medium | ⭐⭐⭐⭐ | Fast reasoning |
-| **O3 Mini** | 3 | 128K | Medium | ⭐⭐⭐⭐ | Next-gen reasoning |
 | **Gemini 2.0 Flash Thinking** | 3 | 1M | Medium | ⭐⭐⭐⭐ | Large context reasoning |
 | **DeepSeek R1** | 2 | 64K | Medium | ⭐⭐⭐ | Budget reasoning |
 | **DeepSeek Llama 70B (Groq)** | 2 | 64K | Fast | ⭐⭐⭐ | Speed + reasoning |
@@ -664,7 +590,7 @@ than a standard model — each one below declares its own minimum. Credits are c
     ```javascript
     const response = await client.chat({
       bot_id: 'math-bot',
-      model: 'o4-mini',
+      model: 'gpt-5.4-mini',
       message: 'Solve: If f(x) = x^2 + 3x - 4, find where f(x) = 0',
       max_reply_tokens: 2000
     });
@@ -730,7 +656,7 @@ const client = new BoostGPT({
 // Create bot with O1 model
 const botResponse = await client.createBot({
   name: 'Deep Thinker',
-  model: 'o1',
+  model: 'gpt-5.4',
   instruction: 'You are a logical analyst.',
   max_reply_tokens: 3000, // O1 needs minimum 3000
   status: 'active'
@@ -803,7 +729,7 @@ All reasoning models support these modes:
 // Use reasoning model with different modes
 const reasoningBot = await client.createBot({
   name: 'Deep Thinker',
-  model: 'o1',
+  model: 'gpt-5.4',
   instruction: 'You solve complex problems.',
   max_reply_tokens: 3000,
   status: 'active'
@@ -907,7 +833,6 @@ const getAnalysis = async (query) => {
 
 | Model | Avg Response Time | Accuracy | Cost Efficiency |
 |-------|-------------------|----------|-----------------|
-| **O1** | 10-20s | ⭐⭐⭐⭐⭐ | Low (6 credits) |
 | **O1 Mini** | 5-10s | ⭐⭐⭐⭐ | Medium (3 credits) |
 | **DeepSeek R1** | 5-8s | ⭐⭐⭐ | High (2 credits) |
 | **Gemini Flash Thinking** | 4-6s | ⭐⭐⭐⭐ | High (3 credits) |

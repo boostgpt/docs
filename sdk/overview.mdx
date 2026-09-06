@@ -53,7 +53,7 @@ BoostGPT provides two complementary SDKs that work together:
     // Create a bot
     await client.createBot({
       name: 'Support Bot',
-      model: 'gpt-4o-mini',
+      model: 'gpt-5.6-luna',
       instruction: 'You are a helpful support agent'
     });
     
@@ -113,7 +113,7 @@ BoostGPT provides two complementary SDKs that work together:
     // Create or update bot configuration
     await client.updateBot({
       bot_id: process.env.BOOSTGPT_BOT_ID,
-      model: 'gpt-4o-mini',
+      model: 'gpt-5.6-luna',
       instruction: 'Updated instructions'
     });
     

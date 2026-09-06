@@ -3,6 +3,50 @@ title: "Chat API"
 description: "Send messages and receive AI responses"
 ---
 
+## Calling as a service
+
+Most API calls represent one person chatting. If instead your **own backend** is calling BoostGPT on
+behalf of many end users — a WhatsApp assistant, a helpdesk, a community bot — say so with
+`purpose: 'service'`:
+
+```javascript
+const result = await client.chat({
+  bot_id: 'bot_abc123',
+  chat_id: 'community-42',
+  message: 'What did we decide about the venue?',
+  purpose: 'service',
+  workspace_uuid: 'ws_abc123',
+  chat_mode: 'edit'
+});
+```
+
+This grants two things an ordinary call does not get:
+
+- **A workspace of your choosing.** Pass `workspace_uuid` and the turn runs in that workspace, so
+  your agent can keep durable notes and read them back on a later conversation.
+- **A chat mode that sticks.** `'edit'` survives the request, so the agent can write files.
+
+And deliberately withholds one: a service call is **not** a builder conversation. It never receives
+the Site builder persona, and it never gets `read_conversations` — the tool that reads what *other*
+people have asked. Workspace scope, never cross-conversation reach.
+
+<Note>
+`purpose` is a request, not a credential. It is granted only when your API key belongs to someone who
+runs the project the bot is in; asking for it otherwise changes nothing and the call proceeds as
+normal. It is also opt-in — omit it and your existing integration behaves exactly as it does today.
+</Note>
+
+### Workspaces and the tool round trip
+
+A pinned workspace is remembered against the `chat_id`, so a turn that pauses for tool execution
+resumes in the **same** workspace. You do not re-send `workspace_uuid` to `executeTool()`.
+
+### Limits
+
+Service workspaces are counted against their own plan allowance, separate from the workspaces you
+create in the dashboard, and shown in your account usage. Neither allowance can be spent by the
+other.
+
 ## Basic Chat
 
 ```javascript
@@ -35,6 +79,8 @@ if (result.err) {
 | `stream` | boolean | No | Stream response (default: `false`) |
 | `memory` | boolean | No | Search the agent's training data. Omit to use the agent's own setting |
 | `reasoning_mode` | string | No | `auto`, `standard`, `agent` |
+| `purpose` | string | No | `'service'` when this call is your own backend acting for many end users. See below |
+| `workspace_uuid` | string | No | Pin the turn to a specific workspace. Requires `purpose: 'service'` |
 
 ### Response
 

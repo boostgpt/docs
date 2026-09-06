@@ -5,6 +5,31 @@ rss: true
 noindex: true
 ---
 
+<Update label="September 2026" tags={["Chat API", "Workspaces"]} rss={{ title: "Calling as a service", description: "A third chat purpose for backends acting on behalf of many end users" }}>
+
+  ## Calling as a service
+
+  `chat()` accepts `purpose: 'service'` for calls made by **your own backend** on behalf of many end
+  users — a WhatsApp assistant, a helpdesk, a community bot — rather than by one person chatting.
+
+  A service call may pin a workspace with `workspace_uuid` and keep a `chat_mode` such as `'edit'`,
+  so your agent can keep durable notes across conversations and read them back later. A pinned
+  workspace is remembered against the `chat_id`, so a turn that pauses for tool execution resumes in
+  the same workspace — there is nothing extra to send to `executeTool()`.
+
+  It is deliberately **not** a builder conversation: it never receives the Site builder persona, and
+  never gets `read_conversations`, which reads what other people have asked. Workspace scope, never
+  cross-conversation reach.
+
+  `purpose` is requested, not asserted — it is granted only when your API key belongs to someone who
+  runs the project. It is also opt-in: **existing integrations are unaffected**, because a call that
+  sends no `purpose` behaves exactly as before.
+
+  Service workspaces have their own plan allowance, counted separately from the workspaces you create
+  in the dashboard and shown in your account usage.
+
+</Update>
+
 <Update label="August 2026" tags={["Removals", "Breaking changes"]} rss={{ title: "CRM, Calendar Booking, Follow-ups, and the Public Agent Workspace Surfaces Removed", description: "Retiring the CRM suite and calendar booking, and narrowing workspaces to per-conversation and members-only" }}>
 
   ## CRM, calendar booking, and follow-ups

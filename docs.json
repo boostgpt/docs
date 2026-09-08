@@ -84,8 +84,7 @@
                   {
                     "group": "Guides",
                     "pages": [
-                      "creators/guides/custom-domain",
-                      "creators/guides/export-subscribers"
+                      "creators/guides/custom-domain"
                     ]
                   }
                 ]
@@ -106,8 +105,7 @@
                         "saas/chat-widget/installation",
                         "saas/chat-widget/configuration",
                         "saas/chat-widget/api-reference",
-                        "saas/chat-widget/iframe-persistence",
-                        "saas/chat-widget/sso"
+                        "saas/chat-widget/iframe-persistence"
                       ]
                     },
                     {

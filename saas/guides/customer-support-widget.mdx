@@ -74,30 +74,6 @@ Set up welcoming greetings in **Branding → Content → Message Greetings**:
 
 These appear as stacked cards above the bubble, inviting users to start a conversation.
 
-### Step 5: Enable SSO (Recommended)
-
-If your site has user authentication, connect SSO to identify users:
-
-```javascript
-// On your backend: generate a signed JWT
-const token = jwt.sign(
-  { email: user.email, name: user.name },
-  'YOUR_SSO_SECRET',
-  { expiresIn: '24h' }
-);
-
-// Pass to widget
-boostgpt.init({
-  botId: 'YOUR_BOT_UUID',
-  userToken: token
-});
-```
-
-Benefits:
-- Agent greets users by name
-- Conversation history persists across sessions
-- Support team can identify who needs help
-
 ## Measuring Success
 
 Track these metrics to evaluate your support widget:
@@ -148,10 +124,6 @@ Track these metrics to evaluate your support widget:
 <CardGroup cols={2}>
   <Card title="Widget Configuration" icon="settings" href="/saas/chat-widget/configuration">
     Customize appearance and behavior
-  </Card>
-
-  <Card title="SSO Setup" icon="lock" href="/saas/chat-widget/sso">
-    Identify your users automatically
   </Card>
 
   <Card title="Best Practices" icon="check" href="/saas/best-practices">

@@ -16,17 +16,13 @@ Webhooks allow you to receive real-time notifications when events occur in your 
 - `memory.created` - Memory source created
 - `memory.updated` - Memory source updated
 - `memory.deleted` - Memory source deleted
-- `subscriber.joined` - Subscriber joined an agent
-- `subscriber.verified` - Subscriber verified their account
-- `subscriber.deactivated` - Subscriber deactivated their agent account
-- `subscriber.subscription.checkout_started` - Subscriber started checkout
-- `subscriber.subscription.created` - Subscriber subscription created
-- `subscriber.subscription.renewed` - Subscriber subscription renewed
-- `subscriber.subscription.cancel_requested` - Subscriber requested cancellation
-- `subscriber.subscription.cancelled` - Subscriber subscription cancelled
-- `subscriber.subscription.paused` - Subscriber subscription paused
-- `subscriber.subscription.resumed` - Subscriber subscription resumed
-- `subscriber.subscription.refunded` - Subscriber payment refunded
+- `subscriber.joined` - Someone new reached the agent for the first time
+
+<Note>
+  `subscriber.joined` fires when a new contact is created — currently when someone new writes in by
+  email, or when a chat creates a member that did not exist before. The id is kept as-is rather than
+  renamed to `contact.created`, because existing automations reference it.
+</Note>
 
 ## Setup Webhook
 
@@ -52,7 +48,7 @@ All webhooks send JSON payloads:
 ```json
 {
   "event": "subscriber.joined",
-  "resource_id": "subscriber_uuid",
+  "resource_id": "contact_uuid",
   "name": "Jane Doe",
   "email": "jane@example.com",
   "bot": {
@@ -79,10 +75,7 @@ app.post('/webhooks/boostgpt', (req, res) => {
 
   switch (event) {
     case 'subscriber.joined':
-      console.log('New subscriber:', req.body.email);
-      break;
-    case 'subscriber.subscription.created':
-      console.log('New customer:', req.body.email);
+      console.log('New contact:', req.body.email);
       break;
     default:
       console.log('Unknown event:', event);

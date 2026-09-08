@@ -1515,58 +1515,6 @@
     }
    }
   },
-  "/v1/bot/subscriber/readall": {
-   "get": {
-    "summary": "List Subscribers",
-    "tags": [
-     "Subscribers"
-    ],
-    "description": "Fetch a paginated list of all subscribers/leads",
-    "parameters": [
-     {
-      "name": "project_id",
-      "in": "query",
-      "required": true,
-      "schema": {
-       "type": "string"
-      },
-      "description": "Project ID"
-     },
-     {
-      "name": "page",
-      "in": "query",
-      "required": false,
-      "schema": {
-       "type": "integer",
-       "default": 1
-      },
-      "description": "Page number"
-     },
-     {
-      "name": "per_page",
-      "in": "query",
-      "required": false,
-      "schema": {
-       "type": "integer",
-       "default": 10
-      },
-      "description": "Items per page"
-     }
-    ],
-    "responses": {
-     "200": {
-      "description": "Subscribers retrieved successfully",
-      "content": {
-       "application/json": {
-        "schema": {
-         "$ref": "#/components/schemas/SubscriberListResponse"
-        }
-       }
-      }
-     }
-    }
-   }
-  },
   "/v1/bot/stats/votes": {
    "get": {
     "summary": "Get Vote Statistics",
@@ -6827,39 +6775,6 @@
      }
     }
    },
-   "SubscriberListResponse": {
-    "type": "object",
-    "properties": {
-     "subscribers": {
-      "type": "array",
-      "items": {
-       "type": "object",
-       "properties": {
-        "id": {
-         "type": "string",
-         "description": "Subscriber ID"
-        },
-        "email": {
-         "type": "string",
-         "description": "Subscriber email"
-        },
-        "name": {
-         "type": "string",
-         "description": "Subscriber name"
-        },
-        "subscribed_at": {
-         "type": "string",
-         "format": "date-time",
-         "description": "Subscription timestamp"
-        }
-       }
-      }
-     },
-     "pagination": {
-      "$ref": "#/components/schemas/Pagination"
-     }
-    }
-   },
    "Pagination": {
     "type": "object",
     "properties": {
@@ -8482,10 +8397,6 @@
   {
    "name": "Chat",
    "description": "Operations for chatting with agents and managing conversations"
-  },
-  {
-   "name": "Subscribers",
-   "description": "Operations for managing subscribers and leads"
   },
   {
    "name": "Tools",

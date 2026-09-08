@@ -41,32 +41,7 @@ Set `data-open-style` to control how the chat opens:
 See [Configuration](/saas/chat-widget/configuration) for greetings, conversation starters,
 auto-open, and branding options.
 
-## Step 3: Identify Your Users (Optional)
-
-If visitors are logged in, sign a JWT on your **backend** so conversations are tied to the right
-user and history persists across sessions:
-
-```javascript
-// YOUR SERVER
-const token = jwt.sign({
-  email: 'user@example.com',
-  name: 'Jane Doe',
-  external_id: 'ext-123',
-}, SSO_SECRET, { expiresIn: '1h' });
-```
-
-```html
-<script
-  src="https://embed.boostgpt.co/widget.js"
-  data-bot-id="YOUR_AGENT_UUID"
-  data-user-token="SIGNED_JWT"
-></script>
-```
-
-Generate the SSO secret on your agent's **Deploy** page. See the [SSO guide](/saas/chat-widget/sso)
-for full backend setup.
-
-## Step 4: Test It
+## Step 3: Test It
 
 1. Open your website in a browser
 2. Click the chat bubble

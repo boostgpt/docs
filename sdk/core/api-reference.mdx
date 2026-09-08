@@ -613,29 +613,6 @@ await client.search({
 
 ---
 
-## Subscribers
-
-### fetchSubscribers()
-
-Get all subscribers for your project.
-
-```javascript
-await client.fetchSubscribers({
-  page: 1,
-  per_page: 10
-});
-```
-
-<ParamField path="page" type="number" default="1">
-  Page number
-</ParamField>
-
-<ParamField path="per_page" type="number" default="10">
-  Subscribers per page
-</ParamField>
-
----
-
 ## Analytics & Statistics
 
 ### fetchVoteStats()
@@ -791,12 +768,6 @@ session or read the same configuration the widget reads.
 
 ```javascript
 await client.fetchWidgetConfig({ bot_id: 'bot-id' });
-```
-
-### createWidgetSso()
-
-```javascript
-await client.createWidgetSso({ bot_id: 'bot-id', token: 'signed-jwt' });
 ```
 
 ---

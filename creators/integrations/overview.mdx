@@ -36,19 +36,28 @@ description: "Connect your favorite tools"
   </Step>
 </Steps>
 
-### Option 2: Add External MCP Server
+### Option 2: Build a connector from an API specification
 
 <Steps>
-  <Step title="Go to Tools Tab">
-    Click **Tools** tab inside your agent
+  <Step title="Go to Connectors">
+    From dashboard, click **Integrations** → **Connectors** → **Custom**
   </Step>
-  <Step title="Add Tool">
-    Click **Add Tool** → **Add New**
+  <Step title="Upload your specification">
+    Provide an OpenAPI or Postman file. BoostGPT turns each operation into a tool and hosts the connector for you.
   </Step>
-  <Step title="Enter MCP Server URL">
-    Provide your external MCP server endpoint
+  <Step title="Add your credentials">
+    Enter the key or token your API expects. It is encrypted and never shown again.
+  </Step>
+  <Step title="Add to Agent">
+    Go to your agent's **Tools** tab → **Add Tool** → Select the connector
   </Step>
 </Steps>
+
+<Note>
+  Your API must be reachable over **https** from the public internet. Addresses on a private network — `localhost`,
+  `127.0.0.1`, `10.x`, `192.168.x` and similar — are refused, because BoostGPT would be making the request from
+  inside its own network rather than from yours.
+</Note>
 
 ## Next Steps
 

@@ -1,0 +1,43 @@
+---
+title: "Telegram"
+description: "Messages, photos and chat members. A bot channel, unrelated to what the site says."
+---
+
+Messages, photos and chat members. A bot channel, unrelated to what the site says.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Telegram and press **Connect**. The key you enter is checked against Telegram before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| Bot Token | Your Telegram bot token from @BotFather |
+
+### Getting the credential
+
+1. Open Telegram and message [@BotFather](https://t.me/BotFather)
+2. Send `/newbot` command
+3. Choose a name and username for your bot
+4. Copy the bot token provided by BotFather
+5. Use the token to configure this connector
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `send_message` | Send a text message to a chat |
+| `send_photo` | Send a photo to a chat |
+| `send_document` | Send a document to a chat |
+| `get_updates` | Get incoming updates (messages, callbacks, etc.) |
+| `get_chat` | Get information about a chat |
+| `get_chat_members_count` | Get the number of members in a chat |
+| `get_chat_member` | Get information about a chat member |
+| `delete_message` | Delete a message |
+| `edit_message_text` | Edit text of a message |
+| `pin_chat_message` | Pin a message in a group or channel |
+
+## Useful resources
+
+- [Telegram documentation](https://core.telegram.org/bots/api#authorizing-your-bot)

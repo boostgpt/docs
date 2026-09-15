@@ -1,0 +1,60 @@
+---
+title: "Square"
+description: "Payments, refunds and catalogue. Revenue, for teams selling through Square."
+---
+
+Payments, refunds and catalogue. Revenue, for teams selling through Square.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Square and press **Connect**. The key you enter is checked against Square before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| Access Token | Your Square application access token |
+| Environment | Square environment |
+
+### Getting the credential
+
+1. Go to [Square Developer Dashboard](https://developer.squareup.com/apps)
+2. Click **Create your first application** or **New Application**
+3. Enter application name and select account
+4. Go to **Credentials** tab
+5. Copy **Application ID** and **Access Token**
+6. Choose **Sandbox** for testing or **Production** for live transactions
+7. Configure OAuth redirect URL if using OAuth flow
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `create_payment` | Create a payment |
+| `get_payment` | Get payment details |
+| `list_payments` | List payments |
+| `cancel_payment` | Cancel a payment |
+| `complete_payment` | Complete a delayed payment |
+| `create_refund` | Create a refund |
+| `get_refund` | Get refund details |
+| `list_refunds` | List refunds |
+| `create_order` | Create an order |
+| `get_order` | Get order details |
+| `update_order` | Update an order |
+| `search_orders` | Search orders |
+| `pay_order` | Pay for an order |
+| `list_customers` | List customers |
+| `create_customer` | Create a customer |
+| `get_customer` | Get customer details |
+| `update_customer` | Update a customer |
+| `delete_customer` | Delete a customer |
+| `search_customers` | Search customers |
+| `list_locations` | List locations |
+| `get_location` | Get location details |
+| `list_catalog_objects` | List catalog objects (items, categories, etc.) |
+| `get_catalog_object` | Get catalog object details |
+| `search_catalog_objects` | Search catalog objects |
+
+## Useful resources
+
+- [Square documentation](https://developer.squareup.com/docs/build-basics/access-tokens)

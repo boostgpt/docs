@@ -1,55 +1,53 @@
 ---
-title: "Datadog"
-description: "Monitoring and analytics platform"
+title: "DataDog"
+description: "Metrics, events, monitors and logs. Infrastructure health — nothing a marketing page claims."
 ---
 
-## Overview
+Metrics, events, monitors and logs. Infrastructure health — nothing a marketing page claims.
 
-Connect Datadog to monitor infrastructure and application performance.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find DataDog and press **Connect**. The key you enter is checked against DataDog before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Datadog** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Datadog**
-  </Step>
-  <Step title="Configure">
-    Enter your Datadog API Key and Application Key
-  </Step>
-  <Step title="Test">
-    Playground: "Show me system metrics"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| API Key | Your DataDog API Key |
+| Application Key | Your DataDog Application Key |
 
-```text
-User: "Get CPU usage for the last hour"
+### Getting the credential
 
-Agent: CPU usage (last hour):
-       Average: 45%, Peak: 78%
-```
+1. Log in to [DataDog](https://app.datadoghq.com)
+2. Go to **Organization Settings** → **API Keys**
+3. Create or copy an existing **API Key**
+4. Go to **Organization Settings** → **Application Keys**
+5. Create a new **Application Key**
+6. Use both keys for authentication
 
-## Integration Example
+## What an agent can do with it
 
-**With Slack:**
+| Tool | What it does |
+|---|---|
+| `submit_metrics` | Submit custom metrics to DataDog |
+| `query_metrics` | Query metric data from DataDog |
+| `get_events` | Get events from DataDog event stream |
+| `create_event` | Create a new event in DataDog |
+| `get_hosts` | Get list of hosts reporting to DataDog |
+| `get_host_details` | Get detailed information about a specific host |
+| `mute_host` | Mute alerts for a host |
+| `get_dashboards` | List all dashboards |
+| `create_dashboard` | Create a new dashboard |
+| `get_monitors` | Get all monitors |
+| `create_monitor` | Create a new monitor |
+| `get_monitor` | Get details of a specific monitor |
+| `update_monitor` | Update an existing monitor |
+| `delete_monitor` | Delete a monitor |
+| `get_downtimes` | Get all downtimes |
+| `create_downtime` | Schedule a downtime |
+| `get_logs` | Search logs |
+| `get_service_map` | Get service map data |
 
-```text
-User: "Alert #ops if CPU exceeds 80%"
+## Useful resources
 
-Agent: Monitoring Datadog, will alert #ops channel
-```
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="Sentry" icon="bug" href="/integrations/connectors/sentry">
-    Error tracking
-  </Card>
-  <Card title="Slack" icon="slack" href="/integrations/connectors/slack">
-    Team notifications
-  </Card>
-</CardGroup>
+- [DataDog documentation](https://docs.datadoghq.com/api/latest/authentication/)

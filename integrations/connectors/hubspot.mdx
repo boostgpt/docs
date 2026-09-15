@@ -1,57 +1,55 @@
 ---
 title: "HubSpot"
-description: "Manage contacts, deals, and CRM data"
+description: "Contacts, companies and deals. Who asked, what they asked about, and whether it ever closed."
 ---
 
-## Overview
+Contacts, companies and deals. Who asked, what they asked about, and whether it ever closed.
 
-Connect HubSpot to manage contacts, deals, companies, and automate CRM workflows.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find HubSpot and press **Connect**. The key you enter is checked against HubSpot before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **HubSpot** → **Deploy**
-  </Step>
+### What you will need
 
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **HubSpot**
-  </Step>
+| Field | What it is |
+|---|---|
+| Access Token | Your HubSpot API key or private app access token |
 
-  <Step title="Configure">
-    Sign in with HubSpot and grant CRM permissions (OAuth)
-  </Step>
+### Getting the credential
 
-  <Step title="Test">
-    Playground: "Create a contact for John Doe at TechCorp"
-  </Step>
-</Steps>
+1. Log in to [HubSpot](https://app.hubspot.com)
+2. Go to **Settings** → **Integrations** → **Private Apps**
+3. Click **Create a private app**
+4. Configure app name and description
+5. Select required scopes:
+   - `crm.objects.contacts.read/write` - Contact management
+   - `crm.objects.companies.read/write` - Company management
+   - `crm.objects.deals.read/write` - Deal management
+   - `transactional-email` - Send emails
+6. Install the app and copy the access token
 
-## Example Usage
+## What an agent can do with it
 
-```text
-User: "Create a contact for Sarah Johnson, email sarah@techcorp.com, company TechCorp"
+| Tool | What it does |
+|---|---|
+| `get_contacts` | List contacts |
+| `get_contact` | Get contact by ID |
+| `create_contact` | Create a new contact |
+| `update_contact` | Update an existing contact |
+| `delete_contact` | Archive a contact |
+| `search_contacts` | Search for contacts |
+| `get_companies` | List companies |
+| `create_company` | Create a new company |
+| `get_deals` | List deals |
+| `create_deal` | Create a new deal |
+| `get_pipelines` | Get deal pipelines |
+| `get_owners` | List owners |
+| `get_properties` | Get properties for an object type |
+| `create_engagement` | Create an engagement (note, email, call, etc.) |
+| `get_activities` | Get activities for a contact |
+| `send_email` | Send a single email |
+| `get_email_events` | Get email events |
 
-Agent: Created HubSpot contact:
-       - Name: Sarah Johnson
-       - Email: sarah@techcorp.com
-       - Company: TechCorp
-```
+## Useful resources
 
-## Integration Example
-
-**With Gmail:**
-
-```text
-User: "Find all emails from sarah@techcorp.com and create a HubSpot contact"
-
-Agent: *searches Gmail for emails from Sarah*
-       *extracts contact information*
-       *creates HubSpot contact*
-
-       Contact created with email history from Gmail
-```
-
-## Next Steps
-
-<CardGroup cols={2}></CardGroup>
+- [HubSpot documentation](https://developers.hubspot.com/docs/api/private-apps)

@@ -1,57 +1,67 @@
 ---
 title: "Calendly"
-description: "Schedule meetings and manage availability"
+description: "Scheduled events, invitees and event types. The same question as Cal.com, for teams on Calendly."
 ---
 
-## Overview
+Scheduled events, invitees and event types. The same question as Cal.com, for teams on Calendly.
 
-Connect Calendly to schedule meetings and manage your availability.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Calendly and press **Connect**. You will be sent to sign in; the connection is saved once that succeeds.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Calendly** → **Deploy**
-  </Step>
+### What you will need
 
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Calendly**
-  </Step>
+| Field | What it is |
+|---|---|
+| Client ID | Your Calendly OAuth app Client ID (for OAuth 2.0) |
+| Client Secret | Your Calendly OAuth app Client Secret (for OAuth 2.0) |
+| Personal Access Token | Your Calendly Personal Access Token (for personal integrations) |
 
-  <Step title="Configure">
-    Sign in to Calendly and grant access (OAuth)
-  </Step>
+### Getting the credential
 
-  <Step title="Test">
-    Playground: "Get my Calendly scheduling link"
-  </Step>
-</Steps>
+1. Log in to [Calendly](https://calendly.com)
+2. Go to **Integrations** → **API & Webhooks**
+3. Generate **Personal Access Token**
+4. Add token to connector
 
-## Example Usage
+## Notes
 
-```text
-User: "Share my Calendly link for 30-minute meetings"
+- Uses Personal Access Token or OAuth 2.0 authentication
+- All datetime values in ISO 8601 format
+- Webhook events: invitee.created, invitee.canceled
 
-Agent: Here's your Calendly link:
-       https://calendly.com/yourname/30min
-```
+See [Calendly API docs](https://developer.calendly.com/api-docs) for complete reference.
 
-## Integration Example
+## What an agent can do with it
 
-**With Gmail:**
+| Tool | What it does |
+|---|---|
+| `get_current_user` | Get current user information |
+| `get_user` | Get information about a specific user |
+| `get_organization` | Get organization information |
+| `get_organization_memberships` | Get organization memberships |
+| `get_event_types` | Get event types for a user or organization |
+| `get_event_type` | Get a specific event type |
+| `get_scheduled_events` | Get scheduled events |
+| `get_scheduled_event` | Get a specific scheduled event |
+| `cancel_scheduled_event` | Cancel a scheduled event |
+| `get_event_invitees` | Get invitees for a scheduled event |
+| `get_invitee` | Get a specific invitee |
+| `create_single_use_link` | Create a single-use scheduling link |
+| `get_user_availability_schedules` | Get availability schedules for a user |
+| `get_availability_schedule` | Get a specific availability schedule |
+| `get_user_busy_times` | Get busy times for a user |
+| `list_webhooks` | List webhook subscriptions |
+| `create_webhook` | Create a webhook subscription |
+| `get_webhook` | Get a specific webhook subscription |
+| `delete_webhook` | Delete a webhook subscription |
+| `get_routing_forms` | Get routing forms for an organization |
+| `get_routing_form` | Get a specific routing form |
+| `get_routing_form_submissions` | Get submissions for a routing form |
+| `get_activity_log_entries` | Get activity log entries for an organization |
+| `get_data_compliance` | Get data compliance information |
+| `request_data_deletion` | Request deletion of invitee data for GDPR compliance |
 
-```text
-User: "Send my Calendly link to john@example.com"
+## Useful resources
 
-Agent: *gets Calendly link*
-       *sends email via Gmail*
-
-       Sent Calendly scheduling link to john@example.com
-```
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="Google Calendar" icon="calendar" href="/integrations/connectors/google-calendar">
-    Sync scheduled meetings
-  </Card></CardGroup>
+- [Calendly documentation](https://developer.calendly.com/api-docs/ZG9jOjM2MzE2MDM4-authentication)

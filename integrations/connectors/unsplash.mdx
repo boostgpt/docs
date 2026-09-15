@@ -1,51 +1,66 @@
 ---
 title: "Unsplash"
-description: "Free stock photography"
+description: "Stock photography, searchable. Real photographs, for the places where a generated image looks generated."
 ---
 
-## Overview
+Stock photography, searchable. Real photographs, for the places where a generated image looks generated.
 
-Connect Unsplash to search and download high-quality stock photos.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Unsplash and press **Connect**. You will be sent to sign in; the connection is saved once that succeeds.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Unsplash** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Unsplash**
-  </Step>
-  <Step title="Configure">
-    Enter your Unsplash Access Key
-  </Step>
-  <Step title="Test">
-    Playground: "Find photos of mountains"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| Access Key | Your Unsplash Access Key (for demo/read-only access) |
+| Client ID | Your Unsplash OAuth app Client ID (for full access) |
+| Client Secret | Your Unsplash OAuth app Client Secret (for full access) |
 
-```text
-User: "Find a photo of sunset over ocean"
+### Getting the credential
 
-Agent: Found 10 sunset photos:
-       [Photo URLs and credits]
-```
+1. Go to [Unsplash Developers](https://unsplash.com/developers)
+2. **Create Application** and get **Access Key**
+3. For user actions: Set up **OAuth** with Client ID/Secret
+4. Add credentials to connector
 
-## Integration Example
+## Notes
 
-**With Google Drive:**
+- **Access Key**: 50 requests/hour (demo mode)
+- **OAuth**: 5000 requests/hour (production)
+- Attribution required for usage
+- All photos free for commercial use
+- Download tracking recommended
 
-```text
-User: "Download Unsplash photos and save to Google Drive"
+See [Unsplash API docs](https://unsplash.com/documentation) for complete reference.
 
-Agent: Downloaded 5 photos to Drive/Stock Images
-```
+## What an agent can do with it
 
-## Next Steps
+| Tool | What it does |
+|---|---|
+| `search_photos` | Search for photos |
+| `search_collections` | Search for collections |
+| `search_users` | Search for users |
+| `get_photos` | List photos (editorial feed) |
+| `get_photo` | Get a specific photo by ID |
+| `get_random_photo` | Get random photo(s) |
+| `get_photo_statistics` | Get photo statistics |
+| `track_photo_download` | Track photo download for attribution |
+| `like_photo` | Like a photo (requires user authentication) |
+| `unlike_photo` | Unlike a photo (requires user authentication) |
+| `get_collections` | List featured collections |
+| `get_collection` | Get a specific collection by ID |
+| `get_collection_photos` | Get photos from a collection |
+| `get_related_collections` | Get collections related to a collection |
+| `get_topics` | List featured topics |
+| `get_topic` | Get a specific topic by ID or slug |
+| `get_topic_photos` | Get photos from a topic |
+| `get_user` | Get a user's public profile |
+| `get_user_photos` | Get photos uploaded by a user |
+| `get_user_liked_photos` | Get photos liked by a user |
+| `get_user_collections` | Get collections created by a user |
+| `get_user_statistics` | Get user statistics |
 
-<CardGroup cols={2}>
-  <Card title="Pexels" icon="images" href="/integrations/connectors/pexels">
-    Alternative stock photos
-  </Card></CardGroup>
+## Useful resources
+
+- [Unsplash documentation](https://unsplash.com/documentation)

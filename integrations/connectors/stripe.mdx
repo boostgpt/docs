@@ -1,60 +1,51 @@
 ---
-title: "Stripe"
-description: "Payment processing"
+title: "Stripe Payments"
+description: "Payments, customers, subscriptions and refunds, with an API key. The Stripe server above signs in instead."
 ---
 
-## Overview
+Payments, customers, subscriptions and refunds, with an API key. The Stripe server above signs in instead.
 
-Connect Stripe to manage payments, customers, and subscriptions.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Stripe Payments and press **Connect**. The key you enter is checked against Stripe Payments before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Stripe** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Stripe**
-  </Step>
-  <Step title="Configure">
-    Enter your Stripe API Key
-  </Step>
-  <Step title="Test">
-    Playground: "Show me recent payments"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| Secret Key | Your Stripe secret key (starts with sk_test_ or sk_live_) |
 
-```text
-User: "Get details for payment pi_123xyz"
+### Getting the credential
 
-Agent: Payment pi_123xyz:
-       - Amount: $499.00
-       - Status: Succeeded
-       - Customer: john@example.com
-```
+1. Create a [Stripe account](https://dashboard.stripe.com/register)
+2. Go to **Developers** → **API Keys**
+3. Copy your **Secret key** (starts with `sk_test_` for testing or `sk_live_` for production)
+4. For webhooks, also note your **Publishable key** and **Webhook signing secret**
 
-## Integration Example
+## What an agent can do with it
 
-**With HubSpot:**
+| Tool | What it does |
+|---|---|
+| `create_payment_intent` | Create a new payment intent |
+| `get_payment_intent` | Retrieve a payment intent |
+| `confirm_payment_intent` | Confirm a payment intent |
+| `cancel_payment_intent` | Cancel a payment intent |
+| `create_customer` | Create a new customer |
+| `get_customer` | Retrieve a customer |
+| `update_customer` | Update a customer |
+| `list_customers` | List all customers |
+| `create_subscription` | Create a new subscription |
+| `get_subscription` | Retrieve a subscription |
+| `update_subscription` | Update a subscription |
+| `cancel_subscription` | Cancel a subscription |
+| `list_subscriptions` | List subscriptions |
+| `create_product` | Create a new product |
+| `list_products` | List products |
+| `create_price` | Create a new price |
+| `list_prices` | List prices |
+| `list_invoices` | List invoices |
+| `get_balance` | Get account balance |
 
-```text
-User: "Update HubSpot deals when Stripe payments succeed"
+## Useful resources
 
-Agent: *monitors Stripe payments*
-       *updates HubSpot deal stages*
-
-       Updated 5 HubSpot deals to "Closed Won"
-```
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="Shopify" icon="shopify" href="/integrations/connectors/shopify">
-    E-commerce platform
-  </Card>
-  <Card title="HubSpot" icon="hubspot" href="/integrations/connectors/hubspot">
-    CRM integration
-  </Card>
-</CardGroup>
+- [Stripe Payments documentation](https://docs.stripe.com/api/authentication)

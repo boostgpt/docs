@@ -1,0 +1,56 @@
+---
+title: "Paddle Billing"
+description: "Transactions, subscriptions and invoices. The end of the funnel, for teams billing through Paddle."
+---
+
+Transactions, subscriptions and invoices. The end of the funnel, for teams billing through Paddle.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Paddle Billing and press **Connect**. The key you enter is checked against Paddle Billing before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your Paddle API key |
+| Environment | Paddle environment |
+
+### Getting the credential
+
+1. Log in to [Paddle Dashboard](https://vendors.paddle.com)
+2. Go to **Settings** → **Developer tools** → **Authentication**
+3. Click **Generate key**
+4. Select appropriate scopes:
+   - `transaction:read, transaction:write` - Transaction management
+   - `subscription:read, subscription:write` - Subscription management
+   - `customer:read, customer:write` - Customer management
+5. Choose **Sandbox** for testing or **Live** for production
+6. Copy the generated API key
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `create_transaction` | Create a new transaction |
+| `get_transaction` | Get transaction details |
+| `list_transactions` | List transactions |
+| `update_transaction` | Update a transaction |
+| `preview_transaction` | Preview a transaction |
+| `get_invoice_pdf` | Get invoice PDF for a transaction |
+| `create_subscription` | Create a new subscription |
+| `get_subscription` | Get subscription details |
+| `list_subscriptions` | List subscriptions |
+| `update_subscription` | Update a subscription |
+| `cancel_subscription` | Cancel a subscription |
+| `pause_subscription` | Pause a subscription |
+| `resume_subscription` | Resume a paused subscription |
+| `preview_subscription` | Preview subscription pricing |
+| `create_customer` | Create a new customer |
+| `get_customer` | Get customer details |
+| `list_customers` | List customers |
+| `update_customer` | Update a customer |
+
+## Useful resources
+
+- [Paddle Billing documentation](https://docs.paddle.com/api/authentication)

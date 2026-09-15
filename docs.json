@@ -48,10 +48,10 @@
             "group": "Choose Your Path",
             "icon": "split",
             "pages": [
-               {
+              {
                 "group": "Creators",
                 "pages": [
-                 {
+                  {
                     "group": "Getting Started",
                     "pages": [
                       "creators/introduction",
@@ -76,6 +76,12 @@
                   {
                     "group": "Integrations",
                     "pages": [
+                      {
+                        "group": "Remote MCP servers",
+                        "pages": [
+                          "integrations/remote-mcp"
+                        ]
+                      },
                       "creators/integrations/overview",
                       "creators/integrations/email-tools",
                       "creators/integrations/crm"
@@ -89,110 +95,110 @@
                   }
                 ]
               },
-               {
+              {
                 "group": "SaaS",
                 "pages": [
-                    {
-                      "group": "Getting Started",
-                      "pages": [
-                        "saas/introduction",
-                        "saas/quickstart"
-                      ]
-                    },
-                    {
-                      "group": "Chat Widget",
-                      "pages": [
-                        "saas/chat-widget/installation",
-                        "saas/chat-widget/configuration",
-                        "saas/chat-widget/api-reference",
-                        "saas/chat-widget/iframe-persistence"
-                      ]
-                    },
-                    {
-                      "group": "Use Case Guides",
-                      "pages": [
-                        "saas/guides/customer-support-widget"
-                      ]
-                    },
-                    {
-                      "group": "Reference",
-                      "pages": [
-                        "saas/best-practices"
-                      ]
-                    }
+                  {
+                    "group": "Getting Started",
+                    "pages": [
+                      "saas/introduction",
+                      "saas/quickstart"
+                    ]
+                  },
+                  {
+                    "group": "Chat Widget",
+                    "pages": [
+                      "saas/chat-widget/installation",
+                      "saas/chat-widget/configuration",
+                      "saas/chat-widget/api-reference",
+                      "saas/chat-widget/iframe-persistence"
+                    ]
+                  },
+                  {
+                    "group": "Use Case Guides",
+                    "pages": [
+                      "saas/guides/customer-support-widget"
+                    ]
+                  },
+                  {
+                    "group": "Reference",
+                    "pages": [
+                      "saas/best-practices"
+                    ]
+                  }
                 ]
               },
               {
                 "group": "Developers",
                 "pages": [
-                    {
-                      "group": "Getting Started",
-                      "pages": [
-                        "developers/introduction",
-                        "developers/installation",
-                        "developers/quickstart"
-                      ]
-                    },
-                    {
-                      "group": "Core SDK",
-                      "pages": [
-                        "sdk/core/overview",
-                        "sdk/core/installation",
-                        "sdk/core/bot-management",
-                        "sdk/core/chat-api",
-                        "sdk/core/training-data",
-                        "sdk/core/tasks",
-                        "sdk/core/workspaces",
-                        "sdk/core/workspace-files",
-                        "sdk/core/built-in-tools",
-                        "sdk/core/tool-management",
-                        "sdk/core/workflows",
-                        "sdk/core/email",
-                        "sdk/core/mcp-connectors",
-                        "sdk/core/api-reference"
-                      ]
-                    },
-                    {
-                      "group": "Router SDK",
-                      "pages": [
-                        "sdk/router/overview",
-                        "sdk/router/installation",
-                        "sdk/router/getting-started",
-                        "sdk/router/message-handling",
-                        "sdk/router/custom-adapters",
-                        "sdk/router/api-reference",
-                        {
-                          "group": "Adapters",
-                          "pages": [
-                            "sdk/router/adapters/overview",
-                            "sdk/router/adapters/discord",
-                            "sdk/router/adapters/telegram",
-                            "sdk/router/adapters/slack",
-                            "sdk/router/adapters/whatsapp",
-                            "sdk/router/adapters/crisp"
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "group": "Advanced",
-                      "pages": [
-                        "developers/deployment",
-                        "developers/error-handling",
-                        "developers/webhooks",
-                        "developers/rate-limits",
-                        "developers/troubleshooting"
-                      ]
-                    },
-                    {
-                      "group": "Examples",
-                      "pages": [
-                        "examples/basic-bot",
-                        "examples/multi-channel",
-                        "examples/custom-adapter",
-                        "examples/with-integrations"
-                      ]
-                    }
+                  {
+                    "group": "Getting Started",
+                    "pages": [
+                      "developers/introduction",
+                      "developers/installation",
+                      "developers/quickstart"
+                    ]
+                  },
+                  {
+                    "group": "Core SDK",
+                    "pages": [
+                      "sdk/core/overview",
+                      "sdk/core/installation",
+                      "sdk/core/bot-management",
+                      "sdk/core/chat-api",
+                      "sdk/core/training-data",
+                      "sdk/core/tasks",
+                      "sdk/core/workspaces",
+                      "sdk/core/workspace-files",
+                      "sdk/core/built-in-tools",
+                      "sdk/core/tool-management",
+                      "sdk/core/workflows",
+                      "sdk/core/email",
+                      "sdk/core/mcp-connectors",
+                      "sdk/core/api-reference"
+                    ]
+                  },
+                  {
+                    "group": "Router SDK",
+                    "pages": [
+                      "sdk/router/overview",
+                      "sdk/router/installation",
+                      "sdk/router/getting-started",
+                      "sdk/router/message-handling",
+                      "sdk/router/custom-adapters",
+                      "sdk/router/api-reference",
+                      {
+                        "group": "Adapters",
+                        "pages": [
+                          "sdk/router/adapters/overview",
+                          "sdk/router/adapters/discord",
+                          "sdk/router/adapters/telegram",
+                          "sdk/router/adapters/slack",
+                          "sdk/router/adapters/whatsapp",
+                          "sdk/router/adapters/crisp"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Advanced",
+                    "pages": [
+                      "developers/deployment",
+                      "developers/error-handling",
+                      "developers/webhooks",
+                      "developers/rate-limits",
+                      "developers/troubleshooting"
+                    ]
+                  },
+                  {
+                    "group": "Examples",
+                    "pages": [
+                      "examples/basic-bot",
+                      "examples/multi-channel",
+                      "examples/custom-adapter",
+                      "examples/with-integrations"
+                    ]
+                  }
                 ]
               },
               {
@@ -207,66 +213,117 @@
                     ]
                   },
                   {
-                    "group": "Pre-Built Connectors",
+                    "group": "Connectors",
                     "pages": [
                       "integrations/connectors/overview",
                       {
-                        "group": "Scheduling & Calendar",
+                        "group": "Make images, video and voice for the site",
                         "pages": [
-                          "integrations/connectors/calendly",
-                          "integrations/connectors/google-calendar"
-                        ]
-                      },
-                      {
-                        "group": "Project Management",
-                        "pages": [
-                          "integrations/connectors/notion",
-                          "integrations/connectors/asana",
-                          "integrations/connectors/jira",
-                          "integrations/connectors/linear",
-                          "integrations/connectors/trello",
-                          "integrations/connectors/monday",
-                          "integrations/connectors/clickup"
-                        ]
-                      },
-                      {
-                        "group": "Marketing & CRM",
-                        "pages": [
-                          "integrations/connectors/hubspot",
-                          "integrations/connectors/mailchimp",
-                          "integrations/connectors/sendgrid"
-                        ]
-                      },
-                      {
-                        "group": "Developer Tools",
-                        "pages": [
+                          "integrations/connectors/elevenlabs",
+                          "integrations/connectors/fal-ai",
+                          "integrations/connectors/google-gemini",
+                          "integrations/connectors/higgsfield",
+                          "integrations/connectors/openai",
+                          "integrations/connectors/replicate",
+                          "integrations/connectors/flux",
                           "integrations/connectors/github",
-                          "integrations/connectors/vercel",
-                          "integrations/connectors/netlify",
-                          "integrations/connectors/sentry",
-                          "integrations/connectors/datadog"
-                        ]
-                      },
-                      {
-                        "group": "AI & Media",
-                        "pages": [
-                          "integrations/connectors/stability-ai",
-                          "integrations/connectors/runway",
-                          "integrations/connectors/kling-ai",
+                          "integrations/connectors/heygen",
+                          "integrations/connectors/ideogram",
                           "integrations/connectors/luma-labs",
+                          "integrations/connectors/mureka-ai",
                           "integrations/connectors/pexels",
+                          "integrations/connectors/recraft",
+                          "integrations/connectors/runway-ai",
+                          "integrations/connectors/stability-ai",
                           "integrations/connectors/unsplash",
-                          "integrations/connectors/jamendo"
+                          "integrations/connectors/xai",
+                          "integrations/connectors/linear",
+                          "integrations/connectors/notion",
+                          "integrations/connectors/sentry"
                         ]
                       },
                       {
-                        "group": "Utilities",
+                        "group": "Research what people search for and ask",
                         "pages": [
-                          "integrations/connectors/openweathermap",
+                          "integrations/connectors/firecrawl",
+                          "integrations/connectors/intercom",
+                          "integrations/connectors/serper",
+                          "integrations/connectors/apify",
+                          "integrations/connectors/browseagent",
+                          "integrations/connectors/calcom",
+                          "integrations/connectors/exa",
+                          "integrations/connectors/hubspot",
+                          "integrations/connectors/screenshotone",
+                          "integrations/connectors/shopify",
+                          "integrations/connectors/tavily",
+                          "integrations/connectors/urlbox",
+                          "integrations/connectors/bing-search",
+                          "integrations/connectors/brave-search",
+                          "integrations/connectors/calendly",
+                          "integrations/connectors/google-calendar",
+                          "integrations/connectors/mixpanel",
+                          "integrations/connectors/paddle-billing",
+                          "integrations/connectors/paypal",
+                          "integrations/connectors/square",
+                          "integrations/connectors/stripe",
+                          "integrations/connectors/zendesk"
+                        ]
+                      },
+                      {
+                        "group": "Reach the audience",
+                        "pages": [
+                          "integrations/connectors/mailchimp",
+                          "integrations/connectors/linkedin",
+                          "integrations/connectors/sendgrid",
+                          "integrations/connectors/twitter",
+                          "integrations/connectors/discord",
+                          "integrations/connectors/facebook",
+                          "integrations/connectors/instagram",
+                          "integrations/connectors/medium",
+                          "integrations/connectors/slack",
+                          "integrations/connectors/threads",
+                          "integrations/connectors/tiktok",
+                          "integrations/connectors/youtube"
+                        ]
+                      },
+                      {
+                        "group": "Work on the site itself",
+                        "pages": [
+                          "integrations/connectors/wordpress",
+                          "integrations/connectors/vercel",
+                          "integrations/connectors/netlify"
+                        ]
+                      },
+                      {
+                        "group": "Other tools your agents can use",
+                        "pages": [
+                          "integrations/connectors/airtable",
+                          "integrations/connectors/asana",
+                          "integrations/connectors/binance-live",
+                          "integrations/connectors/binance-testnet",
+                          "integrations/connectors/clickup",
+                          "integrations/connectors/datadog",
+                          "integrations/connectors/jamendo",
+                          "integrations/connectors/jira",
                           "integrations/connectors/mapbox",
-                          "integrations/connectors/uptimerobot"
+                          "integrations/connectors/monday",
+                          "integrations/connectors/openweathermap",
+                          "integrations/connectors/pinecone",
+                          "integrations/connectors/qdrant",
+                          "integrations/connectors/telegram",
+                          "integrations/connectors/todoist",
+                          "integrations/connectors/trello",
+                          "integrations/connectors/twilio",
+                          "integrations/connectors/uptimerobot",
+                          "integrations/connectors/weaviate"
                         ]
                       }
+                    ]
+                  },
+                  {
+                    "group": "Remote MCP servers",
+                    "pages": [
+                      "integrations/remote-mcp"
                     ]
                   },
                   {

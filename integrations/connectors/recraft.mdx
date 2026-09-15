@@ -1,0 +1,38 @@
+---
+title: "Recraft"
+description: "Raster and vector image generation. It produces real SVG, which is what a logo or an icon on a page should be."
+---
+
+Raster and vector image generation. It produces real SVG, which is what a logo or an icon on a page should be.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Recraft and press **Connect**. The key you enter is checked against Recraft before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Token | Your Recraft API token |
+
+### Getting the credential
+
+1. Create an API token at [recraft.ai](https://www.recraft.ai) under **API**
+2. Paste it into the connector
+
+## Notes
+
+- `style` does most of the work — `vector_illustration` and `icon` for brand assets, `realistic_image` for photos.
+- `n` is charged per image.
+- Results are copied onto BoostGPT storage, so the link keeps working.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `generate_image` | Generate an image with Recraft. Pick a style to control the look — 'vector_illustration' and 'icon' suit brand assets, 'realistic_image' suits photography. |
+| `generate_vector` | Generate a true SVG vector image rather than a raster one — the output scales without pixelation, which matters for logos and icons. |
+
+## Useful resources
+
+- [Recraft API documentation](https://www.recraft.ai/docs)

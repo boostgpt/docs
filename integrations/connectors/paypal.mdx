@@ -1,0 +1,53 @@
+---
+title: "PayPal"
+description: "Orders, captures and refunds. Revenue, for teams taking PayPal."
+---
+
+Orders, captures and refunds. Revenue, for teams taking PayPal.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find PayPal and press **Connect**. You will be sent to sign in; the connection is saved once that succeeds.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| Client ID | Your PayPal app Client ID |
+| Client Secret | Your PayPal app Client Secret |
+| Environment | PayPal environment |
+
+### Getting the credential
+
+1. Go to [PayPal Developer Dashboard](https://developer.paypal.com/developer/applications/)
+2. Click **Create App**
+3. Enter app name and select merchant account
+4. Choose **Sandbox** for testing or **Live** for production
+5. Select features you need (e.g., Accept payments, Log in with PayPal)
+6. Copy **Client ID** and **Client Secret**
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `create_order` | Create a payment order |
+| `get_order` | Get order details |
+| `capture_order` | Capture payment for an order |
+| `authorize_order` | Authorize payment for an order |
+| `capture_authorization` | Capture an authorized payment |
+| `void_authorization` | Void an authorized payment |
+| `refund_capture` | Refund a captured payment |
+| `get_capture` | Get capture details |
+| `get_refund` | Get refund details |
+| `list_transactions` | List transactions |
+| `get_transaction` | Get transaction details |
+| `create_payment` | Create a payment (Classic API) |
+| `execute_payment` | Execute an approved payment |
+| `get_payment` | Get payment details |
+| `create_webhook` | Create a webhook |
+| `list_webhooks` | List webhooks |
+| `get_webhook` | Get webhook details |
+
+## Useful resources
+
+- [PayPal documentation](https://developer.paypal.com/api/rest/authentication/)

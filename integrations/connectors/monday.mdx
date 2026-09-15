@@ -1,58 +1,75 @@
 ---
 title: "Monday.com"
-description: "Team collaboration platform"
+description: "Boards, items and updates. Another place work is tracked."
 ---
 
-## Overview
+Boards, items and updates. Another place work is tracked.
 
-Connect Monday.com to manage boards, items, and team workflows.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Monday.com and press **Connect**. The key you enter is checked against Monday.com before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Monday.com** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Monday.com**
-  </Step>
-  <Step title="Configure">
-    Enter your Monday.com API Key
-  </Step>
-  <Step title="Test">
-    Playground: "Show me items in my board"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| API Token | Your Monday.com API token (v2) |
 
-```text
-User: "Add an item to my Sprint board: Fix login bug"
+### Getting the credential
 
-Agent: Created item in Sprint board:
-       "Fix login bug"
-```
+1. Log in to [Monday.com](https://monday.com)
+2. Go to **Admin** → **API** → **Generate API Token**
+3. Copy the token and add to connector
 
-## Integration Example
+## Notes
 
-**With Jira:**
+- Uses GraphQL (all functions need `query` and `variables`)
+- Rate limited by complexity points (10M/hour)
+- Column values require specific JSON formats
+- Structure: Workspace → Board → Group → Item
 
-```text
-User: "Sync Jira issues to Monday.com board"
+See [Monday.com API docs](https://developer.monday.com/api-reference/docs) for GraphQL schema details.
 
-Agent: *fetches Jira issues*
-       *creates Monday items*
+## What an agent can do with it
 
-       Synced 12 issues to Monday.com
-```
+| Tool | What it does |
+|---|---|
+| `get_me` | Get current user information |
+| `get_users` | Get users in the account |
+| `get_workspaces` | Get all workspaces |
+| `get_boards` | Get boards in workspace or account |
+| `get_board` | Get a specific board by ID |
+| `create_board` | Create a new board |
+| `update_board` | Update board properties |
+| `archive_board` | Archive a board |
+| `get_items` | Get items from a board |
+| `get_item` | Get a specific item by ID |
+| `create_item` | Create a new item |
+| `update_item` | Update an item |
+| `delete_item` | Delete an item |
+| `move_item_to_group` | Move an item to a different group |
+| `duplicate_item` | Duplicate an item |
+| `get_groups` | Get groups from a board |
+| `create_group` | Create a group in a board |
+| `update_group` | Update a group |
+| `delete_group` | Delete a group |
+| `get_columns` | Get columns from a board |
+| `create_column` | Create a column in a board |
+| `update_column` | Update a column |
+| `get_subitems` | Get subitems of an item |
+| `create_subitem` | Create a subitem |
+| `get_updates` | Get updates/comments for an item |
+| `create_update` | Create an update/comment on an item |
+| `get_activity_logs` | Get activity logs for a board |
+| `search_items` | Search for items across boards |
+| `get_webhooks` | Get webhooks for the account |
+| `create_webhook` | Create a webhook |
+| `delete_webhook` | Delete a webhook |
+| `get_teams` | Get teams in the account |
+| `get_tags` | Get tags in the account |
+| `create_tag` | Create a tag |
+| `get_complexity` | Get API complexity information |
 
-## Next Steps
+## Useful resources
 
-<CardGroup cols={2}>
-  <Card title="ClickUp" icon="check" href="/integrations/connectors/clickup">
-    Alternative work management
-  </Card>
-  <Card title="Asana" icon="list-check" href="/integrations/connectors/asana">
-    Project management
-  </Card>
-</CardGroup>
+- [Monday.com documentation](https://developer.monday.com/api-reference/docs/authentication)

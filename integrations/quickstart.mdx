@@ -1,173 +1,62 @@
 ---
-title: "Integration Quickstart"
-description: "Set up your first integration in 5 minutes"
+title: "Integration quickstart"
+description: "Connect your first service and watch an agent use it"
 ---
 
-## Deploy Your First Integration
-
-This guide shows you how to connect Gmail to your agent in under 5 minutes.
+This takes about two minutes. We will connect **OpenAI** so an agent can generate images, then point it at a
+page and ask for one.
 
 <Steps>
-  <Step title="Go to Integrations">
-    Navigate to **Dashboard -> Integrations -> Connectors**
+  <Step title="Open Connectors">
+    In the dashboard, open **Connectors**. The first section lists servers the vendor runs; below it,
+    **Managed by BoostGPT** lists the connectors we maintain.
   </Step>
 
-  <Step title="Deploy Gmail Connector">
-    Click **Deploy** next to the Gmail connector
+  <Step title="Connect OpenAI">
+    Find **OpenAI** under *Make images, video and voice for the site* and press **Connect**. Paste an API key
+    from [platform.openai.com/api-keys](https://platform.openai.com/api-keys).
+
+    The key is checked against OpenAI before anything is saved. If it is refused you will see OpenAI's own words
+    — "Incorrect API key provided" — and nothing is stored, so you never end up with a connection that looks
+    fine and fails on its first real call.
   </Step>
 
-  <Step title="Authenticate">
-    Sign in with your Google account and grant permissions
+  <Step title="Give it to an agent">
+    Open an agent, go to its **Connectors** tab, and add OpenAI. No credential is asked for again: the
+    connection belongs to the workspace, and the agent is simply allowed to use it.
   </Step>
 
-  <Step title="Add to Agent">
-    - Go to your agent
-    - Click the **Tools** tab
-    - Click **Add Tool**
-    - Select your deployed Gmail connector
-  </Step>
-
-  <Step title="Test It">
-    Open the **Playground** and try:
+  <Step title="Ask for something">
+    In the chat, try:
 
     ```text
-    Send an email to john@example.com saying "Meeting at 3pm"
+    Generate a hero image for the pricing page: a calm desk, morning light, no text.
     ```
 
-    Your agent will use the Gmail tool to send the email!
+    The agent picks `generate_image`, calls it, and the result comes back in the conversation.
   </Step>
 </Steps>
 
 <Check>
-  Your agent can now send emails! Try asking it to read, search, or compose emails.
+  A connection that exists is one that works. If Connect refused your key, that is the check doing its job —
+  fix the key and press Connect again.
 </Check>
 
-## What Just Happened?
+## Connecting a server you do not have a key for
 
-1. **You deployed a connector** - The Gmail connector is now running and connected to your Google account
-2. **You connected it to your agent** - Your agent now has access to Gmail tools
-3. **Your agent uses it automatically** - When you ask to send an email, the agent calls the Gmail tool
+Several services run their own MCP server, and those need no key at all — you sign in and approve access, and
+BoostGPT introduces itself to the server automatically. **MetaManager** is a good first one: it scores how a
+page presents itself, which is immediately useful on a Site you have just built.
 
-## Available Tools
+See [remote MCP servers](/integrations/remote-mcp) for the full list.
 
-After connecting Gmail, your agent has access to these tools:
-
-- **Send Email** - Compose and send emails
-- **Read Emails** - Fetch inbox messages
-- **Search Emails** - Search by keywords, sender, date
-- **Reply to Email** - Reply to existing threads
-- **Draft Email** - Create drafts without sending
-
-## Next: Connect More Tools
+## What to do next
 
 <CardGroup cols={2}>
-  <Card title="Google Calendar" icon="calendar" href="/integrations/connectors/google-calendar">
-    Schedule meetings and manage events
+  <Card title="Browse the connectors" icon="plug" href="/integrations/connectors/overview">
+    Everything BoostGPT maintains, grouped by what it is for.
   </Card>
-  <Card title="HubSpot" icon="building" href="/integrations/connectors/hubspot">
-    Manage contacts and deals
-  </Card>
-  <Card title="Slack" icon="slack" href="/integrations/connectors/slack">
-    Send messages to channels
-  </Card>
-  <Card title="Browse All" icon="grid" href="/integrations/connectors/overview">
-    See all 30+ connectors
-  </Card>
-</CardGroup>
-
-## Using External MCP Servers
-
-Want to connect a tool that's not in our pre-built list? You can connect any MCP-compatible server:
-
-<Steps>
-  <Step title="Find MCP Server">
-    Get the URL of any MCP server (e.g., `https://mcp.example.com`)
-  </Step>
-
-  <Step title="Add to Agent">
-    - Go to your agent's **Tools** tab
-    - Click **Add Tool**
-    - Click **Add New**
-    - Enter the MCP server URL
-    - Click **Connect**
-  </Step>
-
-  <Step title="Test It">
-    Your agent can now use tools from that MCP server
-  </Step>
-</Steps>
-
-## Examples
-
-### Customer Support Agent
-
-```javascript
-// Connect: Gmail, HubSpot, Google Calendar
-
-User: "Check if we have any support tickets from acme@corp.com"
-Agent: *searches Gmail* "Yes, found 3 emails from them this week..."
-
-User: "Create a contact for them in HubSpot"
-Agent: *creates HubSpot contact* "Contact created for Acme Corp..."
-
-User: "Schedule a call with them for next Tuesday at 2pm"
-Agent: *creates calendar event* "Call scheduled for Tuesday, Jan 14 at 2pm"
-```
-
-### Sales Assistant
-
-```javascript
-// Connect: Salesforce, Outlook, LinkedIn
-
-User: "Find all deals closing this month"
-Agent: *queries Salesforce* "Found 12 deals totaling $450K..."
-
-User: "Send a follow-up email to the top 3"
-Agent: *sends via Outlook* "Emails sent to TechCorp, StartupXYZ, and..."
-```
-
-## Troubleshooting
-
-<AccordionGroup>
-  <Accordion icon="link-slash" title="Connector not appearing in Tools">
-    Make sure you've deployed the connector first from Dashboard -> Integrations -> Connectors
-  </Accordion>
-
-  <Accordion icon="triangle-exclamation" title="Authentication failed">
-    Re-authenticate by going to Dashboard -> Integrations -> Connectors -> Re-authenticate
-  </Accordion>
-
-  <Accordion icon="circle-xmark" title="Tool not working">
-    Check that you've granted all required permissions during authentication
-  </Accordion>
-
-  <Accordion icon="ban" title="Rate limit errors">
-    Some services (like Gmail) have rate limits. Spread out requests or upgrade your service plan.
-  </Accordion>
-</AccordionGroup>
-
-## Limits by Plan
-
-| Plan | Connectors |
-|------|-----------|
-| **Free** | 1 connector |
-| **Starter** | 5 connectors |
-| **Pro** | 20 connectors |
-| **Scale** | Unlimited |
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="MCP Overview" icon="circle-info" href="/integrations/mcp-overview">
-    Learn how MCP works
-  </Card>
-  <Card title="Browse Connectors" icon="grid" href="/integrations/connectors/overview">
-    Explore all available connectors
-  </Card>
-  <Card title="Build Custom" icon="code" href="/integrations/custom/overview">
-    Create your own MCP connector
-  </Card>
-  <Card title="External Tools" icon="plug" href="/integrations/external-tools/overview">
-    Connect third-party MCP servers
+  <Card title="Bring your own API" icon="code" href="/integrations/custom/overview">
+    Turn an OpenAPI specification or a Postman collection into a connector.
   </Card>
 </CardGroup>

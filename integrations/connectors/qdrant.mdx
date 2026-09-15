@@ -1,0 +1,43 @@
+---
+title: "Qdrant"
+description: "Collections, points and vector search. The same job as Pinecone, self-hosted."
+---
+
+Collections, points and vector search. The same job as Pinecone, self-hosted.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Qdrant and press **Connect**. The key you enter is checked against Qdrant before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your Qdrant API key |
+| Qdrant URL | Your Qdrant instance URL |
+
+### Getting the credential
+
+1. **Qdrant Cloud**: Sign up and create a cluster at [Qdrant Cloud](https://cloud.qdrant.io/)
+2. **Self-hosted**: Deploy Qdrant using Docker or Kubernetes
+3. Get your cluster URL and API key (if authentication enabled)
+4. Test connection with a simple collection creation
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `get_collections` | List all collections |
+| `create_collection` | Create a new collection |
+| `get_collection_info` | Get collection information |
+| `delete_collection` | Delete a collection |
+| `upsert_points` | Insert or update points in a collection |
+| `search_points` | Search for similar points |
+| `get_points` | Retrieve points by IDs |
+| `delete_points` | Delete points from collection |
+| `set_payload` | Set payload for points |
+| `create_index` | Create payload index for faster filtering |
+
+## Useful resources
+
+- [Qdrant documentation](https://qdrant.tech/documentation/guides/authentication/)

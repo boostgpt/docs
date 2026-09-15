@@ -1,0 +1,41 @@
+---
+title: "Tavily"
+description: "Search, extract and crawl, built for agents. A second reader for when Firecrawl is blocked."
+---
+
+Search, extract and crawl, built for agents. A second reader for when Firecrawl is blocked.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Tavily and press **Connect**. The key you enter is checked against Tavily before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your Tavily API key |
+
+### Getting the credential
+
+1. Create an API key at [app.tavily.com](https://app.tavily.com) — it starts with `tvly-`
+2. Paste it into the connector
+
+## Notes
+
+- `include_answer` makes Tavily write a direct answer alongside the sources — useful when the agent just needs
+  the fact rather than the pages.
+- `search_depth: advanced` costs more credits and finds more; leave it `basic` for routine lookups.
+- `map` is much cheaper than `crawl` when you only need to know what exists on a site.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `search` | Search the web and get results already summarised for an agent. Set include_answer to have Tavily write a direct answer as well as returning sources. |
+| `extract` | Pull the readable content out of specific URLs, without searching. |
+| `crawl` | Follow links from a starting URL and return the content of the pages found. |
+| `map` | List the URLs on a site without fetching their content. Cheap way to see structure. |
+
+## Useful resources
+
+- [Tavily documentation](https://docs.tavily.com)

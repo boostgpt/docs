@@ -1,57 +1,64 @@
 ---
 title: "Slack"
-description: "Send messages and manage your Slack workspace"
+description: "Messages, channels and history. Useful for telling the team what Boost changed, not for deciding what to change."
 ---
 
-## Overview
+Messages, channels and history. Useful for telling the team what Boost changed, not for deciding what to change.
 
-Connect Slack to send messages, manage channels, and automate team communication.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Slack and press **Connect**. The key you enter is checked against Slack before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard ’ Integrations ’ Connectors** ’ Find **Slack** ’ **Deploy**
-  </Step>
+### What you will need
 
-  <Step title="Add to Agent">
-    Agent ’ **Tools** tab ’ **Add Tool** ’ Select **Slack**
-  </Step>
+| Field | What it is |
+|---|---|
+| Bot User OAuth Token | Your Slack bot token (starts with xoxb-) |
 
-  <Step title="Configure">
-    Sign in to Slack and authorize your workspace (OAuth)
-  </Step>
+### Getting the credential
 
-  <Step title="Test">
-    Playground: "Send a message to #general saying hello"
-  </Step>
-</Steps>
+1. Go to [Slack API Apps](https://api.slack.com/apps)
+2. Click **Create New App** → **From scratch**
+3. Name your app and select your workspace
+4. Go to **OAuth & Permissions** in the sidebar
+5. Add Bot Token Scopes (see required scopes below)
+6. Click **Install to Workspace** and authorize
+7. Copy the **Bot User OAuth Token** (starts with `xoxb-`)
 
-## Example Usage
+## Notes
 
-```text
-User: "Post to #engineering that the deploy is complete"
+- The bot token needs scopes to match what you ask for: `chat:write` to post, `channels:read` and
+  `channels:history` to read, `users:read` for members. A missing scope reads as `missing_scope`.
+- The bot must be invited to a private channel before it can see it.
+- Tier 1 methods: 1+ requests per minute
+- Tier 2 methods: 20+ requests per minute
+- Tier 3 methods: 50+ requests per minute
+- Tier 4 methods: 100+ requests per minute
 
-Agent: Message sent to #engineering:
-       "Deploy completed successfully at 3:45 PM"
-```
+## What an agent can do with it
 
-## Integration Example
+| Tool | What it does |
+|---|---|
+| `send_message` | Send a message to a channel or user |
+| `update_message` | Update an existing message |
+| `delete_message` | Delete a message |
+| `list_channels` | List channels in the workspace |
+| `get_channel_info` | Get information about a channel |
+| `get_channel_history` | Get message history from a channel |
+| `get_thread_replies` | Get replies in a message thread |
+| `create_channel` | Create a new channel |
+| `archive_channel` | Archive a channel |
+| `unarchive_channel` | Unarchive a channel |
+| `invite_to_channel` | Invite users to a channel |
+| `kick_from_channel` | Remove a user from a channel |
+| `get_channel_members` | Get members of a channel |
+| `list_users` | List users in the workspace |
+| `get_user_info` | Get information about a user |
+| `set_channel_topic` | Set the topic for a channel |
+| `set_channel_purpose` | Set the purpose for a channel |
+| `add_reaction` | Add a reaction to a message |
+| `remove_reaction` | Remove a reaction from a message |
 
-**With HubSpot:**
+## Useful resources
 
-```text
-User: "Post new HubSpot deals to #sales"
-
-Agent: *checks HubSpot for new deals*
-       *posts to Slack*
-
-       Posted to #sales: "New deal: Acme Corp - $25K"
-```
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="Discord" icon="discord" href="/integrations/connectors/discord">
-    Alternative team chat
-  </Card></CardGroup>
+- [Slack documentation](https://api.slack.com/authentication/token-types)

@@ -1,0 +1,44 @@
+---
+title: "Weaviate"
+description: "Classes, objects and vector search. Another vector store, for teams already running one."
+---
+
+Classes, objects and vector search. Another vector store, for teams already running one.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Weaviate and press **Connect**. The key you enter is checked against Weaviate before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your Weaviate API key |
+| Weaviate URL | Your Weaviate instance URL |
+
+### Getting the credential
+
+1. **Weaviate Cloud**: Sign up at [Weaviate Cloud](https://console.weaviate.cloud/)
+2. **Self-hosted**: Deploy using Docker, Kubernetes, or Weaviate Cloud
+3. Get your cluster URL and API key (if authentication enabled)
+4. Configure vectorizer modules (OpenAI, Hugging Face, etc.)
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `get_schema` | Get the current database schema |
+| `create_class` | Create a new class (collection) in the schema |
+| `delete_class` | Delete a class from the schema |
+| `create_objects` | Create objects (batch insert) |
+| `get_object` | Get an object by ID |
+| `update_object` | Update an object |
+| `delete_object` | Delete an object |
+| `graphql_query` | Execute GraphQL query for vector search |
+| `vector_search` | Perform vector similarity search using GraphQL |
+| `ask_question` | Ask a question using generative AI module |
+| `get_cluster_status` | Get cluster health and status |
+
+## Useful resources
+
+- [Weaviate documentation](https://weaviate.io/developers/weaviate/manage-data/authentication)

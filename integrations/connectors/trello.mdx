@@ -1,61 +1,62 @@
 ---
 title: "Trello"
-description: "Manage Kanban boards and cards"
+description: "Boards, lists and cards. Another place work is tracked."
 ---
 
-## Overview
+Boards, lists and cards. Another place work is tracked.
 
-Connect Trello to create and manage boards, lists, and cards.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Trello and press **Connect**. The key you enter is checked against Trello before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Trello** → **Deploy**
-  </Step>
+### What you will need
 
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Trello**
-  </Step>
+| Field | What it is |
+|---|---|
+| API Key | Your Trello API Key |
+| API Token | Your Trello API Token |
 
-  <Step title="Configure">
-    Enter your Trello API Key and Token
-  </Step>
+### Getting the credential
 
-  <Step title="Test">
-    Playground: "Create a card in my Todo list"
-  </Step>
-</Steps>
+1. Get **API Key**: Visit [https://trello.com/app-key](https://trello.com/app-key)
+2. Generate **Token**: Click token link on API key page
+3. Choose permissions (read/write) and expiration
+4. Add both API Key and Token to connector
 
-## Example Usage
+## Notes
 
-```text
-User: "Add a card to my 'In Progress' list: Review pull request #42"
+- Uses API Key + Token authentication via query parameters
+- Rate limited to 300 requests per 10 seconds
+- Structure: Boards → Lists → Cards
+- Supports webhooks for real-time updates
 
-Agent: Created Trello card in 'In Progress':
-       "Review pull request #42"
-```
+See [Trello API docs](https://developer.atlassian.com/cloud/trello/rest/api-group-actions/) for complete reference.
 
-## Integration Example
+## What an agent can do with it
 
-**With Gmail:**
+| Tool | What it does |
+|---|---|
+| `get_member_boards` | Get boards for the authenticated member |
+| `get_board` | Get a specific board by ID |
+| `create_board` | Create a new board |
+| `get_board_lists` | Get lists on a board |
+| `create_list` | Create a new list on a board |
+| `get_list_cards` | Get cards in a list |
+| `create_card` | Create a new card |
+| `get_card` | Get a specific card by ID |
+| `update_card` | Update an existing card |
+| `delete_card` | Delete a card |
+| `add_comment_to_card` | Add a comment to a card |
+| `get_card_actions` | Get actions (activity) for a card |
+| `create_checklist` | Create a checklist on a card |
+| `add_checklist_item` | Add an item to a checklist |
+| `update_checklist_item` | Update a checklist item |
+| `get_board_members` | Get members of a board |
+| `add_member_to_board` | Add a member to a board |
+| `search_trello` | Search across Trello boards, cards, and members |
+| `get_board_labels` | Get labels on a board |
+| `create_label` | Create a label on a board |
 
-```text
-User: "Create Trello cards from emails labeled 'Task'"
+## Useful resources
 
-Agent: *searches Gmail for 'Task' label*
-       *creates Trello cards*
-
-       Created 4 Trello cards from Gmail tasks
-```
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="Asana" icon="list-check" href="/integrations/connectors/asana">
-    Alternative project management
-  </Card>
-  <Card title="Notion" icon="note" href="/integrations/connectors/notion">
-    Knowledge base
-  </Card>
-</CardGroup>
+- [Trello documentation](https://developer.atlassian.com/cloud/trello/guides/rest-api/api-introduction/)

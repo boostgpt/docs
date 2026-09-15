@@ -1,0 +1,54 @@
+---
+title: "Zendesk"
+description: "Tickets, users and help-centre articles, with an API token. The Zendesk server above signs in instead."
+---
+
+Tickets, users and help-centre articles, with an API token. The Zendesk server above signs in instead.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Zendesk and press **Connect**. The key you enter is checked against Zendesk before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| Email Address | Your Zendesk account email address |
+| API Token | Your Zendesk API token |
+| Subdomain | Your Zendesk subdomain (without .zendesk.com) |
+
+### Getting the credential
+
+1. Log in to [Zendesk Admin Center](https://support.zendesk.com/hc/en-us/articles/4408889192858)
+2. Go to **Apps and integrations** → **Zendesk API** → **API token settings**
+3. Click **Add API token**
+4. Enter a description and click **Create**
+5. Copy the generated token
+6. Find your subdomain from your Zendesk URL (company.zendesk.com → "company")
+7. Use your email, API token, and subdomain to configure this connector
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `get_tickets` | List tickets |
+| `get_ticket` | Get ticket by ID |
+| `create_ticket` | Create a new ticket |
+| `update_ticket` | Update an existing ticket |
+| `delete_ticket` | Delete a ticket |
+| `search_tickets` | Search tickets |
+| `get_users` | List users |
+| `get_user` | Get user by ID |
+| `create_user` | Create a new user |
+| `update_user` | Update an existing user |
+| `get_organizations` | List organizations |
+| `create_organization` | Create a new organization |
+| `get_groups` | List groups |
+| `get_ticket_comments` | Get comments for a ticket |
+| `create_ticket_comment` | Add a comment to a ticket |
+| `get_ticket_metrics` | Get metrics for a ticket |
+| `get_satisfaction_ratings` | List satisfaction ratings |
+
+## Useful resources
+
+- [Zendesk documentation](https://developer.zendesk.com/api-reference/introduction/security-and-auth/)

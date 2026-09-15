@@ -1,60 +1,45 @@
 ---
 title: "Mailchimp"
-description: "Manage email marketing campaigns"
+description: "Lists, members, campaigns and reports. The audience that already said yes — and what they opened."
 ---
 
-## Overview
+Lists, members, campaigns and reports. The audience that already said yes — and what they opened.
 
-Connect Mailchimp to manage subscribers, campaigns, and email marketing.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Mailchimp and press **Connect**. The key you enter is checked against Mailchimp before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Mailchimp** → **Deploy**
-  </Step>
+### What you will need
 
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Mailchimp**
-  </Step>
+| Field | What it is |
+|---|---|
+| API Key | Your Mailchimp API key (includes data center suffix) |
+| Data Center | The data centre in your account URL, e.g. us21 |
 
-  <Step title="Configure">
-    Sign in to Mailchimp and grant access (OAuth)
-  </Step>
+### Getting the credential
 
-  <Step title="Test">
-    Playground: "How many subscribers do I have?"
-  </Step>
-</Steps>
+1. Log in to [Mailchimp](https://mailchimp.com)
+2. Go to **Account** → **Extras** → **API keys**
+3. Click **Create A Key**
+4. Copy the generated API key (includes data center suffix like -us1)
+5. Use the full API key to configure this connector
 
-## Example Usage
+## What an agent can do with it
 
-```text
-User: "Add sarah@company.com to my newsletter list"
+| Tool | What it does |
+|---|---|
+| `get_lists` | Get all audience lists |
+| `get_list` | Get information about a specific list |
+| `create_list` | Create a new audience list |
+| `get_list_members` | Get members from a list |
+| `add_list_member` | Add a new member to a list |
+| `update_list_member` | Update a list member |
+| `delete_list_member` | Remove a member from a list |
+| `get_campaigns` | Get all campaigns |
+| `create_campaign` | Create a new campaign |
+| `get_campaign_content` | Get campaign content |
+| `set_campaign_content` | Set campaign content |
 
-Agent: Added sarah@company.com to your newsletter audience
-```
+## Useful resources
 
-## Integration Example
-
-**With HubSpot:**
-
-```text
-User: "Add all HubSpot contacts to my Mailchimp newsletter"
-
-Agent: *fetches HubSpot contacts*
-       *adds to Mailchimp audience*
-
-       Added 150 contacts to Mailchimp newsletter
-```
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="SendGrid" icon="paper-plane" href="/integrations/connectors/sendgrid">
-    Transactional emails
-  </Card>
-  <Card title="HubSpot" icon="hubspot" href="/integrations/connectors/hubspot">
-    CRM integration
-  </Card>
-</CardGroup>
+- [Mailchimp documentation](https://mailchimp.com/developer/marketing/guides/quick-start/)

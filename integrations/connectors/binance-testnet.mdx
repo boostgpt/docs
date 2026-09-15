@@ -1,0 +1,76 @@
+---
+title: "Binance Testnet"
+description: "The same trading tools against Binance's testnet. Safe to experiment with; still nothing to do with a marketing site."
+---
+
+The same trading tools against Binance's testnet. Safe to experiment with; still nothing to do with a marketing site.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Binance Testnet and press **Connect**. The key you enter is checked against Binance Testnet before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your Binance Testnet API Key |
+| Secret Key | Your Binance Testnet Secret Key |
+
+### Getting the credential
+
+1. Go to [Binance Testnet](https://testnet.binance.vision/)
+2. Create account (separate from main Binance)
+3. Go to **API Management**
+4. Generate **API Key** and **Secret Key**
+5. Add keys to connector
+
+## Notes
+
+- Testnet funds are not real, and testnet keys are separate from live ones — a live key will not work here.
+- Balances and order books reset periodically, so a test set up days ago may have vanished.
+**Request Limits:**
+- 1200 requests per minute
+- 10 orders per second
+- 100,000 orders per 24 hours
+- Weight-based system for endpoints
+
+**Order Limits:**
+- Max 200 open orders per symbol
+- Max 10 stop orders per symbol
+- Position size limits vary by symbol
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `get_account_info` | Get account information and balances |
+| `get_exchange_info` | Get exchange trading rules and symbol information |
+| `get_ticker_price` | Get current price for symbol(s) |
+| `get_24hr_ticker` | Get 24-hour ticker price change statistics |
+| `get_order_book` | Get order book depth for a symbol |
+| `get_klines` | Get candlestick/kline data for a symbol |
+| `place_order` | Place a new order (spot trading) |
+| `cancel_order` | Cancel an active order |
+| `get_order_status` | Check order status |
+| `get_open_orders` | Get all open orders for a symbol or all symbols |
+| `get_all_orders` | Get all orders (active, canceled, filled) for a symbol |
+| `get_trade_history` | Get account trade history |
+| `cancel_all_orders` | Cancel all open orders for a symbol |
+| `get_futures_account` | Get futures account information (Futures Testnet) |
+| `get_futures_balance` | Get futures account balance |
+| `place_futures_order` | Place futures order |
+| `get_futures_position` | Get current position information |
+| `change_leverage` | Change leverage for a symbol |
+| `change_margin_type` | Change margin type for a symbol |
+| `get_funding_rate` | Get funding rate history |
+| `get_server_time` | Get server time |
+| `test_connectivity` | Test connectivity to the API |
+
+## Useful resources
+
+- [Binance API Documentation](https://binance-docs.github.io/apidocs/)
+- [Testnet Trading Interface](https://testnet.binance.vision/)
+- [Futures Testnet Interface](https://testnet.binancefuture.com/)
+- [WebSocket Streams](https://binance-docs.github.io/apidocs/testnet/en/#websocket-market-streams)
+
+Perfect for developing and testing trading bots, strategies, and applications without financial risk!

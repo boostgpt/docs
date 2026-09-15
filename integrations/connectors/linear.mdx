@@ -1,55 +1,50 @@
 ---
 title: "Linear"
-description: "Issue and project tracking"
+description: "Issues, teams and cycles, with an API key. The Linear server above signs in instead — use this to hold a key rather than a session."
 ---
 
-## Overview
+Issues, teams and cycles, with an API key. The Linear server above signs in instead — use this to hold a key rather than a session.
 
-Connect Linear to manage issues, projects, and sprints.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Linear and press **Connect**. The key you enter is checked against Linear before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Linear** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Linear**
-  </Step>
-  <Step title="Configure">
-    Enter your Linear API Key
-  </Step>
-  <Step title="Test">
-    Playground: "Show me my issues"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| API Key | Your Linear API key |
 
-```text
-User: "Create an issue: Add dark mode support"
+### Getting the credential
 
-Agent: Created Linear issue:
-       "Add dark mode support" - ENG-42
-```
+1. Log in to [Linear](https://linear.app)
+2. Go to **Settings** → **Account** → **API**
+3. Under **Personal API keys**, click **Create new API key**
+4. Enter a name for your API key
+5. Select appropriate scopes (read/write as needed)
+6. Copy the generated API key
 
-## Integration Example
+## What an agent can do with it
 
-**With GitHub:**
+| Tool | What it does |
+|---|---|
+| `get_viewer` | Get current user information |
+| `get_teams` | List all teams |
+| `get_team` | Get team details |
+| `get_issues` | List issues with filtering |
+| `get_issue` | Get issue details |
+| `create_issue` | Create a new issue |
+| `update_issue` | Update an existing issue |
+| `delete_issue` | Delete an issue |
+| `get_projects` | List all projects |
+| `get_project` | Get project details |
+| `create_project` | Create a new project |
+| `get_users` | List organization users |
+| `get_workflow_states` | Get workflow states for a team |
+| `get_labels` | List available labels |
+| `create_comment` | Add a comment to an issue |
+| `get_comments` | Get comments for an issue |
 
-```text
-User: "Create Linear issues from GitHub bugs"
+## Useful resources
 
-Agent: Created 5 Linear issues from GitHub
-```
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="Jira" icon="jira" href="/integrations/connectors/jira">
-    Alternative issue tracker
-  </Card>
-  <Card title="GitHub" icon="github" href="/integrations/connectors/github">
-    Code repository
-  </Card>
-</CardGroup>
+- [Linear documentation](https://developers.linear.app/docs/graphql/working-with-the-graphql-api)

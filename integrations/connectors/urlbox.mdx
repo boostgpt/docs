@@ -1,0 +1,43 @@
+---
+title: "URLBox"
+description: "Rendered screenshots and PDFs of a URL. The same job as ScreenshotOne, a different renderer."
+---
+
+Rendered screenshots and PDFs of a URL. The same job as ScreenshotOne, a different renderer.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find URLBox and press **Connect**. The key you enter is checked against URLBox before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your URLBox API Key from the dashboard |
+
+### Getting the credential
+
+1. Go to [URLBox](https://urlbox.com) and sign up
+2. Copy your **API Key** from the dashboard Settings
+3. Paste it into this connector
+
+## Notes
+
+- `render_sync` is best for images (PNG/JPEG/WebP/SVG)
+- `render_async` is best for video (MP4/WebM) and large PDFs
+- Renders are cached by default — use `force: true` to bypass
+- `ttl` controls cache duration in seconds
+
+See [URLBox API docs](https://urlbox.com/docs/api) for the full reference.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `render_sync` | Synchronously render a URL to an image (PNG/JPEG/WebP), PDF, SVG, or video (MP4/WebM). Returns a renderUrl pointing to the output on the URLBox CDN. |
+| `render_async` | Asynchronously render a URL. Returns a renderId and statusUrl — use get_render to poll for completion. |
+| `get_render` | Get the status and result of an async render job. Returns renderUrl when complete. |
+
+## Useful resources
+
+- [URLBox documentation](https://urlbox.com/docs/api)

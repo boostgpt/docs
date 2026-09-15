@@ -1,51 +1,45 @@
 ---
 title: "Stability AI"
-description: "AI image generation"
+description: "Image generation, upscaling, background removal and search-and-replace. More post-production than the others."
 ---
 
-## Overview
+Image generation, upscaling, background removal and search-and-replace. More post-production than the others.
 
-Connect Stability AI to generate images with Stable Diffusion.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Stability AI and press **Connect**. The key you enter is checked against Stability AI before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Stability AI** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Stability AI**
-  </Step>
-  <Step title="Configure">
-    Enter your Stability AI API Key
-  </Step>
-  <Step title="Test">
-    Playground: "Generate an image of a sunset"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| API Key | Your Stability AI API key |
 
-```text
-User: "Generate an image: futuristic city at night"
+### Getting the credential
 
-Agent: Generated image:
-       [Image URL]
-```
+1. Sign up at [Stability AI Platform](https://platform.stability.ai)
+2. Go to **Account** → **API Keys**
+3. Generate new **API Key**
+4. Purchase credits for API usage
+5. Add API key to connector
 
-## Integration Example
+## What an agent can do with it
 
-**With Google Drive:**
+| Tool | What it does |
+|---|---|
+| `generate_image` | Generate images using Stable Diffusion models |
+| `generate_image_ultra` | Generate high-quality images using Stable Diffusion 3 Ultra |
+| `upscale_image` | Upscale images using AI upscaling models |
+| `edit_image` | Edit images using inpainting or outpainting |
+| `outpaint_image` | Extend images beyond their borders using outpainting |
+| `search_and_replace` | Search for objects in an image and replace them |
+| `remove_background` | Remove background from images |
+| `control_image` | Generate images with structural control using ControlNet |
+| `control_sketch` | Generate images from sketches using ControlNet |
+| `video_generation` | Generate videos from images using Stable Video Diffusion |
+| `get_balance` | Get account balance and credit information |
+| `list_engines` | List available generation engines/models |
 
-```text
-User: "Generate product images and save to Drive"
+## Useful resources
 
-Agent: Generated 5 images, saved to Drive/AI Images
-```
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="Runway" icon="video" href="/integrations/connectors/runway">
-    AI video generation
-  </Card></CardGroup>
+- [Stability AI documentation](https://platform.stability.ai/docs/api-reference/authentication)

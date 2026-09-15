@@ -1,0 +1,48 @@
+---
+title: "TikTok"
+description: "Creator info, video uploads and search. Where a launch video reaches people who never read a landing page."
+---
+
+Creator info, video uploads and search. Where a launch video reaches people who never read a landing page.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find TikTok and press **Connect**. You will be sent to sign in; the connection is saved once that succeeds.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| Client Key | Your TikTok App Client Key (also called App ID) |
+| Client Secret | Your TikTok App Client Secret |
+
+### Getting the credential
+
+1. Go to [TikTok for Developers](https://developers.tiktok.com/) → **Manage Apps** → **Create App**
+2. Fill in app details and configure **Login Kit**
+3. Add redirect URI: your platform's OAuth callback URL
+4. Copy **Client Key** (App ID) and **Client Secret**
+5. Submit app for review if requesting `video.publish` scope
+
+## Notes
+
+- `video.publish` requires TikTok app review (production) — use sandbox for development
+- Research API endpoints (`search_videos`, `get_video_comments`) require separate Research API access
+- TikTok user tokens expire after 24 hours; refresh tokens last 365 days
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `get_user_info` | Get authenticated TikTok user's profile info and stats |
+| `get_creator_info` | Get creator posting eligibility, max video duration, and privacy settings |
+| `initialize_video_upload` | Initialize a video upload for posting to TikTok (step 1 of publishing). Returns publish_id and upload_url. |
+| `query_post_status` | Check the processing/publishing status of a TikTok video post |
+| `get_video_list` | Get a list of the authenticated user's published TikTok videos |
+| `get_video_details` | Get detailed information for specific TikTok videos by ID |
+| `search_videos` | Search TikTok videos by keyword (requires Research API access) |
+| `get_video_comments` | Get comments on a TikTok video (requires Research API access) |
+
+## Useful resources
+
+- [TikTok documentation](https://developers.tiktok.com/doc/oauth-user-access-token-management)

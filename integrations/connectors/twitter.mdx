@@ -1,0 +1,77 @@
+---
+title: "Twitter/X"
+description: "Post, read and search on X. Announce a page, then read what comes back."
+---
+
+Post, read and search on X. Announce a page, then read what comes back.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Twitter/X and press **Connect**. You will be sent to sign in; the connection is saved once that succeeds.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| Client ID | Your Twitter/X app Client ID (OAuth 2.0) |
+| Client Secret | Your Twitter/X app Client Secret (OAuth 2.0) |
+
+### Getting the credential
+
+1. Apply for [Twitter Developer Account](https://developer.twitter.com/en/apply-for-access)
+2. Create a new app in [Developer Portal](https://developer.twitter.com/en/portal/dashboard)
+3. **Important**: Enable OAuth 2.0 in your app settings
+4. Go to your app's **Keys and tokens** tab
+5. Under **OAuth 2.0 Client ID and Client Secret**:
+   - Copy **Client ID** 
+   - Copy **Client Secret**
+6. Optionally generate **Bearer Token** (for read-only app-context operations)
+7. Configure **OAuth 2.0 Settings**:
+   - Add redirect URLs
+   - Request appropriate scopes for your use case
+
+## Notes
+
+- X has two credential styles and they are not interchangeable: OAuth 2.0 (client id and secret, user context) is
+  what posting needs; a Bearer token alone is read-only.
+- Posting needs the `tweet.write`, `tweet.read` and `users.read` scopes. "Insufficient scope" means the app has
+  them but the token was issued before they were added — re-authorise.
+- Free-tier write limits are low enough that a burst of posts will be refused.
+Twitter has strict rate limits. Key limits include:
+- Tweet creation: 300 tweets per 15-minute window
+- User lookups: 75 requests per 15-minute window
+- Search: 180 requests per 15-minute window
+- Timeline: 75 requests per 15-minute window
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `create_tweet` | Create a new tweet |
+| `delete_tweet` | Delete a tweet |
+| `get_tweet` | Get tweet details |
+| `get_tweets` | Get multiple tweets by IDs |
+| `get_user_tweets` | Get tweets from a specific user |
+| `get_user_mentions` | Get tweets mentioning a specific user |
+| `like_tweet` | Like a tweet |
+| `unlike_tweet` | Unlike a tweet |
+| `retweet` | Retweet a tweet |
+| `unretweet` | Remove a retweet |
+| `get_user` | Get user details by ID |
+| `get_user_by_username` | Get user details by username |
+| `get_users` | Get multiple users by IDs |
+| `get_users_by_usernames` | Get multiple users by usernames |
+| `follow_user` | Follow a user |
+| `unfollow_user` | Unfollow a user |
+| `get_following` | Get users that a user is following |
+| `get_followers` | Get users following a user |
+| `block_user` | Block a user |
+| `unblock_user` | Unblock a user |
+| `mute_user` | Mute a user |
+| `unmute_user` | Unmute a user |
+| `search_tweets` | Search for tweets |
+| `get_me` | Get authenticated user information |
+
+## Useful resources
+
+- [Twitter/X documentation](https://docs.x.com/resources/fundamentals/authentication/overview)

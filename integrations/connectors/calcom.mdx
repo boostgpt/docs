@@ -1,0 +1,45 @@
+---
+title: "Cal.com"
+description: "Event types and bookings. Did the call to action work — is anybody actually booking the call?"
+---
+
+Event types and bookings. Did the call to action work — is anybody actually booking the call?
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Cal.com and press **Connect**. The key you enter is checked against Cal.com before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Personal API key from app.cal.com → Settings → Developer → API Keys |
+
+### Getting the credential
+
+Go to https://app.cal.com/settings/developer/api-keys, generate a new API key, and paste it here.
+
+## Notes
+
+- Use ISO 8601 for all timestamps (`2026-05-15T10:00:00Z`)
+- The `timeZone` parameter uses [IANA names](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) — e.g. `America/New_York`, not `EST`
+- See the [Cal.com v2 API docs](https://cal.com/docs/api-reference/v2/introduction) for the full reference
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `get_me` | Get the authenticated user (account info, default event types, schedules). |
+| `list_event_types` | List bookable event types (the things prospects can book — discovery call, intro call, etc.). Optionally filter by username. |
+| `get_event_type` | Get a single event type by ID, including duration, locations, and required fields. |
+| `list_bookings` | List bookings (scheduled calls). Filter by status, attendee email, or event type. |
+| `get_booking` | Get details of a single booking by its UID (the public booking identifier). |
+| `create_booking` | Create a new booking on behalf of an attendee. Use this to book a discovery call directly from the chat. |
+| `cancel_booking` | Cancel a booking by UID. Optionally include a cancellation reason. |
+| `reschedule_booking` | Reschedule a booking to a new start time. |
+| `get_schedule` | Get an availability schedule by ID (working hours, blocked times). |
+| `get_availability` | Get available time slots for a given event type within a time range — use this to suggest specific booking times to a prospect. |
+
+## Useful resources
+
+- [Cal.com documentation](https://cal.com/docs/api-reference/v2/introduction)

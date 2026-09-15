@@ -1,0 +1,53 @@
+---
+title: "Instagram"
+description: "Media, carousels and account insights. Visual launches, and the captions that carry them."
+---
+
+Media, carousels and account insights. Visual launches, and the captions that carry them.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Instagram and press **Connect**. You will be sent to sign in; the connection is saved once that succeeds.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| App ID | Your Meta App ID (from Meta for Developers) |
+| App Secret | Your Meta App Secret |
+
+### Getting the credential
+
+1. Go to [Meta for Developers](https://developers.facebook.com/apps) → **Create App**
+2. Choose **Business** type, fill in app details
+3. Add the **Instagram** product from the dashboard
+4. Under Instagram → **Instagram Login** → add your redirect URI
+5. Copy **App ID** and **App Secret** from Settings → Basic
+
+## Notes
+
+- Media URLs must be publicly accessible HTTPS links
+- Instagram has a 25 posts/day publishing limit
+- Carousel albums support 2–10 items
+- Video/Reel containers may need a short processing delay before publishing
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `get_me` | Get the authenticated Instagram user's profile |
+| `get_media` | Get a list of media (posts, reels, stories) for the authenticated user |
+| `get_media_by_id` | Get details for a specific media item |
+| `create_media_container` | Create a media container (step 1 of 2 for publishing). Supports IMAGE, VIDEO, and REELS types. After creation, call publish_media. |
+| `create_carousel_container` | Create a carousel (album) container from previously created item containers |
+| `publish_media` | Publish a media container (step 2 of 2). Call this after create_media_container. |
+| `get_account_insights` | Get account-level insights (reach, impressions, profile views, etc.) |
+| `get_media_insights` | Get insights for a specific media post (likes, comments, saves, reach, etc.) |
+| `get_comments` | Get comments on a media post |
+| `reply_to_comment` | Reply to a comment on a media post |
+| `delete_comment` | Delete a comment on a media post |
+| `get_conversations` | Get DM conversations for the Instagram user (requires instagram_business_manage_messages scope) |
+
+## Useful resources
+
+- [Instagram documentation](https://developers.facebook.com/docs/instagram-platform/instagram-api-with-instagram-login)

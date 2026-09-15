@@ -1,0 +1,75 @@
+---
+title: "Remote MCP servers"
+description: "Connect a server the vendor runs, with no key to paste"
+---
+
+Some services run their own MCP server. BoostGPT connects straight to it: you sign in, approve access, and
+the tools arrive from the server itself. There is no key to paste and no app to register — BoostGPT
+introduces itself to the server automatically.
+
+<Note>
+  These are an INPUT to what Boost learns, not a second place to work. They tell it what changed in the
+  product, what visitors do, and what customers keep asking — so the Site and the Widget can say something
+  truer.
+</Note>
+
+## Make images, video and voice for the site
+
+| Server | What it gives Boost |
+|---|---|
+| **GitHub** | See what actually shipped. Read releases, merged pull requests and changelog files from PUBLIC repositories to find product changes the marketing site has not caught up with. Read-only, and prefer releases and merged PRs over raw commits — commit messages are mostly noise for this. |
+| **Linear** | Read completed issues and cycles to see what shipped, in words a human wrote. A cleaner feed of product change than a commit stream. |
+| **Airtable** | Bases and records. Wherever a team keeps the spreadsheet that runs part of the business. |
+| **Sentry** | Errors and releases. Product health — it says what is broken, not what a page should say. |
+| **Slack** | Public channels and their messages. Product context — what the team already said about a change; read-only, and never direct messages. |
+| **Supabase** | Database, auth and storage for a product built on Supabase. Product context rather than marketing signal. |
+
+## Research what people search for and ask
+
+| Server | What it gives Boost |
+|---|---|
+| **Amplitude** | Product analytics — events, funnels and cohorts. Use it to check whether a page change moved the behaviour it was meant to move. |
+| **Attio** | Who the leads are and what they have in common. Use it to find out which audience is actually converting before writing a page for a different one. |
+| **DataForSEO** | What people search for, and who ranks for it. Use it to find the words customers use before they know your product exists. |
+| **Front** | The shared inbox. Read recurring customer questions and confusion — the post-sale half of what the site should have explained. |
+| **Help Scout** | Support conversations and saved replies. A saved reply written five times is a page the marketing site is missing. |
+| **HubSpot** | Contacts, deals and the notes on them. Use it to see which objections come up before a deal closes, and what language customers use for the problem. |
+| **Mixpanel** | Event analytics and funnels. Use it to see where visitors drop out between landing and signup. |
+| **Paddle** | Subscriptions, prices and transactions. Use it to check whether a pricing-page change changed what people actually buy. |
+| **Plain** | Customer conversations and threads. Read what customers ask after they sign up to find the gaps in what the site promised. |
+| **PostHog** | What visitors actually do: pageviews, funnels, retention and session data. Use it to find which pages lose people and which paths convert. |
+| **Stripe** | Revenue, subscriptions and churn. The end of the funnel: which pages and plans actually produce paying customers. |
+| **Zendesk** | Support tickets and help-centre articles. Use recurring ticket subjects to find what the site failed to explain before signup. |
+
+## Reach the audience
+
+| Server | What it gives Boost |
+|---|---|
+| **beehiiv** | Newsletter posts and subscribers. Which issues brought people back to the site. |
+| **Customer.io** | Lifecycle messaging and segments. Use it to reach the people a page change is aimed at. |
+| **Loops** | Audience, campaigns and transactional email. Use it to tell existing customers what changed. |
+| **Resend** | Send email and read what happened to it. For the announcement that follows a page change. |
+
+## Work on the site itself
+
+| Server | What it gives Boost |
+|---|---|
+| **MetaManager** | Score how a page presents itself — title, description, Open Graph and Twitter cards — and get the exact fix. Use it on a page before and after a change to show the improvement. |
+| **Contentful** | Entries, assets and content types. For marketing content managed in Contentful. |
+| **Netlify** | Sites, deploys and forms. Use it to see what is live and to read form submissions from the site. |
+| **Notion** | Pages and databases. Where positioning notes, launch plans and product context usually live. |
+| **Sanity** | Structured content — documents, drafts and schemas. For content that lives in Sanity rather than in the site itself. |
+| **Webflow** | Read and update a site already built in Webflow — pages, collections and CMS items. For a marketing site that lives outside BoostGPT. |
+| **Wix** | Read and update a site built on Wix. For a marketing site that lives outside BoostGPT. |
+
+## Connecting one that is not listed
+
+You can point BoostGPT at any MCP server by its address — **Add your own** on the Connectors screen,
+then **From an MCP server URL**. It is available on higher plans, because a server nobody has vetted
+describes its own tools to the agent that decides when to call them.
+
+<Warning>
+  Only connect servers you trust. Boost reads a server's own description of its tools to decide when
+  to use them, so a server you do not recognise could describe a tool misleadingly.
+</Warning>
+

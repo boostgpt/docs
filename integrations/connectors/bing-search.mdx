@@ -1,0 +1,43 @@
+---
+title: "Bing Search"
+description: "Web, news, image and video search. Another index, useful mainly for comparing what different engines surface."
+---
+
+Web, news, image and video search. Another index, useful mainly for comparing what different engines surface.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Bing Search and press **Connect**. The key you enter is checked against Bing Search before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your Bing Search API subscription key from Azure |
+
+### Getting the credential
+
+1. Go to [Azure Portal](https://portal.azure.com)
+2. Create a **Bing Search** resource (search for "Bing Search v7")
+3. Go to **Keys and Endpoint**
+4. Copy **Key 1** or **Key 2**
+5. Add API key to connector
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `web_search` | Search the web using Bing. Returns web pages, related searches, and more. |
+| `news_search` | Search for news articles using Bing News |
+| `trending_news` | Get trending news topics |
+| `image_search` | Search for images using Bing Images |
+| `trending_images` | Get trending images |
+| `video_search` | Search for videos using Bing Videos |
+| `trending_videos` | Get trending videos |
+| `entity_search` | Search for entities (people, places, organizations) using Bing Entity Search |
+| `autosuggest` | Get search suggestions/autocomplete |
+| `spell_check` | Check spelling and grammar |
+
+## Useful resources
+
+- [Bing Search documentation](https://docs.microsoft.com/en-us/bing/search-apis/bing-web-search/overview)

@@ -1,0 +1,44 @@
+---
+title: "xAI"
+description: "Image and video generation from xAI. Another model to reach for when a page needs a different look."
+---
+
+Image and video generation from xAI. Another model to reach for when a page needs a different look.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find xAI and press **Connect**. The key you enter is checked against xAI before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your xAI API key from console.x.ai |
+
+### Getting the credential
+
+1. Sign up at [console.x.ai](https://console.x.ai)
+2. Create an API key under **API Keys**
+3. Paste it into the connector
+
+## Notes
+
+- **Video is asynchronous.** `generate_video` returns a `request_id`; call `get_video` with it until `status`
+  is `done`. A video can also come back `failed` or `expired`.
+- Both image and video results are copied onto BoostGPT storage. xAI serves them from temporary URLs that stop
+  working, so the link the agent hands back is ours, not theirs.
+- xAI does not offer a speech API. The previous `generate_speech` tool called an endpoint that answers 403 for
+  every account and has been removed.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `generate_image` | Generate an image from a text prompt with Grok Imagine. The image is rehosted on a durable URL — xAI's own link is temporary. |
+| `generate_video` | Start a Grok Imagine video generation from a prompt, optionally animating a still image. Asynchronous: returns a request_id — poll it with get_video. |
+| `get_video` | Poll a video started by generate_video. While it runs the status is 'pending'; when it is 'done' the finished video is rehosted on a durable URL. Status can also be 'failed' or 'expired'. |
+
+## Useful resources
+
+- [xAI API docs](https://docs.x.ai/api)
+- [Grok Imagine](https://docs.x.ai/developers/model-capabilities/imagine)

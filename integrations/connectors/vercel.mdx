@@ -1,58 +1,50 @@
 ---
 title: "Vercel"
-description: "Deployment platform"
+description: "Projects, deployments and domains. Where a site built elsewhere is hosted and shipped."
 ---
 
-## Overview
+Projects, deployments and domains. Where a site built elsewhere is hosted and shipped.
 
-Connect Vercel to manage deployments and projects.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Vercel and press **Connect**. The key you enter is checked against Vercel before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Vercel** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Vercel**
-  </Step>
-  <Step title="Configure">
-    Enter your Vercel API Token
-  </Step>
-  <Step title="Test">
-    Playground: "List my Vercel projects"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| API Token | Your Vercel API token |
 
-```text
-User: "Get status of my latest deployment"
+### Getting the credential
 
-Agent: Latest deployment:
-       - Project: my-app
-       - Status: Ready
-       - URL: https://my-app.vercel.app
-```
+1. Log in to [Vercel Dashboard](https://vercel.com/dashboard)
+2. Go to **Settings** → **Tokens**
+3. Click **Create Token**
+4. Enter a token name and select scopes
+5. Choose expiration period
+6. Copy the generated token
 
-## Integration Example
+## What an agent can do with it
 
-**With Slack:**
+| Tool | What it does |
+|---|---|
+| `get_user` | Get current user information |
+| `get_teams` | List teams you belong to |
+| `get_projects` | List projects |
+| `get_project` | Get project details |
+| `create_project` | Create a new project |
+| `update_project` | Update project settings |
+| `delete_project` | Delete a project |
+| `get_deployments` | List deployments |
+| `get_deployment` | Get deployment details |
+| `create_deployment` | Create a new deployment |
+| `cancel_deployment` | Cancel a deployment |
+| `get_domains` | List domains |
+| `get_domain` | Get domain details |
+| `get_environment_variables` | List environment variables for a project |
+| `create_environment_variable` | Create environment variable |
+| `get_logs` | Get deployment logs |
 
-```text
-User: "Post deployment status to #engineering"
+## Useful resources
 
-Agent: Posted to #engineering:
-       ✅ my-app deployed successfully
-```
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="GitHub" icon="github" href="/integrations/connectors/github">
-    Code repository
-  </Card>
-  <Card title="Netlify" icon="globe" href="/integrations/connectors/netlify">
-    Alternative deployment
-  </Card>
-</CardGroup>
+- [Vercel documentation](https://vercel.com/docs/rest-api#authentication)

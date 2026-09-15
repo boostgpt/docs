@@ -1,0 +1,57 @@
+---
+title: "Airtable"
+description: "Bases and records. Wherever a team keeps the spreadsheet that runs part of the business."
+---
+
+Bases and records. Wherever a team keeps the spreadsheet that runs part of the business.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Airtable and press **Connect**. The key you enter is checked against Airtable before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| Personal Access Token | Your Airtable Personal Access Token (recommended) or API key |
+
+### Getting the credential
+
+1. Go to [Airtable Developer Hub](https://airtable.com/create/tokens)
+2. Click **Create new token**
+3. Give your token a name and description
+4. Add required scopes:
+   - `data.records:read` - Read records
+   - `data.records:write` - Create/update records
+   - `schema.bases:read` - Read base schemas
+5. Add access to specific bases you want to use
+6. Click **Create token** and copy the generated token
+
+## Notes
+
+- Tools take base and table IDs, not names. `list_bases` gives the base id (`app…`) and `get_base_schema`
+  gives the table ids (`tbl…`).
+- A personal access token only reaches the bases you granted it — a missing base is usually a scope, not a bug.
+- 5 requests per second per base
+- Use batch operations to stay within limits
+- Monitor 429 responses and implement backoff
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `list_bases` | List accessible bases |
+| `get_base_schema` | Get schema information for a base |
+| `list_records` | List records from a table |
+| `get_record` | Get a specific record |
+| `create_record` | Create a new record in a table |
+| `create_records` | Create multiple records at once (batch operation) |
+| `update_record` | Update an existing record |
+| `update_records` | Update multiple records at once (batch operation) |
+| `replace_record` | Replace an entire record (PUT operation) |
+| `delete_record` | Delete a record from a table |
+| `delete_records` | Delete multiple records at once (batch operation) |
+
+## Useful resources
+
+- [Airtable documentation](https://airtable.com/developers/web/api/authentication)

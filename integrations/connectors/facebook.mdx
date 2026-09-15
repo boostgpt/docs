@@ -1,0 +1,53 @@
+---
+title: "Facebook"
+description: "Pages, posts and insights. For an audience that lives on Facebook rather than on the site."
+---
+
+Pages, posts and insights. For an audience that lives on Facebook rather than on the site.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Facebook and press **Connect**. You will be sent to sign in; the connection is saved once that succeeds.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| App ID | Your Meta App ID (from Meta for Developers) |
+| App Secret | Your Meta App Secret |
+
+### Getting the credential
+
+1. Go to [Meta for Developers](https://developers.facebook.com/apps) → **Create App**
+2. Choose **Business** type and fill in app details
+3. Add **Facebook Login** product
+4. Under Facebook Login → Settings → add your redirect URI
+5. Copy **App ID** and **App Secret** from Settings → Basic
+
+## Notes
+
+- Personal profile posts are NOT supported — Facebook API only allows Page management
+- Scheduled posts require `published: false` and a future `scheduled_publish_time`
+- App review is required before requesting pages_manage_posts from users other than the app developer
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `get_me` | Get the authenticated user's basic Facebook profile |
+| `get_pages` | Get Facebook Pages managed by the authenticated user |
+| `get_page` | Get details for a specific Facebook Page |
+| `create_page_post` | Create a post on a Facebook Page (text, link, or photo) |
+| `get_page_posts` | Get posts from a Facebook Page feed |
+| `get_post` | Get a specific Facebook post by ID |
+| `delete_post` | Delete a Facebook Page post |
+| `get_post_insights` | Get analytics/insights for a specific Page post |
+| `get_page_insights` | Get analytics for a Facebook Page (reach, impressions, page views, etc.) |
+| `get_comments` | Get comments on a Facebook post |
+| `post_comment` | Comment on a Facebook post or reply to a comment |
+| `like_post` | Like a Facebook post or Page |
+| `search` | Search Facebook for pages, groups, or places |
+
+## Useful resources
+
+- [Facebook documentation](https://developers.facebook.com/docs/graph-api)

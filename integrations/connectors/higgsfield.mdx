@@ -1,0 +1,47 @@
+---
+title: "Higgsfield"
+description: "Image and video generation, including camera-motion animation. For a hero video that would otherwise need a shoot."
+---
+
+Image and video generation, including camera-motion animation. For a hero video that would otherwise need a shoot.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Higgsfield and press **Connect**. The key you enter is checked against Higgsfield before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key ID | The key id half of your Higgsfield API key |
+| API Key Secret | The secret half of your Higgsfield API key |
+
+### Getting the credential
+
+1. Sign in at [higgsfield.ai](https://higgsfield.ai) and open the API section
+2. Create an API key — you get a **key id** and a **key secret**, and this connector needs both
+3. Paste both into the connector
+
+## Notes
+
+- **Everything is asynchronous.** Starting a job returns a `request_id` and `status: "queued"`. Call
+  `get_request_status` until the status is `completed`. Jobs can also end `failed`, `canceled` or `nsfw`.
+- Finished media is copied onto BoostGPT storage, so the link the agent hands back keeps working. Higgsfield
+  keeps its own outputs for about seven days.
+- Authentication uses both halves of the key: the header is `Key <id>:<secret>`.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `generate_image` | Generate an image from a text prompt with Higgsfield Soul. Asynchronous: returns a request_id with status 'queued'. Poll get_request_status with that id until the status is 'completed', then the image is returned on a durable URL. |
+| `generate_video` | Generate a video from a text prompt with Kling 2.5 Turbo Pro. Asynchronous: returns a request_id with status 'queued'. Poll get_request_status with that id until the status is 'completed', then the video is returned on a durable URL. |
+| `image_to_video` | Animate a still image with Kling 2.5 Turbo Pro. Asynchronous: returns a request_id with status 'queued'. Poll get_request_status with that id until the status is 'completed', then the video is returned on a durable URL. |
+| `generate_video_wan` | Generate a video with Wan 2.5, which offers an explicit output resolution including 480p for cheaper drafts. Asynchronous: returns a request_id with status 'queued'. Poll get_request_status with that id until the status is 'completed', then the video is returned on a durable URL. |
+| `animate_with_camera_motion` | Animate a still image with Higgsfield DoP, which specialises in cinematic camera movement. Asynchronous: returns a request_id with status 'queued'. Poll get_request_status with that id until the status is 'completed', then the video is returned on a durable URL. |
+| `get_request_status` | Poll any Higgsfield job. Status is 'queued', 'in_progress', 'completed', 'failed', 'canceled' or 'nsfw'. Once completed the finished image or video is rehosted on a durable URL; while it is still running the status is returned so you can poll again. |
+| `cancel_request` | Cancel a queued Higgsfield job that has not started yet. |
+
+## Useful resources
+
+- [Higgsfield API docs](https://docs.higgsfield.ai/docs)

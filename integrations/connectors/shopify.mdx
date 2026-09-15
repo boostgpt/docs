@@ -1,56 +1,64 @@
 ---
 title: "Shopify"
-description: "E-commerce platform"
+description: "Products, orders and customers. What a store actually sells, which is what its pages should lead with."
 ---
 
-## Overview
+Products, orders and customers. What a store actually sells, which is what its pages should lead with.
 
-Connect Shopify to manage products, orders, and customers.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Shopify and press **Connect**. You will be sent to sign in; the connection is saved once that succeeds.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Shopify** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Shopify**
-  </Step>
-  <Step title="Configure">
-    Enter your Shopify store URL and API credentials
-  </Step>
-  <Step title="Test">
-    Playground: "Show me recent orders"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| Shop Name | Your Shopify shop name (without .myshopify.com) |
+| Client ID | Your Shopify app client ID |
+| Client Secret | Your Shopify app client secret |
+| Access Token | Optional: a previously issued Shopify Admin API access token |
 
-```text
-User: "Get order details for order #1234"
+### Getting the credential
 
-Agent: Order #1234:
-       - Customer: John Doe
-       - Total: $99.99
-       - Status: Shipped
-```
+1. Create or open your app in the [Shopify Partner Dashboard](https://partners.shopify.com)
+2. Configure the app URL and redirect URL
+3. Select Admin API scopes:
+   - `read_products, write_products` - Product management
+   - `read_orders, write_orders` - Order management
+   - `read_customers, write_customers` - Customer management
+   - `read_inventory, write_inventory` - Inventory management
+   - `read_fulfillments, write_fulfillments` - Fulfillment management
+4. Start OAuth for the target shop and exchange the authorization code for an Admin API access token
 
-## Integration Example
+## Notes
 
-**With Gmail:**
+- The shop name is the `xxx.myshopify.com` subdomain, not the custom domain a visitor sees.
+- A custom app's Admin API scopes decide what is visible; products and orders are separate scopes.
 
-```text
-User: "Send order confirmation emails for today's Shopify orders"
+## What an agent can do with it
 
-Agent: *fetches new orders*
-       *sends emails via Gmail*
+| Tool | What it does |
+|---|---|
+| `get_shop` | Get shop information |
+| `get_products` | List products |
+| `get_product` | Get product by ID |
+| `create_product` | Create a new product |
+| `update_product` | Update an existing product |
+| `delete_product` | Delete a product |
+| `get_orders` | List orders |
+| `get_order` | Get order by ID |
+| `create_order` | Create a new order |
+| `update_order` | Update an existing order |
+| `get_customers` | List customers |
+| `get_customer` | Get customer by ID |
+| `create_customer` | Create a new customer |
+| `update_customer` | Update an existing customer |
+| `search_customers` | Search for customers |
+| `get_inventory_levels` | Get inventory levels |
+| `update_inventory_level` | Update inventory level |
+| `get_fulfillments` | List fulfillments for an order |
+| `create_fulfillment` | Create a fulfillment for an order |
 
-       Sent 15 confirmation emails
-```
+## Useful resources
 
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="Stripe" icon="stripe" href="/integrations/connectors/stripe">
-    Payment processing
-  </Card></CardGroup>
+- [Shopify documentation](https://shopify.dev/docs/api/usage/authentication)

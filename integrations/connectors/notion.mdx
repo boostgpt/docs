@@ -1,56 +1,63 @@
 ---
 title: "Notion"
-description: "Manage notes and knowledge base"
+description: "Pages, databases and search, with an integration token. The Notion server above signs in instead."
 ---
 
-## Overview
+Pages, databases and search, with an integration token. The Notion server above signs in instead.
 
-Connect Notion to create, read, and manage pages and databases.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Notion and press **Connect**. You will be sent to sign in; the connection is saved once that succeeds.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Notion** → **Deploy**
-  </Step>
+### What you will need
 
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Notion**
-  </Step>
+| Field | What it is |
+|---|---|
+| OAuth Client ID | Your Notion integration OAuth Client ID (for public integrations) |
+| OAuth Client Secret | Your Notion integration OAuth Client Secret (for public integrations) |
+| Internal Integration Token | Your Notion internal integration token (for private integrations) |
 
-  <Step title="Configure">
-    Sign in to Notion and grant workspace access (OAuth)
-  </Step>
+### Getting the credential
 
-  <Step title="Test">
-    Playground: "Create a new page titled 'Meeting Notes'"
-  </Step>
-</Steps>
+1. Go to [Notion Integrations](https://www.notion.so/my-integrations)
+2. Create **Internal Integration** → Copy **Integration Token**
+3. Share pages/databases with your integration (Settings → Add connections)
+4. Add token to connector
 
-## Example Usage
+## Notes
 
-```text
-User: "Create a Notion page for today's meeting notes"
+- Requires manual sharing of content with integration
+- Rate limited to 3 requests/second
+- Uses structured block hierarchy for content
+- Supports rich formatting and nested structures
 
-Agent: Created Notion page: "Meeting Notes - Jan 5, 2025"
-```
+See [Notion API docs](https://developers.notion.com/docs/getting-started) for complete reference.
 
-## Integration Example
+## What an agent can do with it
 
-**With Gmail:**
+| Tool | What it does |
+|---|---|
+| `search` | Search across all pages and databases |
+| `get_databases` | List all databases (via search) |
+| `get_database` | Retrieve a database by ID |
+| `query_database` | Query a database for pages |
+| `create_database` | Create a new database |
+| `update_database` | Update database properties |
+| `create_page` | Create a new page |
+| `get_page` | Retrieve a page by ID |
+| `update_page` | Update page properties |
+| `get_page_property` | Retrieve a specific page property |
+| `get_block_children` | Get children blocks of a block or page |
+| `append_block_children` | Add children blocks to a block or page |
+| `get_block` | Retrieve a block by ID |
+| `update_block` | Update a block |
+| `delete_block` | Delete a block |
+| `get_users` | List all users in the workspace |
+| `get_user` | Retrieve a user by ID |
+| `get_me` | Get the current bot user info |
+| `create_comment` | Create a comment on a page or discussion |
+| `get_comments` | Retrieve comments for a page |
 
-```text
-User: "Save important emails to Notion as pages"
+## Useful resources
 
-Agent: *searches Gmail for starred emails*
-       *creates Notion pages*
-
-       Created 3 Notion pages from starred emails
-```
-
-## Next Steps
-
-<CardGroup cols={2}>  <Card title="Asana" icon="list-check" href="/integrations/connectors/asana">
-    Project management
-  </Card>
-</CardGroup>
+- [Notion documentation](https://developers.notion.com/docs/authorization)

@@ -1,0 +1,38 @@
+---
+title: "Brave Search"
+description: "Web, news and image search on its own index. A fallback when Google's results are not available."
+---
+
+Web, news and image search on its own index. A fallback when Google's results are not available.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Brave Search and press **Connect**. The key you enter is checked against Brave Search before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your Brave Search API subscription token |
+
+### Getting the credential
+
+1. Sign up at [Brave Search API](https://api.search.brave.com)
+2. Subscribe to a plan (Free tier available)
+3. Copy your API key from the dashboard
+4. Add API key to connector
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `web_search` | Search the web using Brave Search. Returns organic results with snippets and links. |
+| `news_search` | Search for news articles using Brave News Search |
+| `image_search` | Search for images using Brave Image Search |
+| `video_search` | Search for videos using Brave Video Search |
+| `suggest` | Get search suggestions/autocomplete for a query |
+| `spellcheck` | Check spelling of a query |
+
+## Useful resources
+
+- [Brave Search documentation](https://api.search.brave.com/app/documentation/web-search/get-started)

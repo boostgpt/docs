@@ -1,51 +1,45 @@
 ---
 title: "Luma Labs"
-description: "3D capture and AI video"
+description: "Video and image generation, including image-to-video. An alternative to Higgsfield for a moving hero."
 ---
 
-## Overview
+Video and image generation, including image-to-video. An alternative to Higgsfield for a moving hero.
 
-Connect Luma Labs for 3D capture and video generation.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Luma Labs and press **Connect**. The key you enter is checked against Luma Labs before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Luma Labs** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Luma Labs**
-  </Step>
-  <Step title="Configure">
-    Enter your Luma Labs API Key
-  </Step>
-  <Step title="Test">
-    Playground: "Generate a 3D scene"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| API Key | Your Luma API key from lumalabs.ai/api |
 
-```text
-User: "Create a 3D model from photos"
+### Getting the credential
 
-Agent: Processing 3D reconstruction...
-       Model ready: [URL]
-```
+1. Go to [lumalabs.ai/api](https://lumalabs.ai/api) and create an API key
+2. Paste it into the connector
 
-## Integration Example
+## Notes
 
-**With Dropbox:**
+- **Everything is asynchronous.** Starting a job returns an id and `state: "queued"`. Poll `get_generation`
+  until `state` is `completed`; it can also end `failed`.
+- Finished assets are copied onto BoostGPT storage, so the link the agent returns keeps working.
+- This connector targets the **Dream Machine API** (`api.lumalabs.ai/dream-machine/v1`). Luma's newer Ray 3
+  models live on a separate Agents API with its own keys, billing and request format — a different key will
+  not work here.
 
-```text
-User: "Save Luma 3D models to Dropbox"
+## What an agent can do with it
 
-Agent: Saved 3D model to Dropbox/3D Models
-```
+| Tool | What it does |
+|---|---|
+| `generate_video` | Start a Ray video generation from a text prompt. Asynchronous: returns a generation id with state 'queued' — poll it with get_generation until the state is 'completed'. |
+| `image_to_video` | Animate a still image with Ray. Pass a publicly reachable image URL as the starting keyframe. Asynchronous — poll with get_generation. |
+| `generate_image` | Generate an image with Photon. Asynchronous like video — returns a generation id to poll with get_generation. |
+| `get_generation` | Poll a generation started by generate_video, image_to_video or generate_image. States are 'queued', 'dreaming', 'completed' and 'failed'. Once completed the asset is rehosted on a durable URL; while it is still running the state is returned so you can poll again. |
+| `list_generations` | List recent generations on this account, newest first. |
+| `delete_generation` | Permanently delete a generation and its assets. |
 
-## Next Steps
+## Useful resources
 
-<CardGroup cols={2}>
-  <Card title="Stability AI" icon="image" href="/integrations/connectors/stability-ai">
-    AI image generation
-  </Card></CardGroup>
+- [Luma API docs](https://docs.lumalabs.ai)

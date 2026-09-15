@@ -1,0 +1,49 @@
+---
+title: "Medium"
+description: "Publish a post to Medium or a publication. A second home for an article the site already has."
+---
+
+Publish a post to Medium or a publication. A second home for an article the site already has.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Medium and press **Connect**. You will be sent to sign in; the connection is saved once that succeeds.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| Client ID | Your Medium OAuth app Client ID |
+| Client Secret | Your Medium OAuth app Client Secret |
+| Access Token | Medium access token (for personal integrations) |
+
+### Getting the credential
+
+1. Go to [Medium Applications](https://medium.com/me/applications)
+2. Create **New Application** or get **Integration Token**
+3. Copy **Client ID** and **Client Secret** (OAuth) or **Integration Token**
+4. Add credentials to connector
+
+## Notes
+
+- OAuth 2.0 required for full functionality
+- Integration tokens work for personal publishing
+- Rate limited to 1000 requests per hour
+- Images hosted automatically on Medium CDN
+- Maximum 5 tags per post
+
+See [Medium API docs](https://github.com/Medium/medium-api-docs) for complete reference.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `get_user` | Get authenticated user information |
+| `get_user_publications` | Get publications for the authenticated user |
+| `get_publication_contributors` | Get contributors for a publication |
+| `create_user_post` | Create a post on behalf of the authenticated user |
+| `create_publication_post` | Create a post under a publication |
+
+## Useful resources
+
+- [Medium documentation](https://github.com/Medium/medium-api-docs)

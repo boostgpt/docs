@@ -1,57 +1,50 @@
 ---
 title: "OpenWeatherMap"
-description: "Weather data and forecasts"
+description: "Current weather, forecasts and air quality. Here because an agent may need it, not because a page does."
 ---
 
-## Overview
+Current weather, forecasts and air quality. Here because an agent may need it, not because a page does.
 
-Connect OpenWeatherMap to get current weather and forecasts.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find OpenWeatherMap and press **Connect**. The key you enter is checked against OpenWeatherMap before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **OpenWeatherMap** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **OpenWeatherMap**
-  </Step>
-  <Step title="Configure">
-    Enter your OpenWeatherMap API Key
-  </Step>
-  <Step title="Test">
-    Playground: "What's the weather in San Francisco?"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| API Key | Your OpenWeatherMap API key |
 
-```text
-User: "Get weather for New York City"
+### Getting the credential
 
-Agent: New York weather:
-       72°F, Partly cloudy
-       Humidity: 65%
-```
+1. Sign up at [OpenWeatherMap](https://openweathermap.org/api)
+2. Go to **API Keys** section in your account
+3. Copy your default API key or create a new one
+4. For advanced features, consider upgrading to a paid plan
 
-## Integration Example
+## Notes
 
-**With Slack:**
+- Free tier: 1,000 calls/day, 60 calls/minute
+- Paid plans: Higher limits available
 
-```text
-User: "Post daily weather forecast to #general"
+See [OpenWeatherMap API docs](https://openweathermap.org/api) for full details.
 
-Agent: Posted to #general:
-       Today: 75°F, Sunny ☀️
-```
+## What an agent can do with it
 
-## Next Steps
+| Tool | What it does |
+|---|---|
+| `get_current_weather` | Get current weather data for a location |
+| `get_5day_forecast` | Get 5 day weather forecast with 3 hour step |
+| `get_hourly_forecast` | Get hourly forecast for 48 hours |
+| `get_onecall_weather` | Get current and forecast weather data including minute forecast for 1 hour, hourly forecast for 48 hours, daily forecast for 8 days |
+| `get_historical_weather` | Get historical weather data for a specific date |
+| `get_air_pollution` | Get current air pollution data |
+| `get_air_pollution_forecast` | Get air pollution forecast for 5 days |
+| `get_air_pollution_history` | Get historical air pollution data |
+| `get_geocoding` | Get geographical coordinates by location name |
+| `get_reverse_geocoding` | Get location names by geographical coordinates |
+| `get_weather_maps` | Get weather map tiles |
 
-<CardGroup cols={2}>
-  <Card title="Mapbox" icon="map" href="/integrations/connectors/mapbox">
-    Maps and location data
-  </Card>
-  <Card title="Slack" icon="slack" href="/integrations/connectors/slack">
-    Team notifications
-  </Card>
-</CardGroup>
+## Useful resources
+
+- [OpenWeatherMap documentation](https://openweathermap.org/api/statistics-api)

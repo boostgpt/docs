@@ -1,0 +1,71 @@
+---
+title: "Binance Live Trading"
+description: "Spot trading, orders and market data, against real funds. Nothing to do with a marketing site."
+---
+
+Spot trading, orders and market data, against real funds. Nothing to do with a marketing site.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Binance Live Trading and press **Connect**. The key you enter is checked against Binance Live Trading before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your Binance Live API Key (PRODUCTION - REAL MONEY) |
+| Secret Key | Your Binance Live Secret Key (KEEP SECURE - CONTROLS YOUR FUNDS) |
+
+### Getting the credential
+
+1. Go to [Binance.com](https://binance.com) (NOT .us for US users)
+2. Complete **full KYC verification**
+3. Enable **2FA authentication**
+4. Go to **API Management**
+5. Create **API Key** with required permissions
+6. **SECURE your Secret Key** - never share it
+7. Start with **minimum amounts** for testing
+
+## Notes
+
+- **This trades real money.** Orders placed here execute against live funds and cannot be undone by BoostGPT.
+- Give the API key only the permissions you need, never withdrawal, and restrict it to your server's IP.
+- Test against the Binance Testnet connector first; the tools are the same.
+- Spot trading is restricted or prohibited in some jurisdictions — that is yours to check, not ours.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `get_account_info` | Get account information and balances |
+| `get_exchange_info` | Get exchange trading rules and symbol information |
+| `get_ticker_price` | Get current price for symbol(s) |
+| `get_24hr_ticker` | Get 24-hour ticker price change statistics |
+| `get_order_book` | Get order book depth for a symbol |
+| `get_klines` | Get candlestick/kline data for a symbol |
+| `place_order` | Place a new spot order - USE WITH EXTREME CAUTION (REAL MONEY) |
+| `place_test_order` | Test order placement without execution (SAFE for testing) |
+| `cancel_order` | Cancel an active order |
+| `get_order_status` | Check order status |
+| `get_open_orders` | Get all open orders for a symbol or all symbols |
+| `get_all_orders` | Get all orders (active, canceled, filled) for a symbol |
+| `get_trade_history` | Get account trade history |
+| `cancel_all_orders` | Cancel all open orders for a symbol - USE WITH CAUTION |
+| `get_futures_account` | Get futures account information |
+| `get_futures_balance` | Get futures account balance |
+| `place_futures_order` | Place futures order - EXTREME CAUTION: REAL MONEY WITH LEVERAGE |
+| `get_futures_position` | Get current position information |
+| `change_leverage` | Change leverage for a symbol - AFFECTS RISK SIGNIFICANTLY |
+| `change_margin_type` | Change margin type for a symbol |
+| `get_margin_account` | Get margin account details |
+| `margin_borrow` | Borrow asset for margin trading - CREATES DEBT |
+| `margin_repay` | Repay borrowed asset |
+| `get_funding_rate` | Get funding rate history |
+| `get_account_commission` | Get current trading commission rates |
+| `get_api_permissions` | Get API key permissions |
+| `get_server_time` | Get server time for synchronization |
+| `test_connectivity` | Test connectivity to the API |
+
+## Useful resources
+
+- [Binance Live Trading documentation](https://binance-docs.github.io/apidocs/spot/en/#general-info)

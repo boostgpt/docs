@@ -1,0 +1,45 @@
+---
+title: "Mureka"
+description: "Songs, instrumentals and lyrics. Background music for a demo video — rarely something a page itself needs."
+---
+
+Songs, instrumentals and lyrics. Background music for a demo video — rarely something a page itself needs.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Mureka and press **Connect**. The key you enter is checked against Mureka before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your Mureka API key from platform.mureka.ai |
+
+### Getting the credential
+
+1. Create an API key at [platform.mureka.ai](https://platform.mureka.ai)
+2. Paste it into the connector
+
+## Notes
+
+- **Generation is asynchronous.** `generate_song` and `generate_instrumental` return a task id; poll the
+  matching query tool until the status is `succeeded`. Jobs can also end `failed`, `timeouted` or `cancelled`.
+- `n` defaults to 2 and **every track generated is charged**, so pass `n: 1` for a single draft.
+- Mureka's own audio URLs expire after 30 days; the finished track is copied onto BoostGPT storage, so the
+  link the agent returns keeps working.
+- A full song takes noticeably longer than an image. Expect to poll for a while.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `generate_song` | Generate a sung song from lyrics, with an optional style prompt. Asynchronous: returns a task id with status 'preparing'. Poll the matching query tool until the status is 'succeeded', and the finished audio is returned on a durable URL. |
+| `generate_instrumental` | Generate an instrumental track from a style prompt, with no vocals. Asynchronous: returns a task id with status 'preparing'. Poll the matching query tool until the status is 'succeeded', and the finished audio is returned on a durable URL. |
+| `generate_lyrics` | Write lyrics from a description. Returns a title and the lyrics directly — this one is not asynchronous. |
+| `separate_stems` | Split a song into separate stems, such as vocals and instrumental. Asynchronous: returns a task id with status 'preparing'. Poll the matching query tool until the status is 'succeeded', and the finished audio is returned on a durable URL. |
+| `get_song_task` | Poll a song generation. Status is 'preparing', 'queued', 'running', 'streaming', 'succeeded', 'failed', 'timeouted' or 'cancelled'. Once succeeded the first track is rehosted on a durable URL; while it is still running the status is returned so you can poll again. |
+| `get_instrumental_task` | Poll an instrumental generation, the same way as get_song_task. |
+
+## Useful resources
+
+- [Mureka API docs](https://platform.mureka.ai/docs/api/)

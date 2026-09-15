@@ -1,58 +1,72 @@
 ---
 title: "ClickUp"
-description: "Work management platform"
+description: "Spaces, lists and tasks. Another place work is tracked."
 ---
 
-## Overview
+Spaces, lists and tasks. Another place work is tracked.
 
-Connect ClickUp to manage tasks, projects, and team workflows.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find ClickUp and press **Connect**. The key you enter is checked against ClickUp before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **ClickUp** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **ClickUp**
-  </Step>
-  <Step title="Configure">
-    Enter your ClickUp API Key
-  </Step>
-  <Step title="Test">
-    Playground: "Show me my tasks for today"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| API Token | Your ClickUp API token |
 
-```text
-User: "Create a task: Review Q4 budget, due Friday"
+### Getting the credential
 
-Agent: Created ClickUp task:
-       "Review Q4 budget" - Due Jan 10
-```
+1. Log in to [ClickUp](https://app.clickup.com)
+2. Go to **Settings** → **Apps** → **API Token**
+3. Click **"+ Generate"** and copy the token
+4. Add token to connector
 
-## Integration Example
+## Notes
 
-**With Gmail:**
+- Uses API token authentication in Authorization header
+- Rate limited to 100 requests per minute
+- Supports custom task IDs and team-specific operations
+- Structure: Workspace → Space → Folder → List → Task
 
-```text
-User: "Create ClickUp tasks from emails labeled 'Action Required'"
+See [ClickUp API docs](https://clickup.com/api) for complete reference.
 
-Agent: *searches Gmail*
-       *creates tasks*
+## What an agent can do with it
 
-       Created 7 ClickUp tasks from Gmail
-```
+| Tool | What it does |
+|---|---|
+| `get_authorized_user` | Get current authorized user information |
+| `get_workspaces` | Get all workspaces for the authenticated user |
+| `get_spaces` | Get spaces in a workspace |
+| `create_space` | Create a new space |
+| `get_folders` | Get folders in a space |
+| `create_folder` | Create a folder in a space |
+| `get_lists` | Get lists in a folder or space |
+| `get_folderless_lists` | Get lists directly in a space (no folder) |
+| `create_list` | Create a list in a folder |
+| `create_folderless_list` | Create a list directly in a space |
+| `get_tasks` | Get tasks in a list |
+| `get_task` | Get a specific task by ID |
+| `create_task` | Create a new task |
+| `update_task` | Update an existing task |
+| `delete_task` | Delete a task |
+| `add_task_to_list` | Add an existing task to additional list |
+| `get_task_comments` | Get comments for a task |
+| `create_task_comment` | Create a comment on a task |
+| `get_task_time_entries` | Get time tracking entries for a task |
+| `track_time` | Track time on a task |
+| `get_checklists` | Get checklists for a task |
+| `create_checklist` | Create a checklist for a task |
+| `create_checklist_item` | Create a checklist item |
+| `get_team_members` | Get members of a workspace/team |
+| `search_tasks` | Search for tasks across workspace |
+| `get_task_templates` | Get task templates for a workspace |
+| `create_task_from_template` | Create a task from a template |
+| `get_custom_fields` | Get custom fields for a list |
+| `set_custom_field_value` | Set custom field value for a task |
+| `get_webhooks` | Get webhooks for a workspace |
+| `create_webhook` | Create a webhook |
 
-## Next Steps
+## Useful resources
 
-<CardGroup cols={2}>
-  <Card title="Asana" icon="list-check" href="/integrations/connectors/asana">
-    Alternative project tool
-  </Card>
-  <Card title="Monday.com" icon="calendar-days" href="/integrations/connectors/monday">
-    Team collaboration
-  </Card>
-</CardGroup>
+- [ClickUp documentation](https://clickup.com/api/developer-portal/authentication/)

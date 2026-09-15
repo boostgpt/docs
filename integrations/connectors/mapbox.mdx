@@ -1,54 +1,52 @@
 ---
 title: "Mapbox"
-description: "Maps and location services"
+description: "Geocoding, directions and static maps. For a product that needs maps; a page rarely does."
 ---
 
-## Overview
+Geocoding, directions and static maps. For a product that needs maps; a page rarely does.
 
-Connect Mapbox for mapping, geocoding, and location data.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Mapbox and press **Connect**. The key you enter is checked against Mapbox before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Mapbox** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Mapbox**
-  </Step>
-  <Step title="Configure">
-    Enter your Mapbox Access Token
-  </Step>
-  <Step title="Test">
-    Playground: "Geocode '123 Main St, New York, NY'"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| Access Token | Your Mapbox access token with appropriate scopes |
 
-```text
-User: "Get coordinates for '1600 Pennsylvania Ave, Washington DC'"
+### Getting the credential
 
-Agent: Coordinates: 38.8977° N, 77.0365° W
-```
+1. Sign up at [Mapbox](https://www.mapbox.com)
+2. Go to **Account** → **Access Tokens**
+3. Create a new token or use your default public token
+4. For advanced features, configure token scopes:
+   - Public scopes: No restrictions needed
+   - Secret scopes: Add specific API permissions
 
-## Integration Example
+## Notes
 
-**With HubSpot:**
+- Free tier: 50,000 requests/month for most APIs
+- Static Images API: 50,000 requests/month
+- Paid plans: Higher limits available
 
-```text
-User: "Add location coordinates to HubSpot contacts"
+## What an agent can do with it
 
-Agent: Updated 50 HubSpot contacts with coordinates
-```
+| Tool | What it does |
+|---|---|
+| `geocode_forward` | Convert addresses or place names to coordinates |
+| `geocode_reverse` | Convert coordinates to addresses or place names |
+| `get_directions` | Get directions between coordinates |
+| `get_matrix` | Get travel times and distances between multiple points |
+| `get_optimization` | Solve traveling salesman problem for route optimization |
+| `get_isochrone` | Get isochrone (areas reachable within time/distance) |
+| `get_map_matching` | Snap GPS traces to road network |
+| `get_static_map` | Generate static map images |
+| `search_places` | Search for points of interest and places |
+| `get_place_details` | Get detailed information about a specific place |
+| `get_tilesets` | List available tilesets |
+| `get_tileset_metadata` | Get metadata for a specific tileset |
 
-## Next Steps
+## Useful resources
 
-<CardGroup cols={2}>
-  <Card title="OpenWeatherMap" icon="cloud" href="/integrations/connectors/openweathermap">
-    Weather data
-  </Card>
-  <Card title="HubSpot" icon="hubspot" href="/integrations/connectors/hubspot">
-    CRM integration
-  </Card>
-</CardGroup>
+- [Mapbox documentation](https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes)

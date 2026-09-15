@@ -1,0 +1,44 @@
+---
+title: "ElevenLabs"
+description: "Speech, transcription, sound effects and music. Voice-over for a demo, and transcripts of calls the site should answer."
+---
+
+Speech, transcription, sound effects and music. Voice-over for a demo, and transcripts of calls the site should answer.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find ElevenLabs and press **Connect**. The key you enter is checked against ElevenLabs before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your ElevenLabs API key from the dashboard |
+
+### Getting the credential
+
+1. Go to [ElevenLabs](https://elevenlabs.io) and sign in
+2. Navigate to **Profile Settings → API Keys**
+3. Copy your API key (starts with `sk_`) and paste it into this connector
+
+## Notes
+
+- Free tier: 10,000 characters/month
+- 3,000+ community voices available in the Voice Library
+- See [ElevenLabs API docs](https://elevenlabs.io/docs/api-reference) for full reference
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `convert` | Convert text to speech using ElevenLabs. Returns audio binary in the requested format. Use list_voices to discover available voice IDs. |
+| `stream` | Stream text-to-speech audio in real time. Same parameters as convert but returns streaming audio chunks. Ideal for low-latency playback. |
+| `transcribe` | Transcribe audio or video files to text using ElevenLabs Scribe. Supports 99 languages, speaker diarization, and word-level timestamps. |
+| `generate_sound_effect` | Generate sound effects from a text description. Returns audio binary. Duration can be specified or auto-detected from the prompt. |
+| `compose_music` | Generate original music from a text description. Supports instrumental and vocal tracks up to 10 minutes. |
+| `list_voices` | List all available voices including pre-made voices and your cloned voices. Returns voice IDs, names, categories, and preview URLs. |
+| `get_voice` | Get detailed information about a specific voice including settings and sample audio. |
+
+## Useful resources
+
+- [ElevenLabs documentation](https://elevenlabs.io/docs/api-reference)

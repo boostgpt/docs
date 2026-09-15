@@ -1,58 +1,43 @@
 ---
 title: "Discord"
-description: "Discord server management"
+description: "Messages, channels and members. For telling a community something, not for deciding what a page says."
 ---
 
-## Overview
+Messages, channels and members. For telling a community something, not for deciding what a page says.
 
-Connect Discord to send messages and manage your Discord server.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Discord and press **Connect**. The key you enter is checked against Discord before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Discord** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Discord**
-  </Step>
-  <Step title="Configure">
-    Enter your Discord Bot Token
-  </Step>
-  <Step title="Test">
-    Playground: "Send a message to #general"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| Bot Token | Your Discord bot token (from Discord Developer Portal) |
 
-```text
-User: "Post to #announcements that the new feature is live"
+### Getting the credential
 
-Agent: Posted to #announcements:
-       "New feature is now live!"
-```
+1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
+2. Click **New Application** and give it a name
+3. Go to **Bot** section and click **Add Bot**
+4. Copy the bot token from the **Token** section
+5. Go to **OAuth2** → **URL Generator**
+6. Select `bot` scope and required permissions
+7. Use the generated URL to invite bot to your server
 
-## Integration Example
+## What an agent can do with it
 
-**With GitHub:**
+| Tool | What it does |
+|---|---|
+| `send_message` | Send a message to a Discord channel |
+| `get_channel` | Get information about a Discord channel |
+| `get_guild_channels` | Get all channels in a Discord server |
+| `create_channel` | Create a new channel in a Discord server |
+| `get_channel_messages` | Get messages from a Discord channel |
+| `add_reaction` | Add a reaction to a Discord message |
+| `get_guild_members` | Get members of a Discord server |
+| `create_dm_channel` | Create a DM channel with a user |
 
-```text
-User: "Post GitHub issues to #dev channel"
+## Useful resources
 
-Agent: *fetches GitHub issues*
-       *posts to Discord*
-
-       Posted 5 new issues to #dev
-```
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="Slack" icon="slack" href="/integrations/connectors/slack">
-    Alternative team chat
-  </Card>
-  <Card title="GitHub" icon="github" href="/integrations/connectors/github">
-    Code repository
-  </Card>
-</CardGroup>
+- [Discord documentation](https://discord.com/developers/docs/reference#authentication)

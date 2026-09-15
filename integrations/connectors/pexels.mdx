@@ -1,51 +1,58 @@
 ---
 title: "Pexels"
-description: "Free stock photos and videos"
+description: "Free stock photos and video. The quickest way to fill a page before there is art direction. BoostGPT funds the key."
 ---
 
-## Overview
+Free stock photos and video. The quickest way to fill a page before there is art direction. BoostGPT funds the key.
 
-Connect Pexels to search and download free stock photos and videos.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Pexels and press **Connect**. The key you enter is checked against Pexels before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Pexels** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Pexels**
-  </Step>
-  <Step title="Configure">
-    Enter your Pexels API Key
-  </Step>
-  <Step title="Test">
-    Playground: "Search for business photos"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| API Key | Your Pexels API key |
 
-```text
-User: "Find videos of nature"
+### Getting the credential
 
-Agent: Found 10 nature videos:
-       [Video URLs and credits]
-```
+1. Go to [Pexels API](https://www.pexels.com/api/)
+2. **Sign up** for free account
+3. **Generate API Key** from dashboard
+4. Add API key to connector
 
-## Integration Example
+## Notes
 
-**With Dropbox:**
+- **Free API key** with generous rate limits
+- All content is royalty-free for commercial use
+- Photographer attribution recommended
+- Rate limited to 200 requests per hour (free tier)
+- No download tracking required
 
-```text
-User: "Download Pexels videos and save to Dropbox"
+See [Pexels API docs](https://www.pexels.com/api/documentation/) for complete reference.
 
-Agent: Downloaded 3 videos to Dropbox/Stock Videos
-```
+## What an agent can do with it
 
-## Next Steps
+| Tool | What it does |
+|---|---|
+| `search_photos` | Search for photos |
+| `get_curated_photos` | Get curated photos |
+| `get_photo` | Get a specific photo by ID |
+| `search_videos` | Search for videos |
+| `get_popular_videos` | Get popular videos |
+| `get_video` | Get a specific video by ID |
+| `get_collections` | Get featured collections |
+| `get_collection_media` | Get media from a specific collection |
+| `get_photo_statistics` | Get photo statistics (views, downloads) |
+| `get_video_statistics` | Get video statistics (views, downloads) |
+| `get_trending_searches` | Get trending search terms |
+| `autocomplete_search` | Get search suggestions for autocomplete |
+| `get_random_photo` | Get a random photo (using curated endpoint) |
+| `search_by_photographer` | Search photos by photographer name |
+| `get_photo_colors` | Get dominant colors from a photo |
+| `search_similar_photos` | Find photos similar to a given photo |
 
-<CardGroup cols={2}>
-  <Card title="Unsplash" icon="image" href="/integrations/connectors/unsplash">
-    Alternative stock photos
-  </Card></CardGroup>
+## Useful resources
+
+- [Pexels documentation](https://www.pexels.com/api/documentation/)

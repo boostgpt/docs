@@ -1,55 +1,56 @@
 ---
 title: "Netlify"
-description: "Web hosting and deployment"
+description: "Sites, deploys and DNS, with a token. The Netlify server above signs in instead."
 ---
 
-## Overview
+Sites, deploys and DNS, with a token. The Netlify server above signs in instead.
 
-Connect Netlify to manage deployments and sites.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Netlify and press **Connect**. The key you enter is checked against Netlify before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Netlify** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Netlify**
-  </Step>
-  <Step title="Configure">
-    Enter your Netlify Personal Access Token
-  </Step>
-  <Step title="Test">
-    Playground: "List my Netlify sites"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| Personal Access Token | Your Netlify personal access token |
 
-```text
-User: "Trigger a deployment for my-site"
+### Getting the credential
 
-Agent: Deployment started for my-site
-       Deploy ID: 123abc...
-```
+1. Log in to [Netlify](https://app.netlify.com)
+2. Go to **User settings** → **Applications** → **Personal access tokens**
+3. Click **New access token**
+4. Enter a description for your token
+5. Click **Generate token**
+6. Copy the generated token
 
-## Integration Example
+## What an agent can do with it
 
-**With GitHub:**
+| Tool | What it does |
+|---|---|
+| `get_user` | Get current user information |
+| `get_accounts` | List accounts you have access to |
+| `get_sites` | List all sites |
+| `get_site` | Get site details |
+| `create_site` | Create a new site |
+| `update_site` | Update site settings |
+| `delete_site` | Delete a site |
+| `get_deploys` | List site deployments |
+| `get_deploy` | Get deployment details |
+| `create_deploy` | Create a new deployment |
+| `cancel_deploy` | Cancel a deployment |
+| `restore_deploy` | Restore a previous deployment |
+| `get_build_hooks` | List build hooks for a site |
+| `create_build_hook` | Create a build hook |
+| `trigger_build_hook` | Trigger a build hook |
+| `get_forms` | List forms for a site |
+| `get_form_submissions` | Get form submissions |
+| `get_functions` | List serverless functions |
+| `get_env_vars` | Get environment variables for a site |
+| `create_env_var` | Create environment variable |
+| `get_dns_zones` | List DNS zones |
+| `get_dns_records` | List DNS records for a zone |
 
-```text
-User: "Deploy Netlify when GitHub PR is merged"
+## Useful resources
 
-Agent: Monitoring GitHub PRs, will trigger Netlify deploys
-```
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="Vercel" icon="triangle" href="/integrations/connectors/vercel">
-    Alternative deployment
-  </Card>
-  <Card title="GitHub" icon="github" href="/integrations/connectors/github">
-    Code repository
-  </Card>
-</CardGroup>
+- [Netlify documentation](https://docs.netlify.com/api/get-started/#authentication)

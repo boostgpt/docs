@@ -1,0 +1,67 @@
+---
+title: "WordPress"
+description: "Posts, pages, media and categories. Boost can read and edit an existing WordPress site directly."
+---
+
+Posts, pages, media and categories. Boost can read and edit an existing WordPress site directly.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find WordPress and press **Connect**. The key you enter is checked against WordPress before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| Site URL | Your WordPress site URL (e.g., https://yoursite.com) |
+| Username | WordPress username (for Basic Auth) |
+| Application Password | A WordPress Application Password (Users → Profile → Application Passwords) |
+| JWT Token | JWT token (requires JWT Authentication plugin) |
+
+### Getting the credential
+
+WordPress REST API supports multiple auth methods. For Application Passwords, go to Users > Profile > Application Passwords. Many operations work without authentication.
+
+## Notes
+
+- Many operations work without authentication (public content)
+- Uses WordPress REST API (wp-json/wp/v2/)
+- Supports standard WordPress content types
+- Admin privileges needed for user/settings management
+- Rate limiting depends on hosting configuration
+
+See [WordPress REST API docs](https://developer.wordpress.org/rest-api/) for complete reference.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `get_posts` | Get posts from WordPress site |
+| `get_post` | Get a specific post by ID |
+| `create_post` | Create a new post |
+| `update_post` | Update an existing post |
+| `delete_post` | Delete a post |
+| `get_pages` | Get pages from WordPress site |
+| `get_page` | Get a specific page by ID |
+| `create_page` | Create a new page |
+| `update_page` | Update an existing page |
+| `delete_page` | Delete a page |
+| `get_media` | Get media files |
+| `get_media_item` | Get a specific media item by ID |
+| `upload_media` | Upload a media file |
+| `update_media` | Update media metadata |
+| `delete_media` | Delete a media file |
+| `get_categories` | Get post categories |
+| `create_category` | Create a new category |
+| `get_tags` | Get post tags |
+| `create_tag` | Create a new tag |
+| `search_content` | Search across all content types |
+| `get_comments` | Get comments |
+| `get_comment` | Get a specific comment by ID |
+| `create_comment` | Create a new comment |
+| `update_comment` | Update an existing comment |
+| `delete_comment` | Delete a comment |
+
+## Useful resources
+
+- [WordPress documentation](https://developer.wordpress.org/rest-api/using-the-rest-api/authentication/)

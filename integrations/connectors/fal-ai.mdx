@@ -1,0 +1,42 @@
+---
+title: "fal.ai"
+description: "Any model hosted on fal.ai, called by id. Use it when a page needs a model the other connectors do not carry."
+---
+
+Any model hosted on fal.ai, called by id. Use it when a page needs a model the other connectors do not carry.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find fal.ai and press **Connect**. The key you enter is checked against fal.ai before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your fal.ai API key |
+
+### Getting the credential
+
+1. Create an API key at [fal.ai/dashboard/keys](https://fal.ai/dashboard/keys)
+2. Paste it into the connector
+
+## Notes
+
+- **Asynchronous.** `run_model` returns a `request_id`. Poll `get_status`, then call `get_result`.
+- Finished media is copied onto BoostGPT storage, so the link keeps working.
+- Different models take different inputs. `prompt` fits nearly all of them; `image_url` covers image-to-image
+  and image-to-video. A model needing something more unusual may not be reachable through these parameters.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `run_model` | Start any model on fal.ai. `model` is the model's path, e.g. 'fal-ai/flux/dev' for image generation or 'fal-ai/kling-video/v2.5-turbo/pro/text-to-video' for video. Put the model's own inputs in the remaining parameters — `prompt` suits almost every model. Asynchronous: returns a request_id to poll with get_result. |
+| `get_status` | Check whether a fal.ai job has finished. Status is 'IN_QUEUE', 'IN_PROGRESS' or 'COMPLETED'. Call get_result once it is COMPLETED. |
+| `get_result` | Collect the output of a completed fal.ai job. The finished image or video is rehosted on a durable URL. If the job has not finished this returns its status instead. |
+| `cancel_request` | Cancel a fal.ai job that is still queued. |
+
+## Useful resources
+
+- [fal.ai queue API](https://docs.fal.ai/model-apis/queue)
+- [Model catalogue](https://fal.ai/models)

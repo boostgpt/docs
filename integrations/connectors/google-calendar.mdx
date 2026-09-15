@@ -1,59 +1,60 @@
 ---
 title: "Google Calendar"
-description: "Schedule and manage events with Google Calendar"
+description: "Calendars and events. Meetings booked, for teams whose scheduling lives in Google."
 ---
 
-## Overview
+Calendars and events. Meetings booked, for teams whose scheduling lives in Google.
 
-Connect Google Calendar to create, update, and manage calendar events through your agent.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Google Calendar and press **Connect**. You will be sent to sign in; the connection is saved once that succeeds.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Google Calendar** → **Deploy**
-  </Step>
+### What you will need
 
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Google Calendar**
-  </Step>
+| Field | What it is |
+|---|---|
+| Client ID | Your Google OAuth 2.0 Client ID |
+| Client Secret | Your Google OAuth 2.0 Client Secret |
 
-  <Step title="Configure">
-    Sign in with Google and grant Calendar permissions (OAuth)
-  </Step>
+### Getting the credential
 
-  <Step title="Test">
-    Playground: "Schedule a meeting for tomorrow at 2pm"
-  </Step>
-</Steps>
+1. Go to [Google Cloud Console](https://console.cloud.google.com)
+2. Create project → Enable **Calendar API**
+3. Create **OAuth 2.0 credentials**
+4. Add authorized redirect URIs
+5. Add Client ID and Secret to connector
 
-## Example Usage
+## Notes
 
-```text
-User: "Schedule a team meeting for next Tuesday at 10am, 1 hour duration"
+- Access is per calendar: the OAuth account has to have been granted the calendar you name, and the
+  primary calendar id is literally `primary`.
+- Requires OAuth 2.0 with appropriate scopes
+- Rate limited (varies by quota tier)
+- Supports recurring events with RRULE
+- Conference data requires additional permissions
+- Proper time zone handling with RFC3339 format
 
-Agent: I've created a calendar event:
-       - Team Meeting
-       - Tuesday, Jan 14, 2025
-       - 10:00 AM - 11:00 AM
-```
+See [Google Calendar API docs](https://developers.google.com/calendar/api) for complete reference.
 
-## Integration Example
+## What an agent can do with it
 
-**With Gmail:**
+| Tool | What it does |
+|---|---|
+| `get_calendar_list` | Get list of calendars for the authenticated user |
+| `get_calendar` | Get metadata for a specific calendar |
+| `create_calendar` | Create a new secondary calendar |
+| `update_calendar` | Update calendar metadata |
+| `delete_calendar` | Delete a secondary calendar |
+| `get_events` | Get events from a calendar |
+| `get_event` | Get a specific event |
+| `create_event` | Create a new event |
+| `update_event` | Update an existing event |
+| `delete_event` | Delete an event |
+| `move_event` | Move an event to another calendar |
+| `get_freebusy` | Get free/busy information |
+| `quick_add_event` | Create event using natural language |
+| `get_colors` | Get available colors for calendars and events |
 
-```text
-User: "Check my emails for meeting requests and add them to my calendar"
+## Useful resources
 
-Agent: *searches Gmail for meeting requests*
-       *creates calendar events*
-
-       Added 3 meetings from your email to calendar
-```
-
-## Next Steps
-
-<CardGroup cols={2}>  <Card title="Calendly" icon="calendar-check" href="/integrations/connectors/calendly">
-    Alternative scheduling tool
-  </Card>
-</CardGroup>
+- [Google Calendar documentation](https://developers.google.com/calendar/api/guides/auth)

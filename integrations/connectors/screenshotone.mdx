@@ -1,0 +1,41 @@
+---
+title: "ScreenshotOne"
+description: "Screenshots of any URL, still or animated. See a page the way a visitor does — yours or a competitor's."
+---
+
+Screenshots of any URL, still or animated. See a page the way a visitor does — yours or a competitor's.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find ScreenshotOne and press **Connect**. The key you enter is checked against ScreenshotOne before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| Access Key | Your ScreenshotOne access key from the dashboard |
+
+### Getting the credential
+
+1. Go to [ScreenshotOne](https://screenshotone.com) and sign up
+2. Copy your **Access Key** from the dashboard
+3. Paste it into this connector
+
+## Notes
+
+- `response_type=json` returns a hosted screenshot URL — recommended for agents
+- JPEG/WebP support `image_quality` for file size control
+- Free tier includes a monthly screenshot allowance
+
+See [ScreenshotOne docs](https://screenshotone.com/docs/) for the full API reference.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `take_screenshot` | Capture a screenshot of a URL. Set response_type to "json" to receive a CDN URL instead of binary image data. |
+| `take_animated_screenshot` | Capture an animated GIF or WebP of a URL, optionally with page scrolling. |
+
+## Useful resources
+
+- [ScreenshotOne documentation](https://screenshotone.com/docs/)

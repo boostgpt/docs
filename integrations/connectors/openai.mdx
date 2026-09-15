@@ -1,0 +1,39 @@
+---
+title: "OpenAI"
+description: "Images, image edits and speech from OpenAI. The default way Boost makes a picture or a voice-over for a page."
+---
+
+Images, image edits and speech from OpenAI. The default way Boost makes a picture or a voice-over for a page.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find OpenAI and press **Connect**. The key you enter is checked against OpenAI before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your OpenAI API key |
+
+### Getting the credential
+
+1. Go to [OpenAI Platform](https://platform.openai.com/api-keys) and create an API key
+2. Paste it into the connector
+
+## Notes
+
+- Results are copied onto BoostGPT storage, so the link keeps working.
+- `mask.image_url` is optional: supply a PNG whose transparent areas mark the region to change, or leave it out
+  and let the prompt describe the edit.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `generate_image` | Generate an image from a text prompt with GPT-Image. Returns a hosted URL. |
+| `edit_image` | Edit an existing image from a text instruction — for example removing a background or changing a colour. Pass the image by URL; an attached photo's link works directly. Returns a hosted URL. |
+| `generate_speech` | Convert text to speech using OpenAI TTS models. Returns raw audio binary in the requested format. |
+
+## Useful resources
+
+- [OpenAI images guide](https://platform.openai.com/docs/guides/images)

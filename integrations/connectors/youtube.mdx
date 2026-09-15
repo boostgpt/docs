@@ -1,0 +1,63 @@
+---
+title: "YouTube Data API"
+description: "Search, video details, channels and playlists. Where a demo video lives once it is made."
+---
+
+Search, video details, channels and playlists. Where a demo video lives once it is made.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find YouTube Data API and press **Connect**. You will be sent to sign in; the connection is saved once that succeeds.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| Client ID | Your Google OAuth 2.0 Client ID (for user authentication) |
+| Client Secret | Your Google OAuth 2.0 Client Secret |
+
+### Getting the credential
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com)
+2. Create a new project or select existing one
+3. **Enable APIs**: APIs & Services → Library → Search "YouTube Data API v3" → Enable
+4. **Create OAuth 2.0 Credentials**:
+   - Go to APIs & Services → Credentials
+   - Click "Create Credentials" → OAuth 2.0 Client IDs
+   - Choose "Web Application"
+   - Add redirect URIs
+   - Copy Client ID and Client Secret
+5. **Optional**: Create API Key for read-only operations
+
+## Notes
+
+- Reading public data works with an API key; anything about YOUR channel, and every write, needs OAuth.
+- Quota is per project per day and searches are expensive — a search costs about a hundred times a video lookup.
+- **Per user**: 100 requests per 100 seconds
+- **Per project**: 10,000 requests per day
+- **Concurrent requests**: Recommended max 10
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `search_videos` | Search for videos on YouTube |
+| `get_video_details` | Get detailed information about specific videos |
+| `get_channel_info` | Get information about YouTube channels |
+| `get_channel_videos` | Get videos from a specific channel |
+| `get_playlists` | Get playlists from a channel or by ID |
+| `get_playlist_items` | Get videos from a specific playlist |
+| `create_playlist` | Create a new playlist (requires authentication) |
+| `add_video_to_playlist` | Add a video to a playlist (requires authentication) |
+| `get_video_comments` | Get comments for a video |
+| `get_video_categories` | Get available video categories |
+| `get_trending_videos` | Get trending videos by region |
+| `get_my_channel` | Get authenticated user's channel information |
+| `get_subscriptions` | Get channel subscriptions (requires authentication) |
+| `subscribe_to_channel` | Subscribe to a channel (requires authentication) |
+| `rate_video` | Rate a video (like/dislike) - requires authentication |
+| `get_activity` | Get channel activity feed (requires authentication) |
+
+## Useful resources
+
+- [YouTube Data API documentation](https://developers.google.com/youtube/v3/getting-started)

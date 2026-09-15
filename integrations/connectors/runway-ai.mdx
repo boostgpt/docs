@@ -1,0 +1,45 @@
+---
+title: "Runway"
+description: "Video generation, image-to-video and upscaling. A second video model, with a different house look."
+---
+
+Video generation, image-to-video and upscaling. A second video model, with a different house look.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Runway and press **Connect**. The key you enter is checked against Runway before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your Runway API key from dev.runwayml.com (starts with key_) |
+
+### Getting the credential
+
+1. Create an API key in the [Runway developer portal](https://dev.runwayml.com) — it starts with `key_`
+2. Paste it into the connector
+
+## Notes
+
+- **Asynchronous.** Starting a job returns a task id. Poll `get_task` until `status` is `SUCCEEDED`; it can
+  also end `FAILED` or `CANCELLED`, and sits at `THROTTLED` when the account is at its concurrency limit.
+- `ratio` is a width:height pixel pair, not a simple aspect ratio, and the accepted values differ per model.
+  The values offered here are the ones valid for the models above.
+- Every request carries `X-Runway-Version: 2024-11-06`, which the API requires.
+- Results are copied onto BoostGPT storage, so the link keeps working.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `generate_image` | Generate an image from a text prompt with Runway Gen-4 Image. Asynchronous: returns a task id. Poll get_task until its status is SUCCEEDED, and the result is returned on a durable URL. |
+| `generate_video` | Generate a video from a text prompt with Runway Gen-4.5. Asynchronous: returns a task id. Poll get_task until its status is SUCCEEDED, and the result is returned on a durable URL. |
+| `image_to_video` | Animate a still image with Runway. gen4.5 is the current model; gen4_turbo is faster and cheaper. Asynchronous: returns a task id. Poll get_task until its status is SUCCEEDED, and the result is returned on a durable URL. |
+| `upscale_video` | Upscale an existing video, up to 4K. Asynchronous: returns a task id. Poll get_task until its status is SUCCEEDED, and the result is returned on a durable URL. |
+| `get_task` | Poll a Runway task. Status is PENDING, THROTTLED, RUNNING, SUCCEEDED, FAILED or CANCELLED. Once SUCCEEDED the result is rehosted on a durable URL; while it is still running the status is returned so you can poll again. |
+| `cancel_task` | Cancel a Runway task that has not finished, or delete a finished one. |
+
+## Useful resources
+
+- [Runway API docs](https://docs.dev.runwayml.com/api/)

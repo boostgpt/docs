@@ -1,61 +1,66 @@
 ---
 title: "Asana"
-description: "Manage projects and tasks"
+description: "Tasks, projects and sections. Team workload — it says what people are doing, not what a page should say."
 ---
 
-## Overview
+Tasks, projects and sections. Team workload — it says what people are doing, not what a page should say.
 
-Connect Asana to create and manage projects, tasks, and teams.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Asana and press **Connect**. You will be sent to sign in; the connection is saved once that succeeds.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Asana** → **Deploy**
-  </Step>
+### What you will need
 
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Asana**
-  </Step>
+| Field | What it is |
+|---|---|
+| Client ID | Your Asana OAuth app Client ID (for OAuth 2.0) |
+| Client Secret | Your Asana OAuth app Client Secret (for OAuth 2.0) |
+| Personal Access Token | Your Asana Personal Access Token (for personal integrations) |
 
-  <Step title="Configure">
-    Sign in to Asana and grant access (OAuth)
-  </Step>
+### Getting the credential
 
-  <Step title="Test">
-    Playground: "Show me my tasks for today"
-  </Step>
-</Steps>
+For personal use, generate a Personal Access Token in Asana Settings > Apps > Developer Apps. For OAuth apps, create an app at https://app.asana.com/0/developer-console and get Client ID/Secret.
 
-## Example Usage
+## Notes
 
-```text
-User: "Create a task: Review Q1 budget, due next Friday"
+- A Personal Access Token is the quickest way in and is what this connector expects; OAuth apps are for
+  multi-user products and are not needed here.
+- Most tools take Asana's numeric GIDs rather than names — `get_workspaces` and `get_projects` are how you find them.
 
-Agent: Created Asana task:
-       "Review Q1 budget" - Due Jan 10, 2025
-```
+## What an agent can do with it
 
-## Integration Example
+| Tool | What it does |
+|---|---|
+| `get_workspaces` | Get all workspaces the user has access to |
+| `get_me` | Get current user information |
+| `get_projects` | Get projects in a workspace |
+| `get_project` | Get a specific project by GID |
+| `create_project` | Create a new project |
+| `update_project` | Update an existing project |
+| `get_tasks` | Get tasks in a project |
+| `get_task` | Get a specific task by GID |
+| `create_task` | Create a new task |
+| `update_task` | Update an existing task |
+| `delete_task` | Delete a task |
+| `add_task_to_project` | Add a task to a project |
+| `get_subtasks` | Get subtasks of a task |
+| `create_subtask` | Create a subtask |
+| `get_sections` | Get sections in a project |
+| `create_section` | Create a section in a project |
+| `get_teams` | Get teams in a workspace |
+| `get_team_users` | Get users in a team |
+| `search_tasks` | Search for tasks in workspace |
+| `get_tags` | Get tags in a workspace |
+| `create_tag` | Create a tag in a workspace |
+| `get_attachments` | Get attachments for a task |
+| `get_stories` | Get activity/stories for a task |
+| `create_story` | Create a comment/story on a task |
+| `get_custom_fields` | Get custom fields in a workspace |
+| `create_custom_field` | Create a custom field in a workspace |
+| `get_portfolios` | Get portfolios in a workspace |
+| `create_portfolio` | Create a new portfolio |
+| `add_project_to_portfolio` | Add a project to a portfolio |
 
-**With Gmail:**
+## Useful resources
 
-```text
-User: "Convert my Gmail drafts into Asana tasks"
-
-Agent: *gets Gmail drafts*
-       *creates Asana tasks*
-
-       Created 5 Asana tasks from Gmail drafts
-```
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="Trello" icon="trello" href="/integrations/connectors/trello">
-    Alternative task management
-  </Card>
-  <Card title="Monday.com" icon="calendar-days" href="/integrations/connectors/monday">
-    Team collaboration
-  </Card>
-</CardGroup>
+- [Asana documentation](https://developers.asana.com/docs/authentication)

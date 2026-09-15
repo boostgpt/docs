@@ -1,0 +1,46 @@
+---
+title: "Todoist"
+description: "Projects, tasks and comments. A personal to-do list, reachable by an agent."
+---
+
+Projects, tasks and comments. A personal to-do list, reachable by an agent.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Todoist and press **Connect**. The key you enter is checked against Todoist before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Token | Your Todoist API token |
+
+### Getting the credential
+
+1. Log in to [Todoist](https://todoist.com)
+2. Go to **Settings** > **Integrations** > **Developer**
+3. Copy your **API token**
+4. For apps with multiple users, implement OAuth2 flow
+
+## Notes
+
+- 1,000 requests per user within 15 minutes
+- Use batch operations when possible
+- Implement exponential backoff for 429 responses
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `get_projects` | Get all projects |
+| `create_project` | Create a new project |
+| `get_tasks` | Get active tasks |
+| `create_task` | Create a new task |
+| `update_task` | Update an existing task |
+| `close_task` | Close a task |
+| `get_comments` | Get comments for a task or project |
+| `create_comment` | Create a new comment |
+
+## Useful resources
+
+- [Todoist documentation](https://developer.todoist.com/rest/v2/#authorization)

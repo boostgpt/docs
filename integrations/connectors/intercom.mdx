@@ -1,0 +1,57 @@
+---
+title: "Intercom"
+description: "Support conversations, contacts and help articles. A question asked five times is a page the site has not written yet."
+---
+
+Support conversations, contacts and help articles. A question asked five times is a page the site has not written yet.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Intercom and press **Connect**. The key you enter is checked against Intercom before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| Access Token | Your Intercom Access Token |
+
+### Getting the credential
+
+1. Log in to [Intercom](https://app.intercom.com)
+2. Go to **Settings** → **Developers** → **Developer Hub**
+3. Create a new app or select existing app
+4. Go to **Configure** → **Authentication**
+5. Generate an **Access Token**
+6. Copy the generated token
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `get_me` | Get current user information |
+| `get_contacts` | List contacts |
+| `get_contact` | Get contact by ID |
+| `create_contact` | Create a new contact |
+| `update_contact` | Update an existing contact |
+| `archive_contact` | Archive a contact |
+| `search_contacts` | Search for contacts |
+| `get_conversations` | List conversations |
+| `get_conversation` | Get conversation by ID |
+| `create_conversation` | Create a new conversation |
+| `reply_to_conversation` | Reply to a conversation |
+| `assign_conversation` | Assign conversation to admin or team |
+| `close_conversation` | Close a conversation |
+| `open_conversation` | Reopen a conversation |
+| `get_admins` | List admins |
+| `get_teams` | List teams |
+| `get_tags` | List tags |
+| `create_tag` | Create a new tag |
+| `tag_contact` | Apply tags to a contact |
+| `untag_contact` | Remove tags from a contact |
+| `create_note` | Create a note for a contact |
+| `get_notes` | List notes for a contact |
+| `send_message` | Send a message to a contact |
+
+## Useful resources
+
+- [Intercom documentation](https://developers.intercom.com/docs/build-an-integration/learn-more/authentication/)

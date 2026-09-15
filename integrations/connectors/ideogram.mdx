@@ -1,0 +1,39 @@
+---
+title: "Ideogram"
+description: "Image generation, including transparent output. The one that renders legible text inside an image."
+---
+
+Image generation, including transparent output. The one that renders legible text inside an image.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Ideogram and press **Connect**. The key you enter is checked against Ideogram before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your Ideogram API key |
+
+### Getting the credential
+
+1. Create an API key at [ideogram.ai](https://ideogram.ai) under **API**
+2. Paste it into the connector
+
+## Notes
+
+- `rendering_speed` trades quality against cost: `TURBO`, `DEFAULT`, `QUALITY`.
+- `num_images` is charged per image.
+- Results are copied onto BoostGPT storage, so the link keeps working.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `generate_image` | Generate an image from a text prompt with Ideogram v4. Use this when the image needs readable words in it — posters, logos, signage — which most image models render badly. |
+| `generate_transparent` | Generate an image with a transparent background — for a logo or sticker meant to sit on top of something else. |
+| `get_generation` | Fetch a generation by id. Only needed when a request was made with async set; an ordinary call returns the image directly. |
+
+## Useful resources
+
+- [Ideogram API documentation](https://developer.ideogram.ai)

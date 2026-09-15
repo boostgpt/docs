@@ -1,230 +1,278 @@
 ---
-title: "Pre-built Connectors"
-description: "Browse all available BoostGPT connectors"
+title: "Connectors"
+description: "Every service BoostGPT connects to, and what each one is for"
 ---
 
-## Available Connectors
+BoostGPT builds and maintains these. You enter one credential and the tools stay working — when a vendor
+changes an endpoint, that is ours to fix, not yours.
 
-BoostGPT provides 30+ pre-built connectors for popular services. All connectors are:
+They are grouped by the part of the loop they serve, and the featured ones in each group are the ones that
+change what the Site says or what the Widget answers.
 
-- **Ready to use** - No coding required
-- **OAuth authenticated** - Secure connection to your accounts
-- **Automatically maintained** - We handle updates and fixes
-- **One-click deployment** - Deploy from your dashboard
+<Note>
+  A key is checked against the vendor before a connection is saved. A key the vendor refuses never becomes a
+  connection that looks fine and fails on its first real call.
+</Note>
 
-## How to Use
-
-<Steps>
-  <Step title="Deploy">
-    Go to **Dashboard -> Integrations -> Connectors** and click **Deploy** next to any connector
-  </Step>
-  <Step title="Authenticate">
-    Sign in with your account and grant permissions
-  </Step>
-  <Step title="Connect to Agent">
-    Go to your agent's **Tools** tab ’ **Add Tool** ’ Select the connector
-  </Step>
-  <Step title="Start Using">
-    Your agent can now use tools from that connector
-  </Step>
-</Steps>
-
-## Calendar & Scheduling
+## Make images, video and voice for the site
 
 <CardGroup cols={2}>
-  <Card title="Calendly" icon="calendar-check" href="/integrations/connectors/calendly">
-    Schedule meetings and manage availability
+  <Card title="ElevenLabs" href="/integrations/connectors/elevenlabs">
+    Speech, transcription, sound effects and music. Voice-over for a demo, and transcripts of calls the site should answer.
   </Card>
-  <Card title="Google Calendar" icon="google" href="/integrations/connectors/google-calendar">
-    Manage events and calendars
-  </Card></CardGroup>
-
-## Email & Communication
-
-<CardGroup cols={2}>  <Card title="SendGrid" icon="paper-plane" href="/integrations/connectors/sendgrid">
-    Transactional email service
+  <Card title="fal.ai" href="/integrations/connectors/fal-ai">
+    Any model hosted on fal.ai, called by id. Use it when a page needs a model the other connectors do not carry.
   </Card>
-  <Card title="Mailchimp" icon="mailchimp" href="/integrations/connectors/mailchimp">
-    Email marketing campaigns
+  <Card title="Google Gemini" href="/integrations/connectors/google-gemini">
+    Text, images, speech and video from Gemini. A second opinion on any of them, and the cheapest route to long video.
   </Card>
-  <Card title="Twilio" icon="phone" href="/integrations/connectors/twilio">
-    SMS and phone calls
+  <Card title="Higgsfield" href="/integrations/connectors/higgsfield">
+    Image and video generation, including camera-motion animation. For a hero video that would otherwise need a shoot.
   </Card>
-  <Card title="Discord" icon="discord" href="/integrations/connectors/discord">
-    Discord server management
+  <Card title="OpenAI" href="/integrations/connectors/openai">
+    Images, image edits and speech from OpenAI. The default way Boost makes a picture or a voice-over for a page.
   </Card>
-  <Card title="Slack" icon="slack" href="/integrations/connectors/slack">
-    Slack workspace integration
+  <Card title="Replicate" href="/integrations/connectors/replicate">
+    Any model hosted on Replicate, called by id. The same escape hatch as fal.ai, over a different catalogue.
+  </Card>
+  <Card title="FLUX (Black Forest Labs)" href="/integrations/connectors/flux">
+    Image generation and editing from Black Forest Labs. Another look, when OpenAI's house style is not the one you want.
+  </Card>
+  <Card title="GitHub" href="/integrations/connectors/github">
+    Repositories, issues, pull requests and releases. What actually shipped, so the homepage can stop describing the old version.
+  </Card>
+  <Card title="HeyGen" href="/integrations/connectors/heygen">
+    Avatar videos from a script, with stock voices. A talking-head explainer without filming one.
+  </Card>
+  <Card title="Ideogram" href="/integrations/connectors/ideogram">
+    Image generation, including transparent output. The one that renders legible text inside an image.
+  </Card>
+  <Card title="Luma Labs" href="/integrations/connectors/luma-labs">
+    Video and image generation, including image-to-video. An alternative to Higgsfield for a moving hero.
+  </Card>
+  <Card title="Mureka" href="/integrations/connectors/mureka-ai">
+    Songs, instrumentals and lyrics. Background music for a demo video — rarely something a page itself needs.
+  </Card>
+  <Card title="Pexels" href="/integrations/connectors/pexels">
+    Free stock photos and video. The quickest way to fill a page before there is art direction. BoostGPT funds the key.
+  </Card>
+  <Card title="Recraft" href="/integrations/connectors/recraft">
+    Raster and vector image generation. It produces real SVG, which is what a logo or an icon on a page should be.
+  </Card>
+  <Card title="Runway" href="/integrations/connectors/runway-ai">
+    Video generation, image-to-video and upscaling. A second video model, with a different house look.
+  </Card>
+  <Card title="Stability AI" href="/integrations/connectors/stability-ai">
+    Image generation, upscaling, background removal and search-and-replace. More post-production than the others.
+  </Card>
+  <Card title="Unsplash" href="/integrations/connectors/unsplash">
+    Stock photography, searchable. Real photographs, for the places where a generated image looks generated.
+  </Card>
+  <Card title="xAI" href="/integrations/connectors/xai">
+    Image and video generation from xAI. Another model to reach for when a page needs a different look.
+  </Card>
+  <Card title="Linear" href="/integrations/connectors/linear">
+    Issues, teams and cycles, with an API key. The Linear server above signs in instead — use this to hold a key rather than a session.
+  </Card>
+  <Card title="Notion" href="/integrations/connectors/notion">
+    Pages, databases and search, with an integration token. The Notion server above signs in instead.
+  </Card>
+  <Card title="Sentry" href="/integrations/connectors/sentry">
+    Issues, events and releases, with a token. The Sentry server above signs in instead. Product health, not what a page should say.
   </Card>
 </CardGroup>
 
-## CRM & Sales
+## Research what people search for and ask
 
 <CardGroup cols={2}>
-  <Card title="HubSpot" icon="hubspot" href="/integrations/connectors/hubspot">
-    All-in-one CRM platform
-  </Card></CardGroup>
-
-## Productivity & Project Management
-
-<CardGroup cols={2}>
-  <Card title="Notion" icon="note" href="/integrations/connectors/notion">
-    Notes and knowledge base
+  <Card title="Firecrawl" href="/integrations/connectors/firecrawl">
+    Scrape, crawl and map a site into clean text. Point it at a competitor to see how they explain what you also do.
   </Card>
-  <Card title="Asana" icon="list-check" href="/integrations/connectors/asana">
-    Project management platform
+  <Card title="Intercom" href="/integrations/connectors/intercom">
+    Support conversations, contacts and help articles. A question asked five times is a page the site has not written yet.
   </Card>
-  <Card title="Trello" icon="trello" href="/integrations/connectors/trello">
-    Kanban board management
+  <Card title="Serper (Google Search)" href="/integrations/connectors/serper">
+    Google results, People Also Ask, news and shopping. Use it to find the words customers use before they know your product exists.
   </Card>
-  <Card title="ClickUp" icon="check" href="/integrations/connectors/clickup">
-    Work management platform
+  <Card title="Apify" href="/integrations/connectors/apify">
+    Thousands of ready-made scrapers, run by id. For the source with no API — a directory, a review site.
   </Card>
-  <Card title="Monday.com" icon="calendar-days" href="/integrations/connectors/monday">
-    Team collaboration tool
+  <Card title="BrowseAgent" href="/integrations/connectors/browseagent">
+    Drives a real browser: navigate, click, screenshot. For what only appears after JavaScript, or behind a login.
   </Card>
-  <Card title="Jira" icon="jira" href="/integrations/connectors/jira">
-    Issue and project tracking
+  <Card title="Cal.com" href="/integrations/connectors/calcom">
+    Event types and bookings. Did the call to action work — is anybody actually booking the call?
+  </Card>
+  <Card title="Exa" href="/integrations/connectors/exa">
+    Search by meaning rather than keyword, with page contents. Finds pages that discuss a problem, not ones that match a phrase.
+  </Card>
+  <Card title="HubSpot" href="/integrations/connectors/hubspot">
+    Contacts, companies and deals. Who asked, what they asked about, and whether it ever closed.
+  </Card>
+  <Card title="ScreenshotOne" href="/integrations/connectors/screenshotone">
+    Screenshots of any URL, still or animated. See a page the way a visitor does — yours or a competitor's.
+  </Card>
+  <Card title="Shopify" href="/integrations/connectors/shopify">
+    Products, orders and customers. What a store actually sells, which is what its pages should lead with.
+  </Card>
+  <Card title="Tavily" href="/integrations/connectors/tavily">
+    Search, extract and crawl, built for agents. A second reader for when Firecrawl is blocked.
+  </Card>
+  <Card title="URLBox" href="/integrations/connectors/urlbox">
+    Rendered screenshots and PDFs of a URL. The same job as ScreenshotOne, a different renderer.
+  </Card>
+  <Card title="Bing Search" href="/integrations/connectors/bing-search">
+    Web, news, image and video search. Another index, useful mainly for comparing what different engines surface.
+  </Card>
+  <Card title="Brave Search" href="/integrations/connectors/brave-search">
+    Web, news and image search on its own index. A fallback when Google's results are not available.
+  </Card>
+  <Card title="Calendly" href="/integrations/connectors/calendly">
+    Scheduled events, invitees and event types. The same question as Cal.com, for teams on Calendly.
+  </Card>
+  <Card title="Google Calendar" href="/integrations/connectors/google-calendar">
+    Calendars and events. Meetings booked, for teams whose scheduling lives in Google.
+  </Card>
+  <Card title="Mixpanel" href="/integrations/connectors/mixpanel">
+    Events, funnels and insights, with an API key. The Mixpanel server above signs in instead.
+  </Card>
+  <Card title="Paddle Billing" href="/integrations/connectors/paddle-billing">
+    Transactions, subscriptions and invoices. The end of the funnel, for teams billing through Paddle.
+  </Card>
+  <Card title="PayPal" href="/integrations/connectors/paypal">
+    Orders, captures and refunds. Revenue, for teams taking PayPal.
+  </Card>
+  <Card title="Square" href="/integrations/connectors/square">
+    Payments, refunds and catalogue. Revenue, for teams selling through Square.
+  </Card>
+  <Card title="Stripe Payments" href="/integrations/connectors/stripe">
+    Payments, customers, subscriptions and refunds, with an API key. The Stripe server above signs in instead.
+  </Card>
+  <Card title="Zendesk" href="/integrations/connectors/zendesk">
+    Tickets, users and help-centre articles, with an API token. The Zendesk server above signs in instead.
   </Card>
 </CardGroup>
 
-## E-commerce & Payments
+## Reach the audience
 
 <CardGroup cols={2}>
-  <Card title="Shopify" icon="shopify" href="/integrations/connectors/shopify">
-    E-commerce platform
-  </Card>  <Card title="Stripe" icon="stripe" href="/integrations/connectors/stripe">
-    Payment processing
+  <Card title="Mailchimp" href="/integrations/connectors/mailchimp">
+    Lists, members, campaigns and reports. The audience that already said yes — and what they opened.
+  </Card>
+  <Card title="LinkedIn" href="/integrations/connectors/linkedin">
+    Posts, organisation pages and post analytics. Where a B2B launch is actually read.
+  </Card>
+  <Card title="SendGrid" href="/integrations/connectors/sendgrid">
+    Transactional email, bounces and templates. The mail a signup triggers, and whether it arrived.
+  </Card>
+  <Card title="Twitter/X" href="/integrations/connectors/twitter">
+    Post, read and search on X. Announce a page, then read what comes back.
+  </Card>
+  <Card title="Discord" href="/integrations/connectors/discord">
+    Messages, channels and members. For telling a community something, not for deciding what a page says.
+  </Card>
+  <Card title="Facebook" href="/integrations/connectors/facebook">
+    Pages, posts and insights. For an audience that lives on Facebook rather than on the site.
+  </Card>
+  <Card title="Instagram" href="/integrations/connectors/instagram">
+    Media, carousels and account insights. Visual launches, and the captions that carry them.
+  </Card>
+  <Card title="Medium" href="/integrations/connectors/medium">
+    Publish a post to Medium or a publication. A second home for an article the site already has.
+  </Card>
+  <Card title="Slack" href="/integrations/connectors/slack">
+    Messages, channels and history. Useful for telling the team what Boost changed, not for deciding what to change.
+  </Card>
+  <Card title="Threads" href="/integrations/connectors/threads">
+    Text and image posts, and their replies. A quieter place to say the same thing.
+  </Card>
+  <Card title="TikTok" href="/integrations/connectors/tiktok">
+    Creator info, video uploads and search. Where a launch video reaches people who never read a landing page.
+  </Card>
+  <Card title="YouTube Data API" href="/integrations/connectors/youtube">
+    Search, video details, channels and playlists. Where a demo video lives once it is made.
   </Card>
 </CardGroup>
 
-## Analytics
-
-<CardGroup cols={2}>  <Card title="Mixpanel" icon="chart-bar" href="/integrations/connectors/mixpanel">
-    Product analytics
-  </Card>
-</CardGroup>
-
-## Connector Limits by Plan
-
-| Plan | Connectors | Price |
-|------|-----------|-------|
-| **Free** | 1 connector | $0/month |
-| **Starter** | 5 connectors | $49/month |
-| **Pro** | 20 connectors | $199/month |
-| **Scale** | Unlimited | Custom |
-
-## Popular Use Cases
-
-### Customer Support
-
-**Connectors:** Gmail, HubSpot, Google Calendar, Slack
-
-```text
-User: "Check for support requests from john@example.com"
-Agent: *searches Gmail* "Found 2 emails..."
-
-User: "Create a contact in HubSpot"
-Agent: *creates contact* "Contact added for John Doe..."
-
-User: "Schedule a call"
-Agent: *creates calendar event* "Call scheduled for Jan 10 at 2pm"
-
-User: "Notify the team in Slack"
-Agent: *posts to Slack* "Posted to #support channel"
-```
-
-### Sales Assistant
-
-**Connectors:** Salesforce, Outlook, LinkedIn, Calendly
-
-```text
-User: "Find all deals closing this quarter"
-Agent: *queries Salesforce* "Found 15 deals worth $890K..."
-
-User: "Send follow-up to the top 5"
-Agent: *sends via Outlook* "Emails sent to 5 contacts..."
-
-User: "Schedule demos with interested leads"
-Agent: *creates Calendly links* "Demo links sent..."
-```
-
-### Content Manager
-
-**Connectors:** Notion, Google Drive, WordPress, Mailchimp
-
-```text
-User: "Get all blog posts from last month"
-Agent: *searches Notion* "Found 8 posts..."
-
-User: "Create a newsletter draft"
-Agent: *creates Mailchimp draft* "Newsletter draft created..."
-
-User: "Upload images to Drive"
-Agent: *uploads to Google Drive* "4 images uploaded..."
-```
-
-## Authentication & Security
-
-All connectors use **OAuth 2.0** for secure authentication:
-
-1. **You control access** - Grant only the permissions you need
-2. **Encrypted storage** - Tokens encrypted at rest
-3. **Revokable anytime** - Disconnect from Dashboard
-4. **No password sharing** - BoostGPT never sees your password
-
-## Troubleshooting
-
-<AccordionGroup>
-  <Accordion icon="link-slash" title="Connector won't deploy">
-    Make sure you have available connector slots in your plan. Free plans are limited to 1 connector.
-  </Accordion>
-
-  <Accordion icon="triangle-exclamation" title="Authentication keeps failing">
-    Clear your browser cache and try again. Some services require specific permissions that can't be skipped.
-  </Accordion>
-
-  <Accordion icon="circle-xmark" title="Tool not working after connecting">
-    Verify you granted all required permissions during OAuth. Go to Dashboard ’ Integrations ’ Re-authenticate.
-  </Accordion>
-
-  <Accordion icon="ban" title="Rate limit errors">
-    Each service has its own rate limits (e.g., Gmail: 100 emails/day for free accounts). Check the service's documentation.
-  </Accordion>
-</AccordionGroup>
-
-## Need Something Custom?
-
-Don't see the connector you need? You have options:
+## Work on the site itself
 
 <CardGroup cols={2}>
-  <Card title="Request a Connector" icon="plus" href="mailto:support@boostgpt.co">
-    Email us to request a new connector
+  <Card title="WordPress" href="/integrations/connectors/wordpress">
+    Posts, pages, media and categories. Boost can read and edit an existing WordPress site directly.
   </Card>
-  <Card title="Build Your Own" icon="code" href="/integrations/custom/overview">
-    Create a custom MCP connector
+  <Card title="Vercel" href="/integrations/connectors/vercel">
+    Projects, deployments and domains. Where a site built elsewhere is hosted and shipped.
   </Card>
-  <Card title="External MCP Server" icon="plug" href="/integrations/external-tools/overview">
-    Connect any MCP-compatible server
-  </Card>
-  <Card title="API Integration" icon="webhook" href="/developers/introduction">
-    Use our API directly
+  <Card title="Netlify" href="/integrations/connectors/netlify">
+    Sites, deploys and DNS, with a token. The Netlify server above signs in instead.
   </Card>
 </CardGroup>
 
-## Next Steps
+## Other tools your agents can use
 
 <CardGroup cols={2}>
-  <Card title="Quickstart" icon="rocket" href="/integrations/quickstart">
-    Deploy your first connector in 5 minutes
+  <Card title="Airtable" href="/integrations/connectors/airtable">
+    Bases and records. Wherever a team keeps the spreadsheet that runs part of the business.
   </Card>
-  <Card title="MCP Overview" icon="circle-info" href="/integrations/mcp-overview">
-    Learn how connectors work
+  <Card title="Asana" href="/integrations/connectors/asana">
+    Tasks, projects and sections. Team workload — it says what people are doing, not what a page should say.
   </Card>
-  <Card title="Custom Connectors" icon="code" href="/integrations/custom/overview">
-    Build your own integrations
+  <Card title="Binance Live Trading" href="/integrations/connectors/binance-live">
+    Spot trading, orders and market data, against real funds. Nothing to do with a marketing site.
   </Card>
-  <Card title="Integration Guides" icon="book" href="/integrations/guides/overview">
-    Best practices and patterns
+  <Card title="Binance Testnet" href="/integrations/connectors/binance-testnet">
+    The same trading tools against Binance's testnet. Safe to experiment with; still nothing to do with a marketing site.
+  </Card>
+  <Card title="ClickUp" href="/integrations/connectors/clickup">
+    Spaces, lists and tasks. Another place work is tracked.
+  </Card>
+  <Card title="DataDog" href="/integrations/connectors/datadog">
+    Metrics, events, monitors and logs. Infrastructure health — nothing a marketing page claims.
+  </Card>
+  <Card title="Jamendo" href="/integrations/connectors/jamendo">
+    Creative-commons music tracks, searchable. Licensed background audio for a video.
+  </Card>
+  <Card title="Jira" href="/integrations/connectors/jira">
+    Issues, projects and workflows. Engineering process; releases are the part that reaches a page, and GitHub says those better.
+  </Card>
+  <Card title="Mapbox" href="/integrations/connectors/mapbox">
+    Geocoding, directions and static maps. For a product that needs maps; a page rarely does.
+  </Card>
+  <Card title="Monday.com" href="/integrations/connectors/monday">
+    Boards, items and updates. Another place work is tracked.
+  </Card>
+  <Card title="OpenWeatherMap" href="/integrations/connectors/openweathermap">
+    Current weather, forecasts and air quality. Here because an agent may need it, not because a page does.
+  </Card>
+  <Card title="Pinecone" href="/integrations/connectors/pinecone">
+    Vector indexes and queries. A store an agent can search — BoostGPT already has its own.
+  </Card>
+  <Card title="Qdrant" href="/integrations/connectors/qdrant">
+    Collections, points and vector search. The same job as Pinecone, self-hosted.
+  </Card>
+  <Card title="Telegram" href="/integrations/connectors/telegram">
+    Messages, photos and chat members. A bot channel, unrelated to what the site says.
+  </Card>
+  <Card title="Todoist" href="/integrations/connectors/todoist">
+    Projects, tasks and comments. A personal to-do list, reachable by an agent.
+  </Card>
+  <Card title="Trello" href="/integrations/connectors/trello">
+    Boards, lists and cards. Another place work is tracked.
+  </Card>
+  <Card title="Twilio" href="/integrations/connectors/twilio">
+    SMS and voice calls. Notifications, not marketing pages.
+  </Card>
+  <Card title="UptimeRobot" href="/integrations/connectors/uptimerobot">
+    Monitors, alert contacts and maintenance windows. Whether the site is up, which is not the same as whether it is right.
+  </Card>
+  <Card title="Weaviate" href="/integrations/connectors/weaviate">
+    Classes, objects and vector search. Another vector store, for teams already running one.
   </Card>
 </CardGroup>
+
+## Bringing your own
+
+**Add your own** on the Connectors screen takes either an OpenAPI specification or a Postman
+collection and turns it into a connector, or the address of an MCP server somebody else runs —
+see [remote MCP servers](/integrations/remote-mcp).
+

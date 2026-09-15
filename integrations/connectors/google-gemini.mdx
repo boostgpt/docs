@@ -1,0 +1,45 @@
+---
+title: "Google Gemini"
+description: "Text, images, speech and video from Gemini. A second opinion on any of them, and the cheapest route to long video."
+---
+
+Text, images, speech and video from Gemini. A second opinion on any of them, and the cheapest route to long video.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Google Gemini and press **Connect**. The key you enter is checked against Google Gemini before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your Google Gemini API key from Google AI Studio |
+
+### Getting the credential
+
+1. Go to [Google AI Studio](https://aistudio.google.com/apikey) and create an API key
+2. Paste it into the connector
+3. Some models, and Veo video, require billing enabled on the Google Cloud project
+
+## Notes
+
+- Images and audio come back as hosted URLs, not base64 — the agent gets a link it can pass on.
+- `gemini-3.1-flash-lite-image` supports `image/jpeg` only; ask for PNG on a larger model.
+- Image sizes use an uppercase K: `512px`, `1K`, `2K`, `4K`.
+- Video is asynchronous. `generate_video` returns an operation; poll `get_video_operation` until `done` is true.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `generate_text` | Generate text with a Gemini model. Use for writing, reasoning, summarising and Q&A. |
+| `generate_image` | Generate an image from a text prompt with a Nano Banana model. Returns a hosted URL. gemini-3.1-flash-lite-image supports image/jpeg only; 4K needs gemini-3.1-flash-image or gemini-3-pro-image. |
+| `generate_speech` | Synthesize speech from text. Returns a hosted audio URL. Include delivery notes in the text itself, e.g. 'Say cheerfully: ...'. |
+| `generate_video` | Start a Veo video generation. Returns a long-running operation name — poll it with get_video_operation until done, then read the video URI from the result. |
+| `get_video_operation` | Poll a Veo generation started by generate_video. The operation name looks like 'models/<model>/operations/<id>' — pass the two halves separately. Returns done=false while it runs; when done=true the URI is at response.generateVideoResponse.generatedSamples[0].video.uri. |
+
+## Useful resources
+
+- [Gemini API docs](https://ai.google.dev/gemini-api/docs)
+- [Image generation](https://ai.google.dev/gemini-api/docs/image-generation)
+- [Veo video](https://ai.google.dev/gemini-api/docs/veo)

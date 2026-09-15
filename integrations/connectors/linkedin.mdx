@@ -1,0 +1,53 @@
+---
+title: "LinkedIn"
+description: "Posts, organisation pages and post analytics. Where a B2B launch is actually read."
+---
+
+Posts, organisation pages and post analytics. Where a B2B launch is actually read.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find LinkedIn and press **Connect**. You will be sent to sign in; the connection is saved once that succeeds.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| Client ID | Your LinkedIn App Client ID |
+| Client Secret | Your LinkedIn App Client Secret |
+
+### Getting the credential
+
+1. Go to [LinkedIn Developer Portal](https://www.linkedin.com/developers/apps)
+2. Click **Create App** and fill in app details (name, LinkedIn page, logo)
+3. Under **Products**, request access to:
+   - **Sign In with LinkedIn using OpenID Connect** (profile + email)
+   - **Share on LinkedIn** (post creation/deletion)
+4. Go to **Auth** tab → copy **Client ID** and **Client Secret**
+5. Add your redirect URI under **OAuth 2.0 settings**
+
+## Notes
+
+- Personal profile URN format: `urn:li:person:{id}` (get from `get_profile`)
+- Organization URN format: `urn:li:organization:{id}`
+- URNs must be URL-encoded when used as query parameters
+- LinkedIn API has strict rate limits: 100 calls/day per app for some endpoints
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `get_profile` | Get the authenticated user's LinkedIn profile |
+| `create_post` | Create a LinkedIn post/share (text, article, or image) |
+| `get_posts` | Get posts authored by a person or organization |
+| `delete_post` | Delete a LinkedIn post |
+| `get_organization` | Get a LinkedIn organization/company page details |
+| `get_my_organizations` | Get organizations where the authenticated user has admin access |
+| `get_post_analytics` | Get share statistics for an organization's posts |
+| `get_follower_statistics` | Get follower statistics for an organization page |
+| `search_people` | Search for LinkedIn members (requires People Search API access) |
+| `send_message` | Send a direct message to a LinkedIn member |
+
+## Useful resources
+
+- [LinkedIn documentation](https://learn.microsoft.com/en-us/linkedin/shared/authentication/authorization-code-flow)

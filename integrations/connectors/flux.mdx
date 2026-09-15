@@ -1,0 +1,40 @@
+---
+title: "FLUX (Black Forest Labs)"
+description: "Image generation and editing from Black Forest Labs. Another look, when OpenAI's house style is not the one you want."
+---
+
+Image generation and editing from Black Forest Labs. Another look, when OpenAI's house style is not the one you want.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find FLUX (Black Forest Labs) and press **Connect**. The key you enter is checked against FLUX (Black Forest Labs) before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your Black Forest Labs API key |
+
+### Getting the credential
+
+1. Create an API key at [api.bfl.ai](https://api.bfl.ai)
+2. Paste it into the connector
+
+## Notes
+
+- **Everything is asynchronous.** Starting a job returns an `id`; poll `get_result` until `status` is `Ready`.
+  A job can also come back moderated rather than failed.
+- Results are copied onto BoostGPT storage, so the link keeps working.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `generate_image` | Generate an image from a text prompt with FLUX.2 [pro]. Asynchronous: returns an id. Poll get_result until the status is 'Ready', and the image is returned on a durable URL. |
+| `edit_image` | Edit an existing image by describing the change, with FLUX.1 Kontext — 'remove the background', 'make it night'. Pass the image by URL; an attached photo's link works directly. Asynchronous: returns an id. Poll get_result until the status is 'Ready', and the image is returned on a durable URL. |
+| `get_result` | Poll a FLUX job. Status is 'Pending', 'Ready', 'Error', or a moderation outcome. Once Ready the image is rehosted on a durable URL; while it is still running the status is returned so you can poll again. |
+| `get_credits` | Check how much credit is left on the account. |
+
+## Useful resources
+
+- [Black Forest Labs API documentation](https://docs.bfl.ai)

@@ -77,14 +77,14 @@ When your agent needs to use a tool:
 BoostGPT provides 30+ ready-to-use connectors:
 
 - **Managed by BoostGPT** - We handle hosting, updates, and maintenance
-- **OAuth authentication** - Secure connection to your accounts
-- **One-click deployment** - Just authenticate and connect
+- **Checked before it is saved** - A credential the vendor refuses never becomes a connection
+- **Connected once** - The workspace holds it; each agent is then allowed to use it
 
-**Example: Deploying SendGrid**
+**Example: connecting SendGrid**
 
 ```text
-Dashboard -> Integrations -> Connectors -> SendGrid -> Deploy
--> Add API key -> Add to Agent Tools
+Dashboard -> Connectors -> SendGrid -> Connect -> paste the API key
+-> the agent's Connectors tab -> add it
 ```
 
 ### 2. External MCP Servers
@@ -135,14 +135,14 @@ Agent: "I've sent the email to john@example.com"
 
 ## Authentication
 
-### OAuth Flow (Pre-built Connectors)
+### Signing in (connectors and remote servers)
 
 ```text
-1. User clicks "Deploy" on connector
-2. Redirected to service (e.g., Google)
-3. User grants permissions
-4. BoostGPT receives access token
-5. Connector can now act on user's behalf
+1. User presses Connect
+2. Redirected to the service to approve access
+3. The code is exchanged server-side; the browser never sees a token
+4. The connection is created — only now, and only if that succeeded
+5. Its tools are read from the server and stored
 ```
 
 ### API Key (External Servers)
@@ -171,39 +171,38 @@ Agent: "I've sent the email to john@example.com"
 
 ## Real-World Example
 
-### Building a Sales Agent
+### An agent that keeps the marketing site honest
 
-```javascript
-// 1. Deploy connectors
-Dashboard -> Integrations -> Connectors:
-  - Deploy Salesforce
-  - Deploy Gmail
-  - Deploy Google Calendar
+```text
+1. Connect, once, on the Connectors screen:
+   - HubSpot     who asked, and what they asked about
+   - Serper      what people search for before they find you
+   - WordPress   the pages themselves
 
-// 2. Add to agent
-Agent -> Tools Tab:
-  - Add Salesforce connector
-  - Add Gmail connector
-  - Add Calendar connector
+2. Allow them, per agent, from its Connectors tab.
 
-// 3. Agent can now:
-User: "Show me all deals closing this month"
-Agent: *uses Salesforce* "Found 8 deals worth $340K..."
+3. Then:
 
-User: "Email the sales rep for the biggest deal"
-Agent: *uses Salesforce to get contact, Gmail to send* "Emailed Sarah at..."
+User:  "What are people asking sales that the pricing page doesn't answer?"
+Agent: *reads HubSpot deals and notes* "Six of the last twelve asked about
+       per-seat vs usage billing. The pricing page never uses the word 'seat'."
 
-User: "Schedule a review meeting for next week"
-Agent: *uses Calendar* "Meeting scheduled for Jan 12 at 10am"
+User:  "What do people search for around that?"
+Agent: *uses Serper* "'per seat pricing', 'usage based pricing calculator',
+       'how much does X cost for 5 users'."
+
+User:  "Add a short section answering it."
+Agent: *edits the page in WordPress* "Added 'What counts as a seat?' under
+       the pricing table."
 ```
 
 ## MCP vs Direct API Integration
 
 | Feature | MCP Protocol | Direct API |
 |---------|-------------|-----------|
-| **Setup** | Deploy connector, add to agent | Write custom code for each API |
+| **Setup** | Connect once, allow per agent | Write custom code for each API |
 | **Maintenance** | Automatic updates | Manual updates required |
-| **Authentication** | OAuth handled for you | Implement OAuth yourself |
+| **Authentication** | Sign-in handled for you, and checked before it is saved | Implement OAuth yourself |
 | **Agent Access** | Automatic tool calling | Manual prompt engineering |
 | **Multi-service** | One pattern for all | Different code per service |
 
@@ -237,10 +236,10 @@ MCP connectors can provide various tool types:
 Want to create a custom MCP connector? See our guide:
 
 <CardGroup cols={2}>
-  <Card title="Creating Connectors" icon="code" href="/integrations/custom/creating-connector">
+  <Card title="Creating Connectors" icon="code" href="/integrations/custom/overview">
     Build your own MCP connector
   </Card>
-  <Card title="MCP Protocol Spec" icon="book" href="/integrations/custom/mcp-protocol">
+  <Card title="MCP Protocol Spec" icon="book" href="/integrations/custom/openapi">
     Technical protocol details
   </Card>
 </CardGroup>
@@ -269,42 +268,37 @@ Agent -> Playground Tab
 
 ## Limitations
 
-### Rate Limits
+### Rate limits
 
-Each service has its own rate limits:
+Every service has its own, and they are the vendor's to enforce: HubSpot allows 100 requests per 10 seconds,
+most AI providers meter by tokens or images, and a free tier is usually stricter than a paid one. When a vendor
+refuses a call, the agent is told in the vendor's own words rather than being left to guess.
 
-- **Gmail**: 100 emails/day (free), 2,000/day (Google Workspace)
-- **Salesforce**: API limits by license tier
-- **HubSpot**: 100 requests/10 seconds
-
-Your agent automatically respects these limits.
+BoostGPT counts calls too — every connector call is logged and charged against your plan's allowance, whichever
+connector made it.
 
 ### Permissions
 
-Agents can only use tools you've connected:
+An agent can only use what you have connected and left switched on:
 
-```javascript
-// If only Gmail is connected:
-User: "Create a Salesforce contact"
-Agent: "I don't have access to Salesforce. Please connect it first."
+```text
+User:  "Create a HubSpot contact for this lead"
+Agent: "I don't have HubSpot connected. Add it from the Connectors screen and I can."
 ```
 
-### Connector Availability
+A tool switched off in a connection's settings is invisible to the agent — it is not offered and then refused.
 
-By plan:
+### How many connections
 
-| Plan | Connectors |
-|------|-----------|
-| **Free** | 1 connector |
-| **Starter** | 5 connectors |
-| **Pro** | 20 connectors |
-| **Scale** | Unlimited |
+Each plan allows a number of **connections**, not connectors: two connections of the same service — a live
+Stripe and a test one — count as two. The Connectors screen shows where you stand against your plan in its
+header, and creating one past the limit is refused before anything is made.
 
 ## Next Steps
 
 <CardGroup cols={2}>
   <Card title="Quickstart" icon="rocket" href="/integrations/quickstart">
-    Deploy your first connector
+    Connect your first service
   </Card>
   <Card title="Browse Connectors" icon="grid" href="/integrations/connectors/overview">
     See all available connectors
@@ -312,7 +306,7 @@ By plan:
   <Card title="Build Custom" icon="code" href="/integrations/custom/overview">
     Create your own connector
   </Card>
-  <Card title="External Tools" icon="plug" href="/integrations/external-tools/overview">
-    Connect third-party servers
+  <Card title="Remote MCP servers" icon="server" href="/integrations/remote-mcp">
+    Connect a server the vendor runs
   </Card>
 </CardGroup>

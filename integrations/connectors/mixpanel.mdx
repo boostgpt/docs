@@ -1,52 +1,56 @@
 ---
 title: "Mixpanel"
-description: "Product analytics"
+description: "Events, funnels and insights, with an API key. The Mixpanel server above signs in instead."
 ---
 
-## Overview
+Events, funnels and insights, with an API key. The Mixpanel server above signs in instead.
 
-Connect Mixpanel to track user events and product analytics.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Mixpanel and press **Connect**. The key you enter is checked against Mixpanel before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Mixpanel** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Mixpanel**
-  </Step>
-  <Step title="Configure">
-    Enter your Mixpanel Project Token and API Secret
-  </Step>
-  <Step title="Test">
-    Playground: "Show me top events from last week"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| Project Token | Your Mixpanel project token for event tracking |
+| API Secret | Your Mixpanel API secret for data queries |
+| Service Account Username | Service account username (for some endpoints) |
 
-```text
-User: "How many signups did we get this month?"
+### Getting the credential
 
-Agent: January signups: 342 users
-       15% increase from December
-```
+1. Log in to [Mixpanel](https://mixpanel.com)
+2. Go to **Project Settings** → **Access Keys**
+3. Copy your **Project Token** (for event tracking)
+4. Create a **Service Account** in **Project Settings** → **Service Accounts**
+5. Copy the **API Secret** (for data queries)
 
-## Integration Example
+## Notes
 
-**With Slack:**
+- Mixpanel separates ingestion from querying: a project token sends events, a service account reads them.
+  If queries return nothing while tracking works, the service account is the missing half.
+- EU projects live on a different host; a key that works in the dashboard can still 401 here for that reason.
 
-```text
-User: "Post weekly Mixpanel metrics to #product"
+## What an agent can do with it
 
-Agent: Posted to #product:
-       This week: 1,234 signups, 89% activation rate
-```
+| Tool | What it does |
+|---|---|
+| `track_event` | Track a single event |
+| `track_batch_events` | Track multiple events in a single request |
+| `set_user_profile` | Set user profile properties |
+| `import_events` | Import historical events (requires special API credentials) |
+| `query_events` | Query raw event data |
+| `get_insights` | Get event data insights and analytics |
+| `get_funnels` | Get funnel analysis data |
+| `get_retention` | Get user retention analysis |
+| `get_cohorts` | List available cohorts |
+| `create_cohort` | Create a new cohort |
+| `get_people_profiles` | Query user profiles |
+| `delete_user_profile` | Delete a user profile |
+| `get_annotations` | Get project annotations |
+| `create_annotation` | Create a project annotation |
+| `get_lexicon` | Get event and property lexicon |
 
-## Next Steps
+## Useful resources
 
-<CardGroup cols={2}>  <Card title="Slack" icon="slack" href="/integrations/connectors/slack">
-    Team notifications
-  </Card>
-</CardGroup>
+- [Mixpanel documentation](https://developer.mixpanel.com/reference/service-accounts)

@@ -1,0 +1,40 @@
+---
+title: "Replicate"
+description: "Any model hosted on Replicate, called by id. The same escape hatch as fal.ai, over a different catalogue."
+---
+
+Any model hosted on Replicate, called by id. The same escape hatch as fal.ai, over a different catalogue.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Replicate and press **Connect**. The key you enter is checked against Replicate before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Token | Your Replicate API token (starts with r8_) |
+
+### Getting the credential
+
+1. Create a token at [replicate.com/account/api-tokens](https://replicate.com/account/api-tokens) — it starts with `r8_`
+2. Paste it into the connector
+
+## Notes
+
+- **Asynchronous.** `run_model` returns a prediction id. Poll `get_prediction` until the status is `succeeded`.
+- Finished media is copied onto BoostGPT storage, so the link keeps working.
+- Different models take different inputs. `input.prompt` and `input.image` cover most image and video models;
+  a model needing something more unusual may not be reachable through these parameters.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `run_model` | Start a model on Replicate. Pass the model's owner and name — for example owner 'black-forest-labs' and name 'flux-schnell'. Model inputs go in the `input` fields. Asynchronous: returns a prediction id to poll with get_prediction. |
+| `get_prediction` | Poll a Replicate prediction. Status is 'starting', 'processing', 'succeeded', 'failed' or 'canceled'. Once it has succeeded the output is rehosted on a durable URL. |
+| `cancel_prediction` | Cancel a Replicate prediction that is still running. |
+
+## Useful resources
+
+- [Replicate HTTP API](https://replicate.com/docs/reference/http)

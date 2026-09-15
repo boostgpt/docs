@@ -1,0 +1,44 @@
+---
+title: "Apify"
+description: "Thousands of ready-made scrapers, run by id. For the source with no API — a directory, a review site."
+---
+
+Thousands of ready-made scrapers, run by id. For the source with no API — a directory, a review site.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Apify and press **Connect**. The key you enter is checked against Apify before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Token | Your Apify API token |
+
+### Getting the credential
+
+1. Create a token at [console.apify.com](https://console.apify.com) under **Settings → Integrations**
+2. Paste it into the connector
+
+## Notes
+
+- **Every Actor takes different input.** `startUrls.0.url`, `maxCrawlPages` and `query` cover the common
+  scraping and search Actors; an Actor wanting something unusual may not be reachable through these parameters.
+  Its input schema is on its page.
+- `run_actor` waits for the result and suits short jobs. Anything long should use `start_actor`, then `get_run`
+  until it has SUCCEEDED, then `get_dataset_items`.
+- Actor runs consume Apify compute units and are charged.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `run_actor` | Run an Apify Actor and wait for its results. `actor_id` is the Actor's path with the slash replaced by a tilde, e.g. 'apify~website-content-crawler'. Put the Actor's own input fields in the remaining parameters — every Actor takes different ones, so check its page on apify.com. |
+| `start_actor` | Start an Actor without waiting. Use for long jobs that would time out on run_actor. Returns a run id — poll get_run, then read get_dataset_items. |
+| `get_run` | Poll a run started by start_actor. Status is RUNNING, SUCCEEDED, FAILED or TIMED-OUT. |
+| `get_dataset_items` | Read what a finished run produced. |
+| `list_actors` | List the Actors on this account, including ones saved from the store. |
+
+## Useful resources
+
+- [Apify API](https://docs.apify.com/api/v2) · [Actor store](https://apify.com/store)

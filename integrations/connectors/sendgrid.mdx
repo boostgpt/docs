@@ -1,56 +1,49 @@
 ---
 title: "SendGrid"
-description: "Send transactional emails"
+description: "Transactional email, bounces and templates. The mail a signup triggers, and whether it arrived."
 ---
 
-## Overview
+Transactional email, bounces and templates. The mail a signup triggers, and whether it arrived.
 
-Connect SendGrid to send transactional and marketing emails at scale.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find SendGrid and press **Connect**. The key you enter is checked against SendGrid before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **SendGrid** → **Deploy**
-  </Step>
+### What you will need
 
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **SendGrid**
-  </Step>
+| Field | What it is |
+|---|---|
+| API Key | Your SendGrid API key |
 
-  <Step title="Configure">
-    Enter your SendGrid API Key
-  </Step>
+### Getting the credential
 
-  <Step title="Test">
-    Playground: "Send a test email to myemail@example.com"
-  </Step>
-</Steps>
+1. Log in to [SendGrid Console](https://app.sendgrid.com)
+2. Go to **Settings** → **API Keys**
+3. Click **Create API Key**
+4. Choose **Restricted Access** and select required permissions:
+   - Mail Send (for sending emails)
+   - Stats (for analytics)
+   - Suppressions (for bounce/block management)
+   - Template Engine (for templates)
+   - Marketing Campaigns (for contacts)
+5. Copy the generated API key
 
-## Example Usage
+## What an agent can do with it
 
-```text
-User: "Send welcome email to john@example.com using the onboarding template"
+| Tool | What it does |
+|---|---|
+| `send_email` | Send an email message |
+| `get_email_stats` | Get email delivery statistics |
+| `get_bounces` | Get bounced email addresses |
+| `delete_bounce` | Remove an email from bounce list |
+| `get_blocks` | Get blocked email addresses |
+| `delete_block` | Remove an email from block list |
+| `get_templates` | Get email templates |
+| `get_template` | Get a specific email template |
+| `create_template` | Create a new email template |
+| `get_contacts` | Get marketing contacts |
+| `add_contacts` | Add or update marketing contacts |
 
-Agent: Sent welcome email to john@example.com via SendGrid
-```
+## Useful resources
 
-## Integration Example
-
-**With HubSpot:**
-
-```text
-User: "Send onboarding emails to all new HubSpot contacts from today"
-
-Agent: *fetches new HubSpot contacts*
-       *sends emails via SendGrid*
-
-       Sent 12 onboarding emails via SendGrid
-```
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="Mailchimp" icon="mailchimp" href="/integrations/connectors/mailchimp">
-    Email marketing
-  </Card></CardGroup>
+- [SendGrid documentation](https://docs.sendgrid.com/api-reference/how-to-use-the-sendgrid-v3-api/authentication)

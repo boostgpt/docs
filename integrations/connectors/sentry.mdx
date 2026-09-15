@@ -1,54 +1,54 @@
 ---
 title: "Sentry"
-description: "Error tracking and monitoring"
+description: "Issues, events and releases, with a token. The Sentry server above signs in instead. Product health, not what a page should say."
 ---
 
-## Overview
+Issues, events and releases, with a token. The Sentry server above signs in instead. Product health, not what a page should say.
 
-Connect Sentry to track application errors and performance issues.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Sentry and press **Connect**. The key you enter is checked against Sentry before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Sentry** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Sentry**
-  </Step>
-  <Step title="Configure">
-    Enter your Sentry Auth Token
-  </Step>
-  <Step title="Test">
-    Playground: "Show me recent errors"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| Auth Token | Your Sentry Auth Token with appropriate scopes |
+| Organization Slug | Your Sentry organization slug, from the URL |
+| Project Slug | Your Sentry project slug, from the URL |
 
-```text
-User: "How many errors in the last 24 hours?"
+### Getting the credential
 
-Agent: Sentry errors (24h): 12 errors across 3 issues
-```
+1. Log in to [Sentry](https://sentry.io)
+2. Go to **Settings** → **Account** → **API** → **Auth Tokens**
+3. Click **Create New Token**
+4. Select required scopes:
+   - `org:read` - Read organization data
+   - `project:read` - Read project data
+   - `event:read` - Read error events
+   - `issue:write` - Update issues
+   - `project:releases` - Manage releases
+5. Copy the generated token
 
-## Integration Example
+## What an agent can do with it
 
-**With Slack:**
+| Tool | What it does |
+|---|---|
+| `get_organizations` | List organizations you belong to |
+| `get_projects` | List projects in an organization |
+| `get_issues` | List issues for a project |
+| `get_issue` | Get details of a specific issue |
+| `update_issue` | Update an issue (resolve, assign, etc.) |
+| `get_events` | List events for an issue |
+| `get_event` | Get details of a specific event |
+| `get_project_stats` | Get project statistics |
+| `get_releases` | List releases for a project |
+| `create_release` | Create a new release |
+| `get_teams` | List teams in an organization |
+| `get_members` | List organization members |
+| `search_events` | Search for events across projects |
+| `get_user_feedback` | Get user feedback for a project |
 
-```text
-User: "Post critical Sentry errors to #engineering"
+## Useful resources
 
-Agent: Posted 2 critical errors to #engineering
-```
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="Datadog" icon="chart-line" href="/integrations/connectors/datadog">
-    Infrastructure monitoring
-  </Card>
-  <Card title="GitHub" icon="github" href="/integrations/connectors/github">
-    Code repository
-  </Card>
-</CardGroup>
+- [Sentry documentation](https://docs.sentry.io/api/auth/)

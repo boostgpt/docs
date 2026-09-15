@@ -1,61 +1,53 @@
 ---
 title: "Jira"
-description: "Track issues and manage projects"
+description: "Issues, projects and workflows. Engineering process; releases are the part that reaches a page, and GitHub says those better."
 ---
 
-## Overview
+Issues, projects and workflows. Engineering process; releases are the part that reaches a page, and GitHub says those better.
 
-Connect Jira to create and manage issues, projects, and sprints.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Jira and press **Connect**. The key you enter is checked against Jira before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Jira** → **Deploy**
-  </Step>
+### What you will need
 
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Jira**
-  </Step>
+| Field | What it is |
+|---|---|
+| Email Address | Your Atlassian account email address |
+| API Token | Your Jira API token |
+| Jira Domain | Your Jira domain (without .atlassian.net) |
 
-  <Step title="Configure">
-    Enter your Jira domain, email, and API token
-  </Step>
+### Getting the credential
 
-  <Step title="Test">
-    Playground: "Show me open bugs"
-  </Step>
-</Steps>
+1. Go to [Atlassian Account Settings](https://id.atlassian.com/manage-profile/security/api-tokens)
+2. Click **Create API token**
+3. Enter a label for your token
+4. Copy the generated API token
+5. Find your Jira domain from your Jira URL (e.g., company.atlassian.net → "company")
+6. Use your email, API token, and domain to configure this connector
 
-## Example Usage
+## What an agent can do with it
 
-```text
-User: "Create a bug: Login page not loading on Safari"
+| Tool | What it does |
+|---|---|
+| `get_myself` | Get current user information |
+| `get_projects` | List all projects |
+| `get_project` | Get project details |
+| `search_issues` | Search for issues using JQL |
+| `get_issue` | Get issue details |
+| `create_issue` | Create a new issue |
+| `update_issue` | Update an existing issue |
+| `delete_issue` | Delete an issue |
+| `transition_issue` | Transition an issue through workflow |
+| `get_transitions` | Get available transitions for an issue |
+| `add_comment` | Add a comment to an issue |
+| `get_comments` | Get comments for an issue |
+| `get_issue_types` | Get issue types for a project |
+| `get_priorities` | Get available issue priorities |
+| `get_statuses` | Get available issue statuses |
+| `assign_issue` | Assign an issue to a user |
+| `get_users` | Search for users |
 
-Agent: Created Jira issue:
-       BUG-123: Login page not loading on Safari
-```
+## Useful resources
 
-## Integration Example
-
-**With GitHub:**
-
-```text
-User: "Create Jira issues from GitHub issues labeled 'bug'"
-
-Agent: *fetches GitHub issues*
-       *creates Jira issues*
-
-       Created 8 Jira issues from GitHub bugs
-```
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="GitHub" icon="github" href="/integrations/connectors/github">
-    Code repository
-  </Card>
-  <Card title="Linear" icon="line-chart" href="/integrations/connectors/linear">
-    Alternative issue tracker
-  </Card>
-</CardGroup>
+- [Jira documentation](https://developer.atlassian.com/cloud/jira/platform/basic-auth-for-rest-apis/)

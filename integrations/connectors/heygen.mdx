@@ -1,0 +1,40 @@
+---
+title: "HeyGen"
+description: "Avatar videos from a script, with stock voices. A talking-head explainer without filming one."
+---
+
+Avatar videos from a script, with stock voices. A talking-head explainer without filming one.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find HeyGen and press **Connect**. The key you enter is checked against HeyGen before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your HeyGen API key |
+
+### Getting the credential
+
+1. Create an API key at [app.heygen.com](https://app.heygen.com) under **Settings → API**
+2. Paste it into the connector
+
+## Notes
+
+- **Asynchronous**, and slower than an image: a minute of video takes minutes to render.
+- Charged per minute of video produced.
+- Results are copied onto BoostGPT storage, so the link keeps working.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `list_avatars` | List the avatars available on this account. Use one of these ids in generate_video. |
+| `list_voices` | List the voices available on this account. Use one of these ids in generate_video. |
+| `generate_video` | Generate a video of an avatar speaking a script. Get avatar_id from list_avatars and voice_id from list_voices first. Asynchronous: returns a video_id — poll get_video until the status is 'completed'. |
+| `get_video` | Poll a video started by generate_video. Status is 'processing', 'completed' or 'failed'. Once completed the video is rehosted on a durable URL. |
+
+## Useful resources
+
+- [HeyGen API documentation](https://docs.heygen.com)

@@ -1,0 +1,42 @@
+---
+title: "Firecrawl"
+description: "Scrape, crawl and map a site into clean text. Point it at a competitor to see how they explain what you also do."
+---
+
+Scrape, crawl and map a site into clean text. Point it at a competitor to see how they explain what you also do.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Firecrawl and press **Connect**. The key you enter is checked against Firecrawl before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your Firecrawl API key |
+
+### Getting the credential
+
+1. Create an API key at [firecrawl.dev](https://firecrawl.dev) — it starts with `fc-`
+2. Paste it into the connector
+
+## Notes
+
+- `scrape` renders JavaScript, so it works on pages a plain fetch returns empty.
+- **`crawl` is asynchronous and charged per page.** It returns an id; poll `get_crawl` until `completed`. Set
+  `limit` deliberately — the default here is 25, not Firecrawl's maximum.
+- Use `map` first when you only need to know what exists on a site; it costs a fraction of a crawl.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `scrape` | Fetch one page and return it as clean markdown, with navigation and footers stripped. Handles JavaScript-rendered pages, which a plain fetch does not. |
+| `crawl` | Start a crawl of a site and its linked pages. Asynchronous: returns an id — poll get_crawl until the status is 'completed'. |
+| `get_crawl` | Poll a crawl started by crawl. Status is 'scraping', 'completed' or 'failed'. |
+| `map` | List the URLs on a site without fetching them. Far cheaper than crawling. |
+| `search` | Search the web and return each result already scraped as markdown. |
+
+## Useful resources
+
+- [Firecrawl documentation](https://docs.firecrawl.dev)

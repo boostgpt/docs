@@ -1,0 +1,40 @@
+---
+title: "BrowseAgent"
+description: "Drives a real browser: navigate, click, screenshot. For what only appears after JavaScript, or behind a login."
+---
+
+Drives a real browser: navigate, click, screenshot. For what only appears after JavaScript, or behind a login.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find BrowseAgent and press **Connect**. The key you enter is checked against BrowseAgent before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### Getting the credential
+
+1. Install Chrome Extension: Install the [BrowseAgent Chrome Extension](https://chrome.google.com/webstore/detail/browseagent) from the Chrome Web Store.
+2. Connect & Use
+	- **Open the extension popup** and click "Connect" and copy the BrowseAgent mcp server extension bridge url and use for the extension bridge endpoint.
+	- **Start automating** - try saying: *"Take a screenshot of google.com"*
+3. That's it! 🎉
+
+## Notes
+
+- This one drives a browser through the BoostGPT extension rather than calling an API, so the extension has
+  to be installed and the tab open. Nothing happens server-side.
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `browser_navigate` | Navigate to a URL in a new or existing tab |
+| `browser_go_back` | Go back to the previous page |
+| `browser_go_forward` | Go forward to the next page |
+| `browser_wait` | Wait for a specified time in seconds |
+| `browser_press_key` | Press a key on the keyboard |
+| `browser_snapshot` | Capture accessibility snapshot of the current page. Use this for getting references to elements to interact with. |
+| `browser_click` | Perform click on a web page |
+| `browser_drag_drop` | Perform drag and drop between two elements |
+| `browser_hover` | Hover over element on page |
+| `browser_type` | Type text into editable element |
+| `browser_get_console_logs` | Get the console logs from the browser |
+| `browser_screenshot` | Take a screenshot of the current page |

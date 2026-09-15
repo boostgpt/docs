@@ -1,54 +1,44 @@
 ---
 title: "Twilio"
-description: "SMS and voice communication"
+description: "SMS and voice calls. Notifications, not marketing pages."
 ---
 
-## Overview
+SMS and voice calls. Notifications, not marketing pages.
 
-Connect Twilio to send SMS messages and make phone calls.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Twilio and press **Connect**. The key you enter is checked against Twilio before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Twilio** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Twilio**
-  </Step>
-  <Step title="Configure">
-    Enter your Twilio Account SID and Auth Token
-  </Step>
-  <Step title="Test">
-    Playground: "Send SMS to +1234567890 saying 'Test message'"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| Account SID | Your Twilio Account SID |
+| Auth Token | Your Twilio Auth Token |
 
-```text
-User: "Send SMS to +1555123456 about the meeting at 2pm"
+### Getting the credential
 
-Agent: SMS sent to +1555123456:
-       "Reminder: Meeting at 2pm today"
-```
+1. Sign up at [Twilio Console](https://console.twilio.com)
+2. Go to **Account Dashboard**
+3. Copy your **Account SID** and **Auth Token**
+4. Purchase a phone number from **Phone Numbers** section
+5. Use credentials to configure this connector
 
-## Integration Example
+## What an agent can do with it
 
-**With HubSpot:**
+| Tool | What it does |
+|---|---|
+| `send_sms` | Send an SMS message |
+| `make_call` | Make a voice call |
+| `get_messages` | Retrieve sent and received messages |
+| `get_message` | Get details of a specific message |
+| `get_calls` | Retrieve call logs |
+| `get_call` | Get details of a specific call |
+| `update_call` | Update a call in progress |
+| `get_phone_numbers` | List phone numbers in your account |
+| `get_account_info` | Get account information and balance |
+| `get_usage_records` | Get usage and billing information |
 
-```text
-User: "Send SMS reminders to all contacts with meetings today"
+## Useful resources
 
-Agent: *fetches HubSpot contacts with meetings*
-       *sends SMS via Twilio*
-
-       Sent 8 SMS reminders via Twilio
-```
-
-## Next Steps
-
-<CardGroup cols={2}>  <Card title="Slack" icon="slack" href="/integrations/connectors/slack">
-    Team messaging
-  </Card>
-</CardGroup>
+- [Twilio documentation](https://www.twilio.com/docs/iam/api/account)

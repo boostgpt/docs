@@ -1,0 +1,43 @@
+---
+title: "Pinecone"
+description: "Vector indexes and queries. A store an agent can search — BoostGPT already has its own."
+---
+
+Vector indexes and queries. A store an agent can search — BoostGPT already has its own.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Pinecone and press **Connect**. The key you enter is checked against Pinecone before anything is saved, so a key that is refused never becomes a connection that fails later.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| API Key | Your Pinecone API key |
+| Index Host | The host for your index, as returned by describe_index — e.g. my-index-abc123.svc.us-east-1-aws.pinecone.io |
+
+### Getting the credential
+
+1. Sign up at [Pinecone](https://www.pinecone.io/)
+2. Create a new project or use existing one
+3. Go to **API Keys** in the console
+4. Create and copy your API key
+5. Note your environment and project ID for index URLs
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `list_indexes` | List all indexes in the project |
+| `create_index` | Create a new index |
+| `describe_index` | Get index information |
+| `delete_index` | Delete an index |
+| `upsert_vectors` | Insert or update vectors in an index |
+| `query_vectors` | Query vectors for similarity search |
+| `fetch_vectors` | Fetch vectors by IDs |
+| `delete_vectors` | Delete vectors from index |
+| `describe_index_stats` | Get index statistics |
+
+## Useful resources
+
+- [Pinecone documentation](https://docs.pinecone.io/docs/quickstart#2-get-your-api-key)

@@ -1,56 +1,57 @@
 ---
 title: "UptimeRobot"
-description: "Website uptime monitoring"
+description: "Monitors, alert contacts and maintenance windows. Whether the site is up, which is not the same as whether it is right."
 ---
 
-## Overview
+Monitors, alert contacts and maintenance windows. Whether the site is up, which is not the same as whether it is right.
 
-Connect UptimeRobot to monitor website uptime and get alerts.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find UptimeRobot and press **Connect**. The key you enter is checked against UptimeRobot before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **UptimeRobot** → **Deploy**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **UptimeRobot**
-  </Step>
-  <Step title="Configure">
-    Enter your UptimeRobot API Key
-  </Step>
-  <Step title="Test">
-    Playground: "Show me monitor status"
-  </Step>
-</Steps>
+### What you will need
 
-## Example Usage
+| Field | What it is |
+|---|---|
+| API Key | Your UptimeRobot API key |
 
-```text
-User: "Get uptime for mywebsite.com"
+### Getting the credential
 
-Agent: mywebsite.com uptime:
-       30 days: 99.98%
-       Status: Up
-```
+1. Log in to [UptimeRobot Dashboard](https://dashboard.uptimerobot.com)
+2. Go to **Integrations & API** → **API**
+3. Generate **Main API Key** or create specific keys
+4. Add API key to connector
 
-## Integration Example
+## Notes
 
-**With Slack:**
+- The free plan checks every five minutes, so a short outage can pass unseen.
+- Creating a monitor needs the account's main API key; a monitor-specific key can only read.
 
-```text
-User: "Alert #ops when website goes down"
+## What an agent can do with it
 
-Agent: Monitoring UptimeRobot, will alert #ops on downtime
-```
+| Tool | What it does |
+|---|---|
+| `get_monitors` | Get list of monitors |
+| `get_monitor` | Get a specific monitor by ID |
+| `create_monitor` | Create a new monitor |
+| `update_monitor` | Update an existing monitor |
+| `delete_monitor` | Delete a monitor |
+| `reset_monitor` | Reset monitor statistics |
+| `get_alert_contacts` | Get list of alert contacts |
+| `get_alert_contact` | Get a specific alert contact |
+| `create_alert_contact` | Create a new alert contact |
+| `update_alert_contact` | Update an alert contact |
+| `delete_alert_contact` | Delete an alert contact |
+| `get_maintenance_windows` | Get list of maintenance windows |
+| `create_maintenance_window` | Create a new maintenance window |
+| `update_maintenance_window` | Update a maintenance window |
+| `delete_maintenance_window` | Delete a maintenance window |
+| `get_status_pages` | Get list of public status pages |
+| `create_status_page` | Create a new public status page |
+| `update_status_page` | Update a public status page |
+| `delete_status_page` | Delete a public status page |
+| `get_account_details` | Get account information and limits |
 
-## Next Steps
+## Useful resources
 
-<CardGroup cols={2}>
-  <Card title="Datadog" icon="chart-line" href="/integrations/connectors/datadog">
-    Infrastructure monitoring
-  </Card>
-  <Card title="Slack" icon="slack" href="/integrations/connectors/slack">
-    Team alerts
-  </Card>
-</CardGroup>
+- [UptimeRobot documentation](https://uptimerobot.com/api/v3/)

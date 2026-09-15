@@ -1,0 +1,50 @@
+---
+title: "Threads"
+description: "Text and image posts, and their replies. A quieter place to say the same thing."
+---
+
+Text and image posts, and their replies. A quieter place to say the same thing.
+
+## Connecting
+
+In the dashboard, open **Connectors**, find Threads and press **Connect**. You will be sent to sign in; the connection is saved once that succeeds.
+
+### What you will need
+
+| Field | What it is |
+|---|---|
+| App ID | Your Meta App ID (from Meta for Developers) |
+| App Secret | Your Meta App Secret |
+
+### Getting the credential
+
+1. Go to [Meta for Developers](https://developers.facebook.com/apps) → **Create App**
+2. Under **Use Cases** → search for **Threads API** → add it
+3. Configure your redirect URI under Threads API settings
+4. Copy **App ID** and **App Secret** from Settings → Basic
+
+## Notes
+
+- Wait ~30 seconds between container creation and publishing (Meta recommendation)
+- Text posts have a 500 character limit
+- Threads are public by default — no private/friends-only posting
+- Carousel posts: create each item as `is_carousel_item: true`, then create a CAROUSEL container
+
+## What an agent can do with it
+
+| Tool | What it does |
+|---|---|
+| `get_me` | Get the authenticated user's Threads profile |
+| `get_threads` | Get posts (threads) published by a user |
+| `get_thread` | Get a specific Threads post by ID |
+| `create_text_post` | Create a text-only thread container (step 1 of 2). Call publish_post after creation. |
+| `create_image_post` | Create an image thread container (step 1 of 2). Call publish_post after creation. |
+| `publish_post` | Publish a Threads container (step 2 of 2). Call after create_text_post or create_image_post. |
+| `get_replies` | Get replies to a specific thread post |
+| `get_account_insights` | Get account-level insights (views, likes, replies, followers, etc.) |
+| `get_post_insights` | Get insights for a specific thread post (views, likes, replies, reposts) |
+| `manage_reply` | Hide or unhide a reply on one of your threads |
+
+## Useful resources
+
+- [Threads documentation](https://developers.facebook.com/docs/threads)

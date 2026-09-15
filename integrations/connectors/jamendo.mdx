@@ -1,85 +1,41 @@
 ---
 title: "Jamendo"
-description: "Search and stream Creative Commons licensed music"
+description: "Creative-commons music tracks, searchable. Licensed background audio for a video."
 ---
 
-## Overview
+Creative-commons music tracks, searchable. Licensed background audio for a video.
 
-Connect Jamendo to let your agent search and recommend music from a library of over 600,000 tracks by independent artists worldwide. All music is released under [Creative Commons](https://creativecommons.org) licenses — free to use with attribution.
+## Connecting
 
-## Setup
+In the dashboard, open **Connectors**, find Jamendo and press **Connect**. The key you enter is checked against Jamendo before anything is saved, so a key that is refused never becomes a connection that fails later.
 
-<Steps>
-  <Step title="Deploy">
-    **Dashboard → Integrations → Connectors** → Find **Jamendo** → **Deploy**
-  </Step>
-  <Step title="Get a Client ID">
-    Register an application at [developer.jamendo.com](https://developer.jamendo.com) to receive a free **Client ID**
-  </Step>
-  <Step title="Add to Agent">
-    Agent → **Tools** tab → **Add Tool** → Select **Jamendo**, then under **Custom Headers** add:
-    - **Key:** `x-client-id`
-    - **Value:** your Jamendo Client ID
-  </Step>
-  <Step title="Test">
-    Playground: "Find some upbeat jazz tracks"
-  </Step>
-</Steps>
+### What you will need
 
-## Available Tools
+| Field | What it is |
+|---|---|
+| Client ID | Your Jamendo application Client ID from developer.jamendo.com |
 
-| Tool | Description |
-|------|-------------|
-| `search_tracks` | Search tracks by name, artist, or tags (genre, mood, instruments) |
-| `get_track` | Fetch full metadata for a track by its Jamendo ID |
-| `search_albums` | Search albums by name or artist |
-| `get_album_tracks` | Get all tracks in a specific album |
-| `search_artists` | Search artists by name |
-| `get_artist_tracks` | Get tracks by a specific artist |
+### Getting the credential
 
-## Example Usage
-
-```text
-User: "Find upbeat electronic music I can use for a product demo video"
-
-Agent: Here are some energetic electronic tracks from Jamendo:
-
-1. **Circuit Breaker** by Komiku (3:42)
-   Tags: electronic, upbeat, energetic
-   Stream: https://mp3l.jamendo.com/?trackid=...
-   License: CC BY 3.0
-
-2. **Digital Sunrise** by Lobo Loco (4:15)
-   Tags: electronic, inspiring, instrumental
-   Stream: https://mp3l.jamendo.com/?trackid=...
-   License: CC BY-SA 4.0
-```
-
-## Using Tags
-
-The `search_tracks` tool accepts comma-separated tags covering genres, moods, and instruments:
-
-```text
-User: "Find calm acoustic guitar music for a meditation app"
-→ tags: acoustic,guitar,calm,meditation
-```
-
-Popular tag values: `rock`, `electronic`, `jazz`, `classical`, `hip-hop`, `ambient`, `happy`, `melancholic`, `energetic`, `guitar`, `piano`, `violin`
+Register an application at https://developer.jamendo.com to get your Client ID. In the bot tool configuration, add a Custom Header — key: x-client-id, value: your Client ID.
 
 ## Notes
 
-- `audio` URL provides a 30-second streaming preview
-- `audiodownload` URL provides the full track download
-- Always check `license_ccurl` for the specific Creative Commons terms before using a track commercially
-- Add `include=musicinfo` to `search_tracks` to receive detailed genre, mood, and instrument breakdowns in the `music_info` field
+- All music is Creative Commons licensed — check `license_ccurl` for the specific terms
+- The `audio` URL provides a 30-second preview; `audiodownload` provides the full track
+- See the [Jamendo API docs](https://developer.jamendo.com/v3.0) for full parameter reference
 
-## Next Steps
+## What an agent can do with it
 
-<CardGroup cols={2}>
-  <Card title="Pexels" icon="image" href="/integrations/connectors/pexels">
-    Add free stock photos alongside music
-  </Card>
-  <Card title="Unsplash" icon="camera" href="/integrations/connectors/unsplash">
-    Free high-resolution photography
-  </Card>
-</CardGroup>
+| Tool | What it does |
+|---|---|
+| `search_tracks` | Search music tracks by name, artist, tags (genres, moods, instruments), or browse by popularity. Returns track metadata including streaming URL, download URL, album art, artist, duration, and license. |
+| `get_track` | Get detailed metadata for a specific track by its Jamendo ID. Returns the same fields as search_tracks for a single track. |
+| `search_albums` | Search music albums by name or artist. Returns album metadata including cover image, release date, and track count. |
+| `get_album_tracks` | Get all tracks in a specific album by its Jamendo album ID. Returns full track metadata including streaming URLs. |
+| `search_artists` | Search for artists on Jamendo by name. Returns artist metadata including website, image, and location. |
+| `get_artist_tracks` | Get tracks by a specific artist using their Jamendo artist ID. Returns full track metadata including streaming URLs. |
+
+## Useful resources
+
+- [Jamendo documentation](https://developer.jamendo.com/v3.0)

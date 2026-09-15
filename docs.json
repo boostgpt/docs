@@ -234,8 +234,7 @@
                         "pages": [
                           "integrations/connectors/hubspot",
                           "integrations/connectors/mailchimp",
-                          "integrations/connectors/sendgrid",
-                          "integrations/connectors/substack"
+                          "integrations/connectors/sendgrid"
                         ]
                       },
                       {

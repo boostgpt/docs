@@ -406,6 +406,39 @@ await client.toggleChatScheduledTask({
 });
 ```
 
+### The plan behind a conversation
+
+```javascript
+const { response } = await client.fetchChatPlan({ bot_id: 'bot_abc123', chat_id: 'chat-id' });
+
+// No accept method: a plan is accepted through the agent's own review question inside the
+// conversation, never from outside it.
+await client.cancelChatPlan({ bot_id: 'bot_abc123', chat_id: 'chat-id' });
+```
+
+### Agents delegated in a conversation
+
+When an agent splits a task across subagents, each one is a record you can read, and the
+conversation keeps them across turns — a later turn can resume one instead of starting over.
+
+```javascript
+// This turn's agents…
+const { response } = await client.fetchChatAgents({ bot_id: 'bot_abc123', chat_id: 'chat-id' });
+for (const agent of response.agents) {
+  console.log(agent.label, agent.status, `${agent.steps_used} steps`, `${agent.prompt_tokens} tokens`);
+}
+
+// …or every turn's, the way the dashboard's agent map shows them
+const all = await client.fetchChatAgents({ bot_id: 'bot_abc123', chat_id: 'chat-id', scope: 'chat' });
+
+// One agent in full: its brief, its report, and the tools it ran
+const detail = await client.fetchChatAgent({ bot_id: 'bot_abc123', chat_id: 'chat-id', agent_id: response.agents[0].uuid });
+console.log(detail.response.agent.transcript);
+
+// Remove its record; a running agent is stopped first
+await client.deleteChatAgent({ bot_id: 'bot_abc123', chat_id: 'chat-id', agent_id: response.agents[0].uuid });
+```
+
 ## Error Handling
 
 ```javascript

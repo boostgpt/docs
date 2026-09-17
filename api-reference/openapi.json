@@ -4472,6 +4472,294 @@
         }
       }
     },
+    "/v1/bot/chat/plan": {
+      "get": {
+        "summary": "Chat Plan",
+        "tags": [
+          "Chat"
+        ],
+        "description": "The plan behind a builder conversation, if one is active.",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "chat_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Chat ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The active plan, or null",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/chat/plan/cancel": {
+      "post": {
+        "summary": "Cancel Chat Plan",
+        "tags": [
+          "Chat"
+        ],
+        "description": "Cancel the active plan. There is deliberately no accept endpoint: a plan is accepted through the agent's own review question inside the conversation.",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "chat_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Chat ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The cancelled plan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/chat/agents": {
+      "get": {
+        "summary": "Chat Agents",
+        "tags": [
+          "Chat"
+        ],
+        "description": "The agents a conversation delegated to. By default the most recent delegating turn's (or the one named by root_execution_id); with scope=chat every turn's, as the dashboard's agent map shows them. Each agent carries its label, slug, role, model, status, steps, tokens and a 400-character head of its report.",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "chat_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Chat ID"
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "turn",
+                "chat"
+              ]
+            },
+            "description": "turn (default) or chat"
+          },
+          {
+            "name": "root_execution_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A specific turn, when scope is turn"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agents, or turns with their agents",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bot/chat/agents/{uuid}": {
+      "get": {
+        "summary": "Chat Agent",
+        "tags": [
+          "Chat"
+        ],
+        "description": "One agent in full: its brief, its report, and the tools it ran (the transcript).",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID (uuid)"
+          },
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "chat_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Chat ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The agent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Chat Agent",
+        "tags": [
+          "Chat"
+        ],
+        "description": "Remove an agent's record from the conversation. A running agent is stopped at its next decision boundary first. A root turn cannot be deleted.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID (uuid)"
+          },
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent ID"
+          },
+          {
+            "name": "chat_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Chat ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deletion outcome",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/bot/chat/subscribe": {
       "get": {
         "summary": "Subscribe to a Chat",

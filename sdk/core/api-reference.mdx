@@ -477,6 +477,140 @@ await client.deleteMessage({
 
 ---
 
+### fetchChatPlan()
+
+The plan behind a builder conversation, if one is active.
+
+```javascript
+const { response } = await client.fetchChatPlan({
+  bot_id: 'bot-123',
+  chat_id: 'chat-456'
+});
+```
+
+<ParamField path="bot_id" type="string" required>
+  Bot ID
+</ParamField>
+
+<ParamField path="chat_id" type="string" required>
+  Chat ID
+</ParamField>
+
+---
+
+### cancelChatPlan()
+
+Cancel that plan. There is no accept method on purpose: a plan is accepted through the agent's own review question inside the conversation.
+
+```javascript
+await client.cancelChatPlan({
+  bot_id: 'bot-123',
+  chat_id: 'chat-456'
+});
+```
+
+<ParamField path="bot_id" type="string" required>
+  Bot ID
+</ParamField>
+
+<ParamField path="chat_id" type="string" required>
+  Chat ID
+</ParamField>
+
+---
+
+### fetchChatAgents()
+
+The agents a conversation delegated to. Each carries its `label`, `task_name`, `role`, `model`, `status`, `steps_used`, `prompt_tokens`, `completion_tokens` and a 400-character head of its `result`.
+
+```javascript
+// This turn's agents
+const { response } = await client.fetchChatAgents({
+  bot_id: 'bot-123',
+  chat_id: 'chat-456'
+});
+// response.agents
+
+// Every turn's, the way the dashboard's agent map shows them
+const all = await client.fetchChatAgents({
+  bot_id: 'bot-123',
+  chat_id: 'chat-456',
+  scope: 'chat'
+});
+// all.response.turns[].agents
+```
+
+<ParamField path="bot_id" type="string" required>
+  Bot ID
+</ParamField>
+
+<ParamField path="chat_id" type="string" required>
+  Chat ID
+</ParamField>
+
+<ParamField path="scope" type="string" default="turn">
+  `turn` for the most recent delegating turn, `chat` for every turn
+</ParamField>
+
+<ParamField path="root_execution_id" type="string">
+  A specific turn, when `scope` is `turn`
+</ParamField>
+
+---
+
+### fetchChatAgent()
+
+One agent in full: its brief (`input`), its report (`result` or `error`), and the tools it ran (`transcript`).
+
+```javascript
+const { response } = await client.fetchChatAgent({
+  bot_id: 'bot-123',
+  chat_id: 'chat-456',
+  agent_id: 'agent-uuid'
+});
+// response.agent.transcript → [{ name, gist, ok, head }]
+```
+
+<ParamField path="bot_id" type="string" required>
+  Bot ID
+</ParamField>
+
+<ParamField path="chat_id" type="string" required>
+  Chat ID
+</ParamField>
+
+<ParamField path="agent_id" type="string" required>
+  The agent's uuid, from `fetchChatAgents`
+</ParamField>
+
+---
+
+### deleteChatAgent()
+
+Remove an agent's record. A running agent is stopped at its next decision boundary first. A later turn can no longer resume a deleted agent.
+
+```javascript
+await client.deleteChatAgent({
+  bot_id: 'bot-123',
+  chat_id: 'chat-456',
+  agent_id: 'agent-uuid'
+});
+```
+
+<ParamField path="bot_id" type="string" required>
+  Bot ID
+</ParamField>
+
+<ParamField path="chat_id" type="string" required>
+  Chat ID
+</ParamField>
+
+<ParamField path="agent_id" type="string" required>
+  The agent's uuid
+</ParamField>
+
+---
+
 ## Training & Sources
 
 ### startTraining()

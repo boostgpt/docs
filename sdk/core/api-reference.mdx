@@ -23,7 +23,7 @@ Create a new AI bot.
 ```javascript
 await client.createBot({
   name: 'Bot Name',
-  model: 'gpt-5.6-luna',
+  model: 'gpt-6-luna',
   instruction: 'System instruction',
   max_reply_tokens: 1000,
   top: 5,
@@ -100,7 +100,7 @@ Update a bot's configuration.
 await client.updateBot({
   bot_id: 'bot-123',
   name: 'Updated Name',
-  model: 'gpt-5.6-luna',
+  model: 'gpt-6-luna',
   instruction: 'New instruction',
   max_reply_tokens: 1500,
   status: 'active'
@@ -156,7 +156,7 @@ await client.chat({
   chat_id: 'user-456',
   stream: false,
   memory: true,
-  model: 'gpt-5.6-luna',
+  model: 'gpt-6-luna',
   provider_key: 'optional-key',
   provider_host: 'http://localhost:11434', // For Ollama
   instruction: 'Optional override',
@@ -959,7 +959,7 @@ const client = new BoostGPT({
 // Create bot
 const botResult = await client.createBot({
   name: 'Support Bot',
-  model: 'gpt-5.6-luna',
+  model: 'gpt-6-luna',
   instruction: 'You are a helpful support agent'
 });
 

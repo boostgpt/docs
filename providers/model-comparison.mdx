@@ -5,45 +5,48 @@ description: "Compare AI models across all providers"
 
 ## Overview
 
-Compare 105 AI models across 14 providers to find the right one for your use case — by speed, cost, reasoning capability and context window.
+Compare 98 AI models across 14 providers to find the right one for your use case — by speed, cost, reasoning capability and context window.
 
 ## Quick Comparison by Use Case
 
+Credits are charged per step: each model call in an agent turn, or one chat reply. A model's figure is its provider
+price for a typical step — about 31K prompt tokens, most of them cached, and 465 output tokens.
+
 <CardGroup cols={2}>
   <Card title="Best Overall Value" icon="star">
-    **Gemini 2.5 Flash** - 2 credits
-    
-    Fast, excellent reasoning, 1M context
+    **GPT-6 Luna** - 1 credit
+
+    Reasoning, vision and a 1.05M context at the lowest price per step
   </Card>
 
-  <Card title="Fastest Response" icon="bolt">
-    **Llama 3.1 Instant (Groq)** - 1 credit
-    
-    Ultra-fast on Groq's LPU hardware
+  <Card title="Best Mid-Range" icon="bolt">
+    **Gemini 3.8 Flash** - 3 credits
+
+    Strong agentic coding with a 1M context
   </Card>
 
   <Card title="Best Reasoning" icon="brain">
-    **O1 (OpenAI)** - 6 credits
-    
-    Deep analytical thinking
+    **GPT-6.1 Sol** - 8 credits
+
+    Near-Astra performance for complex work
   </Card>
 
   <Card title="Largest Context" icon="database">
-    **Gemini 2.5 Pro** - 3 credits
-    
-    2 million token context window
+    **Claude Sonnet 5.5** - 8 credits
+
+    1M tokens with adaptive thinking
   </Card>
 
   <Card title="Most Affordable" icon="dollar-sign">
-    **GPT-4.1 Nano** - 0.5 credits
-    
-    Lowest cost per request
+    **GPT-5 Nano** - 1 credit
+
+    Lowest cost per step for simple, high-volume work
   </Card>
 
-  <Card title="Best for Production" icon="circle-check">
-    **Claude Sonnet 4.5** - 3 credits
-    
-    Balanced performance and safety
+  <Card title="Best for Long Agentic Work" icon="circle-check">
+    **Claude Opus 5.5** - 15 credits
+
+    Long-running coding and knowledge work
   </Card>
 </CardGroup>
 
@@ -53,104 +56,104 @@ Compare 105 AI models across 14 providers to find the right one for your use cas
 
 | Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
 |-------|----------|---------|---------|-------|------|-----------|--------|
-| **GPT-6 Astra** | `gpt-6-astra` | 10 | 1.05M | Medium | High | Exceptional *(reasoning)* | Yes |
-| **GPT-6 Sol** | `gpt-6-sol` | 3 | 1.05M | Medium | Medium | Exceptional *(reasoning)* | Yes |
+| **GPT-6 Astra** | `gpt-6-astra` | 39 | 1.05M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **GPT-6.1 Sol** | `gpt-6.1-sol` | 8 | 1.05M | Medium | Medium | Exceptional *(reasoning)* | Yes |
+| **GPT-6 Sol** | `gpt-6-sol` | 8 | 1.05M | Medium | Medium | Exceptional *(reasoning)* | Yes |
 | **GPT-6 Luna** | `gpt-6-luna` | 1 | 1.05M | Fast | Low | Excellent *(reasoning)* | Yes |
-| **GPT-5.6 Sol** | `gpt-5.6-sol` | 6 | 1.05M | Medium | High | Exceptional *(reasoning)* | Yes |
-| **GPT-5.6 Terra** | `gpt-5.6-terra` | 3 | 1.05M | Medium | Medium | Exceptional *(reasoning)* | Yes |
+| **GPT-5.6 Sol** | `gpt-5.6-sol` | 16 | 1.05M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **GPT-5.6 Terra** | `gpt-5.6-terra` | 8 | 1.05M | Medium | Medium | Exceptional *(reasoning)* | Yes |
 | **GPT-5.6 Luna** | `gpt-5.6-luna` | 1 | 1.05M | Fast | Low | Excellent *(reasoning)* | Yes |
-| **GPT-5.5** | `gpt-5.5` | 6 | 1.05M | Medium | High | Exceptional *(reasoning)* | Yes |
-| **GPT-5.4** | `gpt-5.4` | 6 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
-| **GPT-5.2** | `gpt-5.2` | 5 | 400K | Medium | High | Exceptional *(reasoning)* | Yes |
-| **GPT-5.1** | `gpt-5.1` | 4 | 200K | Medium | High | Exceptional *(reasoning)* | Yes |
-| **GPT-5** | `gpt-5` | 5 | 200K | Medium | High | Exceptional *(reasoning)* | Yes |
+| **GPT-5.5** | `gpt-5.5` | 20 | 1.05M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **GPT-5.4** | `gpt-5.4` | 10 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **GPT-5.2** | `gpt-5.2` | 8 | 400K | Medium | High | Exceptional *(reasoning)* | Yes |
+| **GPT-5** | `gpt-5` | 6 | 200K | Medium | High | Exceptional *(reasoning)* | Yes |
 | **GPT-5.4 Mini** | `gpt-5.4-mini` | 3 | 400K | Fast | Medium | Excellent *(reasoning)* | Yes |
-| **GPT-5.4 Nano** | `gpt-5.4-nano` | 2 | 400K | Very fast | Low | Good *(reasoning)* | Yes |
-| **GPT-5 Mini** | `gpt-5-mini` | 3 | 200K | Fast | Medium | Excellent *(reasoning)* | Yes |
-| **GPT-5 Nano** | `gpt-5-nano` | 2 | 128K | Very_fast | Low | Good *(reasoning)* | Yes |
+| **GPT-5 Mini** | `gpt-5-mini` | 2 | 200K | Fast | Medium | Excellent *(reasoning)* | Yes |
+| **GPT-5 Nano** | `gpt-5-nano` | 1 | 128K | Very_fast | Low | Good *(reasoning)* | Yes |
 
 ### Google (Gemini) Models
 
 | Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
 |-------|----------|---------|---------|-------|------|-----------|--------|
-| **Gemini 3.7 Flash** | `gemini-3.7-flash` | 2 | 1.05M | Fast | Medium | Exceptional *(reasoning)* | Yes |
-| **Gemini 3.6 Flash** | `gemini-3.6-flash` | 2 | 1M | Fast | Medium | Excellent *(reasoning)* | Yes |
-| **Gemini 3.5 Flash** | `gemini-3.5-flash` | 3 | 1M | Fast | Medium | Exceptional *(reasoning)* | Yes |
-| **Gemini 3.5 Flash Lite** | `gemini-3.5-flash-lite` | 1 | 1M | Very_fast | Very_low | Good *(reasoning)* | Yes |
+| **Gemini 3.7 Flash** | `gemini-3.7-flash` | 3 | 1.05M | Fast | Medium | Exceptional *(reasoning)* | Yes |
+| **Gemini 3.6 Flash** | `gemini-3.6-flash` | 3 | 1M | Fast | Medium | Excellent *(reasoning)* | Yes |
+| **Gemini 3.5 Flash** | `gemini-3.5-flash` | 6 | 1M | Fast | Medium | Exceptional *(reasoning)* | Yes |
+| **Gemini 3.5 Flash Lite** | `gemini-3.5-flash-lite` | 2 | 1M | Very_fast | Very_low | Good *(reasoning)* | Yes |
 | **Gemini 3.1 Flash Lite** | `gemini-3.1-flash-lite` | 1 | 1M | Very_fast | Very_low | Good *(reasoning)* | Yes |
-| **Gemini 3.1 Pro** | `gemini-3.1-pro-preview` | 3 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **Gemini 3.1 Pro** | `gemini-3.1-pro-preview` | 8 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
 | **Gemini 3 Flash** | `gemini-3-flash-preview` | 1 | 1M | Fast | Medium | Excellent *(reasoning)* | Yes |
-| **Gemini 2.5 Flash** | `gemini-2.5-flash` | 1 | 1M | Fast | Medium | Excellent *(reasoning)* | Yes |
+| **Gemini 2.5 Flash** | `gemini-2.5-flash` | 2 | 1M | Fast | Medium | Excellent *(reasoning)* | Yes |
 | **Gemini 2.5 Flash Lite** | `gemini-2.5-flash-lite` | 1 | 1M | Very_fast | Very_low | Good *(reasoning)* | Yes |
 
 ### Anthropic (Claude) Models
 
 | Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
 |-------|----------|---------|---------|-------|------|-----------|--------|
-| **Claude Fable 5.1** | `claude-fable-5-1` | 10 | 1M | Slow | High | Exceptional *(reasoning)* | Yes |
-| **Claude Opus 5.5** | `claude-opus-5-5` | 4 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
-| **Claude Fable 5** | `claude-fable-5` | 10 | 1M | Slow | High | Exceptional *(reasoning)* | Yes |
-| **Claude Opus 5** | `claude-opus-5` | 5 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
-| **Claude Opus 4.8** | `claude-opus-4-8` | 5 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
-| **Claude Sonnet 5** | `claude-sonnet-5` | 3 | 1M | Fast | Medium | Exceptional *(reasoning)* | Yes |
-| **Claude Opus 4.7** | `claude-opus-4-7` | 5 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
-| **Claude Opus 4.6** | `claude-opus-4-6` | 5 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
-| **Claude Sonnet 4.6** | `claude-sonnet-4-6` | 3 | 1M | Fast | Medium | Excellent *(reasoning)* | Yes |
-| **Claude Haiku 4.5** | `claude-haiku-4-5` | 1 | 200K | Fast | Low | Good | Yes |
-| **Claude Opus 4.5** | `claude-opus-4-5` | 5 | 200K | Medium | High | Exceptional | Yes |
-| **Claude Sonnet 4.5** | `claude-sonnet-4-5` | 3 | 200K | Medium | Medium | Excellent | Yes |
+| **Claude Fable 5.1** | `claude-fable-5-1` | 35 | 1M | Slow | High | Exceptional *(reasoning)* | Yes |
+| **Claude Opus 5.5** | `claude-opus-5-5` | 15 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **Claude Fable 5** | `claude-fable-5` | 39 | 1M | Slow | High | Exceptional *(reasoning)* | Yes |
+| **Claude Opus 5** | `claude-opus-5` | 20 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **Claude Opus 4.8** | `claude-opus-4-8` | 20 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **Claude Sonnet 5.5** | `claude-sonnet-5-5` | 8 | 1M | Fast | Medium | Exceptional *(reasoning)* | Yes |
+| **Claude Sonnet 5** | `claude-sonnet-5` | 8 | 1M | Fast | Medium | Exceptional *(reasoning)* | Yes |
+| **Claude Opus 4.7** | `claude-opus-4-7` | 20 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **Claude Opus 4.6** | `claude-opus-4-6` | 20 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **Claude Sonnet 4.6** | `claude-sonnet-4-6` | 12 | 1M | Fast | Medium | Excellent *(reasoning)* | Yes |
+| **Claude Haiku 4.5** | `claude-haiku-4-5` | 4 | 200K | Fast | Low | Good | Yes |
+| **Claude Opus 4.5** | `claude-opus-4-5` | 20 | 200K | Medium | High | Exceptional | Yes |
+| **Claude Sonnet 4.5** | `claude-sonnet-4-5` | 12 | 200K | Medium | Medium | Excellent | Yes |
 
 ### xAI (Grok) Models
 
 | Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
 |-------|----------|---------|---------|-------|------|-----------|--------|
-| **Grok 4.7** | `grok-4.7` | 1 | 500K | Medium | Medium | Exceptional *(reasoning)* | Yes |
-| **Grok 4.6** | `grok-4.6` | 1 | 500K | Medium | Medium | Exceptional *(reasoning)* | Yes |
-| **Grok 4.5** | `grok-4.5` | 1 | 500K | Medium | Medium | Exceptional *(reasoning)* | Yes |
-| **Grok 4.3** | `grok-4.3` | 1 | 1M | Medium | Low | Excellent *(reasoning)* | Yes |
-| **Grok 4.20 Reasoning** | `grok-4.20-0309-reasoning` | 1 | 1M | Medium | Low | Excellent *(reasoning)* | Yes |
-| **Grok 4.20 Non-Reasoning** | `grok-4.20-0309-non-reasoning` | 1 | 1M | Fast | Low | Good | Yes |
-| **Grok Build 0.1** | `grok-build-0.1` | 1 | 256K | Fast | Low | Good | Yes |
+| **Grok 4.7** | `grok-4.7` | 9 | 500K | Medium | Medium | Exceptional *(reasoning)* | Yes |
+| **Grok 4.6** | `grok-4.6` | 9 | 500K | Medium | Medium | Exceptional *(reasoning)* | Yes |
+| **Grok 4.5** | `grok-4.5` | 8 | 500K | Medium | Medium | Exceptional *(reasoning)* | Yes |
+| **Grok 4.3** | `grok-4.3` | 5 | 1M | Medium | Low | Excellent *(reasoning)* | Yes |
+| **Grok 4.20 Reasoning** | `grok-4.20-0309-reasoning` | 5 | 1M | Medium | Low | Excellent *(reasoning)* | Yes |
+| **Grok 4.20 Non-Reasoning** | `grok-4.20-0309-non-reasoning` | 5 | 1M | Fast | Low | Good | Yes |
+| **Grok Build 0.1** | `grok-build-0.1` | 4 | 256K | Fast | Low | Good | Yes |
 
 ### Zhipu AI (GLM) Models
 
 | Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
 |-------|----------|---------|---------|-------|------|-----------|--------|
-| **GLM-5.3** | `glm-5.3` | 1 | 1M | Medium | Low | Exceptional *(reasoning)* | — |
+| **GLM-5.3** | `glm-5.3` | 6 | 1M | Medium | Low | Exceptional *(reasoning)* | — |
 | **GLM-5.3 Flash** | `glm-5.3-flash` | 1 | 1M | Fast | Low | Excellent *(reasoning)* | — |
-| **GLM-5.2** | `glm-5.2` | 1 | 1M | Medium | Low | Exceptional *(reasoning)* | — |
-| **GLM-4.6** | `glm-4.6` | 1 | 200K | Medium | Low | Excellent | — |
-| **GLM-4.7** | `glm-4.7` | 1 | 200K | Medium | Low | Excellent *(reasoning)* | — |
+| **GLM-5.2** | `glm-5.2` | 6 | 1M | Medium | Low | Exceptional *(reasoning)* | — |
+| **GLM-4.6** | `glm-4.6` | 3 | 200K | Medium | Low | Excellent | — |
+| **GLM-4.7** | `glm-4.7` | 3 | 200K | Medium | Low | Excellent *(reasoning)* | — |
 | **GLM-4.7 Flash** | `glm-4.7-flash` | 1 | 200K | Very_fast | Very_low | Good | — |
-| **GLM-5.1** | `glm-5.1` | 1 | 200K | Medium | Low | Exceptional *(reasoning)* | — |
-| **GLM-4.6V** | `glm-4.6v` | 1 | 128K | Medium | Low | Excellent | Yes |
+| **GLM-5.1** | `glm-5.1` | 6 | 200K | Medium | Low | Exceptional *(reasoning)* | — |
+| **GLM-4.6V** | `glm-4.6v` | 2 | 128K | Medium | Low | Excellent | Yes |
 
 ### MiniMax Models
 
 | Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
 |-------|----------|---------|---------|-------|------|-----------|--------|
-| **MiniMax M2.7 Highspeed** | `MiniMax-M2.7-highspeed` | 1 | 205K | Very fast | Low | Excellent *(reasoning)* | — |
-| **MiniMax M2.5 Highspeed** | `MiniMax-M2.5-highspeed` | 1 | 205K | Very fast | Low | Excellent *(reasoning)* | — |
-| **MiniMax M3** | `MiniMax-M3` | 1 | 1M | Medium | Low | Exceptional *(reasoning)* | Yes |
-| **MiniMax M2.7** | `MiniMax-M2.7` | 1 | 205K | Medium | Low | Excellent *(reasoning)* | — |
-| **MiniMax M2.5** | `MiniMax-M2.5` | 1 | 205K | Fast | Very_low | Excellent *(reasoning)* | — |
+| **MiniMax M2.7 Highspeed** | `MiniMax-M2.7-highspeed` | 3 | 205K | Very fast | Low | Excellent *(reasoning)* | — |
+| **MiniMax M2.5 Highspeed** | `MiniMax-M2.5-highspeed` | 3 | 205K | Very fast | Low | Excellent *(reasoning)* | — |
+| **MiniMax M3** | `MiniMax-M3` | 2 | 1M | Medium | Low | Exceptional *(reasoning)* | Yes |
+| **MiniMax M2.7** | `MiniMax-M2.7` | 2 | 205K | Medium | Low | Excellent *(reasoning)* | — |
+| **MiniMax M2.5** | `MiniMax-M2.5` | 2 | 205K | Fast | Very_low | Excellent *(reasoning)* | — |
 
 ### DeepSeek Models
 
 | Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
 |-------|----------|---------|---------|-------|------|-----------|--------|
-| **DeepSeek V4 Flash** | `deepseek-v4-flash` | 1 | 1M | Fast | Low | Good *(reasoning)* | — |
-| **DeepSeek V4 Flash Vision** | `deepseek-v4-flash-vision-exp` | 1 | 1M | Fast | Low | Excellent *(reasoning)* | Yes |
-| **DeepSeek V4 Pro** | `deepseek-v4-pro` | 1 | 1M | Medium | Low | Excellent *(reasoning)* | — |
+| **DeepSeek V4 Flash** | `deepseek-v4-flash` | 2 | 1M | Fast | Low | Good *(reasoning)* | — |
+| **DeepSeek V4 Flash Vision** | `deepseek-v4-flash-vision-exp` | 2 | 1M | Fast | Low | Excellent *(reasoning)* | Yes |
+| **DeepSeek V4 Pro** | `deepseek-v4-pro` | 5 | 1M | Medium | Low | Excellent *(reasoning)* | — |
 
 ### Moonshot AI (Kimi) Models
 
 | Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
 |-------|----------|---------|---------|-------|------|-----------|--------|
-| **Kimi K3** | `kimi-k3` | 4 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
-| **Kimi K2.7 Code** | `kimi-k2.7-code` | 3 | 256K | Medium | Medium | Exceptional *(reasoning)* | — |
-| **Kimi K2.7 Code Highspeed** | `kimi-k2.7-code-highspeed` | 4 | 256K | Fast | High | Exceptional *(reasoning)* | — |
-| **Kimi K2.6** | `kimi-k2.6` | 3 | 256K | Medium | Medium | Exceptional *(reasoning)* | Yes |
+| **Kimi K3** | `kimi-k3` | 12 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
+| **Kimi K2.7 Code** | `kimi-k2.7-code` | 5 | 256K | Medium | Medium | Exceptional *(reasoning)* | — |
+| **Kimi K2.7 Code Highspeed** | `kimi-k2.7-code-highspeed` | 9 | 256K | Fast | High | Exceptional *(reasoning)* | — |
+| **Kimi K2.6** | `kimi-k2.6` | 4 | 256K | Medium | Medium | Exceptional *(reasoning)* | Yes |
 | **Kimi K2.5** | `kimi-k2.5` | 2 | 256K | Medium | Medium | Excellent *(reasoning)* | Yes |
 
 ### Mistral AI Models
@@ -158,16 +161,16 @@ Compare 105 AI models across 14 providers to find the right one for your use cas
 | Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
 |-------|----------|---------|---------|-------|------|-----------|--------|
 | **Mistral Small** | `mistral-small-latest` | 1 | 32K | Fast | Low | Good | Yes |
-| **Mistral Medium** | `mistral-medium-latest` | 2 | 32K | Medium | Medium | Excellent | — |
-| **Mistral Large** | `mistral-large-latest` | 3 | 128K | Medium | Medium | Excellent | — |
+| **Mistral Medium** | `mistral-medium-latest` | 6 | 32K | Medium | Medium | Excellent | — |
+| **Mistral Large** | `mistral-large-latest` | 2 | 128K | Medium | Medium | Excellent | — |
 
 ### Cohere Models
 
 | Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
 |-------|----------|---------|---------|-------|------|-----------|--------|
-| **Command A** | `command-a-03-2025` | 1 | 256K | Medium | High | Exceptional | — |
-| **Command R+** | `command-r-plus-08-2024` | 1 | 128K | Medium | High | Exceptional | — |
-| **Command R** | `command-r-08-2024` | 1 | 128K | Fast | Low | Excellent | — |
+| **Command A** | `command-a-03-2025` | 21 | 256K | Medium | High | Exceptional | — |
+| **Command R+** | `command-r-plus-08-2024` | 21 | 128K | Medium | High | Exceptional | — |
+| **Command R** | `command-r-08-2024` | 2 | 128K | Fast | Low | Excellent | — |
 | **Command R7B** | `command-r7b-12-2024` | 1 | 128K | Very_fast | Low | Excellent | — |
 | **Command A Translate** | `command-a-translate-08-2025` | 1 | 8K | Fast | Low | Good | — |
 
@@ -176,9 +179,9 @@ Compare 105 AI models across 14 providers to find the right one for your use cas
 | Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
 |-------|----------|---------|---------|-------|------|-----------|--------|
 | **GPT-OSS (20B)** | `openai/gpt-oss-20b` | 1 | 131K | Extremely_fast | Very_low | Good | — |
-| **Qwen 3.8 (27B)** | `qwen/qwen3.8-27b` | 1 | 131K | Very fast | Low | Excellent | — |
+| **Qwen 3.8 (27B)** | `qwen/qwen3.8-27b` | 7 | 131K | Very fast | Low | Excellent | — |
 | **Groq Compound** | `groq/compound` | 1 | 131K | Very fast | Low | Excellent | — |
-| **GPT-OSS (120B)** | `openai/gpt-oss-120b` | 1 | 131K | Fast | Low | Excellent | — |
+| **GPT-OSS (120B)** | `openai/gpt-oss-120b` | 2 | 131K | Fast | Low | Excellent | — |
 
 ### Fireworks AI Models
 
@@ -204,7 +207,7 @@ Compare 105 AI models across 14 providers to find the right one for your use cas
 | **GLM-5.2** | `zai-org/GLM-5.2` | 1 | 1M | Medium | Low | Exceptional *(reasoning)* | — |
 | **Kimi K3** | `moonshotai/Kimi-K3` | 4 | 1M | Medium | Medium | Exceptional *(reasoning)* | — |
 | **MiniMax M3** | `MiniMaxAI/MiniMax-M3` | 1 | 524K | Medium | Low | Excellent *(reasoning)* | — |
-| **GPT-OSS (120B)** | `openai/gpt-oss-120b` | 1 | 131K | Fast | Low | Excellent | — |
+| **GPT-OSS (120B)** | `openai/gpt-oss-120b` | 2 | 131K | Fast | Low | Excellent | — |
 | **Qwen 2.5 Coder (32B)** | `Qwen/Qwen2.5-Coder-32B-Instruct` | 1 | 32K | Fast | Low | Excellent | — |
 | **Qwen 2.5 Turbo (72B)** | `Qwen/Qwen2.5-72B-Instruct-Turbo` | 2 | 128K | Fast | Medium | Excellent | — |
 
@@ -222,95 +225,71 @@ Compare 105 AI models across 14 providers to find the right one for your use cas
 ### Best for Speed
 
 <AccordionGroup>
-  <Accordion icon="bolt" title="Ultra Fast (&lt;1s)">
-    - **Llama 3.1 Instant (Groq)** - 1 credit
-    - **GPT-4.1 Nano** - 0.5 credits
-    - **Gemini 2.5 Flash Lite** - 1 credit
+  <Accordion icon="bolt" title="Very fast">
+    - **GPT-5 Nano** - 1 credit
+    - **Gemini 3.1 Flash Lite** - 1 credit
+    - **GPT-OSS (20B)** - 1 credit
+    - **Mistral Small** - 1 credit
   </Accordion>
 
-  <Accordion icon="zap" title="Fast (1-2s)">
-    - **Gemini 2.5 Flash** - 2 credits
-    - **GPT-5 Mini** - 3 credits
+  <Accordion icon="gauge" title="Fast">
+    - **GPT-6 Luna** - 1 credit
+    - **Gemini 3.8 Flash** - 3 credits
     - **Claude Haiku 4.5** - 4 credits
-    - **Grok models** - 1-2 credits
-    - **Groq models** - 1-3 credits
+    - **Claude Sonnet 5.5** - 8 credits
   </Accordion>
 
-  <Accordion icon="gauge" title="Medium (2-5s)">
-    - **GPT-5** - 5 credits
-    - **Claude Sonnet 4.5** - 3 credits
-    - **Gemini 2.0 Flash Thinking** - 3 credits
-    - **Most general-purpose models**
-  </Accordion>
-
-  <Accordion icon="clock" title="Slow (5-10s+)">
-    - **O1** - 6 credits
-    - **Gemini 2.5 Pro** - 3 credits
-    - **Claude 3 Opus Extended** - 6 credits
-    - **Reasoning models** (worth the wait!)
+  <Accordion icon="clock" title="Medium (deep reasoning)">
+    - **GPT-6.1 Sol** - 8 credits
+    - **Claude Opus 5.5** - 15 credits
+    - **GPT-6 Astra** - 39 credits
+    - **Claude Fable 5.1** - 35 credits
   </Accordion>
 </AccordionGroup>
 
 ### Best for Cost
 
 <AccordionGroup>
-  <Accordion icon="dollar-sign" title="Budget (&lt;1 credit)">
-    - **GPT-4.1 Nano** - 0.5 credits
-  </Accordion>
-
-  <Accordion icon="coins" title="Affordable (1 credit)">
-    - **GPT-4o Mini** - 1 credit
-    - **Gemini 2.5 Flash Lite** - 1 credit
-    - **DeepSeek V3** - 1 credit
+  <Accordion icon="coins" title="1 credit">
+    - **GPT-6 Luna** - 1 credit
+    - **GPT-5 Nano** - 1 credit
+    - **Gemini 3.1 Flash Lite** - 1 credit
+    - **GLM-5.3 Flash** - 1 credit
     - **Mistral Small** - 1 credit
-    - **Grok 3 Mini** - 1 credit
-    - **Llama 3.1 Instant (Groq)** - 1 credit
-    - **Ollama 8B** - 1 credit
   </Accordion>
 
-  <Accordion icon="money-bill" title="Mid-Range (2-3 credits)">
-    - **Gemini 2.5 Flash** - 2 credits (best value!)
-    - **GPT-5 Nano** - 2 credits
-    - **Claude Sonnet 4.5** - 3 credits
-    - **GPT-5 Mini** - 3 credits
-    - **DeepSeek R1** - 2 credits
-    - **Groq models** - 1-3 credits
+  <Accordion icon="money-bill" title="2-5 credits">
+    - **DeepSeek V4 Flash** - 2 credits
+    - **MiniMax M3** - 2 credits
+    - **Gemini 3.8 Flash** - 3 credits
+    - **Claude Haiku 4.5** - 4 credits
+    - **DeepSeek V4 Pro** - 5 credits
   </Accordion>
 
-  <Accordion icon="credit-card" title="Premium (5-6 credits)">
-    - **O1** - 6 credits
-    - **Claude 3 Opus Extended** - 6 credits
-    - **GPT-5** - 5 credits
-    - **Claude Opus 4.1** - 5 credits
-    - **Gemini 3 Pro Preview** - 5 credits
-    - **Cohere models** - 5 credits
+  <Accordion icon="credit-card" title="Premium">
+    - **GPT-6.1 Sol** - 8 credits
+    - **Claude Sonnet 5.5** - 8 credits
+    - **Claude Opus 5.5** - 15 credits
+    - **Claude Fable 5.1** - 35 credits
+    - **GPT-6 Astra** - 39 credits
   </Accordion>
 </AccordionGroup>
 
 ### Best for Context Window
 
 <AccordionGroup>
-  <Accordion icon="database" title="Massive Context (1M-2M tokens)">
-    - **Gemini 2.5 Pro** - 2M tokens (largest!)
-    - **Gemini 3 Pro Preview** - 2M tokens
-    - **Gemini 2.5 Flash** - 1M tokens
-    - **Gemini 2.5 Flash Lite** - 1M tokens
+  <Accordion icon="database" title="1M+ tokens">
+    - **GPT-6 Luna** - 1 credit (1.05M)
+    - **GPT-6.1 Sol** - 8 credits (1.05M)
+    - **Gemini 3.8 Flash** - 3 credits (1M)
+    - **Claude Sonnet 5.5** - 8 credits (1M)
+    - **DeepSeek V4 Flash** - 2 credits (1M)
   </Accordion>
 
-  <Accordion icon="hard-drive" title="Large Context (128K-200K tokens)">
-    - **GPT-5 series** - 200K tokens
-    - **Claude models** - 200K tokens
-    - **Mistral Large** - 128K tokens
-    - **Grok models** - 128K tokens
-    - **Cohere models** - 128K tokens
-    - **Groq Llama models** - 128K tokens
-    - **Ollama models** - 128K tokens
-  </Accordion>
-
-  <Accordion icon="circle" title="Standard Context (32K-64K tokens)">
-    - **DeepSeek models** - 64K tokens
-    - **Mistral Small/Medium** - 32K tokens
-    - **Groq Qwen/Mistral** - 32K tokens
+  <Accordion icon="hard-drive" title="200K-500K tokens">
+    - **Grok 4.7** - 9 credits (500K)
+    - **GPT-5.4 Mini** - 3 credits (400K)
+    - **Claude Haiku 4.5** - 4 credits (200K)
   </Accordion>
 </AccordionGroup>
 
@@ -318,33 +297,24 @@ Compare 105 AI models across 14 providers to find the right one for your use cas
 
 <AccordionGroup>
   <Accordion icon="brain" title="Exceptional Reasoning">
-    - **O1** - 6 credits (deepest thinking)
-    - **Claude 3 Opus Extended** - 6 credits
-    - **GPT-5.1** - 4 credits
-    - **GPT-5** - 5 credits
-    - **Claude Opus 4.1** - 5 credits
-    - **Gemini 2.5 Pro** - 3 credits
+    - **GPT-6 Astra** - 39 credits
+    - **Claude Fable 5.1** - 35 credits
+    - **Claude Opus 5.5** - 15 credits
+    - **GPT-6.1 Sol** - 8 credits
+    - **Claude Sonnet 5.5** - 8 credits
   </Accordion>
 
   <Accordion icon="lightbulb" title="Excellent Reasoning">
-    - **O1 Mini** - 3 credits
-    - **O3 Mini** - 3 credits
-    - **Gemini 2.5 Flash** - 2 credits
-    - **Gemini 2.0 Flash Thinking** - 3 credits
-    - **Claude Sonnet 4.5** - 3 credits
-    - **GPT-5 Mini** - 3 credits
-    - **DeepSeek R1** - 2 credits
-    - **Grok 3 Reasoning** - 4 credits
-    - **Most Groq models** - 1-3 credits
+    - **GPT-6 Luna** - 1 credit
+    - **Gemini 3.8 Flash** - 3 credits
+    - **DeepSeek V4 Pro** - 5 credits
+    - **GPT-5.4 Mini** - 3 credits
   </Accordion>
 
   <Accordion icon="circle-check" title="Good Reasoning">
-    - **GPT-4o Mini** - 1 credit
-    - **Gemini 2.5 Flash Lite** - 1 credit
-    - **DeepSeek V3** - 1 credit
+    - **GPT-5 Nano** - 1 credit
     - **Claude Haiku 4.5** - 4 credits
     - **Mistral Small** - 1 credit
-    - **Grok 3 Mini** - 1 credit
   </Accordion>
 </AccordionGroup>
 
@@ -353,57 +323,55 @@ Compare 105 AI models across 14 providers to find the right one for your use cas
 ### Customer Support Chatbots
 
 **Recommended:**
-- **Gemini 2.5 Flash** (2 credits) - Best balance
-- **Claude Sonnet 4.5** (3 credits) - Safety-focused
-- **GPT-5 Mini** (3 credits) - General purpose
+- **GPT-6 Luna** (1 credit) - Best balance
+- **Gemini 3.8 Flash** (3 credits) - Stronger reasoning
+- **Claude Haiku 4.5** (4 credits) - Fast and careful
 
 **Budget Option:**
-- **Gemini 2.5 Flash Lite** (1 credit)
-- **GPT-4o Mini** (1 credit)
+- **GPT-5 Nano** (1 credit)
+- **Gemini 3.1 Flash Lite** (1 credit)
 
 ### Code Analysis & Debugging
 
 **Recommended:**
-- **O1 Mini** (3 credits) - Fast reasoning
-- **DeepSeek R1** (2 credits) - Cost-effective
-- **Gemini 2.0 Flash Thinking** (3 credits)
+- **GPT-6.1 Sol** (8 credits) - Deep reasoning
+- **Claude Sonnet 5.5** (8 credits) - Agentic coding
+- **DeepSeek V4 Pro** (5 credits) - Cost-effective
 
 **Premium:**
-- **O1** (6 credits) - Most thorough
+- **Claude Opus 5.5** (15 credits) - Long-running work
 
 ### Content Generation
 
 **Recommended:**
-- **GPT-5** (5 credits) - Most creative
-- **Claude Opus 4.1** (5 credits) - Nuanced writing
-- **GPT-5 Mini** (3 credits) - Balanced
+- **Claude Sonnet 5.5** (8 credits) - Nuanced writing
+- **GPT-6 Luna** (1 credit) - Balanced
 
 **Budget Option:**
-- **Gemini 2.5 Flash** (2 credits)
+- **Gemini 3.1 Flash Lite** (1 credit)
 
 ### Long Document Analysis
 
 **Recommended:**
-- **Gemini 2.5 Pro** (3 credits) - 2M context!
-- **Gemini 2.5 Flash** (2 credits) - 1M context
+- **GPT-6 Luna** (1 credit) - 1.05M context
+- **Gemini 3.8 Flash** (3 credits) - 1M context
 
 **Alternative:**
-- **GPT-5** (5 credits) - 200K context
+- **Claude Sonnet 5.5** (8 credits) - 1M context
 
 ### Real-Time Applications
 
 **Recommended:**
-- **Llama 3.1 Instant (Groq)** (1 credit) - Ultra-fast
-- **Gemini 2.5 Flash Lite** (1 credit)
-- **GPT-4.1 Nano** (0.5 credits)
+- **GPT-OSS (20B)** (1 credit) - Fast on Groq
+- **GPT-5 Nano** (1 credit)
+- **Gemini 3.1 Flash Lite** (1 credit)
 
 ### High-Volume Production
 
 **Recommended:**
-- **Gemini 2.5 Flash Lite** (1 credit)
-- **DeepSeek V3** (1 credit)
+- **GPT-6 Luna** (1 credit)
+- **GLM-5.3 Flash** (1 credit)
 - **Mistral Small** (1 credit)
-- **Groq models** (1-3 credits) - Very fast
 
 ### Privacy-Sensitive Applications
 
@@ -413,30 +381,27 @@ Compare 105 AI models across 14 providers to find the right one for your use cas
 
 ## Provider Comparison
 
-| Provider | Models | Avg Cost | Speed | Strength |
-|----------|--------|----------|-------|----------|
-| **OpenAI** | 11 | 1-6 credits | Fast-Slow | Most comprehensive |
-| **Google** | 5 | 1-5 credits | Fast-Slow | Largest context (2M) |
-| **Anthropic** | 4 | 3-6 credits | Medium-Slow | Safety & nuance |
-| **Groq** | 8 | 1-3 credits | Ultra Fast | Speed champion |
-| **DeepSeek** | 2 | 1-2 credits | Fast-Medium | Best value reasoning |
-| **Ollama** | 4 | 1-4 credits | Fast-Slow | Local/private |
-| **xAI** | 5 | 1-4 credits | Fast-Medium | Real-time knowledge |
-| **Mistral** | 3 | 1-4 credits | Fast-Medium | Open & efficient |
-| **Cohere** | 3 | 5 credits | Fast-Medium | Enterprise-grade |
+| Provider | Models | Credits per step | Strength |
+|----------|--------|------------------|----------|
+| **OpenAI** | 14 | 1-39 credits | Most comprehensive |
+| **Google** | 10 | 1-8 credits | Long context, fast |
+| **Anthropic** | 13 | 4-39 credits | Agentic coding and writing |
+| **xAI** | 7 | 4-9 credits | Real-time knowledge |
+| **DeepSeek** | 3 | 2-5 credits | Best value reasoning |
+| **Mistral** | 3 | 1-6 credits | Open and efficient |
+| **Cohere** | 5 | 1-21 credits | Enterprise-grade |
+| **Groq** | 4 | 1-7 credits | Speed champion |
 
 ## Decision Tree
 
 ```
-Need reasoning? 
+Need deep reasoning?
 ├─ Yes → Budget?
-│  ├─ Premium → O1 (6 credits)
-│  └─ Budget → DeepSeek R1 (2 credits)
-└─ No → Need speed?
-   ├─ Ultra-fast → Llama 3.1 Instant (1 credit)
-   └─ Balanced → Need long context?
-      ├─ Yes → Gemini 2.5 Pro (3 credits, 2M context)
-      └─ No → Gemini 2.5 Flash (2 credits) ⭐ Best Overall
+│  ├─ Premium → Claude Opus 5.5 (15 credits)
+│  └─ Budget → DeepSeek V4 Pro (5 credits)
+└─ No → Need speed above all?
+   ├─ Yes → GPT-5 Nano (1 credit)
+   └─ Balanced → GPT-6 Luna (1 credit) ⭐ Best Overall
 ```
 
 ## Next Steps

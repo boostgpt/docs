@@ -5882,7 +5882,7 @@
           },
           "model": {
             "type": "string",
-            "description": "The AI model to use (e.g., 'gpt-5.1', 'gemini-2.5-flash')"
+            "description": "The AI model to use (e.g., 'gpt-6-luna', 'gemini-3.8-flash')"
           },
           "instruction": {
             "type": "string",

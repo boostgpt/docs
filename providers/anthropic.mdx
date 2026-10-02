@@ -129,15 +129,6 @@ Anthropic's Claude models are known for their safety, nuance, and strong perform
     - Model id: `claude-opus-4-5`
   </Card>
 
-  <Card title="Claude Sonnet 4.5" icon="microchip">
-    **12 credits** • Balanced Claude Sonnet model with solid performance across everyday tasks.
-
-    - 200K context window
-    - Excellent reasoning
-    - Speed: Medium • Cost: Medium
-    - Vision: images supported
-    - Model id: `claude-sonnet-4-5`
-  </Card>
 </CardGroup>
 ## Setup
 
@@ -150,10 +141,10 @@ Anthropic's Claude models are known for their safety, nuance, and strong perform
 
   <Step title="Choose Your Model">
     Select based on your needs:
-    - **Claude Sonnet 4.5**: Best for most production use cases
-    - **Claude Opus 4.1**: When you need maximum intelligence
+    - **Claude Sonnet 5.5**: Best for most production use cases
+    - **Claude Opus 5.5**: Long-running agentic coding and knowledge work
+    - **Claude Fable 5.1**: Demanding reasoning and long-horizon agentic work
     - **Claude Haiku 4.5**: Fast responses for high-volume apps
-    - **Claude 3 Opus Extended**: Deep reasoning and analysis
   </Step>
 </Steps>
 
@@ -196,7 +187,7 @@ Anthropic's Claude models are known for their safety, nuance, and strong perform
     // Create bot with Claude model
     const botResponse = await client.createBot({
       name: 'My Claude Bot',
-      model: 'claude-sonnet-4-5',
+      model: 'claude-sonnet-5-5',
       instruction: 'You are a helpful and thoughtful assistant.',
       max_reply_tokens: 1000,
       status: 'active'
@@ -287,28 +278,32 @@ Configure how your Claude agent thinks and responds:
 ### When to Use Each Model
 
 <AccordionGroup>
-  <Accordion icon="sparkles" title="Claude Sonnet 4.5 - Production Workhorse">
+  <Accordion icon="sparkles" title="Claude Sonnet 5.5 - Production Workhorse">
     **Best for:**
     - Customer support and chatbots
     - Content generation and editing
-    - General-purpose applications
+    - Agentic coding
     - Balanced cost and performance
 
-    **Sweet spot:** Excellent reasoning at medium cost
-
-    **Cost:** 3 credits per request
+    **Cost:** about 8 credits per agent step
   </Accordion>
 
-  <Accordion icon="crown" title="Claude Opus 4.1 - Maximum Intelligence">
+  <Accordion icon="crown" title="Claude Opus 5.5 - Long-Running Work">
     **Best for:**
+    - Long agentic coding sessions
     - Complex analysis and research
-    - Creative writing and storytelling
-    - Detailed explanations
-    - High-stakes interactions
+    - Knowledge work across large contexts
 
-    **Standout:** Exceptional nuance and depth
+    **Cost:** about 15 credits per agent step
+  </Accordion>
 
-    **Cost:** 5 credits per request
+  <Accordion icon="brain" title="Claude Fable 5.1 - Maximum Intelligence">
+    **Best for:**
+    - Demanding reasoning
+    - Long-horizon agentic work
+    - High-stakes analysis
+
+    **Cost:** about 35 credits per agent step
   </Accordion>
 
   <Accordion icon="zap" title="Claude Haiku 4.5 - Speed & Volume">
@@ -316,21 +311,8 @@ Configure how your Claude agent thinks and responds:
     - Quick responses
     - Simple queries
     - High-volume applications
-    - Cost-sensitive deployments
 
-    **Cost:** 4 credits per request
-  </Accordion>
-
-  <Accordion icon="brain" title="Claude 3 Opus Extended - Deep Analysis">
-    **Best for:**
-    - Scientific and technical analysis
-    - Multi-step reasoning tasks
-    - Strategic planning
-    - Complex problem-solving
-
-    **Note:** Highest cost, slowest, but most thorough
-
-    **Cost:** 6 credits per request
+    **Cost:** about 4 credits per agent step
   </Accordion>
 </AccordionGroup>
 

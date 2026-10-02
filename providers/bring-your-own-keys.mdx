@@ -266,21 +266,20 @@ const customResponse = await client.chat({
 | Scenario | BoostGPT Credits | BYOK | Recommendation |
 |----------|------------------|------|----------------|
 | **Low Volume** (&lt;1M tokens/month) | Simple, predictable | More setup, similar cost | Use Credits |
-| **High Volume** (&gt;10M tokens/month) | Pay per credit | Direct provider pricing | Use BYOK |
+| **High Volume** (&gt;10M tokens/month) | Credits per token | Direct provider pricing | Use BYOK |
 | **Multiple Models** | Single credit balance | Separate provider bills | Use Credits |
 | **Compliance Required** | Shared infrastructure | Direct provider relationship | Use BYOK |
 | **Development/Testing** | Easy to start | Requires API keys | Use Credits |
 
-### Example Cost Analysis
+### How the two are billed
 
-**Scenario:** 1M GPT-4o Mini requests per month
-
-- **BoostGPT Credits:** 1M credits × $0.01 = $10,000
-- **BYOK with OpenAI:** ~$8,000 (OpenAI direct pricing)
-- **Savings:** ~$2,000/month (20%)
+- **BoostGPT credits:** every model call uses credits in line with its tokens and the model's price. Your plan's
+  allowance covers it, with no provider account to manage.
+- **BYOK:** calls made with your key use **no credits** — your provider bills you directly at its own prices.
 
 <Tip>
-  For high-volume production workloads (&gt;1M requests/month), BYOK typically offers 15-30% cost savings.
+  For high-volume production workloads, BYOK moves the model cost onto your provider bill and leaves your credits
+  for the agents that use BoostGPT's keys.
 </Tip>
 
 ## Security Best Practices

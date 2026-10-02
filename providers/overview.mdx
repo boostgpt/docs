@@ -88,7 +88,7 @@ Ultra-fast models for simple tasks, high-volume applications, and real-time resp
 Great all-around models balancing speed, cost, and capability.
 
 **Best for:** Most production use cases, customer support, content generation  
-**Examples:** GPT-4o Mini, Claude Sonnet 4.5, Gemini 2.5 Flash
+**Examples:** GPT-6 Luna, Claude Sonnet 5.5, Gemini 3.8 Flash
 
 ### Advanced (Pro/Large)
 Powerful models for complex tasks requiring deep understanding.
@@ -100,28 +100,29 @@ Powerful models for complex tasks requiring deep understanding.
 Specialized models with extended thinking for complex problem-solving.
 
 **Best for:** Math, coding, logic puzzles, multi-step reasoning  
-**Examples:** O1, DeepSeek R1, Gemini Flash Thinking, Claude Extended Thinking
+**Examples:** GPT-6.1 Sol, Claude Opus 5.5, Gemini 3.8 Flash, DeepSeek V4 Pro
 
 [Learn more about reasoning models →](/providers/reasoning-models)
 
 ## Model Comparison
 
-| Provider | Model | Speed | Cost | Reasoning | Context | Credits |
-|----------|-------|-------|------|-----------|---------|---------|
-| OpenAI | O1 | Slow | High | Exceptional | 200K | 6 |
-| OpenAI | GPT-5 | Medium | High | Exceptional | 200K | 5 |
-| OpenAI | GPT-4o | Medium | Medium | Excellent | 128K | 5 |
-| OpenAI | GPT-4o Mini | Fast | Low | Good | 128K | 1 |
-| Google | Gemini 2.5 Pro | Slow | High | Exceptional | 2M | 3 |
-| Google | Gemini 2.5 Flash | Fast | Medium | Excellent | 1M | 2 |
-| Anthropic | Claude Opus 4.1 | Medium | High | Exceptional | 200K | 5 |
-| Anthropic | Claude Sonnet 4.5 | Medium | Medium | Excellent | 200K | 3 |
-| xAI | Grok 3 Reasoning | Medium | Medium | Excellent | 128K | 4 |
-| DeepSeek | DeepSeek R1 | Medium | Medium | Excellent | 64K | 2 |
-| Groq | Llama 3.3 (70B) | Fast | Medium | Excellent | 128K | 3 |
-| Ollama | Llama 3.3 (70B) | Medium | Free* | Excellent | 128K | 2 |
+| Provider | Model | Speed | Cost | Reasoning | Context | Credits per step |
+|----------|-------|-------|------|-----------|---------|------------------|
+| OpenAI | GPT-6 Astra | Medium | High | Exceptional | 1.05M | 39 |
+| OpenAI | GPT-6.1 Sol | Medium | Medium | Exceptional | 1.05M | 8 |
+| OpenAI | GPT-6 Luna | Fast | Low | Excellent | 1.05M | 1 |
+| Google | Gemini 3.8 Flash | Fast | Medium | Exceptional | 1.05M | 3 |
+| Google | Gemini 3.1 Flash Lite | Very fast | Very low | Good | 1M | 1 |
+| Anthropic | Claude Fable 5.1 | Slow | High | Exceptional | 1M | 35 |
+| Anthropic | Claude Opus 5.5 | Medium | High | Exceptional | 1M | 15 |
+| Anthropic | Claude Sonnet 5.5 | Fast | Medium | Exceptional | 1M | 8 |
+| Anthropic | Claude Haiku 4.5 | Fast | Low | Good | 200K | 4 |
+| xAI | Grok 4.7 | Medium | Medium | Exceptional | 500K | 9 |
+| DeepSeek | DeepSeek V4 Pro | Medium | Low | Excellent | 1M | 5 |
+| Groq | GPT-OSS (120B) | Fast | Low | Excellent | 131K | 2 |
+| Ollama | Llama 3.3 (70B) Local | Medium | Very low | Excellent | 128K | 0 |
 
-*Local hosting costs (compute) not included
+*Ollama runs on your own host, so it uses no credits; your compute is your own.
 
 [View full comparison →](/providers/model-comparison)
 
@@ -162,15 +163,14 @@ The **only way** to use custom models in BoostGPT is through **Ollama**.
 
 ## Credits System
 
-Each model has a **credit cost per message**. Credits are consumed when your agent generates responses.
+Your plan includes a monthly credit allowance. Every model call your agent makes uses credits in line with how much it reads and writes and the model's price, so a short reply on a fast model uses a fraction of a credit and a long agent task on a frontier model uses more.
 
-- **Nano/Mini models:** 0.5-1 credits (cheapest)
-- **Standard models:** 2-3 credits
-- **Pro/Large models:** 4-5 credits
-- **Reasoning models:** 3-6 credits (most expensive, but highest quality)
+- **The model picker** shows each model's credits for a typical agent step, so models can be compared at a glance.
+- **Each message** shows the tokens it used and the credits it was charged.
+- **Your own API keys** (and your own Ollama host) use no credits.
 
 <Info>
-  Credits are only for **agent responses**. Incoming messages, training data, and API calls don't consume credits.
+  Agent turns, plain chat replies, chat titles and other AI calls made on your behalf all use credits. Training data and incoming messages don't.
 </Info>
 
 ## Choosing the Right Model

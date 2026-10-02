@@ -5,7 +5,7 @@ description: "Compare AI models across all providers"
 
 ## Overview
 
-Compare 98 AI models across 14 providers to find the right one for your use case — by speed, cost, reasoning capability and context window.
+Compare 95 AI models across 14 providers to find the right one for your use case — by speed, cost, reasoning capability and context window.
 
 ## Quick Comparison by Use Case
 
@@ -81,7 +81,6 @@ price for a typical step — about 31K prompt tokens, most of them cached, and 4
 | **Gemini 3.5 Flash Lite** | `gemini-3.5-flash-lite` | 2 | 1M | Very_fast | Very_low | Good *(reasoning)* | Yes |
 | **Gemini 3.1 Flash Lite** | `gemini-3.1-flash-lite` | 1 | 1M | Very_fast | Very_low | Good *(reasoning)* | Yes |
 | **Gemini 3.1 Pro** | `gemini-3.1-pro-preview` | 8 | 1M | Medium | High | Exceptional *(reasoning)* | Yes |
-| **Gemini 3 Flash** | `gemini-3-flash-preview` | 1 | 1M | Fast | Medium | Excellent *(reasoning)* | Yes |
 | **Gemini 2.5 Flash** | `gemini-2.5-flash` | 2 | 1M | Fast | Medium | Excellent *(reasoning)* | Yes |
 | **Gemini 2.5 Flash Lite** | `gemini-2.5-flash-lite` | 1 | 1M | Very_fast | Very_low | Good *(reasoning)* | Yes |
 
@@ -101,7 +100,6 @@ price for a typical step — about 31K prompt tokens, most of them cached, and 4
 | **Claude Sonnet 4.6** | `claude-sonnet-4-6` | 12 | 1M | Fast | Medium | Excellent *(reasoning)* | Yes |
 | **Claude Haiku 4.5** | `claude-haiku-4-5` | 4 | 200K | Fast | Low | Good | Yes |
 | **Claude Opus 4.5** | `claude-opus-4-5` | 20 | 200K | Medium | High | Exceptional | Yes |
-| **Claude Sonnet 4.5** | `claude-sonnet-4-5` | 12 | 200K | Medium | Medium | Excellent | Yes |
 
 ### xAI (Grok) Models
 
@@ -124,7 +122,7 @@ price for a typical step — about 31K prompt tokens, most of them cached, and 4
 | **GLM-5.2** | `glm-5.2` | 6 | 1M | Medium | Low | Exceptional *(reasoning)* | — |
 | **GLM-4.6** | `glm-4.6` | 3 | 200K | Medium | Low | Excellent | — |
 | **GLM-4.7** | `glm-4.7` | 3 | 200K | Medium | Low | Excellent *(reasoning)* | — |
-| **GLM-4.7 Flash** | `glm-4.7-flash` | 1 | 200K | Very_fast | Very_low | Good | — |
+| **GLM-4.7 Flash** | `glm-4.7-flash` | 0 | 200K | Very_fast | Very_low | Good | — |
 | **GLM-5.1** | `glm-5.1` | 6 | 200K | Medium | Low | Exceptional *(reasoning)* | — |
 | **GLM-4.6V** | `glm-4.6v` | 2 | 128K | Medium | Low | Excellent | Yes |
 
@@ -154,7 +152,6 @@ price for a typical step — about 31K prompt tokens, most of them cached, and 4
 | **Kimi K2.7 Code** | `kimi-k2.7-code` | 5 | 256K | Medium | Medium | Exceptional *(reasoning)* | — |
 | **Kimi K2.7 Code Highspeed** | `kimi-k2.7-code-highspeed` | 9 | 256K | Fast | High | Exceptional *(reasoning)* | — |
 | **Kimi K2.6** | `kimi-k2.6` | 4 | 256K | Medium | Medium | Exceptional *(reasoning)* | Yes |
-| **Kimi K2.5** | `kimi-k2.5` | 2 | 256K | Medium | Medium | Excellent *(reasoning)* | Yes |
 
 ### Mistral AI Models
 
@@ -172,7 +169,7 @@ price for a typical step — about 31K prompt tokens, most of them cached, and 4
 | **Command R+** | `command-r-plus-08-2024` | 21 | 128K | Medium | High | Exceptional | — |
 | **Command R** | `command-r-08-2024` | 2 | 128K | Fast | Low | Excellent | — |
 | **Command R7B** | `command-r7b-12-2024` | 1 | 128K | Very_fast | Low | Excellent | — |
-| **Command A Translate** | `command-a-translate-08-2025` | 1 | 8K | Fast | Low | Good | — |
+| **Command A Translate** | `command-a-translate-08-2025` | 21 | 8K | Fast | Low | Good | — |
 
 ### Groq Models
 
@@ -180,45 +177,45 @@ price for a typical step — about 31K prompt tokens, most of them cached, and 4
 |-------|----------|---------|---------|-------|------|-----------|--------|
 | **GPT-OSS (20B)** | `openai/gpt-oss-20b` | 1 | 131K | Extremely_fast | Very_low | Good | — |
 | **Qwen 3.8 (27B)** | `qwen/qwen3.8-27b` | 7 | 131K | Very fast | Low | Excellent | — |
-| **Groq Compound** | `groq/compound` | 1 | 131K | Very fast | Low | Excellent | — |
+| **Groq Compound** | `groq/compound` | 2 | 131K | Very fast | Low | Excellent | — |
 | **GPT-OSS (120B)** | `openai/gpt-oss-120b` | 2 | 131K | Fast | Low | Excellent | — |
 
 ### Fireworks AI Models
 
 | Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
 |-------|----------|---------|---------|-------|------|-----------|--------|
-| **DeepSeek V3** | `deepseek-v3` | 1 | 64K | Fast | Low | Good | — |
-| **DeepSeek R1** | `deepseek-r1` | 1 | 64K | Medium | Low | Excellent *(reasoning)* | — |
-| **Llama V3 (8B)** | `llama-v3-8b-instruct` | 1 | 8K | Very_fast | Very_low | Good | — |
-| **Llama V3 (70B)** | `llama-v3-70b-instruct` | 2 | 8K | Medium | Medium | Excellent | — |
-| **Llama V3.1 (8B)** | `llama-v3p1-8b-instruct` | 1 | 128K | Very_fast | Very_low | Good | — |
-| **Llama V3.1 (70B)** | `llama-v3p1-70b-instruct` | 1 | 128K | Fast | Low | Excellent | — |
-| **Llama V3.1 (405B)** | `llama-v3p1-405b-instruct` | 2 | 128K | Slow | High | Exceptional | — |
-| **Yi Large** | `yi-large` | 2 | 32K | Medium | Medium | Excellent | — |
-| **Mixtral (8x7B)** | `mixtral-8x7b-instruct` | 1 | 32K | Fast | Low | Good | — |
-| **Mixtral (8x22B)** | `mixtral-8x22b-instruct` | 2 | 64K | Medium | Medium | Excellent | — |
-| **Qwen 2.5 (72B)** | `qwen2p5-72b-instruct` | 1 | 128K | Medium | Medium | Excellent | — |
+| **DeepSeek V3** | `deepseek-v3` | 4 | 64K | Fast | Low | Good | — |
+| **DeepSeek R1** | `deepseek-r1` | 25 | 64K | Medium | Low | Excellent *(reasoning)* | — |
+| **Llama V3 (8B)** | `llama-v3-8b-instruct` | 2 | 8K | Very_fast | Very_low | Good | — |
+| **Llama V3 (70B)** | `llama-v3-70b-instruct` | 8 | 8K | Medium | Medium | Excellent | — |
+| **Llama V3.1 (8B)** | `llama-v3p1-8b-instruct` | 2 | 128K | Very_fast | Very_low | Good | — |
+| **Llama V3.1 (70B)** | `llama-v3p1-70b-instruct` | 8 | 128K | Fast | Low | Excellent | — |
+| **Llama V3.1 (405B)** | `llama-v3p1-405b-instruct` | 8 | 128K | Slow | High | Exceptional | — |
+| **Yi Large** | `yi-large` | 8 | 32K | Medium | Medium | Excellent | — |
+| **Mixtral (8x7B)** | `mixtral-8x7b-instruct` | 4 | 32K | Fast | Low | Good | — |
+| **Mixtral (8x22B)** | `mixtral-8x22b-instruct` | 10 | 64K | Medium | Medium | Excellent | — |
+| **Qwen 2.5 (72B)** | `qwen2p5-72b-instruct` | 8 | 128K | Medium | Medium | Excellent | — |
 
 ### Together AI Models
 
 | Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
 |-------|----------|---------|---------|-------|------|-----------|--------|
-| **GLM-5.3** | `zai-org/GLM-5.3` | 1 | 1M | Medium | Low | Exceptional *(reasoning)* | — |
-| **GLM-5.2** | `zai-org/GLM-5.2` | 1 | 1M | Medium | Low | Exceptional *(reasoning)* | — |
-| **Kimi K3** | `moonshotai/Kimi-K3` | 4 | 1M | Medium | Medium | Exceptional *(reasoning)* | — |
-| **MiniMax M3** | `MiniMaxAI/MiniMax-M3` | 1 | 524K | Medium | Low | Excellent *(reasoning)* | — |
+| **GLM-5.3** | `zai-org/GLM-5.3` | 6 | 1M | Medium | Low | Exceptional *(reasoning)* | — |
+| **GLM-5.2** | `zai-org/GLM-5.2` | 6 | 1M | Medium | Low | Exceptional *(reasoning)* | — |
+| **Kimi K3** | `moonshotai/Kimi-K3` | 12 | 1M | Medium | Medium | Exceptional *(reasoning)* | — |
+| **MiniMax M3** | `MiniMaxAI/MiniMax-M3` | 2 | 524K | Medium | Low | Excellent *(reasoning)* | — |
 | **GPT-OSS (120B)** | `openai/gpt-oss-120b` | 2 | 131K | Fast | Low | Excellent | — |
-| **Qwen 2.5 Coder (32B)** | `Qwen/Qwen2.5-Coder-32B-Instruct` | 1 | 32K | Fast | Low | Excellent | — |
-| **Qwen 2.5 Turbo (72B)** | `Qwen/Qwen2.5-72B-Instruct-Turbo` | 2 | 128K | Fast | Medium | Excellent | — |
+| **Qwen 2.5 Coder (32B)** | `Qwen/Qwen2.5-Coder-32B-Instruct` | 7 | 32K | Fast | Low | Excellent | — |
+| **Qwen 2.5 Turbo (72B)** | `Qwen/Qwen2.5-72B-Instruct-Turbo` | 10 | 128K | Fast | Medium | Excellent | — |
 
 ### Ollama Models (Local)
 
 | Model | Model id | Credits | Context | Speed | Cost | Reasoning | Vision |
 |-------|----------|---------|---------|-------|------|-----------|--------|
-| **Llama 3.3 (70B) Local** | `llama3.3:70b` | 1 | 128K | Medium | Very_low | Excellent | — |
-| **Llama 3.1 (8B) Local** | `llama3.1:8b` | 1 | 128K | Fast | Very_low | Good | — |
-| **Llama 3.1 (70B) Local** | `llama3.1:70b` | 1 | 128K | Medium | Very_low | Excellent | — |
-| **Llama 3.1 (405B) Local** | `llama3.1:405b` | 2 | 128K | Slow | Very_low | Exceptional | — |
+| **Llama 3.3 (70B) Local** | `llama3.3:70b` | 0 | 128K | Medium | Very_low | Excellent | — |
+| **Llama 3.1 (8B) Local** | `llama3.1:8b` | 0 | 128K | Fast | Very_low | Good | — |
+| **Llama 3.1 (70B) Local** | `llama3.1:70b` | 0 | 128K | Medium | Very_low | Excellent | — |
+| **Llama 3.1 (405B) Local** | `llama3.1:405b` | 0 | 128K | Slow | Very_low | Exceptional | — |
 
 ## Comparison by Category
 
@@ -384,8 +381,8 @@ price for a typical step — about 31K prompt tokens, most of them cached, and 4
 | Provider | Models | Credits per step | Strength |
 |----------|--------|------------------|----------|
 | **OpenAI** | 14 | 1-39 credits | Most comprehensive |
-| **Google** | 10 | 1-8 credits | Long context, fast |
-| **Anthropic** | 13 | 4-39 credits | Agentic coding and writing |
+| **Google** | 9 | 1-8 credits | Long context, fast |
+| **Anthropic** | 12 | 4-39 credits | Agentic coding and writing |
 | **xAI** | 7 | 4-9 credits | Real-time knowledge |
 | **DeepSeek** | 3 | 2-5 credits | Best value reasoning |
 | **Mistral** | 3 | 1-6 credits | Open and efficient |

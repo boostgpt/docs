@@ -249,7 +249,6 @@
                           "integrations/connectors/intercom",
                           "integrations/connectors/serper",
                           "integrations/connectors/apify",
-                          "integrations/connectors/browseagent",
                           "integrations/connectors/calcom",
                           "integrations/connectors/exa",
                           "integrations/connectors/hubspot",

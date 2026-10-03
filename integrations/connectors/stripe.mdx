@@ -1,9 +1,9 @@
 ---
 title: "Stripe Payments"
-description: "Payments, customers, subscriptions and refunds, with an API key. The Stripe server above signs in instead."
+description: "Read-only: customers, subscriptions, products, prices, invoices and balance, with an API key. The Stripe server above signs in instead."
 ---
 
-Payments, customers, subscriptions and refunds, with an API key. The Stripe server above signs in instead.
+Read-only: customers, subscriptions, products, prices, invoices and balance, with an API key. The Stripe server above signs in instead.
 
 ## Connecting
 
@@ -13,39 +13,30 @@ In the dashboard, open **Connectors**, find Stripe Payments and press **Connect*
 
 | Field | What it is |
 |---|---|
-| Secret Key | Your Stripe secret key (starts with sk_test_ or sk_live_) |
+| Restricted key (read-only) | A Stripe restricted key with read access (rk_…). A secret key (sk_…) also works, but this connector only reads, so it needs no more than that. |
 
 ### Getting the credential
 
 1. Create a [Stripe account](https://dashboard.stripe.com/register)
-2. Go to **Developers** → **API Keys**
-3. Copy your **Secret key** (starts with `sk_test_` for testing or `sk_live_` for production)
-4. For webhooks, also note your **Publishable key** and **Webhook signing secret**
+2. Go to **Developers** → **API keys** → **Create restricted key**
+3. Give it **Read** access to Customers, Subscriptions, Products, Prices, Invoices, Payment Intents and Balance, and nothing else
+4. Copy the key (starts with `rk_test_` or `rk_live_`) and paste it here
 
 ## What an agent can do with it
 
 | Tool | What it does |
 |---|---|
-| `create_payment_intent` | Create a new payment intent |
 | `get_payment_intent` | Retrieve a payment intent |
-| `confirm_payment_intent` | Confirm a payment intent |
-| `cancel_payment_intent` | Cancel a payment intent |
-| `create_customer` | Create a new customer |
 | `get_customer` | Retrieve a customer |
-| `update_customer` | Update a customer |
 | `list_customers` | List all customers |
-| `create_subscription` | Create a new subscription |
 | `get_subscription` | Retrieve a subscription |
-| `update_subscription` | Update a subscription |
-| `cancel_subscription` | Cancel a subscription |
 | `list_subscriptions` | List subscriptions |
-| `create_product` | Create a new product |
 | `list_products` | List products |
-| `create_price` | Create a new price |
 | `list_prices` | List prices |
 | `list_invoices` | List invoices |
 | `get_balance` | Get account balance |
 
 ## Useful resources
 
-- [Stripe Payments documentation](https://docs.stripe.com/api/authentication)
+- [Restricted API keys](https://docs.stripe.com/keys#limit-access)
+- [Stripe API authentication](https://docs.stripe.com/api/authentication)
